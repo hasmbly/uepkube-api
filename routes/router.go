@@ -7,8 +7,8 @@ import (
 	"uepkube-api/middlewares"
 	"fmt"
 	"log"
-	"html/template"
-	"io"	
+	//"html/template"
+	//"io"
 	"net/http"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/echo"
@@ -17,17 +17,16 @@ import (
 	_ "uepkube-api/docs"
 )
 
-type TemplateRenderer struct {
-	templates *template.Template
-}
+//type TemplateRenderer struct {
+//	templates *template.Template
+//}
 
-func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
-}
+//func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+//	return t.templates.ExecuteTemplate(w, name, data)
+//}
 
 func Home(c echo.Context) error {
-  return c.Render(http.StatusOK, "index.html", "")	
-}
+  return c.HTML(http.StatusOK, "<pre><strong>Echo</strong>v4.1.11High performance, minimalist Go web framework</pre>")}
 
 func BycriptPass(c echo.Context) error {
 	pwd := []byte(c.Param("pass"))
@@ -50,10 +49,10 @@ func Init() *echo.Echo {
 	e := echo.New()
 
 	// render html
-	renderer := &TemplateRenderer{
-	  templates: template.Must(template.ParseGlob("/home/unknown/go/src/uepkube-api/static/views/*.html")),
-	}
-	e.Renderer = renderer
+//	renderer := &TemplateRenderer{
+//	  templates: template.Must(template.ParseGlob("./static/views/*.html")),
+//	}
+//	e.Renderer = renderer
 
 	// Middleware
 	e.Use(middleware.Logger())
