@@ -26,7 +26,7 @@ import (
 //}
 
 func Home(c echo.Context) error {
-  return c.HTML(http.StatusOK, "<pre><strong>Echo</strong>v4.1.11High performance, minimalist Go web framework</pre>")}
+  return c.HTML(http.StatusOK, "<a href='https://echo.labstack.com'><img height='80' src='https://cdn.labstack.com/images/echo-logo.svg'></a><br /><pre><strong>Echo</strong> v4.1.11High performance, minimalist Go web framework</pre>")}
 
 func BycriptPass(c echo.Context) error {
 	pwd := []byte(c.Param("pass"))
