@@ -7,8 +7,6 @@ import (
 	"uepkube-api/middlewares"
 	"fmt"
 	"log"
-	//"html/template"
-	//"io"
 	"net/http"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/echo"
@@ -16,14 +14,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	_ "uepkube-api/docs"
 )
-
-//type TemplateRenderer struct {
-//	templates *template.Template
-//}
-
-//func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-//	return t.templates.ExecuteTemplate(w, name, data)
-//}
 
 func Home(c echo.Context) error {
   return c.HTML(http.StatusOK, "<a href='https://echo.labstack.com'><img height='80' src='https://cdn.labstack.com/images/echo-logo.svg'></a><br /><pre><strong>Echo</strong> v4.1.11High performance, minimalist Go web framework</pre>")}
@@ -48,12 +38,6 @@ func Init() *echo.Echo {
 	fmt.Println("Running...")
 	e := echo.New()
 
-	// render html
-//	renderer := &TemplateRenderer{
-//	  templates: template.Must(template.ParseGlob("./static/views/*.html")),
-//	}
-//	e.Renderer = renderer
-
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -71,20 +55,57 @@ func Init() *echo.Echo {
 	e.GET("/swagger-api/*", echoSwagger.WrapHandler)
 	e.POST("/api/v1/auth/signin", controllers.SignIn)
 	e.GET("/api/v1/lookup/uepkube", controllers.GetUepOrKube)
+	// produk
+	e.GET("/produk", controllers.GetProduk)
+	e.POST("/produk", controllers.GetPaginateProduk)
+	// pelatihan
+	e.GET("/pelatihan", controllers.GetPelatihan)
+	e.POST("/pelatihan", controllers.GetPaginatePelatihan)
 
 	// Route::Restricted-Group-UEP
 	u := e.Group("/api/v1")
 	u.Use(middleware.JWTWithConfig(config))
 	u.Use(middlewares.CheckUepRoles)
+	// uep
 	u.GET("/uep", controllers.GetUep)
 	u.POST("/uep", controllers.GetPaginateUep)
+	u.PUT("/uep", controllers.UpdateUep)
 	u.POST("/uep/add", controllers.AddUep)
+	u.POST("/uep/:id", controllers.DeleteUep)
+
+	a := e.Group("/api/v1")
+	a.Use(middleware.JWTWithConfig(config))
+	a.Use(middlewares.CheckAllRoles)	
+	// produk
+	a.PUT("/produk", controllers.UpdateProduk)
+	a.POST("/produk/add", controllers.AddProduk)
+	a.POST("/produk/:id", controllers.DeleteProduk)
+	// pelatihan
+	a.PUT("/pelatihan", controllers.UpdatePelatihan)
+	a.POST("/pelatihan/add", controllers.AddPelatihan)
+	a.POST("/pelatihan/:id", controllers.DeletePelatihan)
+	// inventaris
+	a.GET("/inventaris", controllers.GetInventaris)
+	a.POST("/inventaris", controllers.GetPaginateInventaris)	
+	a.PUT("/inventaris", controllers.UpdateInventaris)
+	a.POST("/inventaris/add", controllers.AddInventaris)
+	a.POST("/inventaris/:id", controllers.DeleteInventaris)
+	// aktivitas
+	a.GET("/aktivitas", controllers.GetAktivitas)
+	a.POST("/aktivitas", controllers.GetPaginateAktivitas)	
+	a.PUT("/aktivitas", controllers.UpdateAktivitas)
+	a.POST("/aktivitas/add", controllers.AddAktivitas)
+	a.POST("/aktivitas/:id", controllers.DeleteAktivitas)		
 	
 	// Route::Restricted-Group-KUBE
 	k := e.Group("/api/v1")
 	k.Use(middleware.JWTWithConfig(config))
 	k.Use(middlewares.CheckKubeRoles)	
-	k.GET("/kube", controllers.GetKube)	
+	k.GET("/kube", controllers.GetKube)
+	k.POST("/kube", controllers.GetPaginateKube)
+	k.PUT("/kube", controllers.UpdateKube)
+	k.POST("/kube/add", controllers.AddKube)
+	k.POST("/kube/:id", controllers.DeleteKube)	
 
 	return e
 }

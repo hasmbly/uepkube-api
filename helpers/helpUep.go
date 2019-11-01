@@ -8,14 +8,9 @@ import (
 	"uepkube-api/models"
 	"uepkube-api/db"
 	"strconv"
-	"github.com/astaxie/beego/utils/pagination"
 	"log"
 	"github.com/ulule/paging"
 	"math"
-)
-
-var (
-	paginator = &pagination.Paginator{}
 )
 
 func PaginateUep(c echo.Context, r *models.ResPagin) (err error) {
@@ -29,7 +24,7 @@ func PaginateUep(c echo.Context, r *models.ResPagin) (err error) {
 	limit := strconv.FormatInt(int64(u.Size), 10)
 	var co int = (u.Page - num) * u.Size
 	offset := strconv.FormatInt(int64(co), 10)
-	url := "http://localhost:9000/api/v1/produk?limit="+limit+"&offset="+offset
+	url := "http://localhost:9000/api/v1/uep?limit="+limit+"&offset="+offset
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -40,9 +35,19 @@ func PaginateUep(c echo.Context, r *models.ResPagin) (err error) {
 	        log.Fatal(err)
 	}
 	options := paging.NewOptions()
-	// options.CursorOptions.Reverse = true
 	request, _ := http.NewRequest("GET", url, nil)
-	paginator,_ := paging.NewOffsetPaginator(store, request, options)
+
+	test := make([]map[string]string, len(u.Filters))
+	for i,_ := range u.Filters {
+		fields := map[string]string{
+			"key": u.Filters[i].Key,
+			"operation": u.Filters[i].Operation,
+			"value": u.Filters[i].Value,
+		}
+	    test[i] = fields
+	}
+
+	paginator,_ := paging.NewOffsetPaginator(store, request, options, u.SortField, u.SortOrder, test)
 	errp := paginator.Page()
 	if errp != nil {
 	        log.Fatal(errp)
@@ -81,7 +86,6 @@ func PaginateUep(c echo.Context, r *models.ResPagin) (err error) {
 		TotalPages:rtp,
 		TotalElements:t,		
 	}
-
 	return err
 }
 
@@ -98,7 +102,7 @@ func JoinUep(ur []*models.U) (err error){
 		id := ueps[i].Id_uep
 		if err := con.Where(&models.Tbl_user{Id_user:id}).First(&User).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 		// find uep by id + join pendaming-user
-		if err := con.Table("tbl_uep").Select("tbl_uep.bantuan_modal, tbl_uep.status, tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_uep.id_pendamping").Where(&models.Tbl_uep{Id_uep:id}).Scan(&R).Error; gorm.IsRecordNotFoundError(err) {
+		if err := con.Table("tbl_uep").Select("tbl_uep.bantuan_modal, tbl_uep.status,tbl_uep.id_pendamping, tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_uep.id_pendamping").Where(&models.Tbl_uep{Id_uep:id}).Scan(&R).Error; gorm.IsRecordNotFoundError(err) {
 			return echo.NewHTTPError(http.StatusNotFound, "Uep Not Found")
 		}
 		ur[i] = &models.U{User[0], R[0]}

@@ -7,59 +7,55 @@ import (
 type (
 
  Tbl_user struct {
-	Id_user			int 		`gorm:"primary_key"`
-	Nik				string
-	No_kk			string
-	Nama			string
-	Jenis_kelamin	string
-	Tempat_lahir	string
-	Tgl_lahir		string
-	Alamat			string
-	Id_kelurahan	string
-	Id_kecamatan	int
-	Id_kabupaten	int
-	Email			string
-	No_hp			string
-	Photo 			string
-	Created_at		*time.Time
-	Updated_at		*time.Time
-	Created_by   	string
-	Updated_by		string	
+	Id_user			int 		`json:"id_user" gorm:"primary_key"`
+	Nik				string 		`json:"nik"`
+	No_kk			string 		`json:"no_kk"`
+	Nama			string 		`json:"nama"`
+	Jenis_kelamin	string 		`json:"jenis_kelamin" enums:"L, P"`
+	Tempat_lahir	string 		`json:"tempat_lahir"`
+	Tgl_lahir		string 		`json:"tgl_lahir"`
+	Alamat			string 		`json:"alamat"`
+	Id_kelurahan	*string 	`json:"id_kelurahan"`
+	Id_kecamatan	*int 		`json:"id_kecamatan"`
+	Id_kabupaten	*int 		`json:"id_kabupaten"`
+	Email			string 		`json:"email"`
+	No_hp			string 		`json:"no_hp"`
+	Photo 			string 		`json:"photo"`
+	Created_at		*time.Time 			`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 			`json:"-" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"created_by"`
+	Updated_by		*string	 	`json:"updated_by"` 	
 }
 
  Tbl_uep struct {
 	Id_uep			int 		`gorm:"primary_key"`
-	Id_pendamping	int
-	Bantuan_modal	int
-	Status			string
-	Created_at		*time.Time
-	Updated_at		*time.Time
-	Created_by   	string
-	Updated_by		string		
+	Id_pendamping	int 		`json:"id_pendamping"`
+	Bantuan_modal	int 		`json:"bantuan_modal"`
+	Status			int 		`json:"status"`
 }
 
  Tbl_kube struct {
-	Id_kube      	int 	`gorm:"primary_key"`
-	Nama_kube    	string
-	Jenis_usaha  	string
-	Bantuan_modal	int
-	Ketua        	int
-	Sekertaris   	int
-	Bendahara    	int
-	Anggota1     	int
-	Anggota2     	int
-	Anggota3     	int
-	Anggota4     	int
-	Anggota5     	int
-	Anggota6     	int
-	Anggota7     	int
-	Pendamping		int
-	Photo     		string
-	Status       	string
-	Created_at   	*time.Time
-	Updated_at   	*time.Time
-	Created_by   	string
-	Updated_by		string
+	Id_kube      	int 	`json:"id_kube" gorm:"primary_key"`
+	Nama_kube    	string 	`json:"nama_kube"`
+	Jenis_usaha  	string 	`json:"jenis_usaha"`
+	Bantuan_modal	int 	`json:"bantuan_modal"`
+	Ketua        	int 	`json:"ketua" sql:"DEFAULT:NULL"`
+	Sekertaris   	int 	`json:"sekertaris" sql:"DEFAULT:NULL"`
+	Bendahara    	int 	`json:"bendahara" sql:"DEFAULT:NULL"`
+	Anggota1     	int 	`json:"anggota1" sql:"DEFAULT:NULL"`
+	Anggota2     	int 	`json:"anggota2" sql:"DEFAULT:NULL"`
+	Anggota3     	int 	`json:"anggota3" sql:"DEFAULT:NULL"`
+	Anggota4     	int 	`json:"anggota4" sql:"DEFAULT:NULL"`
+	Anggota5     	int 	`json:"anggota5" sql:"DEFAULT:NULL"`
+	Anggota6     	int 	`json:"anggota6" sql:"DEFAULT:NULL"`
+	Anggota7     	int 	`json:"anggota7" sql:"DEFAULT:NULL"`
+	Pendamping		int 	`json:"pendamping" sql:"DEFAULT:NULL"`
+	Photo     		string 	`json:"photo"`
+	Status       	int 	`json:"status" sql:"default:0"`
+	Created_at   	*time.Time `json:"-" gorm:"timestamp;null"`
+	Updated_at   	*time.Time `json:"-" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"created_by"`
+	Updated_by		*string 	`json:"updated_by"`
 }
 
  Ktype struct {
@@ -79,26 +75,27 @@ type (
 	Anggota7 		string 	`json:"anggota7"`
 	Pendamping 		string 	`json:"pendamping"`
 	Photo 		 	string 	`json:"photo"`
-	Status 		 	string 	`json:"status"`
+	Status 		 	int 	`json:"status"`
 }
 
- U struct {
+ U struct{
 	Tbl_user
 	CustU
 }
 
- UepKube struct {
+ CustU struct{
+ 	Id_Pendamping 	int `json:"id_pendamping"`
+	Nama 			string `json:"nama_pendamping"`
+	Bantuan_modal 	int `json:"bantuan_modal"`
+	Status 			int `json:"status"`
+}
+
+ UepKube struct{
 	Uep 	interface{} `json:"uep"`
 	Kube 	interface{} `json:"kube"`
 }
 
- CustU struct {
-	Nama 			string `json:"nama_pendamping"`
-	Bantuan_modal 	string `json:"bantuan_modal"`
-	Status 			string `json:"status"`
-}
-
- ResPagin struct {
+ ResPagin struct{
 	Content 		interface{}
 	First 			bool 					`json:"first"`
 	Last 			bool 					`json:"last"`
@@ -110,17 +107,19 @@ type (
 	TotalElements 	int64 					`json:"totalElements"`
 }
 
- PosPagin struct {
+ PosPagin struct{
 	Page 		int 			`json:"page" 		validate:"required"`
 	Size 		int 			`json:"size" 		validate:"required"`
 	SortField 	string 			`json:"sortField" 	validate:"required"`
 	SortOrder 	string 			`json:"sortOrder"	validate:"required"`
-	Filters 	[]struct {
-					Key 		string `json:"key"`
-					Operation 	string `json:"operation"`
-					Value 		string `json:"value"`	
-				}
+	Filters     []Filters
 }
+
+Filters struct{
+				Key 		string `json:"key"`
+				Operation 	string `json:"operation"`
+				Value 		string `json:"value"`
+			}
 
 Pageable struct{
 			Offset 		int64 	`json:"offset"`
@@ -146,24 +145,20 @@ Tbl_account struct{
 		Updated_by		string	
 	}
 
-// AddUep struct{
-// 	Id_user			int 		`gorm:"primary_key"`
-// 	Nik				string
-// 	No_kk			string
-// 	Nama			string
-// 	Jenis_kelamin	string
-// 	Tempat_lahir	string
-// 	Tgl_lahir		string
-// 	Alamat			string
-// 	Id_kelurahan	string
-// 	Id_kecamatan	int
-// 	Id_kabupaten	int
-// 	Email			string
-// 	No_hp			string
-// 	Photo			string
-// 	Bantuan_modal	int
-// 	Status			string
-	
-// }		
-		
+Uep struct{
+	*Tbl_user
+	Id_pendamping	int 		`json:"id_pendamping"`
+	Bantuan_modal	int 		`json:"bantuan_modal"`
+	Status			int 		`json:"status"`
+}
+
+PaginateKubes struct{
+	Id_kube      	int 	`json:"id_kube"`
+	Nama_kube    	string 	`json:"nama_kube"`
+	Jenis_usaha  	string	`json:"jenis_usaha"`
+	Bantuan_modal	int 	`json:"bantuan_modal"`
+	Photo 		 	string 	`json:"photo"`
+	Status 		 	int 	`json:"status"`	
+}
+
 )
