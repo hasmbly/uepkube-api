@@ -830,8 +830,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
       summary: GetPelatihanById
       tags:
       - Pelatihan-Controller
@@ -869,8 +867,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
       summary: GetPaginatePelatihan
       tags:
       - Pelatihan-Controller
@@ -1024,8 +1020,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
       summary: GetProdukById
       tags:
       - Produk-Controller
@@ -1063,8 +1057,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
       summary: GetPaginateProduk
       tags:
       - Produk-Controller

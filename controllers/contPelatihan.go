@@ -21,7 +21,6 @@ import (
 // @Failure 401 {object} models.HTTPError
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
 // @Router /pelatihan [get]
 func GetPelatihan(c echo.Context) error {
 	/*prepare DB*/
@@ -70,7 +69,6 @@ func GetPelatihan(c echo.Context) error {
 // @Failure 401 {object} models.HTTPError
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
 // @Router /pelatihan [post]
 func GetPaginatePelatihan(c echo.Context) (err error) {	
 	// if err := helpers.PaginatePelatihan(c, &r); err != nil {

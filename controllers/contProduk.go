@@ -21,7 +21,6 @@ import (
 // @Failure 401 {object} models.HTTPError
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
 // @Router /produk [get]
 func GetProduk(c echo.Context) error {
 	/*prepare DB*/
@@ -70,7 +69,6 @@ func GetProduk(c echo.Context) error {
 // @Failure 401 {object} models.HTTPError
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
 // @Router /produk [post]
 func GetPaginateProduk(c echo.Context) (err error) {	
 	// if err := helpers.PaginateProduk(c, &r); err != nil {
