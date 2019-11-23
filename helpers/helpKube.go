@@ -15,7 +15,7 @@ import (
 	"math"
 )
 
-func SetMemberNameKube(s *models.Ktype, Kube models.Tbl_kube) error {
+func SetMemberNameKube(s *models.ShowKube, Kube models.Tbl_kube) error {
 	/*prepare DB*/
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -36,10 +36,8 @@ func SetMemberNameKube(s *models.Ktype, Kube models.Tbl_kube) error {
 	}
 
     for i,d := range ints {
-
 		if err := con.Table("tbl_user").Where(&models.Tbl_user{Id_user:d}).Pluck("nama", &tmp).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 		res[i] = tmp[0]
-
     }
 
     // get alamat from ketua kube (first man)
@@ -54,34 +52,35 @@ func SetMemberNameKube(s *models.Ktype, Kube models.Tbl_kube) error {
     var lng []*string
 	if err := con.Table("tbl_user").Where(&models.Tbl_user{Id_user: ints[0]}).Pluck("lng", &lng).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	log.Println("alamat", alamat[0])
-	log.Println("lat", lat[0])
-	log.Println("lng", lng[0])
+	// log.Println("alamat", alamat[0])
+	// log.Println("lat", lat[0])
+	// log.Println("lng", lng[0])
 
     /*
 	end:find member name of Kube
 	 */	
-	*s = models.Ktype{
+	*s = models.ShowKube{
 		Id_kube: 		Kube.Id_kube,
 		Nama_kube: 		Kube.Nama_kube,
 		Jenis_usaha: 	Kube.Jenis_usaha,
-		Bantuan_modal: 	Kube.Bantuan_modal,
 		Alamat: 		alamat[0],
 		Lat: 			lat[0],
 		Lng: 			lng[0],
-		Ketua:			res[0],
-		Sekertaris:		res[1],
-		Bendahara:  	res[2],
-		Anggota1:		res[3],
-		Anggota2:		res[4],
-		Anggota3:		res[5],
-		Anggota4:		res[6],
-		Anggota5:		res[7],
-		Anggota6: 		res[8],
-		Anggota7:		res[9],
-		Pendamping:		res[10],
+		Items: models.Items{
+			Ketua:			res[0],
+			Sekertaris:		res[1],
+			Bendahara:  	res[2],
+			Anggota1:		res[3],
+			Anggota2:		res[4],
+			Anggota3:		res[5],
+			Anggota4:		res[6],
+			Anggota5:		res[7],
+			Anggota6: 		res[8],
+			Anggota7:		res[9],
+			Pendamping:		res[10],
+		},
 		Photo:			Kube.Photo,
-		Status:			Kube.Status,
+		Flag:			"KUBE",
 	}
 	defer con.Close()
 	return err

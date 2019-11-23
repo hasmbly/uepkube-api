@@ -9,7 +9,7 @@ import (
 	 "uepkube-api/db"
 	 "regexp"
 	 "uepkube-api/helpers"
-	 "log"
+	 _"log"
 )
 
 // @Summary Get Uep (byNik) or Get Kube (byName)
@@ -25,10 +25,7 @@ import (
 // @Router /lookup/uepkube [get]
 func GetUepKube(c echo.Context) error {
 	val 	:= c.QueryParam("val")
-	User 	:= []models.U{}
-	// Kube 	:= []models.Tbl_kube{}
-	// R 		:= models.CustU{}
-	// Kt 		:= models.Ktype{}
+	Uep 	:= []models.ShowUep{}
 
 	re := regexp.MustCompile("[0-9]+")
 	errr := (re.FindAllString(val, -1))
@@ -45,7 +42,7 @@ func GetUepKube(c echo.Context) error {
 		q1 = q1.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 		q1 = q1.Select("tbl_user.*, tbl_uep.*")
 
-		if err := q1.Scan(&User).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+		if err := q1.Scan(&Uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 		/*find kube by Ketua:id*/
 		// if err := con.Where(&models.Tbl_kube{Ketua:id}).First(&Kube).Error; gorm.IsRecordNotFoundError(err) {
@@ -59,26 +56,28 @@ func GetUepKube(c echo.Context) error {
 		return GetKube(c)
 	}
 
-	if len(User) != 0 {
+	if len(Uep) != 0 {
 		var tempo []string
-		for i,_ := range User {
+		for i,_ := range Uep {
 			q2 := con
 			q2 = q2.Table("tbl_uep")
-			q2 = q2.Joins("join tbl_user on tbl_user.id_user = tbl_uep.id_pendamping")
-			q2 = q2.Where("id_uep = ?", User[i].Id_user)
+			q2 = q2.Joins("join tbl_usaha_produk on tbl_usaha_produk.id_uep = tbl_uep.id_uep")
+			q2 = q2.Joins("join tbl_jenis_usaha on tbl_jenis_usaha.id_usaha = tbl_usaha_produk.id_usaha")
+			q2 = q2.Where("tbl_uep.id_uep = ?", Uep[i].Id_user)
 
-			q2 = q2.Pluck("tbl_user.nama", &tempo)
+			q2 = q2.Pluck("tbl_jenis_usaha.jenis_usaha", &tempo)
 		
-		User[i].Nama_pendamping = tempo[0]
-		log.Println("n_pendamping : ", tempo)
-		
+		Uep[i].Jenis_usaha = tempo[0]
+		// log.Println("n_pendamping : ", tempo)
+
 		}
+	}
+	
+	for i,_ := range Uep {
+		Uep[i].Flag = "UEP"
 	}	
 
-	// helpers.SetMemberNameKube(&Kt, Kube)
-	// r := &models.Jn{Msg: &models.UepKube{Uep: models.U{User, R},Kube: Kt}}
-
-	r := &models.Jn{Msg: User}
+	r := &models.Jn{Msg: Uep}
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, r)
@@ -159,8 +158,10 @@ func GeAllFaq(c echo.Context) (err error) {
 // @Failure 500 {object} models.HTTPError
 // @Router /lookup/persebaran [get]
 func GeAllUepKubeDetail(c echo.Context) (err error) {
-	Uep 	:= []models.U{}
+	
+	Uep 	:= []models.ShowUep{}
 	Kube 	:= []models.Tbl_kube{}
+	ShowKubes := models.ShowKube{}
 	var tempo []interface{}	
 
 	con, err := db.CreateCon()
@@ -171,30 +172,24 @@ func GeAllUepKubeDetail(c echo.Context) (err error) {
 	q1 := con
 	q1 = q1.Table("tbl_user")
 	q1 = q1.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
-	q1 = q1.Select("tbl_user.*, tbl_uep.*")
+	q1 = q1.Select("tbl_user.*")
 
 	if err := q1.Find(&Uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-
 
 	/*query kube*/
 	if err := con.Find(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
 		return echo.NewHTTPError(http.StatusNotFound, "Kube Not Found")
 	}		
-	
-	log.Println("Find Kube : ", len(Kube) )
-	
+		
 	for i,_ := range Kube {
 		
-		helpers.SetMemberNameKube(&Kt, Kube[i])
+		helpers.SetMemberNameKube(&ShowKubes, Kube[i])
 
-		tempo = append(tempo, Kt)
+		tempo = append(tempo, ShowKubes)
 	}	
-	
-	// log.Println("final kube : ", tempo)
-
-	log.Println("len uep : ", len(Uep) )
 
 	for i,_ := range Uep {
+		Uep[i].Flag = "UEP"
 		tempo = append(tempo, Uep[i])
 	}
 
@@ -202,4 +197,5 @@ func GeAllUepKubeDetail(c echo.Context) (err error) {
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, r)
+
 }

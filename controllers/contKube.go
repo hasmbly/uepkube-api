@@ -31,6 +31,7 @@ func GetKube(c echo.Context) error {
 
 	var val string
 	Kube 	:= []models.Tbl_kube{}
+	ShowKubes := models.ShowKube{}
 
 	var tempo []interface{}
 
@@ -57,9 +58,9 @@ func GetKube(c echo.Context) error {
 
 	for i,_ := range Kube {
 		
-		helpers.SetMemberNameKube(&Kt, Kube[i])
+		helpers.SetMemberNameKube(&ShowKubes, Kube[i])
 
-		tempo = append(tempo, Kt)
+		tempo = append(tempo, ShowKubes)
 	}
 
 

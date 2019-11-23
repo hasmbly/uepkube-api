@@ -83,9 +83,48 @@ type (
 	Status 		 	int 	`json:"status"`
 }
 
+ShowKube struct {
+	Id_kube      	int 		`json:"id"`
+	Nama_kube    	string 		`json:"nama"`
+	Jenis_usaha  	string		`json:"jenis_usaha"`
+	Alamat			*string 	`json:"alamat"`
+	Lat				*string 	`json:"lat"`
+	Lng				*string 	`json:"lng"`
+	Photo 		 	string 		`json:"photo"`
+	Items 			Items 	`json:"items"`	
+	Flag 			string 		 `json:"flag"`	
+}
+
+Items struct {
+		Ketua 			string 	`json:"ketua"`
+		Sekertaris 		string 	`json:"sekertaris"`
+		Bendahara 		string 	`json:"bendahara"`
+		Anggota1 		string 	`json:"anggota1"`
+		Anggota2 		string 	`json:"anggota2"`
+		Anggota3 		string 	`json:"anggota3"`
+		Anggota4 		string 	`json:"anggota4"`
+		Anggota5 		string 	`json:"anggota5"`
+		Anggota6 		string 	`json:"anggota6"`
+		Anggota7 		string 	`json:"anggota7"`
+		Pendamping 		string 	`json:"pendamping"`		
+}
+
  U struct{
 	Tbl_user
 	CustU
+}
+
+ ShowUep struct{
+	Id_user			int 		`json:"id"`
+	Nik				string 		`json:"nik"`
+	Jenis_usaha  	string		`json:"jenis_usaha"`
+	Nama			string 		`json:"nama"`
+	Alamat			string 		`json:"alamat"`
+	Photo 			string 		`json:"photo"`
+	Lat 			float64 	`json:"lat"`
+	Lng 			float64 	`json:"lng"`
+	Items 			[]interface{} `json:"items"`
+	Flag 			string 		 `json:"flag"`
 }
 
  CustU struct{
