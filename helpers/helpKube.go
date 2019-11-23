@@ -9,6 +9,7 @@ import (
 	"uepkube-api/db"
 	"github.com/fatih/structs"
 	"fmt"
+	"log"
 	"strconv"
 	"github.com/ulule/paging"
 	"math"
@@ -24,24 +25,39 @@ func SetMemberNameKube(s *models.Ktype, Kube models.Tbl_kube) error {
 	 */
 	kv := structs.Values(Kube)
 	kr := kv[4:15]
-	// fmt.Println(kr)
 	
 	var tmp []string
 	res := make([]string, len(kr))
 	ints := make([]int, len(kr))
 	
 	for i,d := range kr {
-		// fmt.Println(d)
 		nf := fmt.Sprintf("%+v",d)
-		// fmt.Println(nf)
 		ints[i],_ = strconv.Atoi(nf)
 	}
-	// fmt.Println(ints)
+
     for i,d := range ints {
-		// fmt.Println(d)
+
 		if err := con.Table("tbl_user").Where(&models.Tbl_user{Id_user:d}).Pluck("nama", &tmp).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 		res[i] = tmp[0]
+
     }
+
+    // get alamat from ketua kube (first man)
+    var alamat []*string
+	if err := con.Table("tbl_user").Where(&models.Tbl_user{Id_user: ints[0]}).Pluck("alamat", &alamat).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+    // get lat from ketua kube (first man)
+    var lat []*string
+	if err := con.Table("tbl_user").Where(&models.Tbl_user{Id_user: ints[0]}).Pluck("lat", &lat).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+    // get long from ketua kube (first man)
+    var lng []*string
+	if err := con.Table("tbl_user").Where(&models.Tbl_user{Id_user: ints[0]}).Pluck("lng", &lng).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	log.Println("alamat", alamat[0])
+	log.Println("lat", lat[0])
+	log.Println("lng", lng[0])
+
     /*
 	end:find member name of Kube
 	 */	
@@ -50,6 +66,9 @@ func SetMemberNameKube(s *models.Ktype, Kube models.Tbl_kube) error {
 		Nama_kube: 		Kube.Nama_kube,
 		Jenis_usaha: 	Kube.Jenis_usaha,
 		Bantuan_modal: 	Kube.Bantuan_modal,
+		Alamat: 		alamat[0],
+		Lat: 			lat[0],
+		Lng: 			lng[0],
 		Ketua:			res[0],
 		Sekertaris:		res[1],
 		Bendahara:  	res[2],
@@ -85,29 +104,33 @@ func PaginateKube(c echo.Context, r *models.ResPagin) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	store, err := paging.NewGORMStore(con, &kubes)
+	store, err := paging.NewGORMStore(con, "tbl_kube", &kubes)
 	if err != nil {
-	        return err
+	        e := fmt.Sprintf("%v",err)
+	        log.Println(e)
+	        return echo.NewHTTPError(http.StatusInternalServerError, e)
 	}
 	options := paging.NewOptions()
 	request, _ := http.NewRequest("GET", url, nil)
 
-	test := make([]map[string]string, len(u.Filters))
+	filters := make([]map[string]string, len(u.Filters))
 	for i,_ := range u.Filters {
 		fields := map[string]string{
 			"key": u.Filters[i].Key,
 			"operation": u.Filters[i].Operation,
 			"value": u.Filters[i].Value,
 		}
-	    test[i] = fields
+	    filters[i] = fields
 	}
 
 	
-	paginator,_ := paging.NewOffsetPaginator(store, request, options, u.SortField, u.SortOrder, test)
+	paginator,_ := paging.NewOffsetPaginator(store, request, options, u.SortField, u.SortOrder, filters)
 
 	errp := paginator.Page()
 	if errp != nil {
-	        return errp
+	        e := fmt.Sprintf("%v",errp)
+	        log.Println(e)
+	        return echo.NewHTTPError(http.StatusInternalServerError, e)
 	}
 
 	l 	:= paginator.Limit
@@ -156,7 +179,7 @@ func JoinKube(ur []*models.PaginateKubes) (err error){
 			kubes[i].Jenis_usaha,
 			kubes[i].Bantuan_modal,
 			kubes[i].Photo,
-			kubes[i].Status,		
+			kubes[i].Status,
 		}
 	 }
 	return err

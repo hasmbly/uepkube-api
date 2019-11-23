@@ -49,18 +49,24 @@ func Init() *echo.Echo {
 		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
 	}))
 
-	// Route::Unauthenticated-Group
 	e.GET("/", Home)
 	e.GET("/bycrypt/:pass", BycriptPass)
 	e.GET("/swagger-api/*", echoSwagger.WrapHandler)
-	e.POST("/api/v1/auth/signin", controllers.SignIn)
-	e.GET("/api/v1/lookup/uepkube", controllers.GetUepOrKube)
+
+	// Route::Unauthenticated-Group
+	o := e.Group("/api/v1")
+	o.POST("/auth/signin", controllers.SignIn)
+	o.GET("/lookup/uepkube", controllers.GetUepKube)
 	// produk
-	e.GET("/produk", controllers.GetProduk)
-	e.POST("/produk", controllers.GetPaginateProduk)
+	o.GET("/produk", controllers.GetProduk)
+	o.POST("/lookup/uepkube/produk", controllers.GetPaginateProdukUepKube)
 	// pelatihan
-	e.GET("/pelatihan", controllers.GetPelatihan)
-	e.POST("/pelatihan", controllers.GetPaginatePelatihan)
+	o.GET("/pelatihan", controllers.GetPelatihan)
+	o.POST("/lookup/uepkube/pelatihan", controllers.GetPaginatePelatihanUepKube)
+	// faq
+	o.GET("/lookup/faq", controllers.GeAllFaq)
+	// persebaran
+	o.GET("/lookup/persebaran", controllers.GeAllUepKubeDetail)	
 
 	// Route::Restricted-Group-UEP
 	u := e.Group("/api/v1")
@@ -73,6 +79,7 @@ func Init() *echo.Echo {
 	u.POST("/uep/add", controllers.AddUep)
 	u.POST("/uep/:id", controllers.DeleteUep)
 
+	// Routes::All Roles
 	a := e.Group("/api/v1")
 	a.Use(middleware.JWTWithConfig(config))
 	a.Use(middlewares.CheckAllRoles)	

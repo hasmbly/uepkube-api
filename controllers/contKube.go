@@ -9,6 +9,7 @@ import (
 	 "uepkube-api/db"
 	 "strconv"
 	 "uepkube-api/helpers"
+	 // "log"
 )
 // @Summary GetKubeById
 // @Tags Kube-Controller
@@ -29,7 +30,9 @@ func GetKube(c echo.Context) error {
 	con.SingularTable(true)	
 
 	var val string
-	Kube 	:= models.Tbl_kube{}
+	Kube 	:= []models.Tbl_kube{}
+
+	var tempo []interface{}
 
 	/*check if query key -> "val"*/
 	qk := c.QueryParams()
@@ -37,7 +40,7 @@ func GetKube(c echo.Context) error {
 		if k == "val" {
 			val = v[0]
 			/*find kube by Nama_kube:*/
-			if err := con.Where("nama_kube LIKE ?", "%" + val + "%").First(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
+			if err := con.Where("nama_kube LIKE ?", "%" + val + "%").Find(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
 				return echo.NewHTTPError(http.StatusNotFound, "Kube Not Found")
 			}		
 		} else if k == "id" {
@@ -46,13 +49,21 @@ func GetKube(c echo.Context) error {
 			/*find kube by Nama_kube:*/
 			if err := con.Where(&models.Tbl_kube{Id_kube:id}).First(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
 				return echo.NewHTTPError(http.StatusNotFound, "Kube Not Found")
-			}			
+			}
 		}
 	}
 
-	helpers.SetMemberNameKube(&Kt, Kube)
+	// log.Println("Find Kube : ", Kube)
 
-	r := &models.Jn{Msg: Kt}
+	for i,_ := range Kube {
+		
+		helpers.SetMemberNameKube(&Kt, Kube[i])
+
+		tempo = append(tempo, Kt)
+	}
+
+
+	r := &models.Jn{Msg: tempo}
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, r)
@@ -72,7 +83,7 @@ func GetKube(c echo.Context) error {
 // @Router /kube [post]
 func GetPaginateKube(c echo.Context) (err error) {	
 	if err := helpers.PaginateKube(c, &r); err != nil {
-		return echo.ErrInternalServerError
+		return err
 	}	
 	return c.JSON(http.StatusOK, r)
 }

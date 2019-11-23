@@ -2,6 +2,8 @@ package main
 
 import (
 	"uepkube-api/routes"
+	"log"
+	// "os"
 )
 
 // @title UepKube API
@@ -14,7 +16,7 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host api-uepkube.pusdatin-dinsos.jakarta.go.id
+// @host localhost:9093
 // @BasePath /api/v1
 
 // @securityDefinitions.apikey ApiKeyAuth
@@ -22,6 +24,19 @@ import (
 // @name Authorization
 func main() {
 	e := routes.Init()
+
+	// log
+	// f, err := os.OpenFile("err.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	// if err != nil {
+	//     e.Logger.Fatal("error opening file: %v", err)
+	// }
+	// defer f.Close()
+
+	// e.Logger.SetOutput(f)
+
+	// e.Logger.SetHeader("${time_rfc3339} ${level}")
+	
+	log.Println("Go Started...")
 
 	// serve on port
 	e.Logger.Fatal(e.Start(":9093"))

@@ -7,4 +7,5 @@ import (
 var (
 	Kt models.Ktype = models.Ktype{}
 	r models.ResPagin = models.ResPagin{}
+	RO string
 )

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"github.com/labstack/echo"
 	"uepkube-api/helpers"
+	// "uepkube-api/controllers"
 )
 
 var AllRoles = []string{"PENDAMPING_UEP", "VERIFIKATOR", "PENDAMPING_KUBE"}
@@ -12,6 +13,7 @@ var AllRoles = []string{"PENDAMPING_UEP", "VERIFIKATOR", "PENDAMPING_KUBE"}
 func CheckAllRoles(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		role := helpers.GetLoggedUser(c,"roles")
+		// controllers.RO = role
 		ch := IsPresentRolesAll(role)
 		if ch == false {
 			return echo.NewHTTPError(http.StatusUnauthorized, "Sorry, You can't access this resource")

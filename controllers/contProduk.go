@@ -5,10 +5,11 @@ import (
 	"github.com/labstack/echo"
 	// "github.com/jinzhu/gorm"
 	//  _"github.com/jinzhu/gorm/dialects/mysql"
-	 // "uepkube-api/models"
-	//  "uepproduk-api/db"
+	//  "uepkube-api/models"
+	//  "uepkube-api/db"
 	//  "strconv"
-	//  "uepproduk-api/helpers"
+	 // "uepkube-api/helpers"
+	 // "log"
 )
 
 // @Summary GetProdukById
@@ -69,11 +70,12 @@ func GetProduk(c echo.Context) error {
 // @Failure 401 {object} models.HTTPError
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
+// @security ApiKeyAuth
 // @Router /produk [post]
-func GetPaginateProduk(c echo.Context) (err error) {	
+func GetPaginateProduk(c echo.Context) (err error) {
 	// if err := helpers.PaginateProduk(c, &r); err != nil {
 	// 	return echo.ErrInternalServerError
-	// }	
+	// }
 	// return c.JSON(http.StatusOK, r)
 	return nil
 }

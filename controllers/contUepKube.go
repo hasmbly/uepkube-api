@@ -9,6 +9,7 @@ import (
 	 "uepkube-api/db"
 	 "regexp"
 	 "uepkube-api/helpers"
+	 "log"
 )
 
 // @Summary Get Uep (byNik) or Get Kube (byName)
@@ -22,12 +23,12 @@ import (
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
 // @Router /lookup/uepkube [get]
-func GetUepOrKube(c echo.Context) error {
+func GetUepKube(c echo.Context) error {
 	val 	:= c.QueryParam("val")
-	User 	:= models.Tbl_user{}
-	Kube 	:= models.Tbl_kube{}
-	R 		:= models.CustU{}
-	Kt 		:= models.Ktype{}
+	User 	:= []models.U{}
+	// Kube 	:= []models.Tbl_kube{}
+	// R 		:= models.CustU{}
+	// Kt 		:= models.Ktype{}
 
 	re := regexp.MustCompile("[0-9]+")
 	errr := (re.FindAllString(val, -1))
@@ -38,25 +39,166 @@ func GetUepOrKube(c echo.Context) error {
 
 	/*query user*/
 	if errr != nil {
-		if err := con.Where(&models.Tbl_user{Nik:val}).First(&User).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-		/*find uep by id + join pendaming-user*/
-		id := User.Id_user
-		if err := con.Table("tbl_uep").Select("tbl_uep.bantuan_modal, tbl_uep.status, tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_uep.id_pendamping").Where(&models.Tbl_uep{Id_uep:id}).Scan(&R).Error; gorm.IsRecordNotFoundError(err) {
-			return echo.NewHTTPError(http.StatusNotFound, "Uep Not Found")
-		}
+		q1 := con
+		q1 = q1.Table("tbl_user")
+		q1 = q1.Where("nik like ?", "%"+val+"%")
+		q1 = q1.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
+		q1 = q1.Select("tbl_user.*, tbl_uep.*")
+
+		if err := q1.Scan(&User).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
 		/*find kube by Ketua:id*/
-		if err := con.Where(&models.Tbl_kube{Ketua:id}).First(&Kube).Error; gorm.IsRecordNotFoundError(err) {
-			r := &models.Jn{Msg: &models.UepKube{Uep: models.U{User, R}}}
-			defer con.Close()
-			return c.JSON(http.StatusOK, r)
-		}			
+		// if err := con.Where(&models.Tbl_kube{Ketua:id}).First(&Kube).Error; gorm.IsRecordNotFoundError(err) {
+		// 	log.Println("is kube exist : ", Kube)
+		// 	r := &models.Jn{Msg: models.U{User, R}}
+		// 	defer con.Close()
+		// 	return c.JSON(http.StatusOK, r)
+		// }		
+
 	} else if errr == nil {
 		return GetKube(c)
 	}
 
-	helpers.SetMemberNameKube(&Kt, Kube)
+	if len(User) != 0 {
+		var tempo []string
+		for i,_ := range User {
+			q2 := con
+			q2 = q2.Table("tbl_uep")
+			q2 = q2.Joins("join tbl_user on tbl_user.id_user = tbl_uep.id_pendamping")
+			q2 = q2.Where("id_uep = ?", User[i].Id_user)
 
-	r := &models.Jn{Msg: &models.UepKube{Uep: models.U{User, R},Kube: Kt}}
+			q2 = q2.Pluck("tbl_user.nama", &tempo)
+		
+		User[i].Nama_pendamping = tempo[0]
+		log.Println("n_pendamping : ", tempo)
+		
+		}
+	}	
+
+	// helpers.SetMemberNameKube(&Kt, Kube)
+	// r := &models.Jn{Msg: &models.UepKube{Uep: models.U{User, R},Kube: Kt}}
+
+	r := &models.Jn{Msg: User}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
+// @Summary GetPaginateProduk
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Param produk body models.PosPagin true "Show Produk UepKube"
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/uepkube/produk [post]
+func GetPaginateProdukUepKube(c echo.Context) (err error) {
+	if err := helpers.PaginateProduk(c, &r); err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, r)
+	// return nil
+}
+
+// @Summary GetPaginatePelatihanUepKube
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Param produk body models.PosPagin true "Show Pelatihan UepKube"
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/uepkube/pelatihan [post]
+func GetPaginatePelatihanUepKube(c echo.Context) (err error) {
+	if err := helpers.PaginatePelatihan(c, &r); err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, r)
+	// return nil
+}
+
+// @Summary GetAllFaq
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/faq [get]
+func GeAllFaq(c echo.Context) (err error) {
+	Faq := []models.Tbl_faq{}
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	/*query user*/
+	if err := con.Find(&Faq).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	
+	r := &models.Jn{Msg: Faq}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
+// @Summary GeAllUepKubeDetail
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/persebaran [get]
+func GeAllUepKubeDetail(c echo.Context) (err error) {
+	Uep 	:= []models.U{}
+	Kube 	:= []models.Tbl_kube{}
+	var tempo []interface{}	
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	/*query uep*/
+	q1 := con
+	q1 = q1.Table("tbl_user")
+	q1 = q1.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
+	q1 = q1.Select("tbl_user.*, tbl_uep.*")
+
+	if err := q1.Find(&Uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+
+	/*query kube*/
+	if err := con.Find(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
+		return echo.NewHTTPError(http.StatusNotFound, "Kube Not Found")
+	}		
+	
+	log.Println("Find Kube : ", len(Kube) )
+	
+	for i,_ := range Kube {
+		
+		helpers.SetMemberNameKube(&Kt, Kube[i])
+
+		tempo = append(tempo, Kt)
+	}	
+	
+	// log.Println("final kube : ", tempo)
+
+	log.Println("len uep : ", len(Uep) )
+
+	for i,_ := range Uep {
+		tempo = append(tempo, Uep[i])
+	}
+
+	r := &models.Jn{Msg: tempo}
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, r)

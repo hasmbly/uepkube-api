@@ -21,8 +21,10 @@ type (
 	Email			string 		`json:"email"`
 	No_hp			string 		`json:"no_hp"`
 	Photo 			string 		`json:"photo"`
-	Created_at		*time.Time 			`json:"-" gorm:"timestamp;null"`
-	Updated_at		*time.Time 			`json:"-" gorm:"timestamp;null"`
+	Lat 			float64 	`json:"lat"`
+	Lng 			float64 	`json:"lng"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Created_by   	*string 	`json:"created_by"`
 	Updated_by		*string	 	`json:"updated_by"` 	
 }
@@ -63,6 +65,9 @@ type (
 	Nama_kube    	string 	`json:"nama_kube"`
 	Jenis_usaha  	string	`json:"jenis_usaha"`
 	Bantuan_modal	int 	`json:"bantuan_modal"`
+	Alamat			*string 	`json:"alamat"`
+	Lat			*string 	`json:"lat"`
+	Lng			*string 	`json:"lng"`
 	Ketua 			string 	`json:"ketua"`
 	Sekertaris 		string 	`json:"sekertaris"`
 	Bendahara 		string 	`json:"bendahara"`
@@ -85,7 +90,7 @@ type (
 
  CustU struct{
  	Id_Pendamping 	int `json:"id_pendamping"`
-	Nama 			string `json:"nama_pendamping"`
+	Nama_pendamping string `json:"nama_pendamping"`
 	Bantuan_modal 	int `json:"bantuan_modal"`
 	Status 			int `json:"status"`
 }
@@ -108,10 +113,10 @@ type (
 }
 
  PosPagin struct{
-	Page 		int 			`json:"page" 		validate:"required"`
-	Size 		int 			`json:"size" 		validate:"required"`
-	SortField 	string 			`json:"sortField" 	validate:"required"`
-	SortOrder 	string 			`json:"sortOrder"	validate:"required"`
+	Page 		int 			`json:"page" example:"1"`
+	Size 		int 			`json:"size" example:"10"`
+	SortField 	string 			`json:"sortField" example:"created_at"`
+	SortOrder 	string 			`json:"sortOrder" example:"desc"`
 	Filters     []Filters
 }
 
@@ -159,6 +164,115 @@ PaginateKubes struct{
 	Bantuan_modal	int 	`json:"bantuan_modal"`
 	Photo 		 	string 	`json:"photo"`
 	Status 		 	int 	`json:"status"`	
+}
+
+Tbl_produk struct{
+	Id_produk 		int 		`json:"id_produk" gorm:"primary_key"`
+	Nama_produk 	string 		`json:"nama_produk"`
+	Id_jp 			int 		`json:"id_jp" sql:"DEFAULT:NULL"`
+	Deskripsi 		string 		`json:"deskripsi"`
+	Photo 			*string 	`json:"photo"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"created_by"`
+	Updated_by		*string	 	`json:"updated_by"` 	
+}
+
+Tbl_jenis_usaha struct{
+	Id_usaha 		int 		`json:"id_usaha" gorm:"primary_key"`
+	Jenis_usaha 	string 		`json:"jenis_usaha"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"created_by"`
+	Updated_by		*string	 	`json:"updated_by"` 	
+}
+
+PaginateProduks struct{
+	Id 				int 		`json:"id"`
+	Nama			string 		`json:"nama"`
+	Alamat			string 		`json:"alamat"`
+	No_hp			string 		`json:"no_hp"`
+	Nama_produk 	string 		`json:"nama_produk"`
+	Deskripsi 		string 		`json:"deskripsi"`
+	Jenis_usaha 	string 		`json:"jenis_usaha"`
+	Photo 			string 		`json:"photo"`
+}
+
+PaginateProduksUep struct{
+	Id 				int 		`json:"id"`
+	Nama			string 		`json:"nama"`
+	Alamat			string 		`json:"alamat"`
+	No_hp			string 		`json:"no_hp"`
+	Nama_produk 	string 		`json:"nama_produk"`
+	Deskripsi 		string 		`json:"deskripsi"`
+	Jenis_usaha 	string 		`json:"jenis_usaha"`
+	Photo 			string 		`json:"photo"`
+}
+
+PaginateProduksKube struct{
+	Id 				int 		`json:"id"`
+	Nama			string 		`json:"nama"`
+	Alamat			string 		`json:"alamat"`
+	No_hp			string 		`json:"no_hp"`
+	Nama_produk 	string 		`json:"nama_produk"`
+	Deskripsi 		string 		`json:"deskripsi"`
+	Jenis_usaha 	string 		`json:"jenis_usaha"`
+	Photo 			string 		`json:"photo"`
+}
+
+Tbl_usaha_produk struct{
+	Id 				int 		`json:"id" gorm:"primary_key"`
+	Id_uep 	 		int 		`json:"id_uep"`
+	Id_kube 	 	int 		`json:"id_kube"`
+	Id_usaha 	 	int 		`json:"id_usaha"`
+	Id_produk 	 	int 		`json:"id_produk"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"created_by"`
+	Updated_by		*string	 	`json:"updated_by"` 
+}
+
+Tbl_usaha_produk_uep struct{
+	Id 				int 		`json:"id" gorm:"primary_key"`
+	Id_uep 	 		int 		`json:"id_uep"`
+	Id_usaha 	 	int 		`json:"id_usaha"`
+	Id_produk 	 	int 		`json:"id_produk"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"created_by"`
+	Updated_by		*string	 	`json:"updated_by"` 
+}
+
+Tbl_usaha_produk_kube struct{
+	Id 				int 		`json:"id" gorm:"primary_key"`
+	Id_kube 	 	int 		`json:"id_kube"`
+	Id_usaha 	 	int 		`json:"id_usaha"`
+	Id_produk 	 	int 		`json:"id_produk"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"created_by"`
+	Updated_by		*string	 	`json:"updated_by"` 
+}
+
+Tbl_pelatihan struct{
+	Id_pelatihan 		int 		`json:"id_pelatihan" gorm:"primary_key"`
+	Judul_pelatihan 	string 		`json:"judul_pelatihan"`
+	Lokasi_pelatihan 	string 		`json:"lokasi_pelatihan"`
+	Tanggal_pelatihan 	string 		`json:"tanggal_pelatihan"`
+	Deskripsi 			string 		`json:"deskripsi"`
+	Dokumen 			string 		`json:"dokumen"`
+	Photo 				*string 	`json:"photo"`
+
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"created_by"`
+	Updated_by		*string	 	`json:"updated_by"` 	
+}
+
+Tbl_faq struct{
+	Id_faq 		int 		`json:"id_faq" gorm:"primary_key"`
+	Pertanyaan 	string 		`json:"pertanyaan"`
+	Jawaban 	string 		`json:"jawaban"`
 }
 
 )

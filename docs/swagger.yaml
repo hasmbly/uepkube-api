@@ -33,12 +33,16 @@ definitions:
           $ref: '#/definitions/models.Filters'
         type: array
       page:
+        example: 1
         type: integer
       size:
+        example: 10
         type: integer
       sortField:
+        example: created_at
         type: string
       sortOrder:
+        example: desc
         type: string
     type: object
   models.Tbl_kube:
@@ -107,6 +111,10 @@ definitions:
         - L
         - ' P'
         type: string
+      lat:
+        type: number
+      lng:
+        type: number
       nama:
         type: string
       nik:
@@ -126,7 +134,7 @@ definitions:
       updated_by:
         type: string
     type: object
-host: api-uepkube.pusdatin-dinsos.jakarta.go.id
+host: localhost:9093
 info:
   contact:
     email: justhasby@gmail.com
@@ -761,6 +769,66 @@ paths:
       summary: AddKube
       tags:
       - Kube-Controller
+  /lookup/faq:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      summary: GetAllFaq
+      tags:
+      - Lookup-Controller
+  /lookup/persebaran:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      summary: GeAllUepKubeDetail
+      tags:
+      - Lookup-Controller
   /lookup/uepkube:
     get:
       consumes:
@@ -795,6 +863,82 @@ paths:
           schema:
             $ref: '#/definitions/models.HTTPError'
       summary: Get Uep (byNik) or Get Kube (byName)
+      tags:
+      - Lookup-Controller
+  /lookup/uepkube/pelatihan:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Show Pelatihan UepKube
+        in: body
+        name: produk
+        required: true
+        schema:
+          $ref: '#/definitions/models.PosPagin'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      summary: GetPaginatePelatihanUepKube
+      tags:
+      - Lookup-Controller
+  /lookup/uepkube/produk:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Show Produk UepKube
+        in: body
+        name: produk
+        required: true
+        schema:
+          $ref: '#/definitions/models.PosPagin'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      summary: GetPaginateProduk
       tags:
       - Lookup-Controller
   /pelatihan:
@@ -1057,6 +1201,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.HTTPError'
+      security:
+      - ApiKeyAuth: []
       summary: GetPaginateProduk
       tags:
       - Produk-Controller

@@ -71,7 +71,9 @@ func GetUep(c echo.Context) error {
 // @security ApiKeyAuth
 // @Router /uep [post]
 func GetPaginateUep(c echo.Context) (err error) {	
-	helpers.PaginateUep(c, &r)
+	if err := helpers.PaginateUep(c, &r); err != nil {
+		return err
+	}	
 	return c.JSON(http.StatusOK, r)
 }
 
