@@ -300,7 +300,7 @@ Tbl_pelatihan struct{
 	Tanggal_pelatihan 	string 		`json:"tanggal_pelatihan"`
 	Deskripsi 			string 		`json:"deskripsi"`
 	Dokumen 			string 		`json:"dokumen"`
-	Photo 				*string 	`json:"photo"`
+	Photo 				string 	`json:"photo"`
 
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`

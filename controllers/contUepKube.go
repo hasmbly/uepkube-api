@@ -9,7 +9,7 @@ import (
 	 "uepkube-api/db"
 	 "regexp"
 	 "uepkube-api/helpers"
-	 _"log"
+	 // "log"
 )
 
 // @Summary Get Uep (byNik) or Get Kube (byName)
@@ -40,36 +40,21 @@ func GetUepKube(c echo.Context) error {
 		q1 = q1.Table("tbl_user")
 		q1 = q1.Where("nik like ?", "%"+val+"%")
 		q1 = q1.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
-		q1 = q1.Select("tbl_user.*, tbl_uep.*")
+		q1 = q1.Joins("join tbl_usaha_produk on tbl_usaha_produk.id_uep = tbl_uep.id_uep")
+		q1 = q1.Joins("join tbl_jenis_usaha on tbl_jenis_usaha.id_usaha = tbl_usaha_produk.id_usaha")		
+		q1 = q1.Select("tbl_user.id_user, tbl_user.nik, tbl_user.nama, tbl_user.alamat, tbl_user.lat, tbl_user.lng, tbl_user.photo, tbl_uep.*, tbl_jenis_usaha.jenis_usaha")
 
-		if err := q1.Scan(&Uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-
-		/*find kube by Ketua:id*/
-		// if err := con.Where(&models.Tbl_kube{Ketua:id}).First(&Kube).Error; gorm.IsRecordNotFoundError(err) {
-		// 	log.Println("is kube exist : ", Kube)
-		// 	r := &models.Jn{Msg: models.U{User, R}}
-		// 	defer con.Close()
-		// 	return c.JSON(http.StatusOK, r)
-		// }		
-
+		if err := q1.Scan(&Uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
 	} else if errr == nil {
 		return GetKube(c)
 	}
 
 	if len(Uep) != 0 {
-		var tempo []string
 		for i,_ := range Uep {
-			q2 := con
-			q2 = q2.Table("tbl_uep")
-			q2 = q2.Joins("join tbl_usaha_produk on tbl_usaha_produk.id_uep = tbl_uep.id_uep")
-			q2 = q2.Joins("join tbl_jenis_usaha on tbl_jenis_usaha.id_usaha = tbl_usaha_produk.id_usaha")
-			q2 = q2.Where("tbl_uep.id_uep = ?", Uep[i].Id_user)
-
-			q2 = q2.Pluck("tbl_jenis_usaha.jenis_usaha", &tempo)
-		
-		Uep[i].Jenis_usaha = tempo[0]
-		// log.Println("n_pendamping : ", tempo)
-
+			if Uep[i].Photo != "" {
+				ImageBlob := Uep[i].Photo
+				Uep[i].Photo = "data:image/png;base64," + ImageBlob	
+			}
 		}
 	}
 	

@@ -54,9 +54,12 @@ func GetKube(c echo.Context) error {
 		}
 	}
 
-	// log.Println("Find Kube : ", Kube)
-
 	for i,_ := range Kube {
+
+			if Kube[i].Photo != "" {
+				ImageBlob := Kube[i].Photo
+				Kube[i].Photo = "data:image/png;base64," + ImageBlob	
+			}
 		
 		helpers.SetMemberNameKube(&ShowKubes, Kube[i])
 

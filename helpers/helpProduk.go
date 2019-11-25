@@ -3,7 +3,7 @@ package helpers
 import (
 	// "net/http"
 	"github.com/labstack/echo"
-	// "github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
@@ -183,7 +183,9 @@ func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.Pa
 				q = q.Joins("join tbl_produk_photo on tbl_produk_photo.id_produk = t1.id_produk")
 				q = q.Where("t1.id_kube = ?", id_kube)
 			}
-			q = q.Scan(&Products)
+			
+			if err :=  q.Scan(&Products).Error; gorm.IsRecordNotFoundError(err) {return ur, echo.ErrNotFound}
+			
 			ImageBlob := Products[0].Photo
 			Products[0].Photo = "data:image/png;base64," + ImageBlob
 			tmp[i] = Products[0]

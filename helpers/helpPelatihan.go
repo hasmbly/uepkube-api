@@ -70,6 +70,14 @@ func PaginatePelatihan(c echo.Context, r *models.ResPagin) (err error) {
 	if u.Page == 1 {f = true}
 	if u.Page == int(rtp) {la = true}
 
+	for i,_ := range Pelatihan {
+
+			if Pelatihan[i].Photo != "" {
+				ImageBlob := Pelatihan[i].Photo
+				Pelatihan[i].Photo = "data:image/png;base64," + ImageBlob	
+			}
+		}
+
 	*r = models.ResPagin{
 		Content:Pelatihan,
 		First:f,
