@@ -5,8 +5,8 @@ import (
 	"github.com/labstack/echo"
 	// "github.com/jinzhu/gorm"
 	_"github.com/jinzhu/gorm/dialects/mysql"
-	"uepkube-api/models"
 	"uepkube-api/db"
+	"uepkube-api/models"
 	//"strconv"
 	"log"
 	// "fmt"
@@ -167,21 +167,25 @@ func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.Pa
 				q = q.Table("tbl_usaha_produk t1")
 			if id_uep != 0 {
 				q = q.Select(
-					"t1.id,t2.nama,t2.alamat,t2.no_hp,t3.nama_produk,t3.deskripsi,t4.jenis_usaha")
+					"t1.id,t2.nama,t2.alamat,t2.no_hp,t3.nama_produk,t3.deskripsi,t4.jenis_usaha,t5.photo")
 				q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
 				q = q.Joins("join tbl_jenis_usaha t4 on t4.id_usaha = t1.id_usaha")
 				q = q.Joins("join tbl_produk t3 on t3.id_produk = t1.id_produk")
+				q = q.Joins("join tbl_produk_photo t5 on t5.id_produk = t1.id_produk")
 				q = q.Where("t1.id_uep = ?", id_uep)
 			}else {
 				q = q.Select(
-					"t1.id,tbl_kube.nama_kube as nama,tbl_user.alamat,tbl_user.no_hp,tbl_produk.nama_produk,tbl_produk.deskripsi,tbl_jenis_usaha.jenis_usaha")
+					"t1.id,tbl_kube.nama_kube as nama,tbl_user.alamat,tbl_user.no_hp,tbl_produk.nama_produk,tbl_produk.deskripsi,tbl_jenis_usaha.jenis_usaha,tbl_produk_photo.photo")
 				q = q.Joins("join tbl_kube on tbl_kube.id_kube = t1.id_kube")
 				q = q.Joins("join tbl_user on tbl_user.id_user = tbl_kube.ketua")
 				q = q.Joins("join tbl_jenis_usaha on tbl_jenis_usaha.id_usaha = t1.id_usaha")
 				q = q.Joins("join tbl_produk on tbl_produk.id_produk = t1.id_produk")
+				q = q.Joins("join tbl_produk_photo on tbl_produk_photo.id_produk = t1.id_produk")
 				q = q.Where("t1.id_kube = ?", id_kube)
 			}
 			q = q.Scan(&Products)
+			ImageBlob := Products[0].Photo
+			Products[0].Photo = "data:image/png;base64," + ImageBlob
 			tmp[i] = Products[0]
 	 	}
 

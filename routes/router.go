@@ -13,6 +13,15 @@ import (
 	"github.com/swaggo/echo-swagger"
 	"golang.org/x/crypto/bcrypt"
 	_ "uepkube-api/docs"
+
+	"github.com/jinzhu/gorm"
+	"uepkube-api/db"	
+
+	 // "image"
+	 // "image/png"
+	 // "os"
+	 // "bytes"
+
 )
 
 func Home(c echo.Context) error {
@@ -25,6 +34,19 @@ func BycriptPass(c echo.Context) error {
         log.Println(err)
     }
 	return c.JSON(http.StatusOK, string(hash))
+}
+
+func GetPhoto(c echo.Context) error {
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)	
+
+    var imgByte []string
+	if err := con.Table("tbl_produk_photo").Where("id_produk = ?", 11).Pluck("photo", &imgByte).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+   
+	defer con.Close()	
+	return c.HTML(http.StatusOK, "<img src='data:image/png;base64," + imgByte[0] +
+		"alt='testing img' />")
 }
 
 // Middleware Custom Claims JWT
@@ -51,6 +73,7 @@ func Init() *echo.Echo {
 
 	e.GET("/", Home)
 	e.GET("/bycrypt/:pass", BycriptPass)
+	e.GET("/photo", GetPhoto)
 	e.GET("/swagger-api/*", echoSwagger.WrapHandler)
 
 	// Route::Unauthenticated-Group
