@@ -32,21 +32,21 @@ func GetPendamping(c echo.Context) error {
 	}
 
     // get photo user
-    var photo []models.Tbl_user_photo
-	if err := con.Table("tbl_user_photo").Where(&models.Tbl_user_photo{Id_user: Pendamping.Id_user}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+ //    var photo []models.Tbl_user_photo
+	// if err := con.Table("tbl_user_photo").Where(&models.Tbl_user_photo{Id_user: Pendamping.Id_user}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	for i,_ := range photo {
+	// for i,_ := range photo {
 
-			if photo[i].Photo != "" {
-				ImageBlob := photo[i].Photo
-				photo[i].Photo = "data:image/png;base64," + ImageBlob	
-			}
+	// 		if photo[i].Photo != "" {
+	// 			ImageBlob := photo[i].Photo
+	// 			photo[i].Photo = "data:image/png;base64," + ImageBlob	
+	// 		}
 
-		}
+	// 	}
+	// // Pendamping.Photo = photo
 
 	// Pendamping.Password = s.Repeat("*", len(Pendamping.Password))
 	Pendamping.Password = "******"
-	Pendamping.Photo = photo
 
 	r := &models.Jn{Msg: Pendamping}
 	defer con.Close()
