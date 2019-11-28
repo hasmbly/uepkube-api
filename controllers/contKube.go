@@ -15,18 +15,18 @@ import (
 	"encoding/base64"	
 	"io/ioutil"			 
 )
-// @Summary GetKubeById
-// @Tags Kube-Controller
-// @Accept  json
-// @Produce  json
-// @Param id query int true "int"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /kube [get]
+/*@Summary GetKubeById
+@Tags Kube-Controller
+@Accept  json
+@Produce  json
+@Param id query int true "int"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /kube [get]*/
 func GetKube(c echo.Context) error {
 	/*prepare DB*/
 	con, err := db.CreateCon()
@@ -72,18 +72,18 @@ func GetKube(c echo.Context) error {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary GetPaginateKube
-// @Tags Kube-Controller
-// @Accept  json
-// @Produce  json
-// @Param kube body models.PosPagin true "Show Kube Paginate"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /kube [post]
+/*@Summary GetPaginateKube
+@Tags Kube-Controller
+@Accept  json
+@Produce  json
+@Param kube body models.PosPagin true "Show Kube Paginate"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /kube [post]*/
 func GetPaginateKube(c echo.Context) (err error) {	
 	if err := helpers.PaginateKube(c, &r); err != nil {
 		return err
@@ -91,18 +91,18 @@ func GetPaginateKube(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary AddKube
-// @Tags Kube-Controller
-// @Accept  json
-// @Produce  json
-// @Param kube body models.Tbl_kube true "Add Kube"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /kube/add [post]
+/*@Summary AddKube
+@Tags Kube-Controller
+@Accept  json
+@Produce  json
+@Param kube body models.Tbl_kube true "Add Kube"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /kube/add [post]*/
 func AddKube(c echo.Context) (err error) {
 	kube := &models.Tbl_kube{}
 
@@ -122,18 +122,18 @@ func AddKube(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary UpdateKube
-// @Tags Kube-Controller
-// @Accept  json
-// @Produce  json
-// @Param kube body models.Tbl_kube true "Update Kube"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /kube [put]
+/*@Summary UpdateKube
+@Tags Kube-Controller
+@Accept  json
+@Produce  json
+@Param kube body models.Tbl_kube true "Update Kube"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /kube [put]*/
 func UpdateKube(c echo.Context) (err error) {
 	kube := &models.Tbl_kube{}
 
@@ -161,18 +161,18 @@ func UpdateKube(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary DeleteKube
-// @Tags Kube-Controller
-// @Accept  json
-// @Produce  json
-// @Param id path int true "Delete Kube by id"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /kube/{id} [post]
+/*@Summary DeleteKube
+@Tags Kube-Controller
+@Accept  json
+@Produce  json
+@Param id path int true "Delete Kube by id"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /kube/{id} [post]*/
 func DeleteKube(c echo.Context) (err error) {
 	id, _ := strconv.Atoi(c.Param("id"))
 

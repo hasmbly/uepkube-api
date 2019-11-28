@@ -12,8 +12,48 @@ import (
 	 "log"
 )
 
+// @Summary Paginate -> uep | kube | pendamping
+// @Tags Universal-Controller
+// @Accept  json
+// @Produce  json
+// @Param key path string true "Key -> uep | kube | pendamping"
+// @Param uep body models.PosPagin true "Paginate ItemsUepKubePendamping"
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @security ApiKeyAuth
+// @Router /{key} [post]
+func GetPaginateItems(c echo.Context) (err error) {
+	key 	:= c.Param("key")
+
+	log.Println("key : ", key)
+
+	if key == "" {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill key")
+	}
+
+	switch key {
+
+	case "uep":
+		return GetPaginateUep(c)
+	case "kube":
+		return GetPaginateKube(c)
+	case "pendamping":
+		// return UpdatePendamping(c)
+	case "verifikator":
+		// return UpdateVerifikator(c)				
+	default:
+		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
+
+	}
+
+	return nil
+}
+
 // @Summary GetDetails -> uep | kube | pendamping | verifikator
-// @Tags Users-Controller
+// @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
 // @Param key path string true "Key -> uep | kube | pendamping | verifikator"
@@ -24,8 +64,8 @@ import (
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
 // @security ApiKeyAuth
-// @Router /users/{key} [get]
-func GetUsers(c echo.Context) error {
+// @Router /{key} [get]
+func GetItems(c echo.Context) error {
 	key 	:= c.Param("key")
 
 	if key == "" {
@@ -50,19 +90,19 @@ func GetUsers(c echo.Context) error {
 }
 
 // @Summary Add -> uep | kube | pendamping | verifikator
-// @Tags Users-Controller
+// @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
 // @Param key path string true "Key -> uep | kube | pendamping | verifikator "
-// @Param uep body models.Dummy true "Add UsersUepKubePendamping"
+// @Param uep body models.Dummy true "Add ItemsUepKubePendamping"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
 // @security ApiKeyAuth
-// @Router /users/add/{key} [post]
-func AddUsers(c echo.Context) (err error) {
+// @Router /add/{key} [post]
+func AddItems(c echo.Context) (err error) {
 	key 	:= c.Param("key")
 
 	log.Println("key : ", key)
@@ -90,19 +130,19 @@ func AddUsers(c echo.Context) (err error) {
 }
 
 // @Summary Update -> uep | kube | pendamping | verifikator
-// @Tags Users-Controller
+// @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
 // @Param key path string true "Key -> uep | kube | pendamping | verifikator "
-// @Param uep body models.Dummy true "Update UsersUepKubePendamping"
+// @Param uep body models.Dummy true "Update ItemsUepKubePendamping"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
 // @security ApiKeyAuth
-// @Router /users/{key} [put]
-func UpdateUsers(c echo.Context) (err error) {
+// @Router /{key} [put]
+func UpdateItems(c echo.Context) (err error) {
 	key 	:= c.Param("key")
 
 	log.Println("key : ", key)
@@ -130,7 +170,7 @@ func UpdateUsers(c echo.Context) (err error) {
 }
 
 // @Summary Delete -> uep | kube | pendamping | verifikator
-// @Tags Users-Controller
+// @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
 // @Param key path string true "Key -> uep | kube | pendamping | verifikator "
@@ -141,8 +181,8 @@ func UpdateUsers(c echo.Context) (err error) {
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
 // @security ApiKeyAuth
-// @Router /users/{key}/{id}  [post]
-func DeleteUsers(c echo.Context) (err error) {
+// @Router /{key}/{id}  [post]
+func DeleteItems(c echo.Context) (err error) {
 	key 	:= c.Param("key")
 
 	log.Println("key : ", key)

@@ -11,18 +11,18 @@ import (
 	//  "uepkube-api/helpers"
 )
 
-// @Summary GetAktivitasById
-// @Tags Aktivitas-Controller
-// @Accept  json
-// @Produce  json
-// @Param id query int true "int"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /aktivitas [get]
+/*@Summary GetAktivitasById
+@Tags Aktivitas-Controller
+@Accept  json
+@Produce  json
+@Param id query int true "int"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /aktivitas [get]*/
 func GetAktivitas(c echo.Context) error {
 	/*prepare DB*/
 	// con, err := db.CreateCon()
@@ -60,18 +60,18 @@ func GetAktivitas(c echo.Context) error {
 	return nil
 }
 
-// @Summary GetPaginateAktivitas
-// @Tags Aktivitas-Controller
-// @Accept  json
-// @Produce  json
-// @Param aktivitas body models.PosPagin true "Show Aktivitas Paginate"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /aktivitas [post]
+/*@Summary GetPaginateAktivitas
+@Tags Aktivitas-Controller
+@Accept  json
+@Produce  json
+@Param aktivitas body models.PosPagin true "Show Aktivitas Paginate"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /aktivitas [post]*/
 func GetPaginateAktivitas(c echo.Context) (err error) {	
 	// if err := helpers.PaginateAktivitas(c, &r); err != nil {
 	// 	return echo.ErrInternalServerError
@@ -80,18 +80,18 @@ func GetPaginateAktivitas(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary AddAktivitas
-// @Tags Aktivitas-Controller
-// @Accept  json
-// @Produce  json
-// @Param aktivitas body models.Tbl_kube true "Add Aktivitas"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /aktivitas/add [post]
+/*@Summary AddAktivitas
+@Tags Aktivitas-Controller
+@Accept  json
+@Produce  json
+@Param aktivitas body models.Tbl_kube true "Add Aktivitas"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /aktivitas/add [post]*/
 func AddAktivitas(c echo.Context) (err error) {
 	// aktivitas := &models.Tbl_aktivitas{}
 
@@ -112,18 +112,18 @@ func AddAktivitas(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary UpdateAktivitas
-// @Tags Aktivitas-Controller
-// @Accept  json
-// @Produce  json
-// @Param aktivitas body models.Tbl_kube true "Update Aktivitas"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /aktivitas [put]
+/*@Summary UpdateAktivitas
+@Tags Aktivitas-Controller
+@Accept  json
+@Produce  json
+@Param aktivitas body models.Tbl_kube true "Update Aktivitas"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /aktivitas [put]*/
 func UpdateAktivitas(c echo.Context) (err error) {
 	// aktivitas := &models.Tbl_aktivitas{}
 
@@ -152,18 +152,18 @@ func UpdateAktivitas(c echo.Context) (err error) {
 	return nil	
 }
 
-// @Summary DeleteAktivitas
-// @Tags Aktivitas-Controller
-// @Accept  json
-// @Produce  json
-// @Param id path int true "Delete Aktivitas by id"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /aktivitas/{id} [post]
+/*@Summary DeleteAktivitas
+@Tags Aktivitas-Controller
+@Accept  json
+@Produce  json
+@Param id path int true "Delete Aktivitas by id"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /aktivitas/{id} [post]*/
 func DeleteAktivitas(c echo.Context) (err error) {
 	// id, _ := strconv.Atoi(c.Param("id"))
 

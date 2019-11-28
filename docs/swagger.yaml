@@ -77,10 +77,6 @@ definitions:
         type: string
       pendamping:
         type: integer
-      photo:
-        items:
-          $ref: '#/definitions/models.Tbl_kube_photo'
-        type: array
       sekertaris:
         type: integer
       status:
@@ -135,10 +131,6 @@ definitions:
         type: string
       periode:
         type: string
-      photo:
-        items:
-          $ref: '#/definitions/models.Tbl_user_photo'
-        type: array
       roles_name:
         type: string
       tempat_lahir:
@@ -169,73 +161,6 @@ definitions:
         type: string
       sortOrder:
         example: desc
-        type: string
-    type: object
-  models.Tbl_kube:
-    properties:
-      anggota1:
-        type: integer
-      anggota2:
-        type: integer
-      anggota3:
-        type: integer
-      anggota4:
-        type: integer
-      anggota5:
-        type: integer
-      anggota6:
-        type: integer
-      anggota7:
-        type: integer
-      bantuan_modal:
-        type: integer
-      bendahara:
-        type: integer
-      created_by:
-        type: string
-      fb:
-        type: string
-      id_kube:
-        type: integer
-      ig:
-        type: string
-      jenis_usaha:
-        type: string
-      ketua:
-        type: integer
-      nama_kube:
-        type: string
-      pendamping:
-        type: integer
-      sekertaris:
-        type: integer
-      status:
-        type: integer
-      updated_by:
-        type: string
-      wa:
-        type: string
-    type: object
-  models.Tbl_kube_photo:
-    properties:
-      id:
-        type: integer
-      id_kube:
-        type: integer
-      is_display:
-        type: integer
-      photo:
-        type: string
-    type: object
-  models.Tbl_user_photo:
-    properties:
-      id:
-        type: integer
-      id_user:
-        type: integer
-      is_display:
-        type: integer
-      photo:
         type: string
     type: object
   models.Uep:
@@ -331,10 +256,6 @@ definitions:
         type: string
       password:
         type: string
-      photo:
-        items:
-          $ref: '#/definitions/models.Tbl_user_photo'
-        type: array
       roles_name:
         type: string
       tempat_lahir:
@@ -360,11 +281,16 @@ info:
   title: UepKube API
   version: "1.0"
 paths:
-  /aktivitas:
+  /{key}:
     get:
       consumes:
       - application/json
       parameters:
+      - description: Key -> uep | kube | pendamping | verifikator
+        in: path
+        name: key
+        required: true
+        type: string
       - description: int
         in: query
         name: id
@@ -395,16 +321,21 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: GetAktivitasById
+      summary: GetDetails -> uep | kube | pendamping | verifikator
       tags:
-      - Aktivitas-Controller
+      - Universal-Controller
     post:
       consumes:
       - application/json
       parameters:
-      - description: Show Aktivitas Paginate
+      - description: Key -> uep | kube | pendamping
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: Paginate ItemsUepKubePendamping
         in: body
-        name: aktivitas
+        name: uep
         required: true
         schema:
           $ref: '#/definitions/models.PosPagin'
@@ -434,19 +365,24 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: GetPaginateAktivitas
+      summary: Paginate -> uep | kube | pendamping
       tags:
-      - Aktivitas-Controller
+      - Universal-Controller
     put:
       consumes:
       - application/json
       parameters:
-      - description: Update Aktivitas
+      - description: 'Key -> uep | kube | pendamping | verifikator '
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: Update ItemsUepKubePendamping
         in: body
-        name: aktivitas
+        name: uep
         required: true
         schema:
-          $ref: '#/definitions/models.Tbl_kube'
+          $ref: '#/definitions/models.Dummy'
           type: object
       produces:
       - application/json
@@ -473,15 +409,20 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: UpdateAktivitas
+      summary: Update -> uep | kube | pendamping | verifikator
       tags:
-      - Aktivitas-Controller
-  /aktivitas/{id}:
+      - Universal-Controller
+  /{key}/{id}:
     post:
       consumes:
       - application/json
       parameters:
-      - description: Delete Aktivitas by id
+      - description: 'Key -> uep | kube | pendamping | verifikator '
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: 'Id -> uep | kube | pendamping | verifikator '
         in: path
         name: id
         required: true
@@ -511,20 +452,25 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: DeleteAktivitas
+      summary: Delete -> uep | kube | pendamping | verifikator
       tags:
-      - Aktivitas-Controller
-  /aktivitas/add:
+      - Universal-Controller
+  /add/{key}:
     post:
       consumes:
       - application/json
       parameters:
-      - description: Add Aktivitas
+      - description: 'Key -> uep | kube | pendamping | verifikator '
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: Add ItemsUepKubePendamping
         in: body
-        name: aktivitas
+        name: uep
         required: true
         schema:
-          $ref: '#/definitions/models.Tbl_kube'
+          $ref: '#/definitions/models.Dummy'
           type: object
       produces:
       - application/json
@@ -551,9 +497,9 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: AddAktivitas
+      summary: Add -> uep | kube | pendamping | verifikator
       tags:
-      - Aktivitas-Controller
+      - Universal-Controller
   /auth/signin:
     post:
       consumes:
@@ -595,394 +541,6 @@ paths:
       summary: SignIn
       tags:
       - Auth-Controller
-  /inventaris:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: int
-        in: query
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: GetInventarisById
-      tags:
-      - Inventaris-Controller
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Show Inventaris Paginate
-        in: body
-        name: inventaris
-        required: true
-        schema:
-          $ref: '#/definitions/models.PosPagin'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: GetPaginateInventaris
-      tags:
-      - Inventaris-Controller
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: Update Inventaris
-        in: body
-        name: inventaris
-        required: true
-        schema:
-          $ref: '#/definitions/models.Tbl_kube'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: UpdateInventaris
-      tags:
-      - Inventaris-Controller
-  /inventaris/{id}:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Delete Inventaris by id
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: DeleteInventaris
-      tags:
-      - Inventaris-Controller
-  /inventaris/add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Add Inventaris
-        in: body
-        name: inventaris
-        required: true
-        schema:
-          $ref: '#/definitions/models.Tbl_kube'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: AddInventaris
-      tags:
-      - Inventaris-Controller
-  /kube:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: int
-        in: query
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: GetKubeById
-      tags:
-      - Kube-Controller
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Show Kube Paginate
-        in: body
-        name: kube
-        required: true
-        schema:
-          $ref: '#/definitions/models.PosPagin'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: GetPaginateKube
-      tags:
-      - Kube-Controller
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: Update Kube
-        in: body
-        name: kube
-        required: true
-        schema:
-          $ref: '#/definitions/models.Tbl_kube'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: UpdateKube
-      tags:
-      - Kube-Controller
-  /kube/{id}:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Delete Kube by id
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: DeleteKube
-      tags:
-      - Kube-Controller
-  /kube/add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Add Kube
-        in: body
-        name: kube
-        required: true
-        schema:
-          $ref: '#/definitions/models.Tbl_kube'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: AddKube
-      tags:
-      - Kube-Controller
   /lookup/faq:
     get:
       consumes:
@@ -1155,582 +713,6 @@ paths:
       summary: GetPaginateProduk
       tags:
       - Lookup-Controller
-  /pelatihan:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: int
-        in: query
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      summary: GetPelatihanById
-      tags:
-      - Pelatihan-Controller
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Show Pelatihan Paginate
-        in: body
-        name: pelatihan
-        required: true
-        schema:
-          $ref: '#/definitions/models.PosPagin'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      summary: GetPaginatePelatihan
-      tags:
-      - Pelatihan-Controller
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: Update Pelatihan
-        in: body
-        name: pelatihan
-        required: true
-        schema:
-          $ref: '#/definitions/models.Tbl_kube'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: UpdatePelatihan
-      tags:
-      - Pelatihan-Controller
-  /pelatihan/{id}:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Delete Pelatihan by id
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: DeletePelatihan
-      tags:
-      - Pelatihan-Controller
-  /pelatihan/add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Add Pelatihan
-        in: body
-        name: pelatihan
-        required: true
-        schema:
-          $ref: '#/definitions/models.Tbl_kube'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: AddPelatihan
-      tags:
-      - Pelatihan-Controller
-  /produk:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: int
-        in: query
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      summary: GetProdukById
-      tags:
-      - Produk-Controller
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Show Produk Paginate
-        in: body
-        name: produk
-        required: true
-        schema:
-          $ref: '#/definitions/models.PosPagin'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: GetPaginateProduk
-      tags:
-      - Produk-Controller
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: Update Produk
-        in: body
-        name: produk
-        required: true
-        schema:
-          $ref: '#/definitions/models.Tbl_kube'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: UpdateProduk
-      tags:
-      - Produk-Controller
-  /produk/{id}:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Delete Produk by id
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: DeleteProduk
-      tags:
-      - Produk-Controller
-  /produk/add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Add Produk
-        in: body
-        name: produk
-        required: true
-        schema:
-          $ref: '#/definitions/models.Tbl_kube'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: AddProduk
-      tags:
-      - Produk-Controller
-  /uep:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: int
-        in: query
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: GetUepById
-      tags:
-      - Uep-Controller
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Show Uep Paginate
-        in: body
-        name: uep
-        required: true
-        schema:
-          $ref: '#/definitions/models.PosPagin'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: GetPaginateUep
-      tags:
-      - Uep-Controller
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: Update Uep
-        in: body
-        name: uep
-        required: true
-        schema:
-          $ref: '#/definitions/models.Uep'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: UpdateUep
-      tags:
-      - Uep-Controller
-  /uep/{id}:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Delete Uep by id
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: DeleteUep
-      tags:
-      - Uep-Controller
-  /uep/add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: Add Uep
-        in: body
-        name: uep
-        required: true
-        schema:
-          $ref: '#/definitions/models.Uep'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: AddUep
-      tags:
-      - Uep-Controller
   /upload/images/{key}:
     post:
       consumes:
@@ -1783,181 +765,6 @@ paths:
       summary: UploadsImages -> uep | kube | pendamping | verifikator
       tags:
       - UploadImages-Controller
-  /users/{key}:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Key -> uep | kube | pendamping | verifikator
-        in: path
-        name: key
-        required: true
-        type: string
-      - description: int
-        in: query
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: GetDetails -> uep | kube | pendamping | verifikator
-      tags:
-      - Users-Controller
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: 'Key -> uep | kube | pendamping | verifikator '
-        in: path
-        name: key
-        required: true
-        type: string
-      - description: Update UsersUepKubePendamping
-        in: body
-        name: uep
-        required: true
-        schema:
-          $ref: '#/definitions/models.Dummy'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: Update -> uep | kube | pendamping | verifikator
-      tags:
-      - Users-Controller
-  /users/{key}/{id}:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 'Key -> uep | kube | pendamping | verifikator '
-        in: path
-        name: key
-        required: true
-        type: string
-      - description: 'Id -> uep | kube | pendamping | verifikator '
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete -> uep | kube | pendamping | verifikator
-      tags:
-      - Users-Controller
-  /users/add/{key}:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 'Key -> uep | kube | pendamping | verifikator '
-        in: path
-        name: key
-        required: true
-        type: string
-      - description: Add UsersUepKubePendamping
-        in: body
-        name: uep
-        required: true
-        schema:
-          $ref: '#/definitions/models.Dummy'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Jn'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.HTTPError'
-      security:
-      - ApiKeyAuth: []
-      summary: Add -> uep | kube | pendamping | verifikator
-      tags:
-      - Users-Controller
 securityDefinitions:
   ApiKeyAuth:
     in: header

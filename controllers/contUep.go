@@ -17,18 +17,18 @@ import (
 	"io/ioutil"		
 )
 
-// @Summary GetUepById
-// @Tags Uep-Controller
-// @Accept  json
-// @Produce  json
-// @Param id query int true "int"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /uep [get]
+/*@Summary GetUepById
+@Tags Uep-Controller
+@Accept  json
+@Produce  json
+@Param id query int true "int"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /uep [get]*/
 func GetUep(c echo.Context) error {
 	/*prepare DB*/
 	con, err := db.CreateCon()
@@ -80,18 +80,18 @@ func GetUep(c echo.Context) error {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary GetPaginateUep
-// @Tags Uep-Controller
-// @Accept  json
-// @Produce  json
-// @Param uep body models.PosPagin true "Show Uep Paginate"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /uep [post]
+/*@Summary GetPaginateUep
+@Tags Uep-Controller
+@Accept  json
+@Produce  json
+@Param uep body models.PosPagin true "Show Uep Paginate"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /uep [post]*/
 func GetPaginateUep(c echo.Context) (err error) {	
 	if err := helpers.PaginateUep(c, &r); err != nil {
 		return err
@@ -99,18 +99,18 @@ func GetPaginateUep(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary AddUep
-// @Tags Uep-Controller
-// @Accept  json
-// @Produce  json
-// @Param uep body models.Uep true "Add Uep"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /uep/add [post]
+/*@Summary AddUep
+@Tags Uep-Controller
+@Accept  json
+@Produce  json
+@Param uep body models.Uep true "Add Uep"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /uep/add [post]*/
 func AddUep(c echo.Context) (err error) {
 	Uep := &models.Uep{}
 
@@ -149,18 +149,18 @@ func AddUep(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary UpdateUep
-// @Tags Uep-Controller
-// @Accept  json
-// @Produce  json
-// @Param uep body models.Uep true "Update Uep"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /uep [put]
+/*@Summary UpdateUep
+@Tags Uep-Controller
+@Accept  json
+@Produce  json
+@Param uep body models.Uep true "Update Uep"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /uep [put]*/
 func UpdateUep(c echo.Context) (err error) {
 	Uep := &models.Uep{}
 
@@ -200,18 +200,18 @@ func UpdateUep(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary DeleteUep
-// @Tags Uep-Controller
-// @Accept  json
-// @Produce  json
-// @Param id path int true "Delete Uep by id"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /uep/{id} [post]
+/*@Summary DeleteUep
+@Tags Uep-Controller
+@Accept  json
+@Produce  json
+@Param id path int true "Delete Uep by id"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /uep/{id} [post]*/
 func DeleteUep(c echo.Context) (err error) {
 	id, _ := strconv.Atoi(c.Param("id"))
 

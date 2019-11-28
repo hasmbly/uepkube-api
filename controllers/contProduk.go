@@ -12,17 +12,17 @@ import (
 	 // "log"
 )
 
-// @Summary GetProdukById
-// @Tags Produk-Controller
-// @Accept  json
-// @Produce  json
-// @Param id query int true "int"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @Router /produk [get]
+/*@Summary GetProdukById
+@Tags Produk-Controller
+@Accept  json
+@Produce  json
+@Param id query int true "int"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@Router /produk [get]*/
 func GetProduk(c echo.Context) error {
 	/*prepare DB*/
 	// con, err := db.CreateCon()
@@ -60,18 +60,18 @@ func GetProduk(c echo.Context) error {
 	return nil
 }
 
-// @Summary GetPaginateProduk
-// @Tags Produk-Controller
-// @Accept  json
-// @Produce  json
-// @Param produk body models.PosPagin true "Show Produk Paginate"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /produk [post]
+/*@Summary GetPaginateProduk
+@Tags Produk-Controller
+@Accept  json
+@Produce  json
+@Param produk body models.PosPagin true "Show Produk Paginate"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /produk [post]*/
 func GetPaginateProduk(c echo.Context) (err error) {
 	// if err := helpers.PaginateProduk(c, &r); err != nil {
 	// 	return echo.ErrInternalServerError
@@ -80,18 +80,18 @@ func GetPaginateProduk(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary AddProduk
-// @Tags Produk-Controller
-// @Accept  json
-// @Produce  json
-// @Param produk body models.Tbl_kube true "Add Produk"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /produk/add [post]
+/*@Summary AddProduk
+@Tags Produk-Controller
+@Accept  json
+@Produce  json
+@Param produk body models.Tbl_kube true "Add Produk"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /produk/add [post]*/
 func AddProduk(c echo.Context) (err error) {
 	// produk := &models.Tbl_produk{}
 
@@ -112,18 +112,18 @@ func AddProduk(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary UpdateProduk
-// @Tags Produk-Controller
-// @Accept  json
-// @Produce  json
-// @Param produk body models.Tbl_kube true "Update Produk"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /produk [put]
+/*@Summary UpdateProduk
+@Tags Produk-Controller
+@Accept  json
+@Produce  json
+@Param produk body models.Tbl_kube true "Update Produk"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /produk [put]*/
 func UpdateProduk(c echo.Context) (err error) {
 	// produk := &models.Tbl_produk{}
 
@@ -152,18 +152,18 @@ func UpdateProduk(c echo.Context) (err error) {
 	return nil	
 }
 
-// @Summary DeleteProduk
-// @Tags Produk-Controller
-// @Accept  json
-// @Produce  json
-// @Param id path int true "Delete Produk by id"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /produk/{id} [post]
+/*@Summary DeleteProduk
+@Tags Produk-Controller
+@Accept  json
+@Produce  json
+@Param id path int true "Delete Produk by id"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /produk/{id} [post]*/
 func DeleteProduk(c echo.Context) (err error) {
 	// id, _ := strconv.Atoi(c.Param("id"))
 

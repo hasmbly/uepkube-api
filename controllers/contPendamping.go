@@ -82,7 +82,7 @@ func AddPendamping(c echo.Context) (err error) {
 	pendamping.Jenis_pendamping = Pendamping.Jenis_pendamping
 	pendamping.Periode 			= Pendamping.Periode
 
-	if err := con.Create(&pendamping).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+	if err := con.Create(&pendamping).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	// store account_pendamping
 	account 			:= &models.Tbl_account{}
@@ -94,7 +94,7 @@ func AddPendamping(c echo.Context) (err error) {
     hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
     if err != nil {
         log.Println(err)
-    }	
+    }
 	account.Password  	= string(hash)
 
 	if err := con.Create(&account).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}		

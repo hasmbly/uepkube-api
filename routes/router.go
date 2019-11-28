@@ -89,10 +89,10 @@ func Init() *echo.Echo {
 	o.POST("/auth/signin", controllers.SignIn)
 	o.GET("/lookup/uepkube", controllers.GetUepKube)
 	// produk
-	o.GET("/produk", controllers.GetProduk)
+	// o.GET("/produk", controllers.GetProduk)
 	o.POST("/lookup/uepkube/produk", controllers.GetPaginateProdukUepKube)
 	// pelatihan
-	o.GET("/pelatihan", controllers.GetPelatihan)
+	// o.GET("/pelatihan", controllers.GetPelatihan)
 	o.POST("/lookup/uepkube/pelatihan", controllers.GetPaginatePelatihanUepKube)
 	// faq
 	o.GET("/lookup/faq", controllers.GeAllFaq)
@@ -100,63 +100,64 @@ func Init() *echo.Echo {
 	o.GET("/lookup/persebaran", controllers.GeAllUepKubeDetail)	
 
 	// Route::Restricted-Group-UEP
-	u := e.Group("/api/v1")
-	u.Use(middleware.JWTWithConfig(config))
-	u.Use(middlewares.CheckUepRoles)
-	// uep
-	u.GET("/uep", controllers.GetUep)
-	u.POST("/uep", controllers.GetPaginateUep)
-	u.PUT("/uep", controllers.UpdateUep)
-	u.POST("/uep/add", controllers.AddUep)
-	u.POST("/uep/:id", controllers.DeleteUep)
+	// u := e.Group("/api/v1")
+	// u.Use(middleware.JWTWithConfig(config))
+	// u.Use(middlewares.CheckUepRoles)
+	// // uep
+	// // u.GET("/uep", controllers.GetUep)
+	// // u.POST("/uep", controllers.GetPaginateUep)
+	// // u.PUT("/uep", controllers.UpdateUep)
+	// // u.POST("/uep/add", controllers.AddUep)
+	// // u.POST("/uep/:id", controllers.DeleteUep)
+
+	// Route::Restricted-Group-KUBE
+	// k := e.Group("/api/v1")
+	// k.Use(middleware.JWTWithConfig(config))
+	// k.Use(middlewares.CheckKubeRoles)	
+	// k.GET("/kube", controllers.GetKube)
+	// k.POST("/kube", controllers.GetPaginateKube)
+	// k.PUT("/kube", controllers.UpdateKube)
+	// k.POST("/kube/add", controllers.AddKube)
+	// k.POST("/kube/:id", controllers.DeleteKube)	
+
 
 	// Routes::All Roles
 	a := e.Group("/api/v1")
 	a.Use(middleware.JWTWithConfig(config))
 	a.Use(middlewares.CheckAllRoles)	
 	// produk
-	a.PUT("/produk", controllers.UpdateProduk)
-	a.POST("/produk/add", controllers.AddProduk)
-	a.POST("/produk/:id", controllers.DeleteProduk)
-	// pelatihan
-	a.PUT("/pelatihan", controllers.UpdatePelatihan)
-	a.POST("/pelatihan/add", controllers.AddPelatihan)
-	a.POST("/pelatihan/:id", controllers.DeletePelatihan)
-	// inventaris
-	a.GET("/inventaris", controllers.GetInventaris)
-	a.POST("/inventaris", controllers.GetPaginateInventaris)	
-	a.PUT("/inventaris", controllers.UpdateInventaris)
-	a.POST("/inventaris/add", controllers.AddInventaris)
-	a.POST("/inventaris/:id", controllers.DeleteInventaris)
-	// aktivitas
-	a.GET("/aktivitas", controllers.GetAktivitas)
-	a.POST("/aktivitas", controllers.GetPaginateAktivitas)	
-	a.PUT("/aktivitas", controllers.UpdateAktivitas)
-	a.POST("/aktivitas/add", controllers.AddAktivitas)
-	a.POST("/aktivitas/:id", controllers.DeleteAktivitas)
+	// a.PUT("/produk", controllers.UpdateProduk)
+	// a.POST("/produk/add", controllers.AddProduk)
+	// a.POST("/produk/:id", controllers.DeleteProduk)
+	// // pelatihan
+	// a.PUT("/pelatihan", controllers.UpdatePelatihan)
+	// a.POST("/pelatihan/add", controllers.AddPelatihan)
+	// a.POST("/pelatihan/:id", controllers.DeletePelatihan)
+	// // inventaris
+	// a.GET("/inventaris", controllers.GetInventaris)
+	// a.POST("/inventaris", controllers.GetPaginateInventaris)	
+	// a.PUT("/inventaris", controllers.UpdateInventaris)
+	// a.POST("/inventaris/add", controllers.AddInventaris)
+	// a.POST("/inventaris/:id", controllers.DeleteInventaris)
+	// // aktivitas
+	// a.GET("/aktivitas", controllers.GetAktivitas)
+	// a.POST("/aktivitas", controllers.GetPaginateAktivitas)	
+	// a.PUT("/aktivitas", controllers.UpdateAktivitas)
+	// a.POST("/aktivitas/add", controllers.AddAktivitas)
+	// a.POST("/aktivitas/:id", controllers.DeleteAktivitas)
 
-	// CRUD Pendamping, UEP, KUBE
-	a.GET("/users/:key", controllers.GetUsers)
-	a.POST("/users/add/:key", controllers.AddUsers)
-	a.PUT("/users/:key", controllers.UpdateUsers)
-	a.POST("/users/:key/:id", controllers.DeleteUsers)
-	// a.POST("/users", controllers.GetPaginateAktivitas)	
+	// CRUD Pendamping, UEP, KUBE, Verifikator
+	a.POST("/:key", controllers.GetPaginateItems)	
+	a.GET("/:key", controllers.GetItems)
+	a.POST("/add/:key", controllers.AddItems)
+	a.PUT("/:key", controllers.UpdateItems)
+	a.POST("/:key/:id", controllers.DeleteItems)
 	
 	// uploads images
 	a.POST("/upload/images/:key", controllers.UploadImages)
 
 	// uploads pdf
 	// a.POST("/uploads/pdf/:key", controllers.UploadFiles)
-
-	// Route::Restricted-Group-KUBE
-	k := e.Group("/api/v1")
-	k.Use(middleware.JWTWithConfig(config))
-	k.Use(middlewares.CheckKubeRoles)	
-	k.GET("/kube", controllers.GetKube)
-	k.POST("/kube", controllers.GetPaginateKube)
-	k.PUT("/kube", controllers.UpdateKube)
-	k.POST("/kube/add", controllers.AddKube)
-	k.POST("/kube/:id", controllers.DeleteKube)	
-
+	
 	return e
 }

@@ -11,18 +11,18 @@ import (
 	//  "uepkube-api/helpers"
 )
 
-// @Summary GetInventarisById
-// @Tags Inventaris-Controller
-// @Accept  json
-// @Produce  json
-// @Param id query int true "int"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /inventaris [get]
+/*@Summary GetInventarisById
+@Tags Inventaris-Controller
+@Accept  json
+@Produce  json
+@Param id query int true "int"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /inventaris [get]*/
 func GetInventaris(c echo.Context) error {
 	/*prepare DB*/
 	// con, err := db.CreateCon()
@@ -60,18 +60,18 @@ func GetInventaris(c echo.Context) error {
 	return nil
 }
 
-// @Summary GetPaginateInventaris
-// @Tags Inventaris-Controller
-// @Accept  json
-// @Produce  json
-// @Param inventaris body models.PosPagin true "Show Inventaris Paginate"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /inventaris [post]
+/*@Summary GetPaginateInventaris
+@Tags Inventaris-Controller
+@Accept  json
+@Produce  json
+@Param inventaris body models.PosPagin true "Show Inventaris Paginate"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /inventaris [post]*/
 func GetPaginateInventaris(c echo.Context) (err error) {	
 	// if err := helpers.PaginateInventaris(c, &r); err != nil {
 	// 	return echo.ErrInternalServerError
@@ -80,18 +80,18 @@ func GetPaginateInventaris(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary AddInventaris
-// @Tags Inventaris-Controller
-// @Accept  json
-// @Produce  json
-// @Param inventaris body models.Tbl_kube true "Add Inventaris"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /inventaris/add [post]
+/*@Summary AddInventaris
+@Tags Inventaris-Controller
+@Accept  json
+@Produce  json
+@Param inventaris body models.Tbl_kube true "Add Inventaris"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /inventaris/add [post]*/
 func AddInventaris(c echo.Context) (err error) {
 	// inventaris := &models.Tbl_inventaris{}
 
@@ -112,18 +112,18 @@ func AddInventaris(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary UpdateInventaris
-// @Tags Inventaris-Controller
-// @Accept  json
-// @Produce  json
-// @Param inventaris body models.Tbl_kube true "Update Inventaris"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /inventaris [put]
+/*@Summary UpdateInventaris
+@Tags Inventaris-Controller
+@Accept  json
+@Produce  json
+@Param inventaris body models.Tbl_kube true "Update Inventaris"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /inventaris [put]*/
 func UpdateInventaris(c echo.Context) (err error) {
 	// inventaris := &models.Tbl_inventaris{}
 
@@ -152,18 +152,18 @@ func UpdateInventaris(c echo.Context) (err error) {
 	return nil	
 }
 
-// @Summary DeleteInventaris
-// @Tags Inventaris-Controller
-// @Accept  json
-// @Produce  json
-// @Param id path int true "Delete Inventaris by id"
-// @Success 200 {object} models.Jn
-// @Failure 400 {object} models.HTTPError
-// @Failure 401 {object} models.HTTPError
-// @Failure 404 {object} models.HTTPError
-// @Failure 500 {object} models.HTTPError
-// @security ApiKeyAuth
-// @Router /inventaris/{id} [post]
+/*@Summary DeleteInventaris
+@Tags Inventaris-Controller
+@Accept  json
+@Produce  json
+@Param id path int true "Delete Inventaris by id"
+@Success 200 {object} models.Jn
+@Failure 400 {object} models.HTTPError
+@Failure 401 {object} models.HTTPError
+@Failure 404 {object} models.HTTPError
+@Failure 500 {object} models.HTTPError
+@security ApiKeyAuth
+@Router /inventaris/{id} [post]*/
 func DeleteInventaris(c echo.Context) (err error) {
 	// id, _ := strconv.Atoi(c.Param("id"))
 
