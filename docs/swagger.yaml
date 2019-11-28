@@ -1,5 +1,20 @@
 basePath: /api/v1
 definitions:
+  models.Dummy:
+    properties:
+      kube:
+        $ref: '#/definitions/models.Kube'
+        type: object
+      pendamping:
+        $ref: '#/definitions/models.Pendamping'
+        type: object
+      uep:
+        $ref: '#/definitions/models.Uep'
+        type: object
+      verifikator:
+        $ref: '#/definitions/models.Verifikator'
+        type: object
+    type: object
   models.Filters:
     properties:
       key:
@@ -25,6 +40,117 @@ definitions:
         type: boolean
       message:
         type: object
+    type: object
+  models.Kube:
+    properties:
+      anggota1:
+        type: integer
+      anggota2:
+        type: integer
+      anggota3:
+        type: integer
+      anggota4:
+        type: integer
+      anggota5:
+        type: integer
+      anggota6:
+        type: integer
+      anggota7:
+        type: integer
+      bantuan_modal:
+        type: integer
+      bendahara:
+        type: integer
+      created_by:
+        type: string
+      fb:
+        type: string
+      id_kube:
+        type: integer
+      ig:
+        type: string
+      jenis_usaha:
+        type: string
+      ketua:
+        type: integer
+      nama_kube:
+        type: string
+      pendamping:
+        type: integer
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_kube_photo'
+        type: array
+      sekertaris:
+        type: integer
+      status:
+        type: integer
+      updated_by:
+        type: string
+      wa:
+        type: string
+    type: object
+  models.Pendamping:
+    properties:
+      alamat:
+        type: string
+      created_by:
+        type: string
+      email:
+        type: string
+      fb:
+        type: string
+      id_kabupaten:
+        type: integer
+      id_kecamatan:
+        type: integer
+      id_kelurahan:
+        type: string
+      id_roles:
+        type: integer
+      id_user:
+        type: integer
+      ig:
+        type: string
+      jenis_kelamin:
+        enum:
+        - L
+        - ' P'
+        type: string
+      jenis_pendamping:
+        type: string
+      lat:
+        type: number
+      lng:
+        type: number
+      nama:
+        type: string
+      nik:
+        type: string
+      no_hp:
+        type: string
+      no_kk:
+        type: string
+      password:
+        type: string
+      periode:
+        type: string
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_user_photo'
+        type: array
+      roles_name:
+        type: string
+      tempat_lahir:
+        type: string
+      tgl_lahir:
+        type: string
+      updated_by:
+        type: string
+      username:
+        type: string
+      wa:
+        type: string
     type: object
   models.PosPagin:
     properties:
@@ -67,8 +193,12 @@ definitions:
         type: integer
       created_by:
         type: string
+      fb:
+        type: string
       id_kube:
         type: integer
+      ig:
+        type: string
       jenis_usaha:
         type: string
       ketua:
@@ -77,13 +207,35 @@ definitions:
         type: string
       pendamping:
         type: integer
-      photo:
-        type: string
       sekertaris:
         type: integer
       status:
         type: integer
       updated_by:
+        type: string
+      wa:
+        type: string
+    type: object
+  models.Tbl_kube_photo:
+    properties:
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      is_display:
+        type: integer
+      photo:
+        type: string
+    type: object
+  models.Tbl_user_photo:
+    properties:
+      id:
+        type: integer
+      id_user:
+        type: integer
+      is_display:
+        type: integer
+      photo:
         type: string
     type: object
   models.Uep:
@@ -96,6 +248,8 @@ definitions:
         type: string
       email:
         type: string
+      fb:
+        type: string
       id_kabupaten:
         type: integer
       id_kecamatan:
@@ -106,6 +260,8 @@ definitions:
         type: integer
       id_user:
         type: integer
+      ig:
+        type: string
       jenis_kelamin:
         enum:
         - L
@@ -123,8 +279,6 @@ definitions:
         type: string
       no_kk:
         type: string
-      photo:
-        type: string
       status:
         type: integer
       tempat_lahir:
@@ -132,6 +286,66 @@ definitions:
       tgl_lahir:
         type: string
       updated_by:
+        type: string
+      wa:
+        type: string
+    type: object
+  models.Verifikator:
+    properties:
+      alamat:
+        type: string
+      created_by:
+        type: string
+      email:
+        type: string
+      fb:
+        type: string
+      id_kabupaten:
+        type: integer
+      id_kecamatan:
+        type: integer
+      id_kelurahan:
+        type: string
+      id_roles:
+        type: integer
+      id_user:
+        type: integer
+      ig:
+        type: string
+      jenis_kelamin:
+        enum:
+        - L
+        - ' P'
+        type: string
+      lat:
+        type: number
+      lng:
+        type: number
+      nama:
+        type: string
+      nik:
+        type: string
+      no_hp:
+        type: string
+      no_kk:
+        type: string
+      password:
+        type: string
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_user_photo'
+        type: array
+      roles_name:
+        type: string
+      tempat_lahir:
+        type: string
+      tgl_lahir:
+        type: string
+      updated_by:
+        type: string
+      username:
+        type: string
+      wa:
         type: string
     type: object
 host: 157.245.55.185:9093
@@ -1517,6 +1731,233 @@ paths:
       summary: AddUep
       tags:
       - Uep-Controller
+  /upload/images/{key}:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: Key (string) -> uep | kube | pendamping | verifikator
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: id (int)
+        in: query
+        name: id
+        required: true
+        type: integer
+      - description: Uploads Files
+        in: formData
+        name: photo
+        required: true
+        type: file
+      - description: int (int) -> 0 | 1
+        in: query
+        name: is_display
+        type: integer
+      produces:
+      - multipart/form-data
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: UploadsImages -> uep | kube | pendamping | verifikator
+      tags:
+      - UploadImages-Controller
+  /users/{key}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Key -> uep | kube | pendamping | verifikator
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: int
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: GetDetails -> uep | kube | pendamping | verifikator
+      tags:
+      - Users-Controller
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 'Key -> uep | kube | pendamping | verifikator '
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: Update UsersUepKubePendamping
+        in: body
+        name: uep
+        required: true
+        schema:
+          $ref: '#/definitions/models.Dummy'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: Update -> uep | kube | pendamping | verifikator
+      tags:
+      - Users-Controller
+  /users/{key}/{id}:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 'Key -> uep | kube | pendamping | verifikator '
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: 'Id -> uep | kube | pendamping | verifikator '
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete -> uep | kube | pendamping | verifikator
+      tags:
+      - Users-Controller
+  /users/add/{key}:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 'Key -> uep | kube | pendamping | verifikator '
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: Add UsersUepKubePendamping
+        in: body
+        name: uep
+        required: true
+        schema:
+          $ref: '#/definitions/models.Dummy'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: Add -> uep | kube | pendamping | verifikator
+      tags:
+      - Users-Controller
 securityDefinitions:
   ApiKeyAuth:
     in: header

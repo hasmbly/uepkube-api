@@ -42,11 +42,19 @@ func GetPhoto(c echo.Context) error {
 	con.SingularTable(true)	
 
     var imgByte []string
-	if err := con.Table("tbl_produk_photo").Where("id_produk = ?", 11).Pluck("photo", &imgByte).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+	if err := con.Table("tbl_user_photo").Where("id_user = ?", 6).Pluck("photo", &imgByte).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
    
 	defer con.Close()	
-	return c.HTML(http.StatusOK, "<img src='data:image/png;base64," + imgByte[0] +
-		"alt='testing img' />")
+
+	var photos []string
+	for i,_ := range imgByte {
+		var html string
+		html = "<img src='data:image/png;base64," + imgByte[i] +
+			"alt='testing img' /><br />"
+		photos = append(photos, html)
+	}
+
+	return c.HTML(http.StatusOK, photos[0] + photos[1])		
 }
 
 // Middleware Custom Claims JWT
@@ -125,8 +133,21 @@ func Init() *echo.Echo {
 	a.POST("/aktivitas", controllers.GetPaginateAktivitas)	
 	a.PUT("/aktivitas", controllers.UpdateAktivitas)
 	a.POST("/aktivitas/add", controllers.AddAktivitas)
-	a.POST("/aktivitas/:id", controllers.DeleteAktivitas)		
+	a.POST("/aktivitas/:id", controllers.DeleteAktivitas)
+
+	// CRUD Pendamping, UEP, KUBE
+	a.GET("/users/:key", controllers.GetUsers)
+	a.POST("/users/add/:key", controllers.AddUsers)
+	a.PUT("/users/:key", controllers.UpdateUsers)
+	a.POST("/users/:key/:id", controllers.DeleteUsers)
+	// a.POST("/users", controllers.GetPaginateAktivitas)	
 	
+	// uploads images
+	a.POST("/upload/images/:key", controllers.UploadImages)
+
+	// uploads pdf
+	// a.POST("/uploads/pdf/:key", controllers.UploadFiles)
+
 	// Route::Restricted-Group-KUBE
 	k := e.Group("/api/v1")
 	k.Use(middleware.JWTWithConfig(config))

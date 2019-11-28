@@ -3,12 +3,18 @@ package controllers
 import (
 	"net/http"
 	"github.com/labstack/echo"
+
 	"github.com/jinzhu/gorm"
-	 _"github.com/jinzhu/gorm/dialects/mysql"
-	 "uepkube-api/models"
-	 "uepkube-api/db"
-	 "strconv"
+	_"github.com/jinzhu/gorm/dialects/mysql"
+	"uepkube-api/models"
+	"uepkube-api/db"
 	"uepkube-api/helpers"
+	"strconv"
+	"log"
+
+	"bufio"
+	"encoding/base64"	
+	"io/ioutil"		
 )
 
 // @Summary GetUepById
@@ -33,7 +39,6 @@ func GetUep(c echo.Context) error {
 	User 	:= models.Tbl_user{}
 	R 		:= models.CustU{}
 
-
 	/*check if query key -> "val"*/
 	qk := c.QueryParams()
 	for k,v := range qk {
@@ -52,8 +57,25 @@ func GetUep(c echo.Context) error {
 		}
 	}
 
+    // get photo user
+    var photo []models.Tbl_user_photo
+	if err := con.Table("tbl_user_photo").Where(&models.Tbl_user_photo{Id_user: User.Id_user}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	for i,_ := range photo {
+
+			if photo[i].Photo != "" {
+				ImageBlob := photo[i].Photo
+				photo[i].Photo = "data:image/png;base64," + ImageBlob	
+			}
+
+		}
+
+	R.Photo = photo
+	R.Flag = "UEP"
+
 	r := &models.Jn{Msg: models.U{User, R}}
 	defer con.Close()
+
 
 	return c.JSON(http.StatusOK, r)
 }
@@ -96,8 +118,15 @@ func AddUep(c echo.Context) (err error) {
 		return err
 	}
 
+	// log.Println("Uploaded : ", Uep.Photo)
+
 	user := &models.Tbl_user{}
 	user = Uep.Tbl_user
+
+	// validation
+	if Uep.Id_pendamping == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id Pendamping") }
+	if Uep.Bantuan_modal == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") }
+	if Uep.Nik == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") }
 
 	uep := &models.Tbl_uep{}
 	uep.Id_pendamping = Uep.Id_pendamping
@@ -197,10 +226,73 @@ func DeleteUep(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
+	// delete user
 	if err := con.Delete(&user).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	
+	// delete user_photo
+	if err := con.Where("id_user = ?", user.Id_user).Delete(models.Tbl_user_photo{}).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	defer con.Close()
 
 	r := &models.Jn{Msg: "Success Delete Data "	}
 	return c.JSON(http.StatusOK, r)	
+}
+
+func UploadUepFiles(c echo.Context) (err error) {
+	id, _ 			:= strconv.Atoi(c.QueryParam("id"))
+	is_display, _ 	:= strconv.Atoi(c.QueryParam("is_display"))
+
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
+
+	// Multipart form
+	form, err := c.MultipartForm()
+	if err != nil {
+		return err
+	}
+
+	files := form.File["photo"]
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	log.Println("files : ", len(files))
+
+	for _,f := range files {
+
+		src, err := f.Open()
+		if err != nil {
+			return err
+		}
+		defer src.Close()	
+
+	    // Read entire JPG into byte slice.
+	    reader := bufio.NewReader(src)
+	    content, _ := ioutil.ReadAll(reader)
+
+	    // Encode as base64.
+	    encoded := base64.StdEncoding.EncodeToString(content)
+		
+		// init photo model
+		photo := &models.Tbl_user_photo{}
+
+		photo.Id_user = id
+		photo.Is_display = is_display
+		photo.Photo   = encoded
+
+		if err := con.Create(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+		
+		// log.Println("encoded : ", encoded)	
+
+	}
+
+	
+	defer con.Close()
+
+	log.Println("Uploads Uep's file to id : ", id)
+	r := &models.Jn{Msg: "Success Upload files"}	
+	return c.JSON(http.StatusOK, r)	
+	
 }

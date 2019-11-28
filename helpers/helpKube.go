@@ -37,6 +37,7 @@ func SetMemberNameKube(s *models.ShowKube, Kube models.Tbl_kube) error {
 
     for i,d := range ints {
 		if err := con.Table("tbl_user").Where(&models.Tbl_user{Id_user:d}).Pluck("nama", &tmp).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+    	if d == 0 { tmp[0] = "" }
 		res[i] = tmp[0]
     }
 
@@ -52,9 +53,18 @@ func SetMemberNameKube(s *models.ShowKube, Kube models.Tbl_kube) error {
     var lng []*string
 	if err := con.Table("tbl_user").Where(&models.Tbl_user{Id_user: ints[0]}).Pluck("lng", &lng).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// log.Println("alamat", alamat[0])
-	// log.Println("lat", lat[0])
-	// log.Println("lng", lng[0])
+    // get photo kube
+    var photo []models.Tbl_kube_photo
+	if err := con.Table("tbl_kube_photo").Where(&models.Tbl_kube_photo{Id_kube: Kube.Id_kube}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	for i,_ := range photo {
+
+			if photo[i].Photo != "" {
+				ImageBlob := photo[i].Photo
+				photo[i].Photo = "data:image/png;base64," + ImageBlob	
+			}
+
+		}	
 
     /*
 	end:find member name of Kube
@@ -79,7 +89,7 @@ func SetMemberNameKube(s *models.ShowKube, Kube models.Tbl_kube) error {
 			Anggota7:		res[9],
 			Pendamping:		res[10],
 		},
-		Photo:			Kube.Photo,
+		Photo:			photo,
 		Flag:			"KUBE",
 	}
 	defer con.Close()
@@ -177,7 +187,6 @@ func JoinKube(ur []*models.PaginateKubes) (err error){
 			kubes[i].Nama_kube,
 			kubes[i].Jenis_usaha,
 			kubes[i].Bantuan_modal,
-			kubes[i].Photo,
 			kubes[i].Status,
 		}
 	 }

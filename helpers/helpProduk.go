@@ -7,11 +7,8 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	//"strconv"
 	"log"
-	// "fmt"
-	// "github.com/ulule/paging"
-	"math"
+	"math"	
 )
 
 func PaginateProduk(c echo.Context, r *models.ResPagin) (err error) {
@@ -25,56 +22,6 @@ func PaginateProduk(c echo.Context, r *models.ResPagin) (err error) {
 	}
 
 	var co int = (u.Page - num) * u.Size
-	// offset := strconv.FormatInt(int64(co), 10)
-	// log.Println("Ori Offset is : ", offset)
-
-	// limit := strconv.FormatInt(int64(u.Size), 10)
-	// log.Println("Ori size is : ", limit)
-
-
-
-	// url := "http://localhost:9000/api/v1/produk?limit="+limit+"&offset="+offset
-
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
-
-	// store, err := paging.NewGORMStore(con, "tbl_usaha_produk",&PaginProducts)
-	// if err != nil {
-	//         e := fmt.Sprintf("%v",err)
-	//         log.Println(e)
-	//         return echo.NewHTTPError(http.StatusInternalServerError, e)	        
-	// }
-	// options := paging.NewOptions()
-	// request, _ := http.NewRequest("GET", url, nil)
-
-	// log.Println("Request Filter is :", u.Filters)
-	
-	// Filters := make([]map[string]string, len(u.Filters))
-	// for i,_ := range u.Filters {
-	// 	fields := map[string]string{
-	// 		"key": u.Filters[i].Key,
-	// 		"operation": u.Filters[i].Operation,
-	// 		"value": u.Filters[i].Value,
-	// 	}
-	//     Filters[i] = fields
-	// }
-
-	// var fakeFilters []map[string]string
-
-	// paginator,_ := paging.NewOffsetPaginator(store, request, options, u.SortField, u.SortOrder, fakeFilters)
-	// errp := paginator.PageProducts()
-	// if errp != nil {
-	//         e := fmt.Sprintf("%v",errp)
-	//         log.Println(e)
-	//         return echo.NewHTTPError(http.StatusInternalServerError, e)
-	// }
-
-	// log.Println("Products : ", PaginProducts)
-	// 
-	
-
-	// PaginProducts = make([]*models.PaginateProduks, GetCount)
 	
 	ok, _ := PaginateProd(u,co,&CountRows)
 

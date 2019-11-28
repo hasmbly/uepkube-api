@@ -9,7 +9,11 @@ import (
 	 "uepkube-api/db"
 	 "strconv"
 	 "uepkube-api/helpers"
-	 // "log"
+	 "log"
+
+	"bufio"
+	"encoding/base64"	
+	"io/ioutil"			 
 )
 // @Summary GetKubeById
 // @Tags Kube-Controller
@@ -55,11 +59,6 @@ func GetKube(c echo.Context) error {
 	}
 
 	for i,_ := range Kube {
-
-			if Kube[i].Photo != "" {
-				ImageBlob := Kube[i].Photo
-				Kube[i].Photo = "data:image/png;base64," + ImageBlob	
-			}
 		
 		helpers.SetMemberNameKube(&ShowKubes, Kube[i])
 
@@ -188,10 +187,71 @@ func DeleteKube(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
+	// delete kube
 	if err := con.Delete(&kube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	// delete kube_photo
+	if err := con.Where("id_kube = ?", kube.Id_kube).Delete(models.Tbl_kube_photo{}).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	defer con.Close()
 
 	r := &models.Jn{Msg: "Success Delete Data"	}
 	return c.JSON(http.StatusOK, r)	
+}
+
+
+func UploadKubeFiles(c echo.Context) (err error) {
+	id, _ 		:= strconv.Atoi(c.QueryParam("id"))
+	is_display, _ 	:= strconv.Atoi(c.QueryParam("is_display"))
+
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
+
+	// Multipart form
+	form, err := c.MultipartForm()
+	if err != nil {
+		return err
+	}
+
+	files := form.File["photo"]
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	log.Println("files : ", len(files))
+
+	for _,f := range files {
+
+		src, err := f.Open()
+		if err != nil {
+			return err
+		}
+		defer src.Close()
+
+	    // Read entire JPG into byte slice.
+	    reader := bufio.NewReader(src)
+	    content, _ := ioutil.ReadAll(reader)
+
+	    // Encode as base64.
+	    encoded := base64.StdEncoding.EncodeToString(content)
+		
+		// init photo model
+		photo := &models.Tbl_kube_photo{}
+
+		photo.Id_kube = id
+		photo.Is_display = is_display
+		photo.Photo   = encoded
+
+		if err := con.Create(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+		
+	}
+	
+	defer con.Close()
+
+	log.Println("Uploads Kube's file to id : ", id)
+	r := &models.Jn{Msg: "Success Upload files"}
+	return c.JSON(http.StatusOK, r)
+	
 }

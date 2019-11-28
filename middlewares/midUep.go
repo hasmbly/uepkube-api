@@ -6,7 +6,7 @@ import (
 	"uepkube-api/helpers"
 )
 
-var UepRoles = []string{"PENDAMPING_UEP", "VERIFIKATOR"}
+var UepRoles = []string{"PENDAMPING_UEP", "VERIFIKATOR", "ADMINISTRATOR"}
 
 // Middleware Check UEP roles
 func CheckUepRoles(next echo.HandlerFunc) echo.HandlerFunc {

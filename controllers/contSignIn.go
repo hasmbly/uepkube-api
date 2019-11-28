@@ -18,7 +18,7 @@ type ResSignin struct{
 	Id_user int `json:"id_user"`
 	Nama string `json:"nama"`
 	Username string `json:"usernane"`
-	Group_account string `json:"roles"`
+	Roles_name string `json:"roles"`
 }
 
 // @Summary SignIn
@@ -53,12 +53,12 @@ func SignIn(c echo.Context) error {
     if err := bcrypt.CompareHashAndPassword([]byte(signin.Password),[]byte(p));err != nil {return echo.NewHTTPError(http.StatusBadRequest, "Wrong Password")}
 
     // join+get user detail
-	if err := con.Table("tbl_account").Select("tbl_user.nama, tbl_group_account.group_account, tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_account.id_user").Joins("join tbl_group_account on tbl_group_account.id_group = tbl_account.id_group").Where(&models.Tbl_account{Username:u}).Scan(&ressignin).Error; gorm.IsRecordNotFoundError(err) {return echo.NewHTTPError(http.StatusNotFound, "Data Not Found")}
+	if err := con.Table("tbl_account").Select("tbl_user.nama, tbl_roles.roles_name").Joins("join tbl_user on tbl_user.id_user = tbl_account.id_user").Joins("join tbl_roles on tbl_roles.id = tbl_account.id_roles").Where(&models.Tbl_account{Username:u}).Scan(&ressignin).Error; gorm.IsRecordNotFoundError(err) {return echo.NewHTTPError(http.StatusNotFound, "Data Not Found")}
 
 	// Set custom claims for UEP
 	claims := &models.Claims{
 		ressignin.Nama,
-		ressignin.Group_account,
+		ressignin.Roles_name,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		},
