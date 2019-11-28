@@ -108,7 +108,7 @@ Uep struct{
 
 Kube struct{
 	*Tbl_kube
-	// Photo 		 	[]Tbl_kube_photo 	`json:"photo"`
+	Photo 		 	[]Tbl_kube_photo 	`json:"photo"`
 }
 
 Pendamping struct{
@@ -119,7 +119,7 @@ Pendamping struct{
 	Password			string 		`json:"password"`
 	Jenis_pendamping	string 		`json:"jenis_pendamping"`
 	Periode 			string 		`json:"periode"`
-	// Photo 		 		[]Tbl_user_photo 	`json:"photo"`
+	Photo 		 		[]Tbl_user_photo 	`json:"photo"`
 }
 
 Verifikator struct{
@@ -128,7 +128,7 @@ Verifikator struct{
 	Roles_name			string 		`json:"roles_name"`
 	Username			string 		`json:"username"`
 	Password			string 		`json:"password"`
-	// Photo 		 		[]Tbl_user_photo 	`json:"photo"`
+	Photo 		 		[]Tbl_user_photo 	`json:"photo"`
 }
 
  Ktype struct {

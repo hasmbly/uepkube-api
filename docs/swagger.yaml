@@ -77,6 +77,10 @@ definitions:
         type: string
       pendamping:
         type: integer
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_kube_photo'
+        type: array
       sekertaris:
         type: integer
       status:
@@ -131,6 +135,10 @@ definitions:
         type: string
       periode:
         type: string
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_user_photo'
+        type: array
       roles_name:
         type: string
       tempat_lahir:
@@ -161,6 +169,28 @@ definitions:
         type: string
       sortOrder:
         example: desc
+        type: string
+    type: object
+  models.Tbl_kube_photo:
+    properties:
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      is_display:
+        type: integer
+      photo:
+        type: string
+    type: object
+  models.Tbl_user_photo:
+    properties:
+      id:
+        type: integer
+      id_user:
+        type: integer
+      is_display:
+        type: integer
+      photo:
         type: string
     type: object
   models.Uep:
@@ -256,6 +286,10 @@ definitions:
         type: string
       password:
         type: string
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_user_photo'
+        type: array
       roles_name:
         type: string
       tempat_lahir:

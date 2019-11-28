@@ -878,6 +878,12 @@
                 "pendamping": {
                     "type": "integer"
                 },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_kube_photo"
+                    }
+                },
                 "sekertaris": {
                     "type": "integer"
                 },
@@ -959,6 +965,12 @@
                 "periode": {
                     "type": "string"
                 },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_user_photo"
+                    }
+                },
                 "roles_name": {
                     "type": "string"
                 },
@@ -1003,6 +1015,40 @@
                 "sortOrder": {
                     "type": "string",
                     "example": "desc"
+                }
+            }
+        },
+        "models.Tbl_kube_photo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "is_display": {
+                    "type": "integer"
+                },
+                "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_user_photo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "id_user": {
+                    "type": "integer"
+                },
+                "is_display": {
+                    "type": "integer"
+                },
+                "photo": {
+                    "type": "string"
                 }
             }
         },
@@ -1144,6 +1190,12 @@
                 },
                 "password": {
                     "type": "string"
+                },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_user_photo"
+                    }
                 },
                 "roles_name": {
                     "type": "string"
