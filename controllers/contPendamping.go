@@ -8,6 +8,7 @@ import (
 	 _"github.com/jinzhu/gorm/dialects/mysql"
 	 "uepkube-api/db"
 	 "uepkube-api/models"
+	 "uepkube-api/helpers"
 	 "log"
 )
 
@@ -158,5 +159,12 @@ func UpdatePendamping(c echo.Context) (err error) {
 	defer con.Close()
 
 	r := &models.Jn{Msg: "Success Update Data"}
+	return c.JSON(http.StatusOK, r)
+}
+
+func GetPaginatePendamping(c echo.Context) (err error) {	
+	if err := helpers.PaginatePendamping(c, &r); err != nil {
+		return err
+	}	
 	return c.JSON(http.StatusOK, r)
 }

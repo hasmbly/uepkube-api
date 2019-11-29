@@ -8,6 +8,7 @@ import (
 	 _"github.com/jinzhu/gorm/dialects/mysql"
 	 "uepkube-api/db"
 	 "uepkube-api/models"
+	 "uepkube-api/helpers"
 	 "log"
 )
 
@@ -44,7 +45,7 @@ func GetVerifikator(c echo.Context) error {
 
 		}
 	Verifikator.Photo = photo
-	
+
 	Verifikator.Password = "******"
 
 	r := &models.Jn{Msg: Verifikator}
@@ -139,5 +140,12 @@ func UpdateVerifikator(c echo.Context) (err error) {
 	defer con.Close()
 	
 	r := &models.Jn{Msg: "Success Update Data"}
+	return c.JSON(http.StatusOK, r)
+}
+
+func GetPaginateVerifikator(c echo.Context) (err error) {	
+	if err := helpers.PaginateVerifikator(c, &r); err != nil {
+		return err
+	}	
 	return c.JSON(http.StatusOK, r)
 }

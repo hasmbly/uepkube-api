@@ -7,7 +7,7 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	"log"
+	// "log"
 	"math"	
 )
 
@@ -37,7 +37,7 @@ func PaginateProduk(c echo.Context, r *models.ResPagin) (err error) {
 	if u.Page == 1 {f = true}
 	if u.Page == int(rtp) {la = true}
 
-	log.Println("Result is : ", ok)
+	// log.Println("Result is : ", ok)
 
 	*r = models.ResPagin{
 		Content:ok,
@@ -65,7 +65,6 @@ func PaginateProduk(c echo.Context, r *models.ResPagin) (err error) {
 
 func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.PaginateProduks, err error) {
 
-	// var UsahaProductsTemp []models.Tbl_usaha_produk
 	var UsahaProducts []models.Tbl_usaha_produk
 	var Products []*models.PaginateProduks
 
@@ -102,7 +101,7 @@ func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.Pa
 	}
 
 
-	log.Println("final_usaha_produk : ", UsahaProducts)
+	// log.Println("final_usaha_produk : ", UsahaProducts)
 
 	tmp := make([]*models.PaginateProduks, len(UsahaProducts) )
 
@@ -138,7 +137,7 @@ func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.Pa
 			tmp[i] = Products[0]
 	 	}
 
-	log.Println("Final Result is : ", tmp)
+	// log.Println("Final Result is : ", tmp)
 
 	defer con.Close()
 	return tmp, nil

@@ -12,12 +12,12 @@ import (
 	 "log"
 )
 
-// @Summary Paginate -> uep | kube | pendamping
+// @Summary Paginate -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu
 // @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
-// @Param key path string true "Key -> uep | kube | pendamping"
-// @Param uep body models.PosPagin true "Paginate ItemsUepKubePendamping"
+// @Param key path string true "Key -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu"
+// @Param sample body models.PosPagin true "Paginate ItemsUepKubePendamping| verifikator"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
@@ -41,9 +41,9 @@ func GetPaginateItems(c echo.Context) (err error) {
 	case "kube":
 		return GetPaginateKube(c)
 	case "pendamping":
-		// return UpdatePendamping(c)
+		return GetPaginatePendamping(c)
 	case "verifikator":
-		// return UpdateVerifikator(c)				
+		return GetPaginateVerifikator(c)		
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 
@@ -52,12 +52,13 @@ func GetPaginateItems(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary GetDetails -> uep | kube | pendamping | verifikator
+// @Summary GetDetails -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu
 // @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
-// @Param key path string true "Key -> uep | kube | pendamping | verifikator"
+// @Param key path string true "Key -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu"
 // @Param id query int true "int"
+// @Param for query int false "for (int) -> uep : 0 | kube : 1"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
@@ -82,6 +83,8 @@ func GetItems(c echo.Context) error {
 		return GetPendamping(c)
 	case "verifikator":
 		return GetVerifikator(c)
+	case "produk":
+		return GetProduk(c)		
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 	}
@@ -89,12 +92,12 @@ func GetItems(c echo.Context) error {
 	return nil
 }
 
-// @Summary Add -> uep | kube | pendamping | verifikator
+// @Summary Add -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu
 // @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
-// @Param key path string true "Key -> uep | kube | pendamping | verifikator "
-// @Param uep body models.Dummy true "Add ItemsUepKubePendamping"
+// @Param key path string true "Key -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu "
+// @Param sample body models.Dummy true "Add ItemsUepKubePendamping"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
@@ -120,7 +123,9 @@ func AddItems(c echo.Context) (err error) {
 	case "pendamping":
 		return AddPendamping(c)
 	case "verifikator":
-		return AddVerifikator(c)				
+		return AddVerifikator(c)		
+	case "produk":
+		return AddProduk(c)
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 
@@ -129,12 +134,12 @@ func AddItems(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary Update -> uep | kube | pendamping | verifikator
+// @Summary Update -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu
 // @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
-// @Param key path string true "Key -> uep | kube | pendamping | verifikator "
-// @Param uep body models.Dummy true "Update ItemsUepKubePendamping"
+// @Param key path string true "Key -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu "
+// @Param sample body models.Dummy true "Update ItemsUepKubePendamping"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
@@ -160,7 +165,9 @@ func UpdateItems(c echo.Context) (err error) {
 	case "pendamping":
 		return UpdatePendamping(c)
 	case "verifikator":
-		return UpdateVerifikator(c)				
+		return UpdateVerifikator(c)
+	case "produk":
+		return UpdateProduk(c)	
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 
@@ -169,12 +176,12 @@ func UpdateItems(c echo.Context) (err error) {
 	return nil
 }
 
-// @Summary Delete -> uep | kube | pendamping | verifikator
+// @Summary Delete -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu
 // @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
-// @Param key path string true "Key -> uep | kube | pendamping | verifikator "
-// @Param id path int true "Id -> uep | kube | pendamping | verifikator "
+// @Param key path string true "Key -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu "
+// @Param id path int true "Id -> uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu "
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
@@ -193,14 +200,12 @@ func DeleteItems(c echo.Context) (err error) {
 
 	switch key {
 
-	case "uep":
+	case "uep": // for uep,pendamping,verifikator
 		return DeleteUep(c)
 	case "kube":
 		return DeleteKube(c)
-	case "pendamping":
-		// return DeletePendamping(c)
-	case "verifikator":
-		// return DeleteVerifikator(c)				
+	case "produk":
+		return DeleteProduk(c)				
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 

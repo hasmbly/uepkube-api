@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	// "net/http"
+	"net/http"
 	"github.com/labstack/echo"
-	// "github.com/jinzhu/gorm"
-	//  _"github.com/jinzhu/gorm/dialects/mysql"
-	//  "uepkube-api/models"
-	//  "uepkube-api/db"
-	//  "strconv"
+	"github.com/jinzhu/gorm"
+	 _"github.com/jinzhu/gorm/dialects/mysql"
+	 "uepkube-api/db"
+	 "uepkube-api/models"
+	 "strconv"
 	 // "uepkube-api/helpers"
 	 // "log"
 )
@@ -24,40 +24,86 @@ import (
 @Failure 500 {object} models.HTTPError
 @Router /produk [get]*/
 func GetProduk(c echo.Context) error {
-	/*prepare DB*/
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)	
+	id 		:= c.QueryParam("id")
+	For, _	:= strconv.Atoi(c.QueryParam("for"))
 
-	// var val string
-	// Produk 	:= models.Tbl_produk{}
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// /*check if query key -> "val"*/
-	// qk := c.QueryParams()
-	// for k,v := range qk {
-	// 	if k == "val" {
-	// 		val = v[0]
-	// 		/*find produk by Nama_produk:*/
-	// 		if err := con.Where("nama_produk LIKE ?", "%" + val + "%").First(&Produk).Error; gorm.IsRecordNotFoundError(err)  {
-	// 			return echo.NewHTTPError(http.StatusNotFound, "Produk Not Found")
-	// 		}		
-	// 	} else if k == "id" {
-	// 		val = v[0]
-	// 		id,_ := strconv.Atoi(val)
-	// 		/*find produk by Nama_produk:*/
-	// 		if err := con.Where(&models.Tbl_produk{Id_produk:id}).First(&Produk).Error; gorm.IsRecordNotFoundError(err)  {
-	// 			return echo.NewHTTPError(http.StatusNotFound, "Produk Not Found")
-	// 		}			
-	// 	}
-	// }
+	Produks := models.ShowProduks{}
 
-	// helpers.SetMemberNameProduk(&Kt, Produk)
+	var flag int = int(For) // flag uep : 0 | kube : 1
+	var id_uep []int
+	var id_kube []int
 
-	// r := &models.Jn{Msg: Kt}
+	if flag == 0 {
+		q1 := con
+		q1 = q1.Table("tbl_usaha_produk t1")
+		q1 = q1.Where("t1.id_uep = ?", id)
+		q1 = q1.Pluck("t1.id_uep", &id_uep)
+		if len(id_uep) != 0 { flag = 0 }
+	} else if flag == 1 {
+		q2 := con
+		q2 = q2.Table("tbl_usaha_produk t1")
+		q2 = q2.Where("t1.id_kube = ?", id)
+		q2 = q2.Pluck("t1.id_kube", &id_kube)
+		if len(id_kube) != 0 { flag = 1 }
+	}
 
-	// defer con.Close()
-	// return c.JSON(http.StatusOK, r)
-	return nil
+
+	// query uep or kube
+	q := con
+	q = q.Table("tbl_usaha_produk t1")
+
+	if flag == 0 {
+		q = q.Select(
+			"t1.id,t2.nama,t2.alamat,t2.no_hp,t3.nama_produk,t3.deskripsi,t4.jenis_usaha")
+		q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
+		q = q.Joins("join tbl_jenis_usaha t4 on t4.id_usaha = t1.id_usaha")
+		q = q.Joins("join tbl_produk t3 on t3.id_produk = t1.id_produk")
+		q = q.Joins("join tbl_produk_photo t5 on t5.id_produk = t1.id_produk")
+		q = q.Where("t1.id_uep = ?", id)
+
+		if ErrNo := q.Scan(&Produks); ErrNo.Error != nil { 
+			return echo.ErrNotFound
+		}
+
+		// get All photo
+		var photos []string
+		q3 := con
+		q3 = q3.Table("tbl_usaha_produk t1")
+		q3 = q3.Joins("join tbl_produk_photo t2 on t2.id_produk = t1.id_produk")
+		q3 = q3.Where("t1.id_uep = ?", id)
+		q3 = q3.Pluck("t2.photo", &photos)
+
+		// log.Println("photos : ", photos)
+
+		for i,_ := range photos {
+			ImageBlob := photos[i]
+			photos[i] = "data:image/png;base64," + ImageBlob
+			Produks.Photo = append(Produks.Photo, photos[i])
+		}
+
+	} else if flag == 1 {
+		q = q.Select(
+			"t1.id,tbl_kube.nama_kube as nama,tbl_user.alamat,tbl_user.no_hp,tbl_produk.nama_produk,tbl_produk.deskripsi,tbl_jenis_usaha.jenis_usaha,tbl_produk_photo.photo")
+		q = q.Joins("join tbl_kube on tbl_kube.id_kube = t1.id_kube")
+		q = q.Joins("join tbl_user on tbl_user.id_user = tbl_kube.ketua")
+		q = q.Joins("join tbl_jenis_usaha on tbl_jenis_usaha.id_usaha = t1.id_usaha")
+		q = q.Joins("join tbl_produk on tbl_produk.id_produk = t1.id_produk")
+		q = q.Joins("join tbl_produk_photo on tbl_produk_photo.id_produk = t1.id_produk")
+		q = q.Where("t1.id_kube = ?", id)
+
+		if ErrNo := q.Scan(&Produks); ErrNo.Error != nil { 
+			return echo.ErrNotFound
+		}
+	}
+
+	r := &models.Jn{Msg: Produks}
+	defer con.Close()
+
+	return c.JSON(http.StatusOK, r)
 }
 
 /*@Summary GetPaginateProduk
@@ -93,22 +139,25 @@ func GetPaginateProduk(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /produk/add [post]*/
 func AddProduk(c echo.Context) (err error) {
-	// produk := &models.Tbl_produk{}
+	produk := &models.Produk{}
 
-	// if err := c.Bind(produk); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(produk); err != nil {
+		return err
+	}
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	usaha_produk := &models.Tbl_usaha_produk{}
+	usaha_produk = produk.Tbl_usaha_produk
 
-	// if err := con.Create(&produk).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// defer con.Close()
+	if err := con.Create(&usaha_produk).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// r := &models.Jn{Msg: "Success Store Data"}
-	// return c.JSON(http.StatusOK, r)
+	defer con.Close()
+
+	r := &models.Jn{Msg: "Success Store Data"}
+	return c.JSON(http.StatusOK, r)
 	return nil
 }
 
@@ -125,33 +174,38 @@ func AddProduk(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /produk [put]*/
 func UpdateProduk(c echo.Context) (err error) {
-	// produk := &models.Tbl_produk{}
+	produk := &models.Produk{}
 
-	// if err := c.Bind(produk); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(produk); err != nil {
+		return err
+	}
 
-	// if produk.Id_produk == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
-	// }
+	if produk.Id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
+	}
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	if produk.Id_uep == 0 && produk.Id_kube == 0  {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id uep or kube")
+	}
 
-	// if err := con.Model(&models.Tbl_produk{}).UpdateColumns(&produk).Error; err != nil {
-	// 	return echo.ErrInternalServerError
-	// }
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// if err := con.Table("tbl_produk").Where("id_produk = ?",produk.Id_produk).UpdateColumn("status", produk.Status).Error; err != nil {return echo.ErrInternalServerError}
 
-	// defer con.Close()
+	// update user
+	usaha_produk := &models.Tbl_usaha_produk{}
+	usaha_produk = produk.Tbl_usaha_produk
 
-	// r := &models.Jn{Msg: "Success Update Data"}
-	// return c.JSON(http.StatusOK, r)
-	return nil	
+	if err := con.Model(&models.Tbl_usaha_produk{}).UpdateColumns(&usaha_produk).Error; err != nil {
+		return echo.ErrInternalServerError
+	}
+
+	defer con.Close()
+
+	r := &models.Jn{Msg: "Success Update Data"}
+	return c.JSON(http.StatusOK, r)
 }
-
 /*@Summary DeleteProduk
 @Tags Produk-Controller
 @Accept  json
@@ -165,24 +219,23 @@ func UpdateProduk(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /produk/{id} [post]*/
 func DeleteProduk(c echo.Context) (err error) {
-	// id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	// if id == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
-	// }
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
 
-	// produk := &models.Tbl_produk{}
-	// produk.Id_produk = id
+	produk := &models.Tbl_usaha_produk{}
+	produk.Id = id
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// if err := con.Delete(&produk).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Delete(&produk).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// defer con.Close()
+	defer con.Close()
 
-	// r := &models.Jn{Msg: "Success Delete Data"	}
-	// return c.JSON(http.StatusOK, r)	
-	return nil
+	r := &models.Jn{Msg: "Success Delete Data"	}
+	return c.JSON(http.StatusOK, r)	
 }

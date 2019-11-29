@@ -13,7 +13,7 @@
         },
         "version": "1.0"
     },
-    "host": "157.245.55.185:9093",
+    "host": "localhost:9093",
     "basePath": "/api/v1",
     "paths": {
         "/add/{key}": {
@@ -32,18 +32,18 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Add -\u003e uep | kube | pendamping | verifikator",
+                "summary": "Add -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator ",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu ",
                         "name": "key",
                         "in": "path",
                         "required": true
                     },
                     {
                         "description": "Add ItemsUepKubePendamping",
-                        "name": "uep",
+                        "name": "sample",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -507,11 +507,11 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "GetDetails -\u003e uep | kube | pendamping | verifikator",
+                "summary": "GetDetails -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
                         "name": "key",
                         "in": "path",
                         "required": true
@@ -522,6 +522,12 @@
                         "name": "id",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "for (int) -\u003e uep : 0 | kube : 1",
+                        "name": "for",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -572,18 +578,18 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Update -\u003e uep | kube | pendamping | verifikator",
+                "summary": "Update -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator ",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu ",
                         "name": "key",
                         "in": "path",
                         "required": true
                     },
                     {
                         "description": "Update ItemsUepKubePendamping",
-                        "name": "uep",
+                        "name": "sample",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -640,18 +646,18 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Paginate -\u003e uep | kube | pendamping",
+                "summary": "Paginate -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
                         "name": "key",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": "Paginate ItemsUepKubePendamping",
-                        "name": "uep",
+                        "description": "Paginate ItemsUepKubePendamping| verifikator",
+                        "name": "sample",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -710,18 +716,18 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Delete -\u003e uep | kube | pendamping | verifikator",
+                "summary": "Delete -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator ",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu ",
                         "name": "key",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "Id -\u003e uep | kube | pendamping | verifikator ",
+                        "description": "Id -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu ",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -773,6 +779,10 @@
                 "pendamping": {
                     "type": "object",
                     "$ref": "#/definitions/models.Pendamping"
+                },
+                "produk": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Produk"
                 },
                 "uep": {
                     "type": "object",
@@ -1015,6 +1025,32 @@
                 "sortOrder": {
                     "type": "string",
                     "example": "desc"
+                }
+            }
+        },
+        "models.Produk": {
+            "type": "object",
+            "properties": {
+                "created_by": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "id_produk": {
+                    "type": "integer"
+                },
+                "id_uep": {
+                    "type": "integer"
+                },
+                "id_usaha": {
+                    "type": "integer"
+                },
+                "updated_by": {
+                    "type": "string"
                 }
             }
         },

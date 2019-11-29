@@ -8,6 +8,9 @@ definitions:
       pendamping:
         $ref: '#/definitions/models.Pendamping'
         type: object
+      produk:
+        $ref: '#/definitions/models.Produk'
+        type: object
       uep:
         $ref: '#/definitions/models.Uep'
         type: object
@@ -171,6 +174,23 @@ definitions:
         example: desc
         type: string
     type: object
+  models.Produk:
+    properties:
+      created_by:
+        type: string
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      id_produk:
+        type: integer
+      id_uep:
+        type: integer
+      id_usaha:
+        type: integer
+      updated_by:
+        type: string
+    type: object
   models.Tbl_kube_photo:
     properties:
       id:
@@ -303,7 +323,7 @@ definitions:
       wa:
         type: string
     type: object
-host: 157.245.55.185:9093
+host: localhost:9093
 info:
   contact:
     email: justhasby@gmail.com
@@ -320,7 +340,8 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: Key -> uep | kube | pendamping | verifikator
+      - description: Key -> uep | kube | pendamping | verifikator | produk | pelatihan
+          | activity | inventaris | laporanKeu
         in: path
         name: key
         required: true
@@ -329,6 +350,10 @@ paths:
         in: query
         name: id
         required: true
+        type: integer
+      - description: 'for (int) -> uep : 0 | kube : 1'
+        in: query
+        name: for
         type: integer
       produces:
       - application/json
@@ -355,21 +380,23 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: GetDetails -> uep | kube | pendamping | verifikator
+      summary: GetDetails -> uep | kube | pendamping | verifikator | produk | pelatihan
+        | activity | inventaris | laporanKeu
       tags:
       - Universal-Controller
     post:
       consumes:
       - application/json
       parameters:
-      - description: Key -> uep | kube | pendamping
+      - description: Key -> uep | kube | pendamping | verifikator | produk | pelatihan
+          | activity | inventaris | laporanKeu
         in: path
         name: key
         required: true
         type: string
-      - description: Paginate ItemsUepKubePendamping
+      - description: Paginate ItemsUepKubePendamping| verifikator
         in: body
-        name: uep
+        name: sample
         required: true
         schema:
           $ref: '#/definitions/models.PosPagin'
@@ -399,21 +426,23 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: Paginate -> uep | kube | pendamping
+      summary: Paginate -> uep | kube | pendamping | verifikator | produk | pelatihan
+        | activity | inventaris | laporanKeu
       tags:
       - Universal-Controller
     put:
       consumes:
       - application/json
       parameters:
-      - description: 'Key -> uep | kube | pendamping | verifikator '
+      - description: 'Key -> uep | kube | pendamping | verifikator | produk | pelatihan
+          | activity | inventaris | laporanKeu '
         in: path
         name: key
         required: true
         type: string
       - description: Update ItemsUepKubePendamping
         in: body
-        name: uep
+        name: sample
         required: true
         schema:
           $ref: '#/definitions/models.Dummy'
@@ -443,7 +472,8 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: Update -> uep | kube | pendamping | verifikator
+      summary: Update -> uep | kube | pendamping | verifikator | produk | pelatihan
+        | activity | inventaris | laporanKeu
       tags:
       - Universal-Controller
   /{key}/{id}:
@@ -451,12 +481,14 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 'Key -> uep | kube | pendamping | verifikator '
+      - description: 'Key -> uep | kube | pendamping | verifikator | produk | pelatihan
+          | activity | inventaris | laporanKeu '
         in: path
         name: key
         required: true
         type: string
-      - description: 'Id -> uep | kube | pendamping | verifikator '
+      - description: 'Id -> uep | kube | pendamping | verifikator | produk | pelatihan
+          | activity | inventaris | laporanKeu '
         in: path
         name: id
         required: true
@@ -486,7 +518,8 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: Delete -> uep | kube | pendamping | verifikator
+      summary: Delete -> uep | kube | pendamping | verifikator | produk | pelatihan
+        | activity | inventaris | laporanKeu
       tags:
       - Universal-Controller
   /add/{key}:
@@ -494,14 +527,15 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 'Key -> uep | kube | pendamping | verifikator '
+      - description: 'Key -> uep | kube | pendamping | verifikator | produk | pelatihan
+          | activity | inventaris | laporanKeu '
         in: path
         name: key
         required: true
         type: string
       - description: Add ItemsUepKubePendamping
         in: body
-        name: uep
+        name: sample
         required: true
         schema:
           $ref: '#/definitions/models.Dummy'
@@ -531,7 +565,8 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: Add -> uep | kube | pendamping | verifikator
+      summary: Add -> uep | kube | pendamping | verifikator | produk | pelatihan |
+        activity | inventaris | laporanKeu
       tags:
       - Universal-Controller
   /auth/signin:

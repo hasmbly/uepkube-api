@@ -19,20 +19,8 @@ var (
 	// paginate produks
 	PaginProducts = []models.PaginateProduks{}
 
-	// paginate produks Uep
-	PaginProductsUep = []*models.PaginateProduksUep{}
-
-	// paginate produks Kube
-	PaginProductsKube = []*models.PaginateProduksKube{}		
-
 	// usaha-produk
 	UsahaProducts = []*models.Tbl_usaha_produk{}
-
-	// uep-produk
-	UepProduks = []*models.Tbl_usaha_produk_uep{}
-
-	// kube-produk
-	KubeProduks = []*models.Tbl_usaha_produk_kube{}
 
 	// kubes
 	kubes = []*models.Tbl_kube{}
