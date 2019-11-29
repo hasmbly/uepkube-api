@@ -19,6 +19,7 @@ type ResSignin struct{
 	Nama string `json:"nama"`
 	Username string `json:"usernane"`
 	Roles_name string `json:"roles"`
+	Roles_access string `json:"roles_access"`
 }
 
 // @Summary SignIn
@@ -76,6 +77,14 @@ func SignIn(c echo.Context) error {
 	ressignin.TokenType = "Bearer"
 	ressignin.Username = signin.Username
 	ressignin.Id_user = signin.Id_user
+
+	if ressignin.Roles_name == "VERIFIKATOR" {
+		ressignin.Roles_access = "UEP_KUBE"
+	} else if ressignin.Roles_name == "PENDAMPING_KUBE" {
+		ressignin.Roles_access = "KUBE"
+	} else if ressignin.Roles_name == "PENDAMPING_UEP" {
+		ressignin.Roles_access = "UEP"
+	}
 
 	defer con.Close()
     return c.JSON(http.StatusOK, ressignin)
