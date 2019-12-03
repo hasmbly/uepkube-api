@@ -981,6 +981,9 @@
                 "id_kube": {
                     "type": "integer"
                 },
+                "id_pendamping": {
+                    "type": "integer"
+                },
                 "ig": {
                     "type": "string"
                 },
@@ -992,9 +995,6 @@
                 },
                 "nama_usaha": {
                     "type": "string"
-                },
-                "pendamping": {
-                    "type": "integer"
                 },
                 "photo": {
                     "type": "array",

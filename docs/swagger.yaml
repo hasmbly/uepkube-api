@@ -75,6 +75,8 @@ definitions:
         type: integer
       id_kube:
         type: integer
+      id_pendamping:
+        type: integer
       ig:
         type: string
       ketua:
@@ -83,8 +85,6 @@ definitions:
         type: string
       nama_usaha:
         type: string
-      pendamping:
-        type: integer
       photo:
         items:
           $ref: '#/definitions/models.Tbl_kube_photo'

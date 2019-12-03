@@ -81,7 +81,7 @@ Tbl_uep struct {
 	Anggota5     	int 	`json:"anggota5" sql:"DEFAULT:NULL"`
 	Anggota6     	int 	`json:"anggota6" sql:"DEFAULT:NULL"`
 	Anggota7     	int 	`json:"anggota7" sql:"DEFAULT:NULL"`
-	Pendamping		int 	`json:"pendamping" sql:"DEFAULT:NULL"`
+	Id_pendamping	int 	`json:"id_pendamping" sql:"DEFAULT:NULL"`
 	Status       	int 	`json:"status" sql:"default:0"`
 	Ig 				string 		`json:"ig"`
 	Fb 				string 		`json:"fb"`
@@ -417,8 +417,8 @@ PaginateKubes struct{
 	Bantuan_modal	int 	`json:"bantuan_modal"`
 	Status 		 	int 	`json:"status"`
 	Created_at 		*time.Time 	`json:"created_at"`
-	// Pendamping 		CustomPendamping 	`json:"pendamping"`
-	// Usaha 			UsahaKube 		`json:"usaha"`
+	Pendamping 		CustomPendamping 	`json:"pendamping"`
+	Usaha 			UsahaKube 		`json:"usaha"`
 }
 
 PaginateUep struct{

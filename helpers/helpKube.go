@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"net/http"
+	// "net/http"
 	"github.com/labstack/echo"
 	"github.com/jinzhu/gorm"
 	_"github.com/jinzhu/gorm/dialects/mysql"
@@ -9,9 +9,9 @@ import (
 	"uepkube-api/db"
 	"github.com/fatih/structs"
 	"fmt"
-	"log"
+	// "log"
 	"strconv"
-	"github.com/ulule/paging"
+	// "github.com/ulule/paging"
 	"math"
 )
 
@@ -100,63 +100,30 @@ func PaginateKube(c echo.Context, r *models.ResPagin) (err error) {
 	u := &models.PosPagin{}
 	num := 1
 
+	// GetLoggedUser(c,"roles")
+
 	if err := c.Bind(u); err != nil {
 		return err
 	}
 
-	limit := strconv.FormatInt(int64(u.Size), 10)
 	var co int = (u.Page - num) * u.Size
-	offset := strconv.FormatInt(int64(co), 10)
-	url := "http://localhost:9000/api/v1/kube?limit="+limit+"&offset="+offset
-
-	con, err := db.CreateCon()
-	if err != nil { return echo.ErrInternalServerError }
-	con.SingularTable(true)
-
-	store, err := paging.NewGORMStore(con, "tbl_kube", &kubes)
-	if err != nil {
-	        e := fmt.Sprintf("%v",err)
-	        log.Println(e)
-	        return echo.NewHTTPError(http.StatusInternalServerError, e)
-	}
-	options := paging.NewOptions()
-	request, _ := http.NewRequest("GET", url, nil)
-
-	filters := make([]map[string]string, len(u.Filters))
-	for i,_ := range u.Filters {
-		fields := map[string]string{
-			"key": u.Filters[i].Key,
-			"operation": u.Filters[i].Operation,
-			"value": u.Filters[i].Value,
-		}
-	    filters[i] = fields
-	}
 	
-	paginator,_ := paging.NewOffsetPaginator(store, request, options, u.SortField, u.SortOrder, filters)
+	PaginateResult, _ := ExecPaginateKube(u,co,&CountRows)
 
-	errp := paginator.Page()
-	if errp != nil {
-	        e := fmt.Sprintf("%v",errp)
-	        log.Println(e)
-	        return echo.NewHTTPError(http.StatusInternalServerError, e)
-	}
-
-	l 	:= paginator.Limit
-	o 	:= paginator.Offset
-	t 	:= paginator.Count
-	f 	:= false
-	la 	:= false
-	tp 	:= float64(t)/float64(l)
-	rtp := math.Round(tp)
+	l := int64(u.Size)
+	o := int64(co)
+	t := CountRows
+	f := false
+	la := false
+	tp := float64(t)/float64(l)
+	rtp := math.Ceil(tp)
+	if rtp == 0 { rtp = rtp+1 }
 
 	if u.Page == 1 {f = true}
 	if u.Page == int(rtp) {la = true}
 
-	uu := make([]*models.PaginateKubes, len(kubes))
-	JoinKube(uu)
-
 	*r = models.ResPagin{
-		Content:uu,
+		Content:PaginateResult,
 		First:f,
 		Last:la,
 		Number:u.Page,
@@ -171,23 +138,107 @@ func PaginateKube(c echo.Context, r *models.ResPagin) (err error) {
 		Sort: models.Sort{
 			Sorted:true,
 			Unsorted:false,
-		},		
+		},
 		TotalPages:rtp,
 		TotalElements:t,		
 	}
-
 	return err
 }
 
-func JoinKube(ur []*models.PaginateKubes) (err error){
-	for i := range kubes{
-		ur[i] = &models.PaginateKubes{
-			kubes[i].Id_kube,
-			kubes[i].Nama_kube,
-			kubes[i].Bantuan_modal,
-			kubes[i].Status,
-			kubes[i].Created_at,
+func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models.PaginateKubes, err error) {
+
+	// var Pelatihans []models.Tbl_pendamping
+	kubes := []models.PaginateKubes{}
+
+	con, err := db.CreateCon()
+	if err != nil { return ur, echo.ErrInternalServerError }
+	con.SingularTable(true)	
+
+	q := con
+	q = q.Table("tbl_kube t1")
+	q = q.Limit(int(f.Size))
+	q = q.Offset(int(offset))
+	q = q.Select("t1.id_kube, t1.nama_kube, t1.bantuan_modal, t1.status, t1.created_at")
+	// q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
+	q = q.Joins("join tbl_jenis_usaha t3 on t3.id_usaha = t1.id_jenis_usaha")
+
+	for i,_ := range f.Filters {
+		k := f.Filters[i].Key
+		o := f.Filters[i].Operation
+		v := f.Filters[i].Value
+
+		if o == "LIKE" || o == "like" {
+			if v == "" { continue }
+			q = q.Where(fmt.Sprintf("%s %s",k,o) + "?", "%"+v+"%")
+		} else if o == ":" {
+			if v == "" { 
+				continue 
+			} else {
+			 	q = q.Where(fmt.Sprintf("%s ",k) + "=" + "?", v) 
+			}
 		}
-	 }
-	return err
+	}
+	q = q.Order(fmt.Sprintf("t1.%s %s",f.SortField,f.SortOrder))	
+	
+	q = q.Scan(&kubes)
+	q = q.Limit(-1)
+	q = q.Offset(-1)
+
+	// get Pendampings
+	if len(kubes) != 0 {
+		for i,_ := range kubes {
+			var id_pendamping []int
+			var pendamping models.CustomPendamping
+
+			con.Table("tbl_kube").Where("id_kube = ?", kubes[i].Id_kube).Pluck("id_pendamping", &id_pendamping)
+
+			if len(id_pendamping) != 0 {
+
+				for i,_ := range id_pendamping {
+					con.Table("tbl_pendamping").Select("tbl_pendamping.*, tbl_user.nama as nama_pendamping").Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Find(&pendamping)
+				}
+					kubes[i].Pendamping = pendamping
+			}
+		}
+	}
+
+	// get Usaha
+	if len(kubes) != 0 {
+		for i,_ := range kubes {
+			var kube_usaha models.UsahaKube
+ 			// var id_produk []int
+			var photos []models.Tbl_usaha_kube_photo
+
+			// log.Println("id_kube : ", kubes[i].Id_kube)
+			
+			q := con.Table("tbl_kube t1")
+			q = q.Select("t1.id_kube, t1.nama_usaha, t2.id_usaha, t2.jenis_usaha")
+			q = q.Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_jenis_usaha")
+			q = q.Where("t1.id_kube = ?", kubes[i].Id_kube)
+			q = q.Scan(&kube_usaha)
+
+			if kube_usaha.Id_usaha != 0 { kubes[i].Usaha = kube_usaha }
+
+			con.Table("tbl_usaha_kube_photo").Where("id_kube = ?", kubes[i].Id_kube).Find(&photos)
+
+			for index,_ := range photos {
+				ImageBlob := photos[index].Photo
+				photos[index].Photo = "data:image/png;base64," + ImageBlob			
+				kubes[i].Usaha.Photo = photos
+			}
+
+			// log.Println("photos : ", photos)
+			// log.Println("usaha : ", kubes[i].Usaha)
+			
+		}
+	}
+
+	if err := q.Count(count).Error; err != nil {
+		return ur, err
+	}
+
+	// log.Println("result : ", Pelatihans)
+
+	defer con.Close()
+	return kubes, nil
 }
