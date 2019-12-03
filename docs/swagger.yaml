@@ -649,6 +649,12 @@ paths:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: string
+        in: query
+        name: region
+        required: true
+        type: string
       produces:
       - application/json
       responses:

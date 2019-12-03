@@ -179,11 +179,11 @@ Tbl_faq struct{
 	Jawaban 	string 		`json:"jawaban"`
 }
 
-Tbl_address struct{
-	Id 			int 		`json:"id" gorm:"primary_key"`
-	Kabupaten 	string 		`json:"kabupaten"`
-	Kecamaatan 	string 		`json:"kecamatan"`
-	Kelurahan 	string 		`json:"kelurahan"`
+View_address struct{
+	Id_kabupaten 	int 		`json:"id_kabupaten"`
+	Id_kecamatan 	int 		`json:"id_kecamatan"`
+	Id_kelurahan 	string 		`json:"id_kelurahan"`
+	Region 			string 		`json:"region"`
 }
 
 /**

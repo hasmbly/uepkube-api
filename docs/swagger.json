@@ -160,6 +160,15 @@
                     "Lookup-Controller"
                 ],
                 "summary": "GetAllAddress",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "string",
+                        "name": "region",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

@@ -135,6 +135,7 @@ func GeAllFaq(c echo.Context) (err error) {
 // @Tags Lookup-Controller
 // @Accept  json
 // @Produce  json
+// @Param region query string true "string"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
@@ -142,14 +143,15 @@ func GeAllFaq(c echo.Context) (err error) {
 // @Failure 500 {object} models.HTTPError
 // @Router /lookup/address [get]
 func GeAllAddress(c echo.Context) (err error) {
-	address := []models.Tbl_address{}
+	region 	:= c.QueryParam("region")
+	address := []models.View_address{}
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
 	/*query user*/
-	if err := con.Find(&address).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Model(&models.View_address{}).Where("region like ?", "%"+region+"%").Find(&address).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 	
 	r := &models.Jn{Msg: address}
 
