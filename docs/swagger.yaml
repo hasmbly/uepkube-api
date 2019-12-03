@@ -5,6 +5,9 @@ definitions:
       kube:
         $ref: '#/definitions/models.Kube'
         type: object
+      pelatihan:
+        $ref: '#/definitions/models.Pelatihan'
+        type: object
       pendamping:
         $ref: '#/definitions/models.Pendamping'
         type: object
@@ -91,6 +94,27 @@ definitions:
       updated_by:
         type: string
       wa:
+        type: string
+    type: object
+  models.Pelatihan:
+    properties:
+      created_by:
+        type: string
+      deskripsi:
+        type: string
+      id_pelatihan:
+        type: integer
+      judul_pelatihan:
+        type: string
+      lokasi_pelatihan:
+        type: string
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_pelatihan_photo'
+        type: array
+      tanggal_pelatihan:
+        type: string
+      updated_by:
         type: string
     type: object
   models.Pendamping:
@@ -196,6 +220,17 @@ definitions:
       id:
         type: integer
       id_kube:
+        type: integer
+      is_display:
+        type: integer
+      photo:
+        type: string
+    type: object
+  models.Tbl_pelatihan_photo:
+    properties:
+      id:
+        type: integer
+      id_pelatihan:
         type: integer
       is_display:
         type: integer
@@ -610,6 +645,36 @@ paths:
       summary: SignIn
       tags:
       - Auth-Controller
+  /lookup/address:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      summary: GetAllAddress
+      tags:
+      - Lookup-Controller
   /lookup/faq:
     get:
       consumes:

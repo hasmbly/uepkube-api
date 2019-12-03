@@ -148,6 +148,52 @@
                 }
             }
         },
+        "/lookup/address": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lookup-Controller"
+                ],
+                "summary": "GetAllAddress",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Jn"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/lookup/faq": {
             "get": {
                 "consumes": [
@@ -776,6 +822,10 @@
                     "type": "object",
                     "$ref": "#/definitions/models.Kube"
                 },
+                "pelatihan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Pelatihan"
+                },
                 "pendamping": {
                     "type": "object",
                     "$ref": "#/definitions/models.Pendamping"
@@ -904,6 +954,38 @@
                     "type": "string"
                 },
                 "wa": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Pelatihan": {
+            "type": "object",
+            "properties": {
+                "created_by": {
+                    "type": "string"
+                },
+                "deskripsi": {
+                    "type": "string"
+                },
+                "id_pelatihan": {
+                    "type": "integer"
+                },
+                "judul_pelatihan": {
+                    "type": "string"
+                },
+                "lokasi_pelatihan": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_pelatihan_photo"
+                    }
+                },
+                "tanggal_pelatihan": {
+                    "type": "string"
+                },
+                "updated_by": {
                     "type": "string"
                 }
             }
@@ -1061,6 +1143,23 @@
                     "type": "integer"
                 },
                 "id_kube": {
+                    "type": "integer"
+                },
+                "is_display": {
+                    "type": "integer"
+                },
+                "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_pelatihan_photo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "id_pelatihan": {
                     "type": "integer"
                 },
                 "is_display": {

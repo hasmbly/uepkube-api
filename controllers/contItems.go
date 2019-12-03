@@ -43,7 +43,16 @@ func GetPaginateItems(c echo.Context) (err error) {
 	case "pendamping":
 		return GetPaginatePendamping(c)
 	case "verifikator":
-		return GetPaginateVerifikator(c)		
+		return GetPaginateVerifikator(c)
+	case "produk":
+		return GetPaginateProduk(c)
+	case "pelatihan":
+		return GetPaginatePelatihan(c)			
+	case "aktivitas":
+		return GetPaginateAktivitas(c)			
+	case "inventaris":
+		return GetPaginateInventaris(c)			
+
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 
@@ -84,7 +93,13 @@ func GetItems(c echo.Context) error {
 	case "verifikator":
 		return GetVerifikator(c)
 	case "produk":
-		return GetProduk(c)		
+		return GetProduk(c)
+	case "pelatihan":
+		return GetPelatihan(c)
+	case "aktivitas":
+		return GetAktivitas(c)
+	case "inventaris":
+		return GetInventaris(c)				
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 	}
@@ -123,9 +138,15 @@ func AddItems(c echo.Context) (err error) {
 	case "pendamping":
 		return AddPendamping(c)
 	case "verifikator":
-		return AddVerifikator(c)		
+		return AddVerifikator(c)
 	case "produk":
 		return AddProduk(c)
+	case "pelatihan":
+		return AddPelatihan(c)
+	case "aktivitas":
+		return AddInventaris(c)
+	case "inventaris":
+		return AddAktivitas(c)
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 
@@ -167,7 +188,13 @@ func UpdateItems(c echo.Context) (err error) {
 	case "verifikator":
 		return UpdateVerifikator(c)
 	case "produk":
-		return UpdateProduk(c)	
+		return UpdateProduk(c)
+	case "pelatihan":
+		return UpdatePelatihan(c)
+	case "aktivitas":
+		return UpdateAktivitas(c)
+	case "inventaris":
+		return UpdateInventaris(c)				
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 
@@ -205,7 +232,13 @@ func DeleteItems(c echo.Context) (err error) {
 	case "kube":
 		return DeleteKube(c)
 	case "produk":
-		return DeleteProduk(c)				
+		return DeleteProduk(c)
+	case "pelatihan":
+		return DeletePelatihan(c)
+	case "aktivitas":
+		return DeleteAktivitas(c)
+	case "inventaris":
+		return DeleteInventaris(c)				
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 

@@ -8,7 +8,7 @@ import (
 	 "uepkube-api/db"
 	 "uepkube-api/models"
 	 "strconv"
-	 // "uepkube-api/helpers"
+	 "uepkube-api/helpers"
 	 // "log"
 )
 
@@ -70,18 +70,19 @@ func GetProduk(c echo.Context) error {
 		}
 
 		// get All photo
-		var photos []string
+		var photos []models.Tbl_produk_photo
 		q3 := con
 		q3 = q3.Table("tbl_usaha_produk t1")
 		q3 = q3.Joins("join tbl_produk_photo t2 on t2.id_produk = t1.id_produk")
 		q3 = q3.Where("t1.id_uep = ?", id)
-		q3 = q3.Pluck("t2.photo", &photos)
+		q3 = q3.Select("t2.id_produk, t2.id, t2.is_display, t2.photo")
+		q3 = q3.Scan(&photos)
 
 		// log.Println("photos : ", photos)
 
 		for i,_ := range photos {
-			ImageBlob := photos[i]
-			photos[i] = "data:image/png;base64," + ImageBlob
+			ImageBlob := photos[i].Photo
+			photos[i].Photo = "data:image/png;base64," + ImageBlob
 			Produks.Photo = append(Produks.Photo, photos[i])
 		}
 
@@ -98,6 +99,23 @@ func GetProduk(c echo.Context) error {
 		if ErrNo := q.Scan(&Produks); ErrNo.Error != nil { 
 			return echo.ErrNotFound
 		}
+
+		// get All photo
+		var photos []models.Tbl_produk_photo
+		q3 := con
+		q3 = q3.Table("tbl_usaha_produk t1")
+		q3 = q3.Joins("join tbl_produk_photo t2 on t2.id_produk = t1.id_produk")
+		q3 = q3.Where("t1.id_kube = ?", id)
+		q3 = q3.Select("t2.id_produk, t2.id, t2.is_display, t2.photo")
+		q3 = q3.Scan(&photos)
+
+		// log.Println("photos : ", photos)
+
+		for i,_ := range photos {
+			ImageBlob := photos[i].Photo
+			photos[i].Photo = "data:image/png;base64," + ImageBlob
+			Produks.Photo = append(Produks.Photo, photos[i])
+		}		
 	}
 
 	r := &models.Jn{Msg: Produks}
@@ -119,11 +137,10 @@ func GetProduk(c echo.Context) error {
 @security ApiKeyAuth
 @Router /produk [post]*/
 func GetPaginateProduk(c echo.Context) (err error) {
-	// if err := helpers.PaginateProduk(c, &r); err != nil {
-	// 	return echo.ErrInternalServerError
-	// }
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	if err := helpers.PaginateProduk(c, &r); err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, r)
 }
 
 /*@Summary AddProduk
@@ -158,7 +175,6 @@ func AddProduk(c echo.Context) (err error) {
 
 	r := &models.Jn{Msg: "Success Store Data"}
 	return c.JSON(http.StatusOK, r)
-	return nil
 }
 
 /*@Summary UpdateProduk

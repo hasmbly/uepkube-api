@@ -89,9 +89,10 @@ func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.Pa
 				up = up.Where("id_produk = ?", id_produk[0])				
 				for i,_ := range id_produk {				
 					up = up.Or("id_produk = ?", id_produk[i])
-				}
+			}
 		}		
 	}	
+
 	up = up.Scan(&UsahaProducts)
 	up = up.Limit(-1)
 	up = up.Offset(-1)
@@ -100,7 +101,6 @@ func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.Pa
 		return ur, err
 	}
 
-
 	// log.Println("final_usaha_produk : ", UsahaProducts)
 
 	tmp := make([]*models.PaginateProduks, len(UsahaProducts) )
@@ -108,6 +108,7 @@ func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.Pa
 		for i := range UsahaProducts{
 			var id_uep = UsahaProducts[i].Id_uep
 			var id_kube = UsahaProducts[i].Id_kube
+			// var produk_photo []models.tbl_produk_photo
 			
 				q := con
 				q = q.Table("tbl_usaha_produk t1")
@@ -135,6 +136,14 @@ func PaginateProd(u *models.PosPagin, offset int, count *int64) (ur []*models.Pa
 			ImageBlob := Products[0].Photo
 			Products[0].Photo = "data:image/png;base64," + ImageBlob
 			tmp[i] = Products[0]
+			
+			// get photos
+			
+			// var account = models.Tbl_account{}
+
+			// con.Table("tbl_produk_photo").Where("id_produk = ?", id_uep).Select("tbl_produk_photo.*").Find(&produk_photo)
+			// Products[i].Photo = produk_photo
+					
 	 	}
 
 	// log.Println("Final Result is : ", tmp)

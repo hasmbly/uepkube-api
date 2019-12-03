@@ -84,7 +84,6 @@ func GetPaginateProdukUepKube(c echo.Context) (err error) {
 		return err
 	}
 	return c.JSON(http.StatusOK, r)
-	// return nil
 }
 
 // @Summary GetPaginatePelatihanUepKube
@@ -127,6 +126,32 @@ func GeAllFaq(c echo.Context) (err error) {
 	if err := con.Find(&Faq).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 	
 	r := &models.Jn{Msg: Faq}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
+// @Summary GetAllAddress
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/address [get]
+func GeAllAddress(c echo.Context) (err error) {
+	address := []models.Tbl_address{}
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	/*query user*/
+	if err := con.Find(&address).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	
+	r := &models.Jn{Msg: address}
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, r)

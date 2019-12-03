@@ -26,7 +26,7 @@ var (
 	kubes = []*models.Tbl_kube{}
 
 	// pelatihan
-	Pelatihan = []*models.Tbl_pelatihan{}
+	Pelatihan = []*models.PaginatePelatihan{}
 
 	// response paginate
 	r models.ResPagin = models.ResPagin{}

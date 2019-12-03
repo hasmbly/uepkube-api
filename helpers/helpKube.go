@@ -131,7 +131,6 @@ func PaginateKube(c echo.Context, r *models.ResPagin) (err error) {
 		}
 	    filters[i] = fields
 	}
-
 	
 	paginator,_ := paging.NewOffsetPaginator(store, request, options, u.SortField, u.SortOrder, filters)
 
@@ -176,7 +175,7 @@ func PaginateKube(c echo.Context, r *models.ResPagin) (err error) {
 		TotalPages:rtp,
 		TotalElements:t,		
 	}
-
+	
 	return err
 }
 

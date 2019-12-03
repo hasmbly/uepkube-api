@@ -56,7 +56,7 @@ func GetUep(c echo.Context) error {
 			}			
 		}
 	}
-
+	
     // get photo user
     var photo []models.Tbl_user_photo
 	if err := con.Table("tbl_user_photo").Where(&models.Tbl_user_photo{Id_user: User.Id_user}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
@@ -95,7 +95,7 @@ func GetUep(c echo.Context) error {
 func GetPaginateUep(c echo.Context) (err error) {	
 	if err := helpers.PaginateUep(c, &r); err != nil {
 		return err
-	}	
+	}
 	return c.JSON(http.StatusOK, r)
 }
 

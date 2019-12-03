@@ -1,14 +1,15 @@
 package controllers
 
 import (
-	// "net/http"
+	"net/http"
 	"github.com/labstack/echo"
-	// "github.com/jinzhu/gorm"
-	//  _"github.com/jinzhu/gorm/dialects/mysql"
-	 // "uepkube-api/models"
-	//  "uepkube-api/db"
-	//  "strconv"
-	//  "uepkube-api/helpers"
+	"github.com/jinzhu/gorm"
+	 _"github.com/jinzhu/gorm/dialects/mysql"
+	 "uepkube-api/db"
+	 "uepkube-api/models"
+	 "strconv"
+	 "uepkube-api/helpers"
+	 "log"
 )
 
 /*@Summary GetPelatihanById
@@ -23,40 +24,39 @@ import (
 @Failure 500 {object} models.HTTPError
 @Router /pelatihan [get]*/
 func GetPelatihan(c echo.Context) error {
-	/*prepare DB*/
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)	
+	id 		:= c.QueryParam("id")
 
-	// var val string
-	// Pelatihan 	:= models.Tbl_pelatihan{}
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// /*check if query key -> "val"*/
-	// qk := c.QueryParams()
-	// for k,v := range qk {
-	// 	if k == "val" {
-	// 		val = v[0]
-	// 		/*find pelatihan by Nama_pelatihan:*/
-	// 		if err := con.Where("nama_pelatihan LIKE ?", "%" + val + "%").First(&Pelatihan).Error; gorm.IsRecordNotFoundError(err)  {
-	// 			return echo.NewHTTPError(http.StatusNotFound, "Pelatihan Not Found")
-	// 		}		
-	// 	} else if k == "id" {
-	// 		val = v[0]
-	// 		id,_ := strconv.Atoi(val)
-	// 		/*find pelatihan by Nama_pelatihan:*/
-	// 		if err := con.Where(&models.Tbl_pelatihan{Id_pelatihan:id}).First(&Pelatihan).Error; gorm.IsRecordNotFoundError(err)  {
-	// 			return echo.NewHTTPError(http.StatusNotFound, "Pelatihan Not Found")
-	// 		}			
-	// 	}
-	// }
+	Pelatihan := models.Pelatihan{}
+	q := con
+	q = q.Table("tbl_pelatihan t1")
+	q = q.Where("t1.id_pelatihan = ?", id)
+	if ErrNo := q.Scan(&Pelatihan); ErrNo.Error != nil { 
+		log.Println("Erro : ", ErrNo.Error)
+		return echo.ErrNotFound
+	}
 
-	// helpers.SetMemberNamePelatihan(&Kt, Pelatihan)
+    // get photo pelatihan
+    var photo []models.Tbl_pelatihan_photo
+	if err := con.Table("tbl_pelatihan_photo").Where(&models.Tbl_pelatihan_photo{Id_pelatihan: Pelatihan.Id_pelatihan}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// r := &models.Jn{Msg: Kt}
+	for i,_ := range photo {
 
-	// defer con.Close()
-	// return c.JSON(http.StatusOK, r)
-	return nil
+			if photo[i].Photo != "" {
+				ImageBlob := photo[i].Photo
+				photo[i].Photo = "data:image/png;base64," + ImageBlob	
+			}
+
+		}
+	Pelatihan.Photo = photo
+
+	r := &models.Jn{Msg: Pelatihan}
+	defer con.Close()
+
+	return c.JSON(http.StatusOK, r)
 }
 
 /*@Summary GetPaginatePelatihan
@@ -71,11 +71,10 @@ func GetPelatihan(c echo.Context) error {
 @Failure 500 {object} models.HTTPError
 @Router /pelatihan [post]*/
 func GetPaginatePelatihan(c echo.Context) (err error) {	
-	// if err := helpers.PaginatePelatihan(c, &r); err != nil {
-	// 	return echo.ErrInternalServerError
-	// }	
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	if err := helpers.PaginatePelatihan(c, &r); err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, r)
 }
 
 /*@Summary AddPelatihan
@@ -91,23 +90,25 @@ func GetPaginatePelatihan(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /pelatihan/add [post]*/
 func AddPelatihan(c echo.Context) (err error) {
-	// pelatihan := &models.Tbl_pelatihan{}
+	pelatihan := &models.Pelatihan{}
 
-	// if err := c.Bind(pelatihan); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(pelatihan); err != nil {
+		return err
+	}
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	Pelatihan := &models.Tbl_pelatihan{}
+	Pelatihan = pelatihan.Tbl_pelatihan
 
-	// if err := con.Create(&pelatihan).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// defer con.Close()
+	if err := con.Create(&Pelatihan).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// r := &models.Jn{Msg: "Success Store Data"}
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	defer con.Close()
+
+	r := &models.Jn{Msg: "Success Store Data"}
+	return c.JSON(http.StatusOK, r)
 }
 /*
 @Summary UpdatePelatihan
@@ -123,31 +124,31 @@ func AddPelatihan(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /pelatihan [put]*/
 func UpdatePelatihan(c echo.Context) (err error) {
-	// pelatihan := &models.Tbl_pelatihan{}
+	pelatihan := &models.Pelatihan{}
 
-	// if err := c.Bind(pelatihan); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(pelatihan); err != nil {
+		return err
+	}
 
-	// if pelatihan.Id_pelatihan == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
-	// }
+	if pelatihan.Id_pelatihan == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
+	}
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	Pelatihan := &models.Tbl_pelatihan{}
+	Pelatihan = pelatihan.Tbl_pelatihan
 
-	// if err := con.Model(&models.Tbl_pelatihan{}).UpdateColumns(&pelatihan).Error; err != nil {
-	// 	return echo.ErrInternalServerError
-	// }
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// if err := con.Table("tbl_pelatihan").Where("id_pelatihan = ?",pelatihan.Id_pelatihan).UpdateColumn("status", pelatihan.Status).Error; err != nil {return echo.ErrInternalServerError}
+	if err := con.Model(&models.Tbl_pelatihan{}).UpdateColumns(&Pelatihan).Error; err != nil {
+		return echo.ErrInternalServerError
+	}
 
-	// defer con.Close()
+	defer con.Close()
 
-	// r := &models.Jn{Msg: "Success Update Data"}
-	// return c.JSON(http.StatusOK, r)
-	return nil	
+	r := &models.Jn{Msg: "Success Update Data"}
+	return c.JSON(http.StatusOK, r)
 }
 
 /*@Summary DeletePelatihan
@@ -163,24 +164,23 @@ func UpdatePelatihan(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /pelatihan/{id} [post]*/
 func DeletePelatihan(c echo.Context) (err error) {
-	// id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	// if id == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
-	// }
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
 
-	// pelatihan := &models.Tbl_pelatihan{}
-	// pelatihan.Id_pelatihan = id
+	pelatihan := &models.Tbl_pelatihan{}
+	pelatihan.Id_pelatihan = id
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// if err := con.Delete(&pelatihan).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Delete(&pelatihan).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// defer con.Close()
+	defer con.Close()
 
-	// r := &models.Jn{Msg: "Success Delete Data"	}
-	// return c.JSON(http.StatusOK, r)	
-	return nil
+	r := &models.Jn{Msg: "Success Delete Data"	}
+	return c.JSON(http.StatusOK, r)	
 }
