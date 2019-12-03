@@ -131,6 +131,32 @@ func GeAllFaq(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
+// @Summary GeAllJenisUsaha
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/jenis_usaha [get]
+func GeAllJenisUsaha(c echo.Context) (err error) {
+	JenisUsaha := []models.Tbl_jenis_usaha{}
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	/*query user*/
+	if err := con.Find(&JenisUsaha).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	
+	r := &models.Jn{Msg: JenisUsaha}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
 // @Summary GetAllAddress
 // @Tags Lookup-Controller
 // @Accept  json

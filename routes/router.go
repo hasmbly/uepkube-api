@@ -100,6 +100,8 @@ func Init() *echo.Echo {
 	o.GET("/lookup/persebaran", controllers.GeAllUepKubeDetail)
 	// kelurahan-kabupaten
 	o.GET("/lookup/address", controllers.GeAllAddress)
+	// jenis_usaha
+	o.GET("/lookup/jenis_usaha", controllers.GeAllJenisUsaha)
 
 	// Route::Restricted-Group-UEP
 	// u := e.Group("/api/v1")

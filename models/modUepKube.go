@@ -340,8 +340,13 @@ ShowProduks struct{
 
 Usaha struct {
 	Id_usaha   	  int 	 `json:"id_usaha"`
-	Jenis_usaha   string 	 `json:"nama_usaha"`
+	Jenis_usaha   string `json:"jenis_usaha"`
 	Photo 		 []string `json:"photo"`
+}
+
+CustomPendamping struct {
+	*Tbl_pendamping
+	Nama_pendamping string `json:"nama_pendamping"`
 }
 
 
@@ -386,7 +391,7 @@ PaginateKubes struct{
 	Nama_kube    	string 	`json:"nama_kube"`
 	Jenis_usaha  	string	`json:"jenis_usaha"`
 	Bantuan_modal	int 	`json:"bantuan_modal"`
-	Status 		 	int 	`json:"status"`	
+	Status 		 	int 	`json:"status"`
 }
 
 PaginateUep struct{
@@ -396,7 +401,7 @@ PaginateUep struct{
 	No_kk			string 	`json:"no_kk"`
 	Alamat			string 	`json:"alamat"`
 	Status 		 	int 	`json:"status"`
-	Pendamping 		Tbl_pendamping 	`json:"pendamping"`
+	Pendamping 		CustomPendamping 	`json:"pendamping"`
 	Usaha 			Usaha 		`json:"usaha"`
 }
 

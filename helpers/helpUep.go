@@ -7,7 +7,7 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	"log"
+	// "log"
 	"math"	
 	"fmt"
 )
@@ -76,8 +76,10 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	q = q.Table("tbl_uep t1")
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Select("t1.id_uep, t2.nama, t2.nik, t2.no_kk, t2.alamat, t1.status")
+	q = q.Select("t1.id_uep, t2.nama, t2.nik, t2.no_kk, t2.alamat, t1.status, t4.jenis_usaha")
 	q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
+	q = q.Joins("join tbl_usaha_produk t3 on t3.id_uep = t1.id_uep")
+	q = q.Joins("join tbl_jenis_usaha t4 on t4.id_usaha = t3.id_usaha")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -105,13 +107,12 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	if len(Ueps) != 0 {
 		for i,_ := range Ueps {
 			var id_pendamping []int
-			var pendamping models.Tbl_pendamping
+			var pendamping models.CustomPendamping
 
 			con.Table("tbl_uep").Where("id_uep = ?", Ueps[i].Id_uep).Pluck("id_pendamping", &id_pendamping)
 
 			for i,_ := range id_pendamping {
-				con.Table("tbl_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Select("tbl_pendamping.*").Find(&pendamping)
-
+				con.Table("tbl_pendamping").Select("tbl_pendamping.*, tbl_user.nama as nama_pendamping").Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Find(&pendamping)
 			}
 				Ueps[i].Pendamping = pendamping
 		}
@@ -138,9 +139,9 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 				
 				Ueps[i].Usaha.Photo = photos
 			}
-			
-			log.Println("photos : ", photos)
-			Ueps[i].Usaha = uep_usaha
+
+			// log.Println("photos : ", photos)
+			if uep_usaha.Id_usaha != 0 { Ueps[i].Usaha = uep_usaha }
 			
 		}
 	}
