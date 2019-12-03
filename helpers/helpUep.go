@@ -118,26 +118,30 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	}
 
 	// get photos
-	// if len(Ueps) != 0 {
-	// 	for i,_ := range Ueps {
-	// 		var id_produk []int
-	// 		var uep_produk []models.Tbl_produk_photo
+	if len(Ueps) != 0 {
+		for i,_ := range Ueps {
+			var uep_usaha models.Usaha
+ 			// var id_produk []int
+			// var uep_produk []models.Tbl_produk_photo
 
-	// 		con.Table("tbl_usaha_produk").Where("id_uep = ?", Ueps[i].Id_uep).Pluck("id_produk", &id_produk)
+			con.Table("tbl_usaha_produk t1").Select("t1.id_usaha, t2.jenis_usaha as nama_usaha").Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_usaha").Where("t1.id_uep = ?", Ueps[i].Id_uep).Scan(&uep_usaha)
 
-	// 		for i,_ := range id_produk {
-	// 			con.Table("tbl_produk_photo").Where("id_produk = ?", id_produk[i]).Select("tbl_produk_photo.*").Find(&uep_produk)
+			// con.Table("tbl_usaha_produk").Where("id_uep = ?", Ueps[i].Id_uep).Pluck("id_produk", &id_produk)
 
-	// 			for i,_ := range uep_produk {
-	// 				ImageBlob := uep_produk[i].Photo
-	// 				uep_produk[i].Photo = "data:image/png;base64," + ImageBlob			
-	// 			}
-	// 		}
+			// for i,_ := range id_produk {
+			// 	con.Table("tbl_produk_photo").Where("id_produk = ?", id_produk[i]).Select("tbl_produk_photo.*").Find(&uep_produk)
+
+			// 	for i,_ := range uep_produk {
+			// 		ImageBlob := uep_produk[i].Photo
+			// 		uep_produk[i].Photo = "data:image/png;base64," + ImageBlob			
+			// 	}
+			// }
 			
-	// 		Ueps[i].Photo = uep_produk				
+			// Ueps[i].Photo = uep_produk				
+			Ueps[i].Usaha = uep_usaha				
 			
-	// 	}
-	// }
+		}
+	}
 
 	if err := q.Count(count).Error; err != nil {
 		return ur, err

@@ -358,7 +358,7 @@ definitions:
       wa:
         type: string
     type: object
-host: 157.245.55.185:9093
+host: localhost:9093
 info:
   contact:
     email: justhasby@gmail.com
