@@ -7,7 +7,7 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	// "log"
+	"log"
 	"math"	
 	"fmt"
 )
@@ -76,10 +76,9 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	q = q.Table("tbl_uep t1")
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Select("t1.id_uep, t2.nama, t2.nik, t2.no_kk, t2.alamat, t1.status, t4.jenis_usaha")
+	q = q.Select("t1.id_uep, t2.nama, t2.nik, t2.no_kk, t2.alamat, t1.status, t1.created_at")
 	q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
-	q = q.Joins("join tbl_usaha_produk t3 on t3.id_uep = t1.id_uep")
-	q = q.Joins("join tbl_jenis_usaha t4 on t4.id_usaha = t3.id_usaha")
+	q = q.Joins("join tbl_jenis_usaha t3 on t3.id_usaha = t1.id_jenis_usaha")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -118,30 +117,32 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 		}
 	}
 
-	// get photos
+	// get Usaha
 	if len(Ueps) != 0 {
 		for i,_ := range Ueps {
-			var uep_usaha models.Usaha
- 			var id_produk []int
-			var photos []string
+			var uep_usaha models.UsahaUep
+ 			// var id_produk []int
+			var photos []models.Tbl_usaha_uep_photo
 
-			con.Table("tbl_usaha_produk t1").Select("t1.id_usaha, t2.jenis_usaha").Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_usaha").Where("t1.id_uep = ?", Ueps[i].Id_uep).Scan(&uep_usaha)
+			log.Println("id_uep : ", Ueps[i].Id_uep)
+			q := con.Table("tbl_uep t1")
+			q = q.Select("t1.id_uep, t1.nama_usaha, t2.id_usaha, t2.jenis_usaha")
+			q = q.Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_jenis_usaha")
+			q = q.Where("t1.id_uep = ?", Ueps[i].Id_uep)
+			q = q.Scan(&uep_usaha)
 
-			con.Table("tbl_usaha_produk").Where("id_uep = ?", Ueps[i].Id_uep).Pluck("id_produk", &id_produk)
+			if uep_usaha.Id_usaha != 0 { Ueps[i].Usaha = uep_usaha }
 
-			for i,_ := range id_produk {
-				con.Table("tbl_produk_photo").Where("id_produk = ?", id_produk[i]).Pluck("photo", &photos)
+			con.Table("tbl_usaha_uep_photo").Where("id_uep = ?", Ueps[i].Id_uep).Find(&photos)
 
-				for i,_ := range photos {
-					ImageBlob := photos[i]
-					photos[i] = "data:image/png;base64," + ImageBlob			
-				}
-				
+			for index,_ := range photos {
+				ImageBlob := photos[index].Photo
+				photos[index].Photo = "data:image/png;base64," + ImageBlob			
 				Ueps[i].Usaha.Photo = photos
 			}
 
 			// log.Println("photos : ", photos)
-			if uep_usaha.Id_usaha != 0 { Ueps[i].Usaha = uep_usaha }
+			log.Println("usaha : ", Ueps[i].Usaha)
 			
 		}
 	}

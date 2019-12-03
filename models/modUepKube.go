@@ -42,9 +42,25 @@ Tbl_user_photo struct {
 	Is_display		int 		`json:"is_display"`	
 }
 
+Tbl_usaha_uep_photo struct {
+	Id				int 		`json:"id" gorm:"primary_key"`
+	Id_uep			int 		`json:"id_uep"`
+	Photo			string 	 	`json:"photo"`	
+	Is_display		int 		`json:"is_display"`	
+}
+
+Tbl_usaha_kube_photo struct {
+	Id				int 		`json:"id" gorm:"primary_key"`
+	Id_kube			int 		`json:"id_kube"`
+	Photo			string 	 	`json:"photo"`	
+	Is_display		int 		`json:"is_display"`	
+}
+
 Tbl_uep struct {
 	Id_uep			int 		`gorm:"primary_key"`
 	Id_pendamping	int 		`json:"id_pendamping"`
+	Nama_usaha		string 		`json:"nama_usaha"`
+	Id_jenis_usaha	int 		`json:"id_jenis_usaha"`
 	Bantuan_modal	int 		`json:"bantuan_modal"`
 	Status			int 		`json:"status"`
 }
@@ -52,7 +68,8 @@ Tbl_uep struct {
  Tbl_kube struct {
 	Id_kube      	int 	`json:"id_kube" gorm:"primary_key"`
 	Nama_kube    	string 	`json:"nama_kube"`
-	Jenis_usaha  	string 	`json:"jenis_usaha"`
+	Nama_usaha  	string 	`json:"nama_usaha"`
+	Id_jenis_usaha  int 	`json:"id_jenis_usaha"`
 	Bantuan_modal	int 	`json:"bantuan_modal"`
 	Ketua        	int 	`json:"ketua" sql:"DEFAULT:NULL"`
 	Sekertaris   	int 	`json:"sekertaris" sql:"DEFAULT:NULL"`
@@ -88,7 +105,7 @@ Tbl_pendamping struct {
 	Periode				string 		`json:"periode"`
 }
 
-Tbl_account struct{
+Tbl_account struct {
 		Id_user			int 		`gorm:"primary_key"`
 		Id_roles		int
 		Username 		string
@@ -268,7 +285,7 @@ Items struct {
 ShowKube struct {
 	Id_kube      	int 		`json:"id"`
 	Nama_kube    	string 		`json:"nama"`
-	Jenis_usaha  	string		`json:"jenis_usaha"`
+	Nama_usaha  	string		`json:"Nama_usaha"`
 	Alamat			*string 	`json:"alamat"`
 	Lat				*string 	`json:"lat"`
 	Lng				*string 	`json:"lng"`
@@ -338,10 +355,18 @@ ShowProduks struct{
 	Flag 			string 		 `json:"flag"`
 }
 
-Usaha struct {
+UsahaUep struct {
 	Id_usaha   	  int 	 `json:"id_usaha"`
+	Nama_usaha    string `json:"nama_usaha"`
 	Jenis_usaha   string `json:"jenis_usaha"`
-	Photo 		 []string `json:"photo"`
+	Photo 		 []Tbl_usaha_uep_photo `json:"photo"`
+}
+
+UsahaKube struct {
+	Id_usaha   	  int 	 `json:"id_usaha"`
+	Nama_usaha    string `json:"nama_usaha"`
+	Jenis_usaha   string `json:"jenis_usaha"`
+	Photo 		 []Tbl_usaha_kube_photo `json:"photo"`
 }
 
 CustomPendamping struct {
@@ -389,9 +414,11 @@ Sort struct{
 PaginateKubes struct{
 	Id_kube      	int 	`json:"id"`
 	Nama_kube    	string 	`json:"nama_kube"`
-	Jenis_usaha  	string	`json:"jenis_usaha"`
 	Bantuan_modal	int 	`json:"bantuan_modal"`
 	Status 		 	int 	`json:"status"`
+	Created_at 		*time.Time 	`json:"created_at"`
+	// Pendamping 		CustomPendamping 	`json:"pendamping"`
+	// Usaha 			UsahaKube 		`json:"usaha"`
 }
 
 PaginateUep struct{
@@ -401,8 +428,9 @@ PaginateUep struct{
 	No_kk			string 	`json:"no_kk"`
 	Alamat			string 	`json:"alamat"`
 	Status 		 	int 	`json:"status"`
+	Created_at 		string 	`json:"created_at"`
 	Pendamping 		CustomPendamping 	`json:"pendamping"`
-	Usaha 			Usaha 		`json:"usaha"`
+	Usaha 			UsahaUep 		`json:"usaha"`
 }
 
 PaginateProduks struct{

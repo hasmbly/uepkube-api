@@ -72,7 +72,7 @@ func SetMemberNameKube(s *models.ShowKube, Kube models.Tbl_kube) error {
 	*s = models.ShowKube{
 		Id_kube: 		Kube.Id_kube,
 		Nama_kube: 		Kube.Nama_kube,
-		Jenis_usaha: 	Kube.Jenis_usaha,
+		Nama_usaha: 	Kube.Nama_usaha,
 		Alamat: 		alamat[0],
 		Lat: 			lat[0],
 		Lng: 			lng[0],
@@ -175,7 +175,7 @@ func PaginateKube(c echo.Context, r *models.ResPagin) (err error) {
 		TotalPages:rtp,
 		TotalElements:t,		
 	}
-	
+
 	return err
 }
 
@@ -184,9 +184,9 @@ func JoinKube(ur []*models.PaginateKubes) (err error){
 		ur[i] = &models.PaginateKubes{
 			kubes[i].Id_kube,
 			kubes[i].Nama_kube,
-			kubes[i].Jenis_usaha,
 			kubes[i].Bantuan_modal,
 			kubes[i].Status,
+			kubes[i].Created_at,
 		}
 	 }
 	return err

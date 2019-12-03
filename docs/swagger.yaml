@@ -71,15 +71,17 @@ definitions:
         type: string
       fb:
         type: string
+      id_jenis_usaha:
+        type: integer
       id_kube:
         type: integer
       ig:
         type: string
-      jenis_usaha:
-        type: string
       ketua:
         type: integer
       nama_kube:
+        type: string
+      nama_usaha:
         type: string
       pendamping:
         type: integer
