@@ -7,7 +7,7 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	// "log"
+	"log"
 	"math"	
 	"fmt"
 )
@@ -121,24 +121,26 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	if len(Ueps) != 0 {
 		for i,_ := range Ueps {
 			var uep_usaha models.Usaha
- 			// var id_produk []int
-			// var uep_produk []models.Tbl_produk_photo
+ 			var id_produk []int
+			var photos []string
 
-			con.Table("tbl_usaha_produk t1").Select("t1.id_usaha, t2.jenis_usaha as nama_usaha").Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_usaha").Where("t1.id_uep = ?", Ueps[i].Id_uep).Scan(&uep_usaha)
+			con.Table("tbl_usaha_produk t1").Select("t1.id_usaha, t2.jenis_usaha").Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_usaha").Where("t1.id_uep = ?", Ueps[i].Id_uep).Scan(&uep_usaha)
 
-			// con.Table("tbl_usaha_produk").Where("id_uep = ?", Ueps[i].Id_uep).Pluck("id_produk", &id_produk)
+			con.Table("tbl_usaha_produk").Where("id_uep = ?", Ueps[i].Id_uep).Pluck("id_produk", &id_produk)
 
-			// for i,_ := range id_produk {
-			// 	con.Table("tbl_produk_photo").Where("id_produk = ?", id_produk[i]).Select("tbl_produk_photo.*").Find(&uep_produk)
+			for i,_ := range id_produk {
+				con.Table("tbl_produk_photo").Where("id_produk = ?", id_produk[i]).Pluck("photo", &photos)
 
-			// 	for i,_ := range uep_produk {
-			// 		ImageBlob := uep_produk[i].Photo
-			// 		uep_produk[i].Photo = "data:image/png;base64," + ImageBlob			
-			// 	}
-			// }
+				for i,_ := range photos {
+					ImageBlob := photos[i]
+					photos[i] = "data:image/png;base64," + ImageBlob			
+				}
+				
+				Ueps[i].Usaha.Photo = photos
+			}
 			
-			// Ueps[i].Photo = uep_produk				
-			Ueps[i].Usaha = uep_usaha				
+			log.Println("photos : ", photos)
+			Ueps[i].Usaha = uep_usaha
 			
 		}
 	}

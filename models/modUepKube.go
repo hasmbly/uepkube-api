@@ -339,8 +339,8 @@ ShowProduks struct{
 }
 
 Usaha struct {
-	Id_usaha   	 int 	 `json:"id_usaha"`
-	Nama_usaha  int 	 `json:"nama_usaha"`
+	Id_usaha   	  int 	 `json:"id_usaha"`
+	Jenis_usaha   string 	 `json:"nama_usaha"`
 	Photo 		 []string `json:"photo"`
 }
 
