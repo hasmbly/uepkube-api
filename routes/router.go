@@ -54,7 +54,7 @@ func GetPhoto(c echo.Context) error {
 		photos = append(photos, html)
 	}
 
-	return c.HTML(http.StatusOK, photos[0] + photos[1])		
+	return c.HTML(http.StatusOK, photos[0] + photos[1])
 }
 
 // Middleware Custom Claims JWT
@@ -102,6 +102,10 @@ func Init() *echo.Echo {
 	o.GET("/lookup/address", controllers.GeAllAddress)
 	// jenis_usaha
 	o.GET("/lookup/jenis_usaha", controllers.GeAllJenisUsaha)
+	// pendamping
+	o.GET("/lookup/pendamping", controllers.GeAllPendamping)	
+	// bantuan_periods
+	o.GET("/lookup/bantuan_periods", controllers.GeAllBantuanPeriods)	
 
 	// Route::Restricted-Group-UEP
 	// u := e.Group("/api/v1")

@@ -7,7 +7,7 @@ import (
 type (
 
 /**
- * Tables Model
+ * Tables Struct
  */
 
 Tbl_user struct {
@@ -61,7 +61,7 @@ Tbl_uep struct {
 	Id_pendamping	int 		`json:"id_pendamping"`
 	Nama_usaha		string 		`json:"nama_usaha"`
 	Id_jenis_usaha	int 		`json:"id_jenis_usaha"`
-	Bantuan_modal	int 		`json:"bantuan_modal"`
+	Id_periods		int 		`json:"id_periods"`
 	Status			int 		`json:"status"`
 }
 
@@ -70,7 +70,7 @@ Tbl_uep struct {
 	Nama_kube    	string 	`json:"nama_kube"`
 	Nama_usaha  	string 	`json:"nama_usaha"`
 	Id_jenis_usaha  int 	`json:"id_jenis_usaha"`
-	Bantuan_modal	int 	`json:"bantuan_modal"`
+	Id_periods		int 	`json:"id_periods"`
 	Ketua        	int 	`json:"ketua" sql:"DEFAULT:NULL"`
 	Sekertaris   	int 	`json:"sekertaris" sql:"DEFAULT:NULL"`
 	Bendahara    	int 	`json:"bendahara" sql:"DEFAULT:NULL"`
@@ -196,6 +196,18 @@ Tbl_faq struct{
 	Jawaban 	string 		`json:"jawaban"`
 }
 
+Tbl_bantuan_periods struct{
+	Id 				int 		`json:"id" gorm:"primary_key"`
+	Bantuan_modal 	float64		`json:"bantuan_modal"`
+	Start_date 		*time.Time 	`json:"start_date"`
+	End_date 		*time.Time 	`json:"end_date"`
+	Peruntukan 		string 		`json:"peruntukan"`
+	Quota 			int 		`json:"quota"`
+	Status 			int 		`json:"status"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+}
+
 View_address struct{
 	Id_kabupaten 	int 		`json:"id_kabupaten"`
 	Id_kecamatan 	int 		`json:"id_kecamatan"`
@@ -204,15 +216,16 @@ View_address struct{
 }
 
 /**
- * Custom Model
+ * Custom Struct
  */
 
 Uep struct{
 	*Tbl_user
 	Id_pendamping	int 		`json:"id_pendamping"`
-	Bantuan_modal	int 		`json:"bantuan_modal"`
+	Id_periods		int 		`json:"id_periods"`
+	Nama_usaha		string 		`json:"nama_usaha"`
+	Id_jenis_usaha	int 		`json:"id_jenis_usaha"`
 	Status			int 		`json:"status"`
-	// Photo 		 	[]Tbl_user_photo 	`json:"photo"`
 }
 
 Kube struct{
@@ -256,7 +269,7 @@ UepKube struct{
 }
 
 /**
- * Abstract Model
+ * Abstract Struct
  */
 
 Dummy struct{
@@ -376,7 +389,7 @@ CustomPendamping struct {
 
 
 /**
- * PaginateOptions Model
+ * PaginateOptions Struct
  */
 
 
@@ -408,7 +421,7 @@ Sort struct{
 	}
 
 /**
- * PaginateResults Model
+ * PaginateResults Struct
  */
 
 PaginateKubes struct{

@@ -203,6 +203,52 @@
                 }
             }
         },
+        "/lookup/bantuan_periods": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lookup-Controller"
+                ],
+                "summary": "GeAllBantuanPeriods",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Jn"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/lookup/faq": {
             "get": {
                 "consumes": [
@@ -261,6 +307,52 @@
                     "Lookup-Controller"
                 ],
                 "summary": "GeAllJenisUsaha",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Jn"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/lookup/pendamping": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lookup-Controller"
+                ],
+                "summary": "GetAllFaq",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -963,9 +1055,6 @@
                 "anggota7": {
                     "type": "integer"
                 },
-                "bantuan_modal": {
-                    "type": "integer"
-                },
                 "bendahara": {
                     "type": "integer"
                 },
@@ -982,6 +1071,9 @@
                     "type": "integer"
                 },
                 "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_periods": {
                     "type": "integer"
                 },
                 "ig": {
@@ -1251,9 +1343,6 @@
                 "alamat": {
                     "type": "string"
                 },
-                "bantuan_modal": {
-                    "type": "integer"
-                },
                 "created_by": {
                     "type": "string"
                 },
@@ -1262,6 +1351,9 @@
                 },
                 "fb": {
                     "type": "string"
+                },
+                "id_jenis_usaha": {
+                    "type": "integer"
                 },
                 "id_kabupaten": {
                     "type": "integer"
@@ -1273,6 +1365,9 @@
                     "type": "string"
                 },
                 "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_periods": {
                     "type": "integer"
                 },
                 "id_user": {
@@ -1295,6 +1390,9 @@
                     "type": "number"
                 },
                 "nama": {
+                    "type": "string"
+                },
+                "nama_usaha": {
                     "type": "string"
                 },
                 "nik": {

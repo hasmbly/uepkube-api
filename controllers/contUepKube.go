@@ -10,6 +10,8 @@ import (
 	 "regexp"
 	 "uepkube-api/helpers"
 	 // "log"
+	 // "fmt"
+	 // "time"
 )
 
 // @Summary Get Uep (byNik) or Get Kube (byName)
@@ -105,6 +107,51 @@ func GetPaginatePelatihanUepKube(c echo.Context) (err error) {
 	// return nil
 }
 
+// @Summary GeAllBantuanPeriods
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/bantuan_periods [get]
+func GeAllBantuanPeriods(c echo.Context) (err error) {
+	Periods := []models.Tbl_bantuan_periods{}
+	// timeFormat := "2006-01-02 15:04:05"
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	/*query user*/
+	if err := con.Find(&Periods).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	
+	// var rPeriods []RPeriods
+
+	// if len(Periods) != 0 {
+	// 	for i,_ := range Periods {
+
+	// 		rPeriods = append(rPeriods, Periods[i])
+
+	// 		ts := Periods[i].Start_date
+	// 		te := Periods[i].End_date
+
+	// 		rPeriods[i].Start_date = ts.Format(timeFormat)
+	// 		rPeriods[i].End_date = te.Format(timeFormat)
+
+	// 		log.Println(Periods[i].Start_date)
+	// 		// log.Println(Periods[i].End_date)
+	// 	}
+	// }
+
+	r := &models.Jn{Msg: Periods}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
 // @Summary GetAllFaq
 // @Tags Lookup-Controller
 // @Accept  json
@@ -126,6 +173,34 @@ func GeAllFaq(c echo.Context) (err error) {
 	if err := con.Find(&Faq).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 	
 	r := &models.Jn{Msg: Faq}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
+// @Summary GetAllFaq
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/pendamping [get]
+func GeAllPendamping(c echo.Context) (err error) {
+	Pendampings := []models.CustomPendamping{}
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	/*query user*/
+	if err := con.Table("tbl_pendamping t1").Select("t1.*, t2.nama as nama_pendamping").Joins("join tbl_user t2 on t2.id_user = t1.id_pendamping").Scan(&Pendampings).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	
+	// check how many pendamping in each uep/kube
+
+	r := &models.Jn{Msg: Pendampings}
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, r)

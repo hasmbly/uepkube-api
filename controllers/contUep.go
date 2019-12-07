@@ -125,17 +125,27 @@ func AddUep(c echo.Context) (err error) {
 
 	// validation
 	if Uep.Id_pendamping == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id Pendamping") }
-	if Uep.Bantuan_modal == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") }
+	if Uep.Id_periods == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") }
+	if Uep.Nama_usaha == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha Modal") }	
 	if Uep.Nik == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") }
 
 	uep := &models.Tbl_uep{}
 	uep.Id_pendamping = Uep.Id_pendamping
-	uep.Bantuan_modal = Uep.Bantuan_modal
+	uep.Id_periods = Uep.Id_periods
+	uep.Nama_usaha = Uep.Nama_usaha
+	uep.Id_jenis_usaha = Uep.Id_jenis_usaha
 	uep.Status = Uep.Status
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
+
+	// check if nik is not exist
+    var nik []int
+	con.Table("tbl_user").Where("nik = ?", Uep.Nik).Pluck("nik", &nik)
+	if len(nik) > 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Maaf NIK sudah digunakan")
+	}
 
 	if err := con.Create(&user).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
@@ -177,7 +187,7 @@ func UpdateUep(c echo.Context) (err error) {
 
 	uep := &models.Tbl_uep{}
 	uep.Id_pendamping = Uep.Id_pendamping
-	uep.Bantuan_modal = Uep.Bantuan_modal
+	uep.Id_periods = Uep.Id_periods
 	uep.Status = Uep.Status
 
 	con, err := db.CreateCon()
@@ -288,7 +298,6 @@ func UploadUepFiles(c echo.Context) (err error) {
 
 	}
 
-	
 	defer con.Close()
 
 	log.Println("Uploads Uep's file to id : ", id)
