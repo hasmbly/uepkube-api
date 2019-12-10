@@ -17,6 +17,27 @@ import (
 	"io/ioutil"		
 )
 
+type Tbl_pendamping struct {
+	*models.Tbl_pendamping
+	Nama string `json:"nama"`
+}
+
+type Tbl_uep struct {
+	*models.Tbl_uep
+	Pendamping 	*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
+	JenisUsaha 	*models.Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
+	BantuanPeriods 	*models.Tbl_bantuan_periods `json:"bantuan_periods" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+}
+
+type Tbl_user struct {
+	*models.Tbl_user
+	*Tbl_uep
+	Kelurahan 	*models.Tbl_kelurahan `json:"kelurahan" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
+	Kecamatan 	*models.Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kecamatan;association_foreignkey:id_kecamatan"`
+	Kabupaten 	*models.Tbl_kabupaten `json:"kabupaten" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
+	Photo 		[]*models.Tbl_user_photo `json:"photo" gorm:"foreignkey:id_user"`
+}
+
 /*@Summary GetUepById
 @Tags Uep-Controller
 @Accept  json
@@ -30,50 +51,34 @@ import (
 @security ApiKeyAuth
 @Router /uep [get]*/
 func GetUep(c echo.Context) error {
+	id 		:= c.QueryParam("id")
+
 	/*prepare DB*/
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)	
 	
-	var val string
-	User 	:= models.Tbl_user{}
-	R 		:= models.CustU{}
+	User 	:= Tbl_user{}
 
-	/*check if query key -> "val"*/
-	qk := c.QueryParams()
-	for k,v := range qk {
-		if k == "val" {
-			return err
-		} else if k == "id" {
-			val = v[0]
-			id,_ := strconv.Atoi(val)
-			/*find kube by Nama_kube:*/
-			if err := con.Where(&models.Tbl_user{Id_user:id}).First(&User).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-			/*find uep by id + join pendaming-user*/
-			id = User.Id_user
-			if err := con.Table("tbl_uep").Select("tbl_uep.bantuan_modal, tbl_uep.status,tbl_uep.id_pendamping,tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_uep.id_pendamping").Where(&models.Tbl_uep{Id_uep:id}).Scan(&R).Error; gorm.IsRecordNotFoundError(err) {
-				return echo.NewHTTPError(http.StatusNotFound, "Uep Not Found")
-			}			
-		}
-	}
-	
-    // get photo user
-    var photo []models.Tbl_user_photo
-	if err := con.Table("tbl_user_photo").Where(&models.Tbl_user_photo{Id_user: User.Id_user}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	q := con
+	q = q.Model(&User)
+	q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
+	q = q.Select("tbl_uep.*, tbl_user.*")
+	q = q.Preload("JenisUsaha")
+	q = q.Preload("BantuanPeriods")
+	q = q.Preload("Pendamping")
+	q = q.Preload("Kelurahan")
+	q = q.Preload("Kecamatan")
+	q = q.Preload("Kabupaten")
+	q = q.Preload("Photo")
+	q = q.First(&User, id)
 
-	for i,_ := range photo {
-
-			if photo[i].Photo != "" {
-				ImageBlob := photo[i].Photo
-				photo[i].Photo = "data:image/png;base64," + ImageBlob	
-			}
-
+	for i,_ := range User.Photo {
+			ImageBlob := User.Photo[i].Photo
+			User.Photo[i].Photo = "data:image/png;base64," + ImageBlob	
 		}
 
-	R.Photo = photo
-	R.Flag = "UEP"
-
-	r := &models.Jn{Msg: models.U{User, R}}
+	r := &models.Jn{Msg: User}
 	defer con.Close()
 
 
@@ -127,7 +132,13 @@ func AddUep(c echo.Context) (err error) {
 	if Uep.Id_pendamping == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id Pendamping") }
 	if Uep.Id_periods == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") }
 	if Uep.Nama_usaha == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha Modal") }	
-	if Uep.Nik == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") }
+	if Uep.Nik == "" { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") 
+	} else {
+		if len(Uep.Nik) > 16 || len(Uep.Nik) < 16 {
+			return echo.NewHTTPError(http.StatusBadRequest, "Please fill NIK with 16 Digits")
+		}
+	}
 
 	uep := &models.Tbl_uep{}
 	uep.Id_pendamping = Uep.Id_pendamping
@@ -187,20 +198,23 @@ func UpdateUep(c echo.Context) (err error) {
 
 	uep := &models.Tbl_uep{}
 	uep.Id_pendamping = Uep.Id_pendamping
+	uep.Nama_usaha = Uep.Nama_usaha
 	uep.Id_periods = Uep.Id_periods
+	uep.Id_jenis_usaha = Uep.Id_jenis_usaha
 	uep.Status = Uep.Status
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	if err := con.Save(&user).Error; err != nil {
+	// update user
+	if err := con.Model(&models.Tbl_user{}).UpdateColumns(&user).Error; err != nil {
 		return echo.ErrInternalServerError
 	}
 
+	// update uep
 	uep.Id_uep = user.Id_user
-
-	if err := con.Save(&uep).Error; err != nil {
+	if err := con.Model(&models.Tbl_uep{}).UpdateColumns(&uep).Error; err != nil {
 		return echo.ErrInternalServerError
 	}
 

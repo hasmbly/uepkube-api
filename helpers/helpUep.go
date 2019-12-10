@@ -7,7 +7,7 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	"log"
+	// "log"
 	"math"	
 	"fmt"
 )
@@ -111,7 +111,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 			con.Table("tbl_uep").Where("id_uep = ?", Ueps[i].Id_uep).Pluck("id_pendamping", &id_pendamping)
 
 			for i,_ := range id_pendamping {
-				con.Table("tbl_pendamping").Select("tbl_pendamping.*, tbl_user.nama as nama_pendamping").Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Find(&pendamping)
+				con.Table("tbl_pendamping").Select("tbl_pendamping.*, tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Find(&pendamping)
 			}
 				Ueps[i].Pendamping = pendamping
 		}
@@ -124,7 +124,6 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
  			// var id_produk []int
 			var photos []models.Tbl_usaha_uep_photo
 
-			log.Println("id_uep : ", Ueps[i].Id_uep)
 			q := con.Table("tbl_uep t1")
 			q = q.Select("t1.id_uep, t1.nama_usaha, t2.id_usaha, t2.jenis_usaha")
 			q = q.Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_jenis_usaha")
@@ -133,6 +132,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 
 			if uep_usaha.Id_usaha != 0 { Ueps[i].Usaha = uep_usaha }
 
+			// get usaha_photo
 			con.Table("tbl_usaha_uep_photo").Where("id_uep = ?", Ueps[i].Id_uep).Find(&photos)
 
 			for index,_ := range photos {
@@ -140,9 +140,6 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 				photos[index].Photo = "data:image/png;base64," + ImageBlob			
 				Ueps[i].Usaha.Photo = photos
 			}
-
-			// log.Println("photos : ", photos)
-			log.Println("usaha : ", Ueps[i].Usaha)
 			
 		}
 	}

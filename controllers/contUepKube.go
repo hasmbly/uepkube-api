@@ -9,7 +9,7 @@ import (
 	 "uepkube-api/db"
 	 "regexp"
 	 "uepkube-api/helpers"
-	 // "log"
+	 "log"
 	 // "fmt"
 	 // "time"
 )
@@ -152,6 +152,61 @@ func GeAllBantuanPeriods(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
+// @Summary GeAllMemberPelatihan
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Param id_pendamping query int true "int"
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/member_pelatihan [get]
+func GeAllMemberPelatihan(c echo.Context) (err error) {
+	id_pendamping 	:= c.QueryParam("id_pendamping")
+	MemberUep 			:= []models.MemberPelatihan{}
+	MemberKube 			:= []models.MemberPelatihan{}
+	var Result []interface{}
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	// get member pendamping from uep
+	if err := con.Table("tbl_uep t1").Select("t2.id_user, t2.nik, t2.nama, 'uep' as flag ").Joins("join tbl_user t2 on t2.id_user = t1.id_uep").Where("id_pendamping = ?", id_pendamping).Scan(&MemberUep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	if len(MemberUep) != 0 {
+		for i,_ := range MemberUep {
+			Result = append(Result, MemberUep[i])
+		}
+	}
+
+	// get member pendamping from uep
+	var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}
+
+	log.Println("kube_member : ", KubesMember)
+
+	for i,_ := range KubesMember {
+		if err := con.Table("tbl_kube t1").Select("t2.id_user, t2.nik, t2.nama, 'kube' as flag ").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[i]).Where("id_pendamping = ?", id_pendamping).Scan(&MemberKube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+		if len(MemberKube) != 0 {
+			for i,_ := range MemberKube {
+				Result = append(Result, MemberKube[i])
+			}
+		}
+	}
+
+
+
+
+
+	r := &models.Jn{Msg: Result}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
 // @Summary GetAllFaq
 // @Tags Lookup-Controller
 // @Accept  json
@@ -178,7 +233,7 @@ func GeAllFaq(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary GetAllFaq
+// @Summary GeAllPendamping
 // @Tags Lookup-Controller
 // @Accept  json
 // @Produce  json

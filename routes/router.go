@@ -105,7 +105,9 @@ func Init() *echo.Echo {
 	// pendamping
 	o.GET("/lookup/pendamping", controllers.GeAllPendamping)	
 	// bantuan_periods
-	o.GET("/lookup/bantuan_periods", controllers.GeAllBantuanPeriods)	
+	o.GET("/lookup/bantuan_periods", controllers.GeAllBantuanPeriods)
+	// member_pelatihan
+	o.GET("/lookup/member_pelatihan", controllers.GeAllMemberPelatihan)
 
 	// Route::Restricted-Group-UEP
 	// u := e.Group("/api/v1")

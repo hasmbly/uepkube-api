@@ -123,17 +123,11 @@ definitions:
     properties:
       alamat:
         type: string
-      created_by:
+      created_at:
         type: string
       email:
         type: string
       fb:
-        type: string
-      id_kabupaten:
-        type: integer
-      id_kecamatan:
-        type: integer
-      id_kelurahan:
         type: string
       id_roles:
         type: integer
@@ -174,7 +168,7 @@ definitions:
         type: string
       tgl_lahir:
         type: string
-      updated_by:
+      updated_at:
         type: string
       username:
         type: string
@@ -254,7 +248,7 @@ definitions:
     properties:
       alamat:
         type: string
-      created_by:
+      created_at:
         type: string
       email:
         type: string
@@ -262,12 +256,6 @@ definitions:
         type: string
       id_jenis_usaha:
         type: integer
-      id_kabupaten:
-        type: integer
-      id_kecamatan:
-        type: integer
-      id_kelurahan:
-        type: string
       id_pendamping:
         type: integer
       id_periods:
@@ -301,7 +289,7 @@ definitions:
         type: string
       tgl_lahir:
         type: string
-      updated_by:
+      updated_at:
         type: string
       wa:
         type: string
@@ -310,17 +298,11 @@ definitions:
     properties:
       alamat:
         type: string
-      created_by:
+      created_at:
         type: string
       email:
         type: string
       fb:
-        type: string
-      id_kabupaten:
-        type: integer
-      id_kecamatan:
-        type: integer
-      id_kelurahan:
         type: string
       id_roles:
         type: integer
@@ -357,7 +339,7 @@ definitions:
         type: string
       tgl_lahir:
         type: string
-      updated_by:
+      updated_at:
         type: string
       username:
         type: string
@@ -777,6 +759,42 @@ paths:
       summary: GeAllJenisUsaha
       tags:
       - Lookup-Controller
+  /lookup/member_pelatihan:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: int
+        in: query
+        name: id_pendamping
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      summary: GeAllMemberPelatihan
+      tags:
+      - Lookup-Controller
   /lookup/pendamping:
     get:
       consumes:
@@ -804,7 +822,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.HTTPError'
-      summary: GetAllFaq
+      summary: GeAllPendamping
       tags:
       - Lookup-Controller
   /lookup/persebaran:

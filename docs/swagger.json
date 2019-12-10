@@ -341,6 +341,61 @@
                 }
             }
         },
+        "/lookup/member_pelatihan": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lookup-Controller"
+                ],
+                "summary": "GeAllMemberPelatihan",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "int",
+                        "name": "id_pendamping",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Jn"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/lookup/pendamping": {
             "get": {
                 "consumes": [
@@ -352,7 +407,7 @@
                 "tags": [
                     "Lookup-Controller"
                 ],
-                "summary": "GetAllFaq",
+                "summary": "GeAllPendamping",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1146,22 +1201,13 @@
                 "alamat": {
                     "type": "string"
                 },
-                "created_by": {
+                "created_at": {
                     "type": "string"
                 },
                 "email": {
                     "type": "string"
                 },
                 "fb": {
-                    "type": "string"
-                },
-                "id_kabupaten": {
-                    "type": "integer"
-                },
-                "id_kecamatan": {
-                    "type": "integer"
-                },
-                "id_kelurahan": {
                     "type": "string"
                 },
                 "id_roles": {
@@ -1222,7 +1268,7 @@
                 "tgl_lahir": {
                     "type": "string"
                 },
-                "updated_by": {
+                "updated_at": {
                     "type": "string"
                 },
                 "username": {
@@ -1343,7 +1389,7 @@
                 "alamat": {
                     "type": "string"
                 },
-                "created_by": {
+                "created_at": {
                     "type": "string"
                 },
                 "email": {
@@ -1354,15 +1400,6 @@
                 },
                 "id_jenis_usaha": {
                     "type": "integer"
-                },
-                "id_kabupaten": {
-                    "type": "integer"
-                },
-                "id_kecamatan": {
-                    "type": "integer"
-                },
-                "id_kelurahan": {
-                    "type": "string"
                 },
                 "id_pendamping": {
                     "type": "integer"
@@ -1413,7 +1450,7 @@
                 "tgl_lahir": {
                     "type": "string"
                 },
-                "updated_by": {
+                "updated_at": {
                     "type": "string"
                 },
                 "wa": {
@@ -1427,22 +1464,13 @@
                 "alamat": {
                     "type": "string"
                 },
-                "created_by": {
+                "created_at": {
                     "type": "string"
                 },
                 "email": {
                     "type": "string"
                 },
                 "fb": {
-                    "type": "string"
-                },
-                "id_kabupaten": {
-                    "type": "integer"
-                },
-                "id_kecamatan": {
-                    "type": "integer"
-                },
-                "id_kelurahan": {
                     "type": "string"
                 },
                 "id_roles": {
@@ -1497,7 +1525,7 @@
                 "tgl_lahir": {
                     "type": "string"
                 },
-                "updated_by": {
+                "updated_at": {
                     "type": "string"
                 },
                 "username": {
