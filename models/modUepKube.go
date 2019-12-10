@@ -236,6 +236,21 @@ Tbl_credit_debit struct{
 	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
 }
 
+// pertanyaan_monev
+Tbl_indikator_uep struct{
+	Id_indikator 	int 		`json:"id_indikator" gorm:"primary_key"`
+	Id_kriteria 	int			`json:"id_kriteria"`
+	Nama_indikator 	string		`json:"nama_indikator"`
+	Skor_indikator 	int			`json:"skor_indikator"`
+}
+
+Tbl_indikator_kube struct{
+	Id_indikator 	int 		`json:"id_indikator" gorm:"primary_key"`
+	Id_kriteria 	int			`json:"id_kriteria"`
+	Nama_indikator 	string		`json:"nama_indikator"`
+	Skor_indikator 	int			`json:"skor_indikator"`
+}
+
 View_address struct{
 	Id_kabupaten 	int 		`json:"id_kabupaten"`
 	Id_kecamatan 	int 		`json:"id_kecamatan"`

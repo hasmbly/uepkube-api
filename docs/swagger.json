@@ -396,6 +396,61 @@
                 }
             }
         },
+        "/lookup/monev_indikator": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lookup-Controller"
+                ],
+                "summary": "GeAllMonevIndikator",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "string",
+                        "name": "flag",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Jn"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/lookup/pendamping": {
             "get": {
                 "consumes": [
@@ -1210,6 +1265,15 @@
                 "fb": {
                     "type": "string"
                 },
+                "id_kabupaten": {
+                    "type": "integer"
+                },
+                "id_kecamatan": {
+                    "type": "integer"
+                },
+                "id_kelurahan": {
+                    "type": "string"
+                },
                 "id_roles": {
                     "type": "integer"
                 },
@@ -1401,6 +1465,15 @@
                 "id_jenis_usaha": {
                     "type": "integer"
                 },
+                "id_kabupaten": {
+                    "type": "integer"
+                },
+                "id_kecamatan": {
+                    "type": "integer"
+                },
+                "id_kelurahan": {
+                    "type": "string"
+                },
                 "id_pendamping": {
                     "type": "integer"
                 },
@@ -1471,6 +1544,15 @@
                     "type": "string"
                 },
                 "fb": {
+                    "type": "string"
+                },
+                "id_kabupaten": {
+                    "type": "integer"
+                },
+                "id_kecamatan": {
+                    "type": "integer"
+                },
+                "id_kelurahan": {
                     "type": "string"
                 },
                 "id_roles": {

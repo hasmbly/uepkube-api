@@ -108,6 +108,8 @@ func Init() *echo.Echo {
 	o.GET("/lookup/bantuan_periods", controllers.GeAllBantuanPeriods)
 	// member_pelatihan
 	o.GET("/lookup/member_pelatihan", controllers.GeAllMemberPelatihan)
+	// monev_pertanyaan+score indikator
+	o.GET("/lookup/monev_indikator", controllers.GeAllMonevIndikator)
 
 	// Route::Restricted-Group-UEP
 	// u := e.Group("/api/v1")
@@ -129,7 +131,6 @@ func Init() *echo.Echo {
 	// k.PUT("/kube", controllers.UpdateKube)
 	// k.POST("/kube/add", controllers.AddKube)
 	// k.POST("/kube/:id", controllers.DeleteKube)	
-
 
 	// Routes::All Roles
 	a := e.Group("/api/v1")
