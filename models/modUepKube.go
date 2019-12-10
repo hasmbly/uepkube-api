@@ -236,7 +236,49 @@ Tbl_credit_debit struct{
 	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
 }
 
-// pertanyaan_monev
+// dimensi uepkube
+Tbl_dimensi_uepkube struct{
+	Id_dimensi 		int 		`json:"id_dimensi" gorm:"primary_key"`
+	Nama_dimensi 	string		`json:"nama_dimensi"`
+	Aspek_uep 		[]*Tbl_aspek_uep `json:"aspek_uep" gorm:"foreignkey:id_dimensi;association_foreignkey:id_dimensi"`
+	Aspek_kube 		[]*Tbl_aspek_kube `json:"aspek_kube" gorm:"foreignkey:id_dimensi;association_foreignkey:id_dimensi"`
+}
+
+// aspek uep
+Tbl_aspek_uep struct{
+	Id_aspek 		int 		`json:"id_aspek" gorm:"primary_key"`
+	Id_dimensi 		int 		`json:"id_dimensi"`
+	Nama_aspek 		string		`json:"nama_aspek"`
+	Kriteria_uep 	[]*Tbl_kriteria_uep `json:"kriteria_uep" gorm:"foreignkey:id_aspek;association_foreignkey:id_aspek"`
+}
+
+// aspek kube
+Tbl_aspek_kube struct{
+	Id_aspek 		int 		`json:"id_aspek" gorm:"primary_key"`
+	Id_dimensi 		int 		`json:"id_dimensi"`
+	Nama_aspek 		string		`json:"nama_aspek"`
+	Kriteria_kube 	[]*Tbl_kriteria_kube `json:"kriteria_kube" gorm:"foreignkey:id_aspek;association_foreignkey:id_aspek"`
+}
+
+// kriteria uep
+Tbl_kriteria_uep struct{
+	Id_kriteria 	int 		`json:"id_kriteria" gorm:"primary_key"`
+	Id_aspek 		int 		`json:"id_aspek"`
+	Nama_kriteria 	string		`json:"nama_kriteria"`
+	Bobot 			int			`json:"bobot"`
+	Indikator_uep 	[]*Tbl_indikator_uep `json:"indikator_uep" gorm:"foreignkey:id_kriteria;association_foreignkey:id_kriteria"`
+}
+
+// kriteria kube
+Tbl_kriteria_kube struct{
+	Id_kriteria 	int 		`json:"id_kriteria" gorm:"primary_key"`
+	Id_aspek 		int 		`json:"id_aspek"`
+	Nama_kriteria 	string		`json:"nama_kriteria"`
+	Bobot 			int			`json:"bobot"`
+	Indikator_kube 	[]*Tbl_indikator_kube `json:"indikator_kube" gorm:"foreignkey:id_kriteria;association_foreignkey:id_kriteria"`
+}
+
+// indikator uep
 Tbl_indikator_uep struct{
 	Id_indikator 	int 		`json:"id_indikator" gorm:"primary_key"`
 	Id_kriteria 	int			`json:"id_kriteria"`
@@ -244,6 +286,7 @@ Tbl_indikator_uep struct{
 	Skor_indikator 	int			`json:"skor_indikator"`
 }
 
+// indikator kube
 Tbl_indikator_kube struct{
 	Id_indikator 	int 		`json:"id_indikator" gorm:"primary_key"`
 	Id_kriteria 	int			`json:"id_kriteria"`

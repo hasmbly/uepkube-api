@@ -396,7 +396,7 @@
                 }
             }
         },
-        "/lookup/monev_indikator": {
+        "/lookup/monev_items": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -407,7 +407,7 @@
                 "tags": [
                     "Lookup-Controller"
                 ],
-                "summary": "GeAllMonevIndikator",
+                "summary": "GeAllMonevItems",
                 "parameters": [
                     {
                         "type": "string",

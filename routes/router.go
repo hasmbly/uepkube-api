@@ -109,7 +109,7 @@ func Init() *echo.Echo {
 	// member_pelatihan
 	o.GET("/lookup/member_pelatihan", controllers.GeAllMemberPelatihan)
 	// monev_pertanyaan+score indikator
-	o.GET("/lookup/monev_indikator", controllers.GeAllMonevIndikator)
+	o.GET("/lookup/monev_items", controllers.GeAllMonevItems)
 
 	// Route::Restricted-Group-UEP
 	// u := e.Group("/api/v1")

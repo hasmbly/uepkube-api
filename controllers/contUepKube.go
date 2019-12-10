@@ -315,7 +315,7 @@ func GeAllAddress(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
-// @Summary GeAllMonevIndikator
+// @Summary GeAllMonevItems
 // @Tags Lookup-Controller
 // @Accept  json
 // @Produce  json
@@ -325,11 +325,13 @@ func GeAllAddress(c echo.Context) (err error) {
 // @Failure 401 {object} models.HTTPError
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
-// @Router /lookup/monev_indikator [get]
-func GeAllMonevIndikator(c echo.Context) (err error) {
+// @Router /lookup/monev_items [get]
+func GeAllMonevItems(c echo.Context) (err error) {
 	flag 	:= c.QueryParam("flag")
-	PertanyaanUep := []models.Tbl_indikator_uep{}
-	PertanyaanKube := []models.Tbl_indikator_kube{}
+
+	Dimensi := []models.Tbl_dimensi_uepkube{}
+	// PertanyaanUep := []models.Tbl_indikator_uep{}
+	// PertanyaanKube := []models.Tbl_indikator_kube{}
 
 	r := &models.Jn{}
 
@@ -338,13 +340,13 @@ func GeAllMonevIndikator(c echo.Context) (err error) {
 	con.SingularTable(true)
 
 	if flag == "uep" {
-		if err := con.Model(&models.Tbl_indikator_uep{}).Find(&PertanyaanUep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-		r.Msg = PertanyaanUep
-
-	} else if flag == "kube" {
-		if err := con.Model(&models.Tbl_indikator_kube{}).Find(&PertanyaanKube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-		r.Msg = PertanyaanKube
+		q := con
+		q = q.Model(&Dimensi)
+		q = q.Preload("Aspek_uep.Kriteria_uep.Indikator_uep")
+		q = q.Find(&Dimensi)
 	}
+	
+	r.Msg = Dimensi
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, r)
