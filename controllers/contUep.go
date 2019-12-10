@@ -158,11 +158,21 @@ func AddUep(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, "Maaf NIK sudah digunakan")
 	}
 
+	// create user
 	if err := con.Create(&user).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	uep.Id_uep = user.Id_user
 
+	// create uep
 	if err := con.Create(&uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+
+	// store credit
+	credit := &models.Tbl_credit_debit{}
+	credit.Id_uep = user.Id_user
+	credit.credit = 1
+	credot.Id_periods = uep.Id_periods
+
+	if err := con.Create(&credit).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	defer con.Close()
 

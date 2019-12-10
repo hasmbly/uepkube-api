@@ -224,6 +224,18 @@ Tbl_bantuan_periods struct{
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 }
 
+Tbl_credit_debit struct{
+	Id 				int 		`json:"id" gorm:"primary_key"`
+	Id_uep 			int			`json:"-"`
+	Id_kube 		int			`json:"-"`
+	Credit 			int			`json:"-"`
+	Debit 			int			`json:"-"`
+	File 			string		`json:"-"`
+	Id_periods 		int			`json:"-"`
+	Transaction_at	*time.Time 	`json:"transaction_at" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
+}
+
 View_address struct{
 	Id_kabupaten 	int 		`json:"id_kabupaten"`
 	Id_kecamatan 	int 		`json:"id_kecamatan"`
