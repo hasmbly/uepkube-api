@@ -344,6 +344,11 @@ func GeAllMonevItems(c echo.Context) (err error) {
 		q = q.Model(&Dimensi)
 		q = q.Preload("Aspek_uep.Kriteria_uep.Indikator_uep")
 		q = q.Find(&Dimensi)
+	} else if flag == "kube" {
+		q := con
+		q = q.Model(&Dimensi)
+		q = q.Preload("Aspek_kube.Kriteria_kube.Indikator_kube")
+		q = q.Find(&Dimensi)
 	}
 	
 	r.Msg = Dimensi
