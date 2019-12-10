@@ -76,7 +76,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	q = q.Table("tbl_uep t1")
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Select("t1.id_uep, t2.nama, t2.nik, t2.no_kk, t2.alamat, t1.status, t1.created_at")
+	q = q.Select("t1.id_uep, t1.id_periods, t2.nama, t2.nik, t2.no_kk, t2.alamat, t1.status, t1.created_at")
 	q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
 	q = q.Joins("join tbl_jenis_usaha t3 on t3.id_usaha = t1.id_jenis_usaha")
 
@@ -143,6 +143,24 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 			
 		}
 	}
+
+	// get bantuan_periods
+	if len(Ueps) != 0 {
+		for i,_ := range Ueps {
+			bantuan_periods := models.Tbl_bantuan_periods{}
+			con.Table("tbl_bantuan_periods").Select("*").Where("id = ?", Ueps[i].Id_periods).Scan(&bantuan_periods)
+			Ueps[i].BantuanPeriods = bantuan_periods
+		}
+	}	
+
+	// get credit_debit
+	if len(Ueps) != 0 {
+		for i,_ := range Ueps {
+			credit_debit := []*models.Tbl_credit_debit{}
+			con.Table("tbl_credit_debit").Select("*").Where("id_uep = ?", Ueps[i].Id_uep).Scan(&credit_debit)
+			Ueps[i].BantuanPeriods.CreditDebit = credit_debit
+		}
+	}		
 
 	if err := q.Count(count).Error; err != nil {
 		return ur, err

@@ -19,9 +19,9 @@ Tbl_user struct {
 	Tempat_lahir	string 		`json:"tempat_lahir"`
 	Tgl_lahir		string 		`json:"tgl_lahir"`
 	Alamat			string 		`json:"alamat"`
-	Id_kelurahan	*string 	`json:"-"`
-	Id_kecamatan	*int 		`json:"-"`
-	Id_kabupaten	*int 		`json:"-"`
+	Id_kelurahan	*string 	`json:"id_kelurahan"`
+	Id_kecamatan	*int 		`json:"id_kecamatan"`
+	Id_kabupaten	*int 		`json:"id_kabupaten"`
 	Email			string 		`json:"email"`
 	No_hp			string 		`json:"no_hp"`
 	Lat 			*float64 	`json:"lat"`
@@ -49,7 +49,6 @@ Tbl_kabupaten struct{
 	Id_kabupaten 		string 		`json:"id_kabupaten" gorm:"primary_key"`
 	Kabupaten 			string 		`json:"kabupaten"`
 }
-
 
 Tbl_user_photo struct {
 	Id				int 		`json:"id" gorm:"primary_key"`
@@ -222,16 +221,17 @@ Tbl_bantuan_periods struct{
 	Status 			int 		`json:"status"`
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	CreditDebit 	[]*Tbl_credit_debit `json:"credit_debit"`
 }
 
 Tbl_credit_debit struct{
 	Id 				int 		`json:"id" gorm:"primary_key"`
-	Id_uep 			int			`json:"-"`
-	Id_kube 		int			`json:"-"`
-	Credit 			int			`json:"-"`
-	Debit 			int			`json:"-"`
-	File 			string		`json:"-"`
-	Id_periods 		int			`json:"-"`
+	Id_uep 			int			`json:"id_uep"`
+	Id_kube 		int			`json:"id_kube"`
+	Credit 			int			`json:"credit"`
+	Debit 			int			`json:"debit"`
+	File 			string		`json:"file" sql:"default:null"`
+	Id_periods 		int			`json:"id_periods"`
 	Transaction_at	*time.Time 	`json:"transaction_at" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
 }
@@ -489,6 +489,8 @@ PaginateUep struct{
 	Created_at 		string 	`json:"created_at"`
 	Pendamping 		CustomPendamping 	`json:"pendamping"`
 	Usaha 			UsahaUep 		`json:"jenis_usaha"`
+	Id_periods 		int 		`json:"-`
+	BantuanPeriods 	Tbl_bantuan_periods `json:"bantuan_periods"`	
 }
 
 PaginateProduks struct{

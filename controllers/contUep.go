@@ -22,11 +22,16 @@ type Tbl_pendamping struct {
 	Nama string `json:"nama"`
 }
 
+type Tbl_bantuan_periods struct {
+	*models.Tbl_bantuan_periods
+	CreditDebit 	[]*models.Tbl_credit_debit `json:"credit_debit"`
+}
+
 type Tbl_uep struct {
 	*models.Tbl_uep
-	Pendamping 	*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
-	JenisUsaha 	*models.Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	BantuanPeriods 	*models.Tbl_bantuan_periods `json:"bantuan_periods" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
+	JenisUsaha 		*models.Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
+	BantuanPeriods 	*Tbl_bantuan_periods `json:"bantuan_periods" gorm:"foreignkey:id_periods;association_foreignkey:id"`	
 }
 
 type Tbl_user struct {
@@ -59,13 +64,15 @@ func GetUep(c echo.Context) error {
 	con.SingularTable(true)	
 	
 	User 	:= Tbl_user{}
-
 	q := con
 	q = q.Model(&User)
 	q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 	q = q.Select("tbl_uep.*, tbl_user.*")
 	q = q.Preload("JenisUsaha")
 	q = q.Preload("BantuanPeriods")
+	// q = q.Preload("BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+	// 	return q.Select("tbl_credit_debit.*")
+	// })
 	q = q.Preload("Pendamping")
 	q = q.Preload("Kelurahan")
 	q = q.Preload("Kecamatan")
@@ -77,6 +84,9 @@ func GetUep(c echo.Context) error {
 			ImageBlob := User.Photo[i].Photo
 			User.Photo[i].Photo = "data:image/png;base64," + ImageBlob	
 		}
+
+	//get all transac credit_debit
+	con.Table("tbl_credit_debit").Select("*").Where("id_uep = ?", id).Scan(&User.BantuanPeriods.CreditDebit)
 
 	r := &models.Jn{Msg: User}
 	defer con.Close()
@@ -152,13 +162,14 @@ func AddUep(c echo.Context) (err error) {
 	con.SingularTable(true)
 
 	// check if nik is not exist
-    var nik []int
+    var nik []string
 	con.Table("tbl_user").Where("nik = ?", Uep.Nik).Pluck("nik", &nik)
 	if len(nik) > 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Maaf NIK sudah digunakan")
 	}
 
 	// create user
+	log.Println("user : ", user)
 	if err := con.Create(&user).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	uep.Id_uep = user.Id_user
@@ -169,8 +180,8 @@ func AddUep(c echo.Context) (err error) {
 	// store credit
 	credit := &models.Tbl_credit_debit{}
 	credit.Id_uep = user.Id_user
-	credit.credit = 1
-	credot.Id_periods = uep.Id_periods
+	credit.Credit = 1
+	credit.Id_periods = uep.Id_periods
 
 	if err := con.Create(&credit).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
@@ -199,9 +210,17 @@ func UpdateUep(c echo.Context) (err error) {
 		return err
 	}
 
+	// validation
 	if Uep.Id_user == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
 	}
+	if Uep.Nik == "" { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") 
+	} else {
+		if len(Uep.Nik) > 16 || len(Uep.Nik) < 16 {
+			return echo.NewHTTPError(http.StatusBadRequest, "Please fill NIK with 16 Digits")
+		}
+	}	
 	
 	user := &models.Tbl_user{}
 	user = Uep.Tbl_user
