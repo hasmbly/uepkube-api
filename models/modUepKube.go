@@ -88,18 +88,17 @@ Tbl_uep struct {
 	Nama_kube    	string 	`json:"nama_kube"`
 	Nama_usaha  	string 	`json:"nama_usaha"`
 	Id_jenis_usaha  int 	`json:"id_jenis_usaha"`
-	Id_periods		int 	`json:"id_periods"`
-	Ketua        	int 	`json:"ketua" sql:"DEFAULT:NULL"`
-	Sekertaris   	int 	`json:"sekertaris" sql:"DEFAULT:NULL"`
-	Bendahara    	int 	`json:"bendahara" sql:"DEFAULT:NULL"`
-	Anggota1     	int 	`json:"anggota1" sql:"DEFAULT:NULL"`
-	Anggota2     	int 	`json:"anggota2" sql:"DEFAULT:NULL"`
-	Anggota3     	int 	`json:"anggota3" sql:"DEFAULT:NULL"`
-	Anggota4     	int 	`json:"anggota4" sql:"DEFAULT:NULL"`
-	Anggota5     	int 	`json:"anggota5" sql:"DEFAULT:NULL"`
-	Anggota6     	int 	`json:"anggota6" sql:"DEFAULT:NULL"`
-	Anggota7     	int 	`json:"anggota7" sql:"DEFAULT:NULL"`
-	Id_pendamping	int 	`json:"id_pendamping" sql:"DEFAULT:NULL"`
+	Ketua        	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Sekertaris   	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Bendahara    	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Anggota1     	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Anggota2     	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Anggota3     	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Anggota4     	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Anggota5     	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Anggota6     	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Anggota7     	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Id_pendamping	int 	`json:"-" sql:"DEFAULT:NULL"`
 	Status       	int 	`json:"status" sql:"default:0"`
 	Ig 				string 		`json:"ig"`
 	Fb 				string 		`json:"fb"`
@@ -108,7 +107,19 @@ Tbl_uep struct {
 	Updated_at   	*time.Time `json:"-" gorm:"timestamp;null"`
 	Created_by   	*string 	`json:"created_by"`
 	Updated_by		*string 	`json:"updated_by"`
+	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
+	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
+	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_kube"`	
+	Photo 			[]*Tbl_uepkube_photo `json:"photo" gorm:"foreignkey:id_kube"`
+	Items 			[]Kubes_items `json:"items"`
 }
+
+Kubes_items struct{
+		Id_user int `json:"id_user"`
+		Nik string `json:"nik"`
+		Nama string `json:"nama"`
+		Posisi string `json:"posisi"`
+	}
 
 Tbl_kube_photo struct {
 	Id				int 		`json:"id" gorm:"primary_key"`
@@ -227,7 +238,7 @@ Tbl_periods_uepkube struct {
 	Id_periods 	 	int 		`json:"id_periods"`
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
-	BantuanPeriods 	*Tbl_bantuan_periods `json:"bantuan_periods"`
+	BantuanPeriods 	*Tbl_bantuan_periods `json:"bantuan_periods" gorm:"foreignkey:id;association_foreignkey:id_periods"`
 }
 
 Tbl_bantuan_periods struct{
@@ -240,7 +251,7 @@ Tbl_bantuan_periods struct{
 	Status 			int 		`json:"status"`
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
-	CreditDebit 	[]*Tbl_credit_debit `json:"credit_debit"`
+	CreditDebit 	[]*Tbl_credit_debit `json:"credit_debit" gorm:"foreignkey:id_periods;association_foreignkey:id"`
 }
 
 Tbl_credit_debit struct{
@@ -430,7 +441,7 @@ ShowKube struct {
 	Alamat			*string 	`json:"alamat"`
 	Lat				*string 	`json:"lat"`
 	Lng				*string 	`json:"lng"`
-	Photo 		 	[]Tbl_kube_photo 	`json:"photo"`
+	Photo 		 	[]Tbl_uepkube_photo 	`json:"photo"`
 	Items 			Items 		`json:"items"`	
 	Flag 			string 		 `json:"flag"`	
 }

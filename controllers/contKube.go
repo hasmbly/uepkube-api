@@ -10,6 +10,7 @@ import (
 	 "strconv"
 	 "uepkube-api/helpers"
 	 "log"
+	 "fmt"
 
 	"bufio"
 	"encoding/base64"	
@@ -34,39 +35,66 @@ func GetKube(c echo.Context) error {
 	con.SingularTable(true)	
 
 	var val string
-	Kube 	:= []models.Tbl_kube{}
 	ShowKubes := models.ShowKube{}
-
 	var tempo []interface{}
+	
+	r := &models.Jn{}
 
 	/*check if query key -> "val"*/
 	qk := c.QueryParams()
 	for k,v := range qk {
 		if k == "val" {
-			val = v[0]
+
 			/*find kube by Nama_kube:*/
-			if err := con.Where("nama_kube LIKE ?", "%" + val + "%").Find(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
-				return echo.NewHTTPError(http.StatusNotFound, "Kube Not Found")
-			}		
-		} else if k == "id" {
 			val = v[0]
-			id,_ := strconv.Atoi(val)
-			/*find kube by Nama_kube:*/
-			if err := con.Where(&models.Tbl_kube{Id_kube:id}).First(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
+			Kubes 	:= []models.Tbl_kube{}
+			if err := con.Where("nama_kube LIKE ?", "%" + val + "%").Find(&Kubes).Error; gorm.IsRecordNotFoundError(err)  {
 				return echo.NewHTTPError(http.StatusNotFound, "Kube Not Found")
 			}
+			for i,_ := range Kubes {
+				helpers.SetMemberNameKube(&ShowKubes, Kubes[i])
+				tempo = append(tempo, ShowKubes)
+			}			
+			r.Msg = tempo
+
+		} else if k == "id" {
+
+			/*find kube by Id Kube :*/
+			val = v[0]
+			id,_ := strconv.Atoi(val)
+			Kube 	:= models.Tbl_kube{}
+			q := con
+			q = q.Model(&Kube)
+			q = q.Preload("JenisUsaha")
+			q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+				return q.Where("id_kube = ?", id)
+			})
+			q = q.Preload("Pendamping")
+			q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
+				return q.Where("id_kube = ?", id)	
+			})
+			q = q.First(&Kube, id)
+
+			// get kubes_member
+			var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}
+			tmp := []models.Kubes_items{}
+
+			for i, _ := range KubesMember {
+			
+				if err := con.Table("tbl_kube t1").Select("t2.id_user, t2.nama, t2.nik, '" +KubesMember[i] + "' as posisi").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[i]).Where("id_kube = ?", id).Scan(&tmp).Error; err != nil { return echo.ErrInternalServerError }
+
+				if len(tmp) != 0 {
+					Kube.Items = append(Kube.Items, tmp[0])
+				}
+
+			}
+
+			r.Msg = Kube
 		}
 	}
 
-	for i,_ := range Kube {
-		
-		helpers.SetMemberNameKube(&ShowKubes, Kube[i])
-
-		tempo = append(tempo, ShowKubes)
-	}
 
 
-	r := &models.Jn{Msg: tempo}
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, r)
@@ -104,7 +132,7 @@ func GetPaginateKube(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /kube/add [post]*/
 func AddKube(c echo.Context) (err error) {
-	Kube := &models.Tbl_kube{}
+	Kube := &models.Kube{}
 
 	if err := c.Bind(Kube); err != nil {
 		return err
@@ -128,7 +156,27 @@ func AddKube(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	if err := con.Create(&Kube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	// create kube
+	kube := &models.Tbl_kube{}
+	kube = Kube.Tbl_kube
+	if err := con.Create(&kube).Error; err != nil {return echo.ErrInternalServerError}	
+
+	// store bantuan_periods history
+	kubePeriods := &models.Tbl_periods_uepkube{}
+	kubePeriods.Id_kube = Kube.Id_kube
+	kubePeriods.Id_periods = Kube.Id_periods
+	if err := con.Create(&kubePeriods).Error; err != nil {return echo.ErrInternalServerError}	
+
+	// store credit_debit
+	creditDebit := &models.Tbl_credit_debit{}
+	creditDebit.Id_kube = Kube.Id_kube
+	creditDebit.Debit = 1
+	creditDebit.Id_periods = Kube.Id_periods
+	var nilai []float32
+	con.Table("tbl_bantuan_periods").Where("id = ?", creditDebit.Id_periods).Pluck("bantuan_modal", &nilai)
+	creditDebit.Nilai = nilai[0]
+	creditDebit.Deskripsi = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
+	if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
 
 	defer con.Close()
 

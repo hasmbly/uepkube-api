@@ -85,10 +85,6 @@ definitions:
         type: string
       nama_usaha:
         type: string
-      photo:
-        items:
-          $ref: '#/definitions/models.Tbl_kube_photo'
-        type: array
       sekertaris:
         type: integer
       status:
@@ -202,8 +198,6 @@ definitions:
     type: object
   models.Produk:
     properties:
-      created_by:
-        type: string
       id:
         type: integer
       id_kube:
@@ -214,19 +208,6 @@ definitions:
         type: integer
       id_usaha:
         type: integer
-      updated_by:
-        type: string
-    type: object
-  models.Tbl_kube_photo:
-    properties:
-      id:
-        type: integer
-      id_kube:
-        type: integer
-      is_display:
-        type: integer
-      photo:
-        type: string
     type: object
   models.Tbl_pelatihan_photo:
     properties:

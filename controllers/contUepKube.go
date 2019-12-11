@@ -197,10 +197,6 @@ func GeAllMemberPelatihan(c echo.Context) (err error) {
 		}
 	}
 
-
-
-
-
 	r := &models.Jn{Msg: Result}
 
 	defer con.Close()
