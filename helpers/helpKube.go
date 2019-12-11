@@ -158,9 +158,7 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 	q = q.Table("tbl_kube t1")
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Select("t1.id_kube, t1.nama_kube, t1.bantuan_modal, t1.status, t1.created_at")
-	// q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
-	q = q.Joins("join tbl_jenis_usaha t3 on t3.id_usaha = t1.id_jenis_usaha")
+	q = q.Select("t1.id_kube, t1.nama_kube, t1.status, t1.created_at")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -219,25 +217,66 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 
 			if kube_usaha.Id_usaha != 0 { kubes[i].Usaha = kube_usaha }
 
-			con.Table("tbl_usaha_kube_photo").Where("id_kube = ?", kubes[i].Id_kube).Find(&photos)
+			con.Table("tbl_uepkube_photo").Where("id_kube = ?", kubes[i].Id_kube).Find(&photos)
 
 			for index,_ := range photos {
 				ImageBlob := photos[index].Photo
 				photos[index].Photo = "data:image/png;base64," + ImageBlob			
 				kubes[i].Usaha.Photo = photos
 			}
-
-			// log.Println("photos : ", photos)
-			// log.Println("usaha : ", kubes[i].Usaha)
 			
 		}
 	}
 
+	// get hitory_periods
+	if len(kubes) != 0 {
+		for i,_ := range kubes {
+			history_periods := []*models.Tbl_periods_uepkube{}
+			con.Table("tbl_periods_uepkube").Select("*").Where("id_kube = ?", kubes[i].Id_kube).Scan(&history_periods)
+			
+			if len(history_periods) != 0 {
+				for index, _ := range history_periods {
+					kubes[i].PeriodsHistory = append(kubes[i].PeriodsHistory, history_periods[index])
+				}
+			}
+		}
+	}		
+
+	// get bantuan_periods
+	if len(kubes) != 0 {
+		for i,_ := range kubes {
+			bantuan_periods := models.Tbl_bantuan_periods{}
+			
+			if len(kubes[i].PeriodsHistory) != 0 {
+				for index, _ := range kubes[i].PeriodsHistory {
+					con.Table("tbl_bantuan_periods").Select("*").Where("id = ?", kubes[i].PeriodsHistory[index].Id_periods).Scan(&bantuan_periods)
+
+						kubes[i].PeriodsHistory[index].BantuanPeriods = &bantuan_periods
+				}
+			}
+		}
+	}	
+
+	// get credit_debit
+	if len(kubes) != 0 {
+		for i,_ := range kubes {
+			credit_debit := []*models.Tbl_credit_debit{}
+
+			con.Table("tbl_credit_debit").Select("*").Where("id_kube = ?", kubes[i].Id_kube).Scan(&credit_debit)
+			
+			if len(credit_debit) != 0 {
+				for indexDebit, _ := range credit_debit {
+					for indexPeriods, _ := range kubes[i].PeriodsHistory {
+						kubes[i].PeriodsHistory[indexPeriods].BantuanPeriods.CreditDebit = append(kubes[i].PeriodsHistory[indexPeriods].BantuanPeriods.CreditDebit, credit_debit[indexDebit])
+					}
+				}
+			}
+		}
+	}	
+
 	if err := q.Count(count).Error; err != nil {
 		return ur, err
 	}
-
-	// log.Println("result : ", Pelatihans)
 
 	defer con.Close()
 	return kubes, nil

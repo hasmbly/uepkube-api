@@ -566,11 +566,11 @@ Sort struct{
 PaginateKubes struct{
 	Id_kube      	int 	`json:"id"`
 	Nama_kube    	string 	`json:"nama_kube"`
-	Bantuan_modal	int 	`json:"bantuan_modal"`
 	Status 		 	int 	`json:"status"`
 	Created_at 		*time.Time 	`json:"created_at"`
 	Pendamping 		CustomPendamping 	`json:"pendamping"`
 	Usaha 			UsahaKube 		`json:"usaha"`
+	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history"`
 }
 
 PaginateUep struct{

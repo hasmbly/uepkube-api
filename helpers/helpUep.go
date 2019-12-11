@@ -78,7 +78,6 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	q = q.Offset(int(offset))
 	q = q.Select("t1.id_uep, t2.nama, t2.nik, t2.no_kk, t2.alamat, t1.status, t1.created_at")
 	q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
-	q = q.Joins("join tbl_jenis_usaha t3 on t3.id_usaha = t1.id_jenis_usaha")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -121,7 +120,6 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	if len(Ueps) != 0 {
 		for i,_ := range Ueps {
 			var uep_usaha models.UsahaUep
- 			// var id_produk []int
 			var photos []models.Tbl_uepkube_photo
 
 			q := con.Table("tbl_uep t1")
@@ -193,8 +191,6 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	if err := q.Count(count).Error; err != nil {
 		return ur, err
 	}
-
-	// log.Println("result : ", Pelatihans)
 
 	defer con.Close()
 	return Ueps, nil
