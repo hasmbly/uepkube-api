@@ -11,6 +11,7 @@ import (
 	"uepkube-api/helpers"
 	"strconv"
 	"log"
+	"fmt"
 
 	"bufio"
 	"encoding/base64"	
@@ -22,16 +23,22 @@ type Tbl_pendamping struct {
 	Nama string `json:"nama"`
 }
 
+type Tbl_periods_uepkube struct {
+	*models.Tbl_periods_uepkube
+	BantuanPeriods *Tbl_bantuan_periods `json:"bantuan_periods" gorm:"foreignkey:id;association_foreignkey:id_periods"`
+}
+
 type Tbl_bantuan_periods struct {
 	*models.Tbl_bantuan_periods
-	CreditDebit 	[]*models.Tbl_credit_debit `json:"credit_debit"`
+	CreditDebit 	[]*models.Tbl_credit_debit `json:"credit_debit" gorm:"foreignkey:id_periods;association_foreignkey:id"`
 }
 
 type Tbl_uep struct {
 	*models.Tbl_uep
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	JenisUsaha 		*models.Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	BantuanPeriods 	*Tbl_bantuan_periods `json:"bantuan_periods" gorm:"foreignkey:id_periods;association_foreignkey:id"`	
+	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_uep"`	
+	Photo 			[]*models.Tbl_uepkube_photo `json:"photo" gorm:"foreignkey:id_uep"`
 }
 
 type Tbl_user struct {
@@ -40,7 +47,6 @@ type Tbl_user struct {
 	Kelurahan 	*models.Tbl_kelurahan `json:"kelurahan" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
 	Kecamatan 	*models.Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kecamatan;association_foreignkey:id_kecamatan"`
 	Kabupaten 	*models.Tbl_kabupaten `json:"kabupaten" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
-	Photo 		[]*models.Tbl_user_photo `json:"photo" gorm:"foreignkey:id_user"`
 }
 
 /*@Summary GetUepById
@@ -69,15 +75,16 @@ func GetUep(c echo.Context) error {
 	q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 	q = q.Select("tbl_uep.*, tbl_user.*")
 	q = q.Preload("JenisUsaha")
-	q = q.Preload("BantuanPeriods")
-	// q = q.Preload("BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
-	// 	return q.Select("tbl_credit_debit.*")
-	// })
+	q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+		return q.Where("id_uep = ?", id)
+	})
 	q = q.Preload("Pendamping")
 	q = q.Preload("Kelurahan")
 	q = q.Preload("Kecamatan")
 	q = q.Preload("Kabupaten")
-	q = q.Preload("Photo")
+	q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
+		return q.Where("id_uep = ?", id)	
+	})
 	q = q.First(&User, id)
 
 	for i,_ := range User.Photo {
@@ -86,11 +93,10 @@ func GetUep(c echo.Context) error {
 		}
 
 	//get all transac credit_debit
-	con.Table("tbl_credit_debit").Select("*").Where("id_uep = ?", id).Scan(&User.BantuanPeriods.CreditDebit)
+	// con.Table("tbl_credit_debit").Select("*").Where("id_uep = ?", id).Scan(&User.BantuanPeriods.CreditDebit)
 
 	r := &models.Jn{Msg: User}
 	defer con.Close()
-
 
 	return c.JSON(http.StatusOK, r)
 }
@@ -140,6 +146,7 @@ func AddUep(c echo.Context) (err error) {
 
 	// validation
 	if Uep.Id_pendamping == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id Pendamping") }
+	if Uep.Id_jenis_usaha == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id jenis usaha") }
 	if Uep.Id_periods == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") }
 	if Uep.Nama_usaha == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha Modal") }	
 	if Uep.Nik == "" { 
@@ -152,7 +159,6 @@ func AddUep(c echo.Context) (err error) {
 
 	uep := &models.Tbl_uep{}
 	uep.Id_pendamping = Uep.Id_pendamping
-	uep.Id_periods = Uep.Id_periods
 	uep.Nama_usaha = Uep.Nama_usaha
 	uep.Id_jenis_usaha = Uep.Id_jenis_usaha
 	uep.Status = Uep.Status
@@ -169,21 +175,28 @@ func AddUep(c echo.Context) (err error) {
 	}
 
 	// create user
-	log.Println("user : ", user)
-	if err := con.Create(&user).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-
-	uep.Id_uep = user.Id_user
+	if err := con.Create(&user).Error; err != nil {return echo.ErrInternalServerError}
 
 	// create uep
-	if err := con.Create(&uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+	uep.Id_uep = user.Id_user
+	if err := con.Create(&uep).Error; err != nil {return echo.ErrInternalServerError}
 
-	// store credit
-	credit := &models.Tbl_credit_debit{}
-	credit.Id_uep = user.Id_user
-	credit.Credit = 1
-	credit.Id_periods = uep.Id_periods
+	// store bantuan_periods_history
+	uepPeriods := &models.Tbl_periods_uepkube{}
+	uepPeriods.Id_uep = user.Id_user
+	uepPeriods.Id_periods = Uep.Id_periods
+	if err := con.Create(&uepPeriods).Error; err != nil {return echo.ErrInternalServerError}
 
-	if err := con.Create(&credit).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	// store creditDebit
+	creditDebit := &models.Tbl_credit_debit{}
+	creditDebit.Id_uep = user.Id_user
+	creditDebit.Debit = 1
+	creditDebit.Id_periods = Uep.Id_periods
+	var nilai []float32
+	con.Table("tbl_bantuan_periods").Where("id = ?", creditDebit.Id_periods).Pluck("bantuan_modal", &nilai)
+	creditDebit.Nilai = nilai[0]
+	creditDebit.Deskripsi = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
+	if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
 
 	defer con.Close()
 
@@ -228,7 +241,6 @@ func UpdateUep(c echo.Context) (err error) {
 	uep := &models.Tbl_uep{}
 	uep.Id_pendamping = Uep.Id_pendamping
 	uep.Nama_usaha = Uep.Nama_usaha
-	uep.Id_periods = Uep.Id_periods
 	uep.Id_jenis_usaha = Uep.Id_jenis_usaha
 	uep.Status = Uep.Status
 

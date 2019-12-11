@@ -207,7 +207,7 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 		for i,_ := range kubes {
 			var kube_usaha models.UsahaKube
  			// var id_produk []int
-			var photos []models.Tbl_usaha_kube_photo
+			var photos []models.Tbl_uepkube_photo
 
 			// log.Println("id_kube : ", kubes[i].Id_kube)
 			

@@ -95,7 +95,7 @@ func GetPaginateKube(c echo.Context) (err error) {
 @Tags Kube-Controller
 @Accept  json
 @Produce  json
-@Param kube body models.Tbl_kube true "Add Kube"
+@Param kube body models.Kube true "Add Kube"
 @Success 200 {object} models.Jn
 @Failure 400 {object} models.HTTPError
 @Failure 401 {object} models.HTTPError
@@ -104,17 +104,31 @@ func GetPaginateKube(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /kube/add [post]*/
 func AddKube(c echo.Context) (err error) {
-	kube := &models.Tbl_kube{}
+	Kube := &models.Tbl_kube{}
 
-	if err := c.Bind(kube); err != nil {
+	if err := c.Bind(Kube); err != nil {
 		return err
 	}
+
+	// validation
+	if Kube.Id_pendamping == 0 { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id Pendamping") 
+	}
+	if Kube.Id_jenis_usaha == 0 { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id jenis usaha") 
+	}
+	if Kube.Id_periods == 0 { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") 
+	}
+	if Kube.Nama_usaha == "" { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha Modal") 
+	}	
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	if err := con.Create(&kube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Create(&Kube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	defer con.Close()
 
