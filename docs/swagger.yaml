@@ -49,22 +49,6 @@ definitions:
     type: object
   models.Kube:
     properties:
-      anggota1:
-        type: integer
-      anggota2:
-        type: integer
-      anggota3:
-        type: integer
-      anggota4:
-        type: integer
-      anggota5:
-        type: integer
-      anggota6:
-        type: integer
-      anggota7:
-        type: integer
-      bendahara:
-        type: integer
       created_by:
         type: string
       fb:
@@ -73,25 +57,48 @@ definitions:
         type: integer
       id_kube:
         type: integer
-      id_pendamping:
-        type: integer
       id_periods:
         type: integer
       ig:
         type: string
-      ketua:
-        type: integer
+      items:
+        items:
+          $ref: '#/definitions/models.Kubes_items'
+        type: array
+      jenis_usaha:
+        $ref: '#/definitions/models.Tbl_jenis_usaha'
+        type: object
       nama_kube:
         type: string
       nama_usaha:
         type: string
-      sekertaris:
-        type: integer
+      pendamping:
+        $ref: '#/definitions/models.Tbl_pendamping'
+        type: object
+      periods_history:
+        items:
+          $ref: '#/definitions/models.Tbl_periods_uepkube'
+        type: array
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_uepkube_photo'
+        type: array
       status:
         type: integer
       updated_by:
         type: string
       wa:
+        type: string
+    type: object
+  models.Kubes_items:
+    properties:
+      id_user:
+        type: integer
+      nama:
+        type: string
+      nik:
+        type: string
+      posisi:
         type: string
     type: object
   models.Pelatihan:
@@ -209,11 +216,100 @@ definitions:
       id_usaha:
         type: integer
     type: object
+  models.Tbl_bantuan_periods:
+    properties:
+      bantuan_modal:
+        type: number
+      credit_debit:
+        items:
+          $ref: '#/definitions/models.Tbl_credit_debit'
+        type: array
+      end_date:
+        type: string
+      id:
+        type: integer
+      peruntukan:
+        type: string
+      quota:
+        type: integer
+      start_date:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.Tbl_credit_debit:
+    properties:
+      credit:
+        type: integer
+      debit:
+        type: integer
+      deskripsi:
+        type: string
+      file:
+        type: string
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      id_periods:
+        type: integer
+      id_uep:
+        type: integer
+      nilai:
+        type: number
+      transaction_at:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.Tbl_jenis_usaha:
+    properties:
+      id_usaha:
+        type: integer
+      jenis_usaha:
+        type: string
+    type: object
   models.Tbl_pelatihan_photo:
     properties:
       id:
         type: integer
       id_pelatihan:
+        type: integer
+      is_display:
+        type: integer
+      photo:
+        type: string
+    type: object
+  models.Tbl_pendamping:
+    properties:
+      id_pendamping:
+        type: integer
+      jenis_pendamping:
+        type: string
+      periode:
+        type: string
+    type: object
+  models.Tbl_periods_uepkube:
+    properties:
+      bantuan_periods:
+        $ref: '#/definitions/models.Tbl_bantuan_periods'
+        type: object
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      id_periods:
+        type: integer
+      id_uep:
+        type: integer
+    type: object
+  models.Tbl_uepkube_photo:
+    properties:
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      id_uep:
         type: integer
       is_display:
         type: integer
@@ -345,7 +441,7 @@ definitions:
       wa:
         type: string
     type: object
-host: localhost:9093
+host: 157.245.55.185:9093
 info:
   contact:
     email: justhasby@gmail.com
