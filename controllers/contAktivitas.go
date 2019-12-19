@@ -1,188 +1,110 @@
 package controllers
 
 import (
-	// "net/http"
+	"net/http"
 	"github.com/labstack/echo"
-	// "github.com/jinzhu/gorm"
-	//  _"github.com/jinzhu/gorm/dialects/mysql"
-	 // "uepkube-api/models"
-	//  "uepkube-api/db"
-	//  "strconv"
-	//  "uepkube-api/helpers"
+	"github.com/jinzhu/gorm"
+	 _"github.com/jinzhu/gorm/dialects/mysql"
+	 "uepkube-api/db"
+	 "uepkube-api/models"
+	 "strconv"
+	 "uepkube-api/helpers"
 )
 
-/*@Summary GetAktivitasById
-@Tags Aktivitas-Controller
-@Accept  json
-@Produce  json
-@Param id query int true "int"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /aktivitas [get]*/
 func GetAktivitas(c echo.Context) error {
-	/*prepare DB*/
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)	
+	id 		:= c.QueryParam("id")
 
-	// var val string
-	// Aktivitas 	:= models.Tbl_aktivitas{}
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// /*check if query key -> "val"*/
-	// qk := c.QueryParams()
-	// for k,v := range qk {
-	// 	if k == "val" {
-	// 		val = v[0]
-	// 		/*find aktivitas by Nama_aktivitas:*/
-	// 		if err := con.Where("nama_aktivitas LIKE ?", "%" + val + "%").First(&Aktivitas).Error; gorm.IsRecordNotFoundError(err)  {
-	// 			return echo.NewHTTPError(http.StatusNotFound, "Aktivitas Not Found")
-	// 		}		
-	// 	} else if k == "id" {
-	// 		val = v[0]
-	// 		id,_ := strconv.Atoi(val)
-	// 		/*find aktivitas by Nama_aktivitas:*/
-	// 		if err := con.Where(&models.Tbl_aktivitas{Id_aktivitas:id}).First(&Aktivitas).Error; gorm.IsRecordNotFoundError(err)  {
-	// 			return echo.NewHTTPError(http.StatusNotFound, "Aktivitas Not Found")
-	// 		}			
-	// 	}
-	// }
+	Activity := models.Tbl_activity{}
+	q := con
+	q = q.Model(&Activity)
+	q = q.Preload("Photo")
+	q = q.First(&Activity, id)
 
-	// helpers.SetMemberNameAktivitas(&Kt, Aktivitas)
+	r := &models.Jn{Msg: Activity}
+	defer con.Close()
 
-	// r := &models.Jn{Msg: Kt}
-
-	// defer con.Close()
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	return c.JSON(http.StatusOK, r)
 }
 
-/*@Summary GetPaginateAktivitas
-@Tags Aktivitas-Controller
-@Accept  json
-@Produce  json
-@Param aktivitas body models.PosPagin true "Show Aktivitas Paginate"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /aktivitas [post]*/
 func GetPaginateAktivitas(c echo.Context) (err error) {	
-	// if err := helpers.PaginateAktivitas(c, &r); err != nil {
-	// 	return echo.ErrInternalServerError
-	// }	
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	if err := helpers.PaginateAktivitas(c, &r); err != nil {
+		return echo.ErrInternalServerError
+	}	
+	return c.JSON(http.StatusOK, r)
 }
 
-/*@Summary AddAktivitas
-@Tags Aktivitas-Controller
-@Accept  json
-@Produce  json
-@Param aktivitas body models.Tbl_kube true "Add Aktivitas"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /aktivitas/add [post]*/
 func AddAktivitas(c echo.Context) (err error) {
-	// aktivitas := &models.Tbl_aktivitas{}
+	activity := &models.Activity{}
 
-	// if err := c.Bind(aktivitas); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(activity); err != nil {
+		return err
+	}
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	Activity := &models.Tbl_activity{}
+	Activity = activity.Tbl_activity
 
-	// if err := con.Create(&aktivitas).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// defer con.Close()
+	if err := con.Create(&Activity).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// r := &models.Jn{Msg: "Success Store Data"}
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	defer con.Close()
+
+	r := &models.Jn{Msg: "Success Store Data"}
+	return c.JSON(http.StatusOK, r)
 }
 
-/*@Summary UpdateAktivitas
-@Tags Aktivitas-Controller
-@Accept  json
-@Produce  json
-@Param aktivitas body models.Tbl_kube true "Update Aktivitas"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /aktivitas [put]*/
 func UpdateAktivitas(c echo.Context) (err error) {
-	// aktivitas := &models.Tbl_aktivitas{}
+	activity := &models.Activity{}
 
-	// if err := c.Bind(aktivitas); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(activity); err != nil {
+		return err
+	}
 
-	// if aktivitas.Id_aktivitas == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
-	// }
+	if activity.Id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
+	}
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	Activity := &models.Tbl_activity{}
+	Activity = activity.Tbl_activity
 
-	// if err := con.Model(&models.Tbl_aktivitas{}).UpdateColumns(&aktivitas).Error; err != nil {
-	// 	return echo.ErrInternalServerError
-	// }
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// if err := con.Table("tbl_aktivitas").Where("id_aktivitas = ?",aktivitas.Id_aktivitas).UpdateColumn("status", aktivitas.Status).Error; err != nil {return echo.ErrInternalServerError}
+	if err := con.Model(&models.Tbl_activity{}).UpdateColumns(&Activity).Error; err != nil {
+		return echo.ErrInternalServerError
+	}
 
-	// defer con.Close()
+	defer con.Close()
 
-	// r := &models.Jn{Msg: "Success Update Data"}
-	// return c.JSON(http.StatusOK, r)
-	return nil	
+	r := &models.Jn{Msg: "Success Update Data"}
+	return c.JSON(http.StatusOK, r)
 }
 
-/*@Summary DeleteAktivitas
-@Tags Aktivitas-Controller
-@Accept  json
-@Produce  json
-@Param id path int true "Delete Aktivitas by id"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /aktivitas/{id} [post]*/
 func DeleteAktivitas(c echo.Context) (err error) {
-	// id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	// if id == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
-	// }
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
 
-	// aktivitas := &models.Tbl_aktivitas{}
-	// aktivitas.Id_aktivitas = id
+	activity := &models.Tbl_activity{}
+	activity.Id = id
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// if err := con.Delete(&aktivitas).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Delete(&activity).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// defer con.Close()
+	defer con.Close()
 
-	// r := &models.Jn{Msg: "Success Delete Data"	}
-	// return c.JSON(http.StatusOK, r)	
-	return nil
+	r := &models.Jn{Msg: "Success Delete Data"	}
+	return c.JSON(http.StatusOK, r)	
 }

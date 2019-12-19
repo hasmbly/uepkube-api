@@ -1,9 +1,45 @@
 basePath: /api/v1
 definitions:
+  models.Activity:
+    properties:
+      created_by:
+        type: string
+      id:
+        type: integer
+      id_pendamping:
+        type: integer
+      nama_kegiatan:
+        type: string
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_activity_photo'
+        type: array
+      rincian:
+        type: string
+      tanggal:
+        type: string
+      updated_by:
+        type: string
+    type: object
   models.Dummy:
     properties:
+      activity:
+        $ref: '#/definitions/models.Activity'
+        type: object
+      inventory:
+        $ref: '#/definitions/models.Inventory'
+        type: object
+      kehadiran:
+        $ref: '#/definitions/models.Kehadiran'
+        type: object
       kube:
         $ref: '#/definitions/models.Kube'
+        type: object
+      lapkeu:
+        $ref: '#/definitions/models.Lapkeu'
+        type: object
+      monev:
+        $ref: '#/definitions/models.Monev'
         type: object
       pelatihan:
         $ref: '#/definitions/models.Pelatihan'
@@ -39,6 +75,33 @@ definitions:
       timestamp:
         type: string
     type: object
+  models.Inventory:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: string
+      file:
+        type: string
+      harga:
+        type: number
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      id_pendamping:
+        type: integer
+      id_uep:
+        type: integer
+      merk:
+        type: string
+      nama:
+        type: string
+      updated_at:
+        type: string
+      updated_by:
+        type: string
+    type: object
   models.Jn:
     properties:
       error:
@@ -46,6 +109,17 @@ definitions:
         type: boolean
       message:
         type: object
+    type: object
+  models.Kehadiran:
+    properties:
+      id_pelatihan:
+        type: integer
+      id_pendamping:
+        type: integer
+      kehadiran:
+        items:
+          $ref: '#/definitions/models.Tbl_kehadiran'
+        type: array
     type: object
   models.Kube:
     properties:
@@ -101,25 +175,100 @@ definitions:
       posisi:
         type: string
     type: object
+  models.Lapkeu:
+    properties:
+      bulan:
+        type: integer
+      created_by:
+        type: string
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      id_pendamping:
+        type: integer
+      id_uep:
+        type: integer
+      modal:
+        type: number
+      omset:
+        type: number
+      pendapatan:
+        type: number
+      tahun:
+        type: string
+      updated_by:
+        type: string
+    type: object
+  models.Monev:
+    properties:
+      id_indikator:
+        items:
+          type: integer
+        type: array
+      id_kube:
+        type: integer
+      id_pendamping:
+        type: integer
+      id_uep:
+        type: integer
+    type: object
   models.Pelatihan:
     properties:
       created_by:
         type: string
       deskripsi:
         type: string
+      end:
+        type: string
+      files:
+        items:
+          $ref: '#/definitions/models.Tbl_pelatihan_files'
+        type: array
       id_pelatihan:
         type: integer
+      instruktur:
+        type: string
       judul_pelatihan:
         type: string
+      kehadiran:
+        items:
+          $ref: '#/definitions/models.PelatihanKehadiran'
+        type: array
       lokasi_pelatihan:
+        type: string
+      peruntukan:
+        enum:
+        - UEP
+        - ' KUBE'
+        - ' UEP-KUBE'
         type: string
       photo:
         items:
-          $ref: '#/definitions/models.Tbl_pelatihan_photo'
+          $ref: '#/definitions/models.Tbl_pelatihan_files'
         type: array
-      tanggal_pelatihan:
+      quota:
+        type: integer
+      start:
         type: string
+      status:
+        type: integer
       updated_by:
+        type: string
+    type: object
+  models.PelatihanKehadiran:
+    properties:
+      flag:
+        type: string
+      id:
+        type: integer
+      id_pelatihan:
+        type: integer
+      id_pendamping:
+        type: integer
+      id_user:
+        type: integer
+      nama:
         type: string
     type: object
   models.Pendamping:
@@ -151,6 +300,15 @@ definitions:
         type: string
       jenis_pendamping:
         type: string
+      kabupaten:
+        $ref: '#/definitions/models.Tbl_kabupaten'
+        type: object
+      kecamatan:
+        $ref: '#/definitions/models.Tbl_kecamatan'
+        type: object
+      kelurahan:
+        $ref: '#/definitions/models.Tbl_kelurahan'
+        type: object
       lat:
         type: number
       lng:
@@ -215,6 +373,21 @@ definitions:
         type: integer
       id_usaha:
         type: integer
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_produk_photo'
+        type: array
+    type: object
+  models.Tbl_activity_photo:
+    properties:
+      id:
+        type: integer
+      id_activity:
+        type: integer
+      is_display:
+        type: integer
+      photo:
+        type: string
     type: object
   models.Tbl_bantuan_periods:
     properties:
@@ -236,6 +409,9 @@ definitions:
         type: string
       status:
         type: integer
+      usaha:
+        $ref: '#/definitions/models.Tbl_usaha_uepkube'
+        type: object
     type: object
   models.Tbl_credit_debit:
     properties:
@@ -262,6 +438,13 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.Tbl_jenis_produk:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
   models.Tbl_jenis_usaha:
     properties:
       id_usaha:
@@ -269,15 +452,51 @@ definitions:
       jenis_usaha:
         type: string
     type: object
-  models.Tbl_pelatihan_photo:
+  models.Tbl_kabupaten:
     properties:
+      id_kabupaten:
+        type: string
+      kabupaten:
+        type: string
+    type: object
+  models.Tbl_kecamatan:
+    properties:
+      id_kecamatan:
+        type: string
+      kecamatan:
+        type: string
+    type: object
+  models.Tbl_kehadiran:
+    properties:
+      flag:
+        type: string
+      id:
+        type: integer
+      id_pelatihan:
+        type: integer
+      id_pendamping:
+        type: integer
+      id_user:
+        type: integer
+    type: object
+  models.Tbl_kelurahan:
+    properties:
+      id_kelurahan:
+        type: string
+      kelurahan:
+        type: string
+    type: object
+  models.Tbl_pelatihan_files:
+    properties:
+      files:
+        type: string
       id:
         type: integer
       id_pelatihan:
         type: integer
       is_display:
         type: integer
-      photo:
+      type:
         type: string
     type: object
   models.Tbl_pendamping:
@@ -303,6 +522,43 @@ definitions:
       id_uep:
         type: integer
     type: object
+  models.Tbl_produk:
+    properties:
+      deskripsi:
+        type: string
+      id_jp:
+        type: integer
+      id_produk:
+        type: integer
+      jenis_produk:
+        $ref: '#/definitions/models.Tbl_jenis_produk'
+        type: object
+      nama_produk:
+        type: string
+    type: object
+  models.Tbl_produk_photo:
+    properties:
+      id:
+        type: integer
+      id_produk:
+        type: integer
+      is_display:
+        type: integer
+      photo:
+        type: string
+    type: object
+  models.Tbl_produk_uepkube:
+    properties:
+      detail_produk:
+        $ref: '#/definitions/models.Tbl_produk'
+        type: object
+      id:
+        type: integer
+      id_produk:
+        type: integer
+      id_usaha_uk:
+        type: integer
+    type: object
   models.Tbl_uepkube_photo:
     properties:
       id:
@@ -314,6 +570,28 @@ definitions:
       is_display:
         type: integer
       photo:
+        type: string
+    type: object
+  models.Tbl_usaha_uepkube:
+    properties:
+      all_produk:
+        items:
+          $ref: '#/definitions/models.Tbl_produk_uepkube'
+        type: array
+      id:
+        type: integer
+      id_jenis_usaha:
+        type: integer
+      id_kube:
+        type: integer
+      id_periods:
+        type: integer
+      id_uep:
+        type: integer
+      jenis_usaha:
+        $ref: '#/definitions/models.Tbl_jenis_usaha'
+        type: object
+      nama_usaha:
         type: string
     type: object
   models.Tbl_user_photo:
@@ -358,6 +636,15 @@ definitions:
         - L
         - ' P'
         type: string
+      kabupaten:
+        $ref: '#/definitions/models.Tbl_kabupaten'
+        type: object
+      kecamatan:
+        $ref: '#/definitions/models.Tbl_kecamatan'
+        type: object
+      kelurahan:
+        $ref: '#/definitions/models.Tbl_kelurahan'
+        type: object
       lat:
         type: number
       lng:
@@ -410,6 +697,15 @@ definitions:
         - L
         - ' P'
         type: string
+      kabupaten:
+        $ref: '#/definitions/models.Tbl_kabupaten'
+        type: object
+      kecamatan:
+        $ref: '#/definitions/models.Tbl_kecamatan'
+        type: object
+      kelurahan:
+        $ref: '#/definitions/models.Tbl_kelurahan'
+        type: object
       lat:
         type: number
       lng:
@@ -459,7 +755,7 @@ paths:
       - application/json
       parameters:
       - description: Key -> uep | kube | pendamping | verifikator | produk | pelatihan
-          | activity | inventaris | laporanKeu
+          | log_aktivitas | inventaris | lap_keu | kehadiran | monev
         in: path
         name: key
         required: true
@@ -499,7 +795,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: GetDetails -> uep | kube | pendamping | verifikator | produk | pelatihan
-        | activity | inventaris | laporanKeu
+        | log_aktivitas | inventaris | lap_keu | kehadiran | monev
       tags:
       - Universal-Controller
     post:
@@ -507,7 +803,7 @@ paths:
       - application/json
       parameters:
       - description: Key -> uep | kube | pendamping | verifikator | produk | pelatihan
-          | activity | inventaris | laporanKeu
+          | log_aktivitas | inventaris | lap_keu | kehadiran | monev
         in: path
         name: key
         required: true
@@ -545,7 +841,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Paginate -> uep | kube | pendamping | verifikator | produk | pelatihan
-        | activity | inventaris | laporanKeu
+        | log_aktivitas | inventaris | lap_keu | kehadiran | monev
       tags:
       - Universal-Controller
     put:
@@ -553,7 +849,7 @@ paths:
       - application/json
       parameters:
       - description: 'Key -> uep | kube | pendamping | verifikator | produk | pelatihan
-          | activity | inventaris | laporanKeu '
+          | log_aktivitas | inventaris | lap_keu | kehadiran | monev '
         in: path
         name: key
         required: true
@@ -591,7 +887,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Update -> uep | kube | pendamping | verifikator | produk | pelatihan
-        | activity | inventaris | laporanKeu
+        | log_aktivitas | inventaris | lap_keu | kehadiran | monev
       tags:
       - Universal-Controller
   /{key}/{id}:
@@ -600,13 +896,13 @@ paths:
       - application/json
       parameters:
       - description: 'Key -> uep | kube | pendamping | verifikator | produk | pelatihan
-          | activity | inventaris | laporanKeu '
+          | log_aktivitas | inventaris | lap_keu | kehadiran | monev '
         in: path
         name: key
         required: true
         type: string
       - description: 'Id -> uep | kube | pendamping | verifikator | produk | pelatihan
-          | activity | inventaris | laporanKeu '
+          | log_aktivitas | inventaris | lap_keu | kehadiran | monev '
         in: path
         name: id
         required: true
@@ -637,7 +933,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Delete -> uep | kube | pendamping | verifikator | produk | pelatihan
-        | activity | inventaris | laporanKeu
+        | log_aktivitas | inventaris | lap_keu | kehadiran | monev
       tags:
       - Universal-Controller
   /add/{key}:
@@ -646,7 +942,7 @@ paths:
       - application/json
       parameters:
       - description: 'Key -> uep | kube | pendamping | verifikator | produk | pelatihan
-          | activity | inventaris | laporanKeu '
+          | log_aktivitas | inventaris | lap_keu | kehadiran | monev '
         in: path
         name: key
         required: true
@@ -684,7 +980,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Add -> uep | kube | pendamping | verifikator | produk | pelatihan |
-        activity | inventaris | laporanKeu
+        log_aktivitas | inventaris | lap_keu | kehadiran | monev
       tags:
       - Universal-Controller
   /auth/signin:

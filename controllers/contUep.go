@@ -23,30 +23,9 @@ type Tbl_pendamping struct {
 	Nama string `json:"nama"`
 }
 
-type Tbl_periods_uepkube struct {
-	*models.Tbl_periods_uepkube
-	BantuanPeriods *Tbl_bantuan_periods `json:"bantuan_periods" gorm:"foreignkey:id;association_foreignkey:id_periods"`
-}
-
-type Tbl_bantuan_periods struct {
-	*models.Tbl_bantuan_periods
-	CreditDebit 	[]*models.Tbl_credit_debit `json:"credit_debit" gorm:"foreignkey:id_periods;association_foreignkey:id"`
-}
-
-type Tbl_uep struct {
-	*models.Tbl_uep
-	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
-	JenisUsaha 		*models.Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_uep"`	
-	Photo 			[]*models.Tbl_uepkube_photo `json:"photo" gorm:"foreignkey:id_uep"`
-}
-
 type Tbl_user struct {
 	*models.Tbl_user
-	*Tbl_uep
-	Kelurahan 	*models.Tbl_kelurahan `json:"kelurahan" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
-	Kecamatan 	*models.Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kecamatan;association_foreignkey:id_kecamatan"`
-	Kabupaten 	*models.Tbl_kabupaten `json:"kabupaten" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
+	*models.Tbl_uep
 }
 
 /*@Summary GetUepById
@@ -67,7 +46,7 @@ func GetUep(c echo.Context) error {
 	/*prepare DB*/
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
-	con.SingularTable(true)	
+	con.SingularTable(true)
 	
 	User 	:= Tbl_user{}
 	q := con
@@ -75,6 +54,10 @@ func GetUep(c echo.Context) error {
 	q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 	q = q.Select("tbl_uep.*, tbl_user.*")
 	q = q.Preload("JenisUsaha")
+	q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
+		return q.Where("id_uep = ?", id).Preload("JenisUsaha")
+	})
+	q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
 	q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
 		return q.Where("id_uep = ?", id)
 	})
@@ -197,6 +180,14 @@ func AddUep(c echo.Context) (err error) {
 	creditDebit.Nilai = nilai[0]
 	creditDebit.Deskripsi = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
 	if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
+
+	// add queue monev_uepkube
+	monev := &models.Tbl_monev_uepkube{}
+	monev.Id_uep = user.Id_user
+	monev.Id_pendamping = Uep.Id_pendamping
+	monev.Is_monev = "BELUM"
+	monev.Id_periods = Uep.Id_periods
+	if err := con.Create(&monev).Error; err != nil {return echo.ErrInternalServerError}
 
 	defer con.Close()
 

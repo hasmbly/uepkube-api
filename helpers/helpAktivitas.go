@@ -12,7 +12,7 @@ import (
 	"fmt"
 )
 
-func PaginatePelatihan(c echo.Context, r *models.ResPagin) (err error) {
+func PaginateAktivitas(c echo.Context, r *models.ResPagin) (err error) {
 	u := &models.PosPagin{}
 	num := 1
 
@@ -24,7 +24,7 @@ func PaginatePelatihan(c echo.Context, r *models.ResPagin) (err error) {
 
 	var co int = (u.Page - num) * u.Size
 	
-	PaginateResult, _ := ExecPaginatePelatihan(u,co,&CountRows)
+	PaginateResult, _ := ExecPaginateAktivitas(u,co,&CountRows)
 
 	l := int64(u.Size)
 	o := int64(co)
@@ -37,8 +37,6 @@ func PaginatePelatihan(c echo.Context, r *models.ResPagin) (err error) {
 
 	if u.Page == 1 {f = true}
 	if u.Page == int(rtp) {la = true}
-
-	// log.Println("Result is : ", PaginateResult)
 
 	*r = models.ResPagin{
 		Content:PaginateResult,
@@ -63,20 +61,19 @@ func PaginatePelatihan(c echo.Context, r *models.ResPagin) (err error) {
 	return err
 }
 
-func ExecPaginatePelatihan(f *models.PosPagin, offset int, count *int64) (ur []models.PaginatePelatihan, err error) {
+func ExecPaginateAktivitas(f *models.PosPagin, offset int, count *int64) (ur []models.PaginateAktivitas, err error) {
 
-	// var Pelatihans []models.Tbl_pendamping
-	Pelatihans := []models.PaginatePelatihan{}
+	Aktivitas := []models.PaginateAktivitas{}
 
 	con, err := db.CreateCon()
 	if err != nil { return ur, echo.ErrInternalServerError }
 	con.SingularTable(true)	
 
 	q := con
-	q = q.Table("tbl_pelatihan t1")
+	q = q.Table("tbl_activity t1")
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Select("t1.id_pelatihan, t1.judul_pelatihan, t1.lokasi_pelatihan, t1.peruntukan, t1.start, t1.instruktur, t1.end, t1.deskripsi")
+	q = q.Select("t1.id, t1.id_pendamping, t1.tanggal, t1.nama_kegiatan, t1.rincian")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -96,32 +93,32 @@ func ExecPaginatePelatihan(f *models.PosPagin, offset int, count *int64) (ur []m
 	}
 	q = q.Order(fmt.Sprintf("t1.%s %s",f.SortField,f.SortOrder))	
 	
-	q = q.Scan(&Pelatihans)
+	q = q.Scan(&Aktivitas)
 	q = q.Limit(-1)
 	q = q.Offset(-1)
 
 	// get photos
-	if len(Pelatihans) != 0 {
-		for i,_ := range Pelatihans {
-			var pelatihan_photos []models.Tbl_pelatihan_files
-			// var account = models.Tbl_account{}
+	// if len(Aktivitas) != 0 {
+	// 	for i,_ := range Aktivitas {
+	// 		var pelatihan_photos []models.Tbl_pelatihan_files
+	// 		// var account = models.Tbl_account{}
 
-			con.Table("tbl_pelatihan_files").Where("type = 'IMAGE' ").Where("id_pelatihan = ?", Pelatihans[i].Id_pelatihan).Select("tbl_pelatihan_files.*").Find(&pelatihan_photos)
+	// 		con.Table("tbl_activity_files").Where("type = 'IMAGE' ").Where("id = ?", Aktivitas[i].Id_pelatihan).Select("tbl_activity_files.*").Find(&pelatihan_photos)
 
-			for i,_ := range pelatihan_photos {
-				ImageBlob := pelatihan_photos[i].Files
-				pelatihan_photos[i].Files = "data:image/png;base64," + ImageBlob			
-			}
-			Pelatihans[i].Photo = pelatihan_photos
-		}
-	}
+	// 		for i,_ := range pelatihan_photos {
+	// 			ImageBlob := pelatihan_photos[i].Files
+	// 			pelatihan_photos[i].Files = "data:image/png;base64," + ImageBlob			
+	// 		}
+	// 		Aktivitas[i].Photo = pelatihan_photos
+	// 	}
+	// }
 
 	if err := q.Count(count).Error; err != nil {
 		return ur, err
 	}
 
-	// log.Println("result : ", Pelatihans)
+	// log.Println("result : ", Aktivitas)
 
 	defer con.Close()
-	return Pelatihans, nil
+	return Aktivitas, nil
 }

@@ -111,6 +111,29 @@ func Init() *echo.Echo {
 	// monev_pertanyaan+score indikator
 	o.GET("/lookup/monev_items", controllers.GeAllMonevItems)
 
+	// Routes::All Roles
+	a := e.Group("/api/v1")
+	a.Use(middleware.JWTWithConfig(config))
+	a.Use(middlewares.CheckAllRoles)	
+
+	// CRUD Pendamping, UEP, KUBE, Verifikator
+	a.POST("/:key", controllers.GetPaginateItems)	
+	a.GET("/:key", controllers.GetItems)
+	a.POST("/add/:key", controllers.AddItems)
+	a.PUT("/:key", controllers.UpdateItems)
+	a.POST("/:key/:id", controllers.DeleteItems)
+	
+	// uploads images
+	a.POST("/upload/images/:key", controllers.UploadImages)
+
+	// uploads pdf
+	// a.POST("/uploads/pdf/:key", controllers.UploadFiles)
+	
+	// produk
+	// a.PUT("/produk", controllers.UpdateProduk)
+	// a.POST("/produk/add", controllers.AddProduk)
+	// a.POST("/produk/:id", controllers.DeleteProduk)
+
 	// Route::Restricted-Group-UEP
 	// u := e.Group("/api/v1")
 	// u.Use(middleware.JWTWithConfig(config))
@@ -132,43 +155,5 @@ func Init() *echo.Echo {
 	// k.POST("/kube/add", controllers.AddKube)
 	// k.POST("/kube/:id", controllers.DeleteKube)	
 
-	// Routes::All Roles
-	a := e.Group("/api/v1")
-	a.Use(middleware.JWTWithConfig(config))
-	a.Use(middlewares.CheckAllRoles)	
-	// produk
-	// a.PUT("/produk", controllers.UpdateProduk)
-	// a.POST("/produk/add", controllers.AddProduk)
-	// a.POST("/produk/:id", controllers.DeleteProduk)
-	// // pelatihan
-	// a.PUT("/pelatihan", controllers.UpdatePelatihan)
-	// a.POST("/pelatihan/add", controllers.AddPelatihan)
-	// a.POST("/pelatihan/:id", controllers.DeletePelatihan)
-	// // inventaris
-	// a.GET("/inventaris", controllers.GetInventaris)
-	// a.POST("/inventaris", controllers.GetPaginateInventaris)	
-	// a.PUT("/inventaris", controllers.UpdateInventaris)
-	// a.POST("/inventaris/add", controllers.AddInventaris)
-	// a.POST("/inventaris/:id", controllers.DeleteInventaris)
-	// // aktivitas
-	// a.GET("/aktivitas", controllers.GetAktivitas)
-	// a.POST("/aktivitas", controllers.GetPaginateAktivitas)	
-	// a.PUT("/aktivitas", controllers.UpdateAktivitas)
-	// a.POST("/aktivitas/add", controllers.AddAktivitas)
-	// a.POST("/aktivitas/:id", controllers.DeleteAktivitas)
-
-	// CRUD Pendamping, UEP, KUBE, Verifikator
-	a.POST("/:key", controllers.GetPaginateItems)	
-	a.GET("/:key", controllers.GetItems)
-	a.POST("/add/:key", controllers.AddItems)
-	a.PUT("/:key", controllers.UpdateItems)
-	a.POST("/:key/:id", controllers.DeleteItems)
-	
-	// uploads images
-	a.POST("/upload/images/:key", controllers.UploadImages)
-
-	// uploads pdf
-	// a.POST("/uploads/pdf/:key", controllers.UploadFiles)
-	
 	return e
 }

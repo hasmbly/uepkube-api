@@ -66,6 +66,10 @@ func GetKube(c echo.Context) error {
 			q := con
 			q = q.Model(&Kube)
 			q = q.Preload("JenisUsaha")
+			q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
+				return q.Where("id_kube = ?", id).Preload("JenisUsaha")
+			})
+			q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
 			q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
 				return q.Where("id_kube = ?", id)
 			})
@@ -177,6 +181,14 @@ func AddKube(c echo.Context) (err error) {
 	creditDebit.Nilai = nilai[0]
 	creditDebit.Deskripsi = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
 	if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
+
+	// add queue monev_uepkube
+	monev := &models.Tbl_monev_uepkube{}
+	monev.Id_kube = Kube.Id_kube
+	monev.Id_pendamping = Kube.Id_pendamping
+	monev.Is_monev = "BELUM"
+	monev.Id_periods = Kube.Id_periods
+	if err := con.Create(&monev).Error; err != nil {return echo.ErrInternalServerError}
 
 	defer con.Close()
 

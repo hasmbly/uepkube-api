@@ -1,129 +1,100 @@
 package controllers
 
 import (
-	// "net/http"
+	"net/http"
 	"github.com/labstack/echo"
-	// "github.com/jinzhu/gorm"
-	//  _"github.com/jinzhu/gorm/dialects/mysql"
-	 // "uepkube-api/models"
-	//  "uepkube-api/db"
-	//  "strconv"
-	//  "uepkube-api/helpers"
+	"github.com/jinzhu/gorm"
+	_"github.com/jinzhu/gorm/dialects/mysql"
+	"uepkube-api/db"
+	"uepkube-api/models"
+	"uepkube-api/helpers"
+	"strconv"
+	"fmt"
 )
 
-/*@Summary GetInventarisById
-@Tags Inventaris-Controller
-@Accept  json
-@Produce  json
-@Param id query int true "int"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /inventaris [get]*/
 func GetInventaris(c echo.Context) error {
-	/*prepare DB*/
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)	
+	id 		:= c.QueryParam("id")
 
-	// var val string
-	// Inventaris 	:= models.Tbl_inventaris{}
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// /*check if query key -> "val"*/
-	// qk := c.QueryParams()
-	// for k,v := range qk {
-	// 	if k == "val" {
-	// 		val = v[0]
-	// 		/*find inventaris by Nama_inventaris:*/
-	// 		if err := con.Where("nama_inventaris LIKE ?", "%" + val + "%").First(&Inventaris).Error; gorm.IsRecordNotFoundError(err)  {
-	// 			return echo.NewHTTPError(http.StatusNotFound, "Inventaris Not Found")
-	// 		}		
-	// 	} else if k == "id" {
-	// 		val = v[0]
-	// 		id,_ := strconv.Atoi(val)
-	// 		/*find inventaris by Nama_inventaris:*/
-	// 		if err := con.Where(&models.Tbl_inventaris{Id_inventaris:id}).First(&Inventaris).Error; gorm.IsRecordNotFoundError(err)  {
-	// 			return echo.NewHTTPError(http.StatusNotFound, "Inventaris Not Found")
-	// 		}			
-	// 	}
-	// }
+	Inventory := models.Tbl_inventory{}
+	q := con
+	q = q.Model(&Inventory)
+	q = q.First(&Inventory, id)
 
-	// helpers.SetMemberNameInventaris(&Kt, Inventaris)
+	r := &models.Jn{Msg: Inventory}
+	defer con.Close()
 
-	// r := &models.Jn{Msg: Kt}
-
-	// defer con.Close()
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	return c.JSON(http.StatusOK, r)
 }
 
-/*@Summary GetPaginateInventaris
-@Tags Inventaris-Controller
-@Accept  json
-@Produce  json
-@Param inventaris body models.PosPagin true "Show Inventaris Paginate"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /inventaris [post]*/
 func GetPaginateInventaris(c echo.Context) (err error) {	
-	// if err := helpers.PaginateInventaris(c, &r); err != nil {
-	// 	return echo.ErrInternalServerError
-	// }	
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	if err := helpers.PaginateInventory(c, &r); err != nil {
+		return echo.ErrInternalServerError
+	}	
+	return c.JSON(http.StatusOK, r)
 }
 
-/*@Summary AddInventaris
-@Tags Inventaris-Controller
-@Accept  json
-@Produce  json
-@Param inventaris body models.Tbl_kube true "Add Inventaris"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /inventaris/add [post]*/
 func AddInventaris(c echo.Context) (err error) {
-	// inventaris := &models.Tbl_inventaris{}
+	inventory := &models.Inventory{}
+	
+	var id_periods []int
 
-	// if err := c.Bind(inventaris); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(inventory); err != nil {
+		return err
+	}
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	// validation
+	if inventory.Id_uep == 0 && inventory.Id_kube == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_uep or id_kube")
+	}	
 
-	// if err := con.Create(&inventaris).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if inventory.Id_pendamping == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_pendamping")
+	}	
 
-	// defer con.Close()
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// r := &models.Jn{Msg: "Success Store Data"}
-	// return c.JSON(http.StatusOK, r)
-	return nil
+
+	creditDebit := &models.Tbl_credit_debit{}
+	
+	if inventory.Id_uep == 0 { 
+		creditDebit.Id_kube = inventory.Id_kube
+		con.Table("tbl_credit_debit").Where("id_kube = ?", creditDebit.Id_kube).Pluck("id_periods", &id_periods)
+	}
+	if inventory.Id_kube == 0 { 
+		creditDebit.Id_uep = inventory.Id_uep 
+		con.Table("tbl_credit_debit").Where("id_uep = ?", creditDebit.Id_uep).Pluck("id_periods", &id_periods)
+	}
+
+	if len(id_periods) == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Maaf UEP atau Kube belum mendapatkan bantuan_periods")
+	}
+
+
+	Inventory := &models.Tbl_inventory{}
+	Inventory = inventory.Tbl_inventory
+
+
+	if err := con.Create(&Inventory).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	// store creditDebit
+	creditDebit.Credit = 1
+	if len(id_periods) != 0 { creditDebit.Id_periods = id_periods[0] }
+	creditDebit.Nilai = inventory.Harga
+	creditDebit.Deskripsi = fmt.Sprintf("Debit dengan nilai : Rp. %.2f,-", inventory.Harga)
+	if err := con.Create(&creditDebit).Error; err != nil { return echo.ErrInternalServerError }
+
+	defer con.Close()
+
+	r := &models.Jn{Msg: "Success Store Data"}
+	return c.JSON(http.StatusOK, r)
 }
 
-/*@Summary UpdateInventaris
-@Tags Inventaris-Controller
-@Accept  json
-@Produce  json
-@Param inventaris body models.Tbl_kube true "Update Inventaris"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /inventaris [put]*/
 func UpdateInventaris(c echo.Context) (err error) {
 	// inventaris := &models.Tbl_inventaris{}
 
@@ -152,37 +123,24 @@ func UpdateInventaris(c echo.Context) (err error) {
 	return nil	
 }
 
-/*@Summary DeleteInventaris
-@Tags Inventaris-Controller
-@Accept  json
-@Produce  json
-@Param id path int true "Delete Inventaris by id"
-@Success 200 {object} models.Jn
-@Failure 400 {object} models.HTTPError
-@Failure 401 {object} models.HTTPError
-@Failure 404 {object} models.HTTPError
-@Failure 500 {object} models.HTTPError
-@security ApiKeyAuth
-@Router /inventaris/{id} [post]*/
 func DeleteInventaris(c echo.Context) (err error) {
-	// id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	// if id == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
-	// }
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
 
-	// inventaris := &models.Tbl_inventaris{}
-	// inventaris.Id_inventaris = id
+	inventory := &models.Tbl_inventory{}
+	inventory.Id = id
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// if err := con.Delete(&inventaris).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Delete(&inventory).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// defer con.Close()
+	defer con.Close()
 
-	// r := &models.Jn{Msg: "Success Delete Data"	}
-	// return c.JSON(http.StatusOK, r)	
-	return nil
+	r := &models.Jn{Msg: "Success Delete Data"	}
+	return c.JSON(http.StatusOK, r)	
 }

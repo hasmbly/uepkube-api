@@ -32,11 +32,11 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Add -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
+                "summary": "Add -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu ",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev ",
                         "name": "key",
                         "in": "path",
                         "required": true
@@ -810,11 +810,11 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "GetDetails -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
+                "summary": "GetDetails -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                         "name": "key",
                         "in": "path",
                         "required": true
@@ -881,11 +881,11 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Update -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
+                "summary": "Update -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu ",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev ",
                         "name": "key",
                         "in": "path",
                         "required": true
@@ -949,11 +949,11 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Paginate -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
+                "summary": "Paginate -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                         "name": "key",
                         "in": "path",
                         "required": true
@@ -1019,18 +1019,18 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Delete -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu",
+                "summary": "Delete -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu ",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev ",
                         "name": "key",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "Id -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | activity | inventaris | laporanKeu ",
+                        "description": "Id -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev ",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1072,12 +1072,64 @@
         }
     },
     "definitions": {
+        "models.Activity": {
+            "type": "object",
+            "properties": {
+                "created_by": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "nama_kegiatan": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_activity_photo"
+                    }
+                },
+                "rincian": {
+                    "type": "string"
+                },
+                "tanggal": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Dummy": {
             "type": "object",
             "properties": {
+                "activity": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Activity"
+                },
+                "inventory": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Inventory"
+                },
+                "kehadiran": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Kehadiran"
+                },
                 "kube": {
                     "type": "object",
                     "$ref": "#/definitions/models.Kube"
+                },
+                "lapkeu": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Lapkeu"
+                },
+                "monev": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Monev"
                 },
                 "pelatihan": {
                     "type": "object",
@@ -1129,6 +1181,47 @@
                 }
             }
         },
+        "models.Inventory": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "file": {
+                    "type": "string"
+                },
+                "harga": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_uep": {
+                    "type": "integer"
+                },
+                "merk": {
+                    "type": "string"
+                },
+                "nama": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Jn": {
             "type": "object",
             "properties": {
@@ -1138,6 +1231,23 @@
                 },
                 "message": {
                     "type": "object"
+                }
+            }
+        },
+        "models.Kehadiran": {
+            "type": "object",
+            "properties": {
+                "id_pelatihan": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "kehadiran": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_kehadiran"
+                    }
                 }
             }
         },
@@ -1222,6 +1332,64 @@
                 }
             }
         },
+        "models.Lapkeu": {
+            "type": "object",
+            "properties": {
+                "bulan": {
+                    "type": "integer"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_uep": {
+                    "type": "integer"
+                },
+                "modal": {
+                    "type": "number"
+                },
+                "omset": {
+                    "type": "number"
+                },
+                "pendapatan": {
+                    "type": "number"
+                },
+                "tahun": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Monev": {
+            "type": "object",
+            "properties": {
+                "id_indikator": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_uep": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.Pelatihan": {
             "type": "object",
             "properties": {
@@ -1231,25 +1399,80 @@
                 "deskripsi": {
                     "type": "string"
                 },
+                "end": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_pelatihan_files"
+                    }
+                },
                 "id_pelatihan": {
                     "type": "integer"
+                },
+                "instruktur": {
+                    "type": "string"
                 },
                 "judul_pelatihan": {
                     "type": "string"
                 },
+                "kehadiran": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.PelatihanKehadiran"
+                    }
+                },
                 "lokasi_pelatihan": {
                     "type": "string"
+                },
+                "peruntukan": {
+                    "type": "string",
+                    "enum": [
+                        "UEP",
+                        " KUBE",
+                        " UEP-KUBE"
+                    ]
                 },
                 "photo": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_pelatihan_photo"
+                        "$ref": "#/definitions/models.Tbl_pelatihan_files"
                     }
                 },
-                "tanggal_pelatihan": {
+                "quota": {
+                    "type": "integer"
+                },
+                "start": {
                     "type": "string"
                 },
+                "status": {
+                    "type": "integer"
+                },
                 "updated_by": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.PelatihanKehadiran": {
+            "type": "object",
+            "properties": {
+                "flag": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_pelatihan": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_user": {
+                    "type": "integer"
+                },
+                "nama": {
                     "type": "string"
                 }
             }
@@ -1296,6 +1519,18 @@
                 },
                 "jenis_pendamping": {
                     "type": "string"
+                },
+                "kabupaten": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kabupaten"
+                },
+                "kecamatan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kecamatan"
+                },
+                "kelurahan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kelurahan"
                 },
                 "lat": {
                     "type": "number"
@@ -1391,6 +1626,29 @@
                 },
                 "id_usaha": {
                     "type": "integer"
+                },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_produk_photo"
+                    }
+                }
+            }
+        },
+        "models.Tbl_activity_photo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "id_activity": {
+                    "type": "integer"
+                },
+                "is_display": {
+                    "type": "integer"
+                },
+                "photo": {
+                    "type": "string"
                 }
             }
         },
@@ -1423,6 +1681,10 @@
                 },
                 "status": {
                     "type": "integer"
+                },
+                "usaha": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_usaha_uepkube"
                 }
             }
         },
@@ -1464,6 +1726,17 @@
                 }
             }
         },
+        "models.Tbl_jenis_produk": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Tbl_jenis_usaha": {
             "type": "object",
             "properties": {
@@ -1475,9 +1748,65 @@
                 }
             }
         },
-        "models.Tbl_pelatihan_photo": {
+        "models.Tbl_kabupaten": {
             "type": "object",
             "properties": {
+                "id_kabupaten": {
+                    "type": "string"
+                },
+                "kabupaten": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_kecamatan": {
+            "type": "object",
+            "properties": {
+                "id_kecamatan": {
+                    "type": "string"
+                },
+                "kecamatan": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_kehadiran": {
+            "type": "object",
+            "properties": {
+                "flag": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_pelatihan": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_user": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Tbl_kelurahan": {
+            "type": "object",
+            "properties": {
+                "id_kelurahan": {
+                    "type": "string"
+                },
+                "kelurahan": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_pelatihan_files": {
+            "type": "object",
+            "properties": {
+                "files": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -1487,7 +1816,7 @@
                 "is_display": {
                     "type": "integer"
                 },
-                "photo": {
+                "type": {
                     "type": "string"
                 }
             }
@@ -1527,6 +1856,62 @@
                 }
             }
         },
+        "models.Tbl_produk": {
+            "type": "object",
+            "properties": {
+                "deskripsi": {
+                    "type": "string"
+                },
+                "id_jp": {
+                    "type": "integer"
+                },
+                "id_produk": {
+                    "type": "integer"
+                },
+                "jenis_produk": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_jenis_produk"
+                },
+                "nama_produk": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_produk_photo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "id_produk": {
+                    "type": "integer"
+                },
+                "is_display": {
+                    "type": "integer"
+                },
+                "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_produk_uepkube": {
+            "type": "object",
+            "properties": {
+                "detail_produk": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_produk"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_produk": {
+                    "type": "integer"
+                },
+                "id_usaha_uk": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.Tbl_uepkube_photo": {
             "type": "object",
             "properties": {
@@ -1543,6 +1928,39 @@
                     "type": "integer"
                 },
                 "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_usaha_uepkube": {
+            "type": "object",
+            "properties": {
+                "all_produk": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_produk_uepkube"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_jenis_usaha": {
+                    "type": "integer"
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "id_periods": {
+                    "type": "integer"
+                },
+                "id_uep": {
+                    "type": "integer"
+                },
+                "jenis_usaha": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_jenis_usaha"
+                },
+                "nama_usaha": {
                     "type": "string"
                 }
             }
@@ -1609,6 +2027,18 @@
                         "L",
                         " P"
                     ]
+                },
+                "kabupaten": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kabupaten"
+                },
+                "kecamatan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kecamatan"
+                },
+                "kelurahan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kelurahan"
                 },
                 "lat": {
                     "type": "number"
@@ -1687,6 +2117,18 @@
                         "L",
                         " P"
                     ]
+                },
+                "kabupaten": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kabupaten"
+                },
+                "kecamatan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kecamatan"
+                },
+                "kelurahan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kelurahan"
                 },
                 "lat": {
                     "type": "number"
