@@ -40,7 +40,7 @@ Tbl_user struct {
 	Kelurahan 	*Tbl_kelurahan `json:"kelurahan" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
 	Kecamatan 	*Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kecamatan;association_foreignkey:id_kecamatan"`
 	Kabupaten 	*Tbl_kabupaten `json:"kabupaten" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
-	Flag 			string 		`json:"flag"`
+	Flag 			string 		`json:"flag" gorm:"-"`
 }
 
 Tbl_kelurahan struct{
@@ -231,6 +231,7 @@ Tbl_pelatihan_files struct{
 	Id				int 		`json:"id" gorm:"primary_key"`
 	Id_pelatihan	int 		`json:"id_pelatihan"`
 	Files			string 		`json:"files"`	
+	Description		string 		`json:"description"`	
 	Type			string 		`json:"type"`	
 	Is_display		int 		`json:"is_display"`	
 }

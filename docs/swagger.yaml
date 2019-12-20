@@ -540,6 +540,8 @@ definitions:
     type: object
   models.Tbl_pelatihan_files:
     properties:
+      description:
+        type: string
       files:
         type: string
       id:
@@ -1486,12 +1488,13 @@ paths:
       summary: GeAllUser
       tags:
       - Lookup-Controller
-  /upload/images/{key}:
+  /upload/files/{key}:
     post:
       consumes:
       - multipart/form-data
       parameters:
-      - description: Key (string) -> uep | kube | pendamping | verifikator
+      - description: Key (string) -> uep | kube | pendamping | verifikator | produk
+          | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev
         in: path
         name: key
         required: true
@@ -1503,9 +1506,19 @@ paths:
         type: integer
       - description: Uploads Files
         in: formData
-        name: photo
+        name: files
         required: true
         type: file
+      - description: Uploads Files
+        in: formData
+        name: description
+        required: true
+        type: string
+      - description: 'enums : ''IMAGE'', ''PDF'' '
+        in: formData
+        name: type
+        required: true
+        type: string
       - description: int (int) -> 0 | 1
         in: query
         name: is_display
@@ -1535,9 +1548,10 @@ paths:
             $ref: '#/definitions/models.HTTPError'
       security:
       - ApiKeyAuth: []
-      summary: UploadsImages -> uep | kube | pendamping | verifikator
+      summary: UploadsFiles -> uep | kube | pendamping | verifikator | produk | pelatihan
+        | log_aktivitas | inventaris | lap_keu | kehadiran | monev
       tags:
-      - UploadImages-Controller
+      - UploadFiles-Controller
 securityDefinitions:
   ApiKeyAuth:
     in: header

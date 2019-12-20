@@ -12,13 +12,15 @@ import (
 	 "log"	 
 )
 
-// @Summary UploadsImages -> uep | kube | pendamping | verifikator
-// @Tags UploadImages-Controller
+// @Summary UploadsFiles -> uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev
+// @Tags UploadFiles-Controller
 // @Accept  mpfd
 // @Produce  mpfd
-// @Param key path string true "Key (string) -> uep | kube | pendamping | verifikator"
+// @Param key path string true "Key (string) -> uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev"
 // @Param id query int true "id (int)"
-// @Param photo formData file true "Uploads Files"
+// @Param files formData file true "Uploads Files"
+// @Param description formData string true "Uploads Files"
+// @Param type formData string true "enums : 'IMAGE', 'PDF' "
 // @Param is_display query int false "int (int) -> 0 | 1"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
@@ -26,8 +28,8 @@ import (
 // @Failure 404 {object} models.HTTPError
 // @Failure 500 {object} models.HTTPError
 // @security ApiKeyAuth
-// @Router /upload/images/{key} [post]
-func UploadImages(c echo.Context) (err error) {
+// @Router /upload/files/{key} [post]
+func UploadFiles(c echo.Context) (err error) {
 	key 	:= c.Param("key")
 
 	log.Println("Uploads File to : ", key)

@@ -769,7 +769,7 @@
                 }
             }
         },
-        "/upload/images/{key}": {
+        "/upload/files/{key}": {
             "post": {
                 "security": [
                     {
@@ -783,13 +783,13 @@
                     "multipart/form-data"
                 ],
                 "tags": [
-                    "UploadImages-Controller"
+                    "UploadFiles-Controller"
                 ],
-                "summary": "UploadsImages -\u003e uep | kube | pendamping | verifikator",
+                "summary": "UploadsFiles -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key (string) -\u003e uep | kube | pendamping | verifikator",
+                        "description": "Key (string) -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
                         "name": "key",
                         "in": "path",
                         "required": true
@@ -804,7 +804,21 @@
                     {
                         "type": "file",
                         "description": "Uploads Files",
-                        "name": "photo",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Uploads Files",
+                        "name": "description",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "enums : 'IMAGE', 'PDF' ",
+                        "name": "type",
                         "in": "formData",
                         "required": true
                     },
@@ -1935,6 +1949,9 @@
         "models.Tbl_pelatihan_files": {
             "type": "object",
             "properties": {
+                "description": {
+                    "type": "string"
+                },
                 "files": {
                     "type": "string"
                 },

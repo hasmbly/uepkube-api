@@ -125,8 +125,8 @@ func Init() *echo.Echo {
 	a.PUT("/:key", controllers.UpdateItems)
 	a.POST("/:key/:id", controllers.DeleteItems)
 	
-	// uploads images
-	a.POST("/upload/images/:key", controllers.UploadImages)
+	// uploads files
+	a.POST("/upload/files/:key", controllers.UploadFiles)
 
 	// uploads pdf
 	// a.POST("/uploads/pdf/:key", controllers.UploadFiles)

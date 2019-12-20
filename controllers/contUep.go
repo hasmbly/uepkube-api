@@ -157,6 +157,13 @@ func AddUep(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, "Maaf NIK sudah digunakan")
 	}
 
+	// check pendamping
+    var id_pendamping []string
+	con.Table("tbl_pendamping").Where("id_pendamping = ?", Uep.Id_pendamping).Pluck("id_pendamping", &id_pendamping)
+	if len(id_pendamping) == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Maaf id_pendamping tidak ada ditemukan")
+	}	
+
 	// create user
 	if err := con.Create(&user).Error; err != nil {return echo.ErrInternalServerError}
 

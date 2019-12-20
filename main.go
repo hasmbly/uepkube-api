@@ -3,7 +3,7 @@ package main
 import (
 	"uepkube-api/routes"
 	"log"
-	// "os"
+	"os"
 )
 
 // @title UepKube API
@@ -26,15 +26,15 @@ func main() {
 	e := routes.Init()
 
 	// log
-	// f, err := os.OpenFile("err.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
-	// if err != nil {
-	//     e.Logger.Fatal("error opening file: %v", err)
-	// }
-	// defer f.Close()
+	f, err := os.OpenFile("err.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	if err != nil {
+	    e.Logger.Fatal("error opening file: %v", err)
+	}
+	defer f.Close()
 
-	// e.Logger.SetOutput(f)
+	e.Logger.SetOutput(f)
 
-	// e.Logger.SetHeader("${time_rfc3339} ${level}")
+	e.Logger.SetHeader("${time_rfc3339} ${level}")
 	
 	log.Println("Go Started...")
 
