@@ -110,6 +110,8 @@ func Init() *echo.Echo {
 	o.GET("/lookup/member_pelatihan", controllers.GeAllMemberPelatihan)
 	// monev_pertanyaan+score indikator
 	o.GET("/lookup/monev_items", controllers.GeAllMonevItems)
+	// users
+	o.GET("/lookup/users", controllers.GeAllUser)
 
 	// Routes::All Roles
 	a := e.Group("/api/v1")

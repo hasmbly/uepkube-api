@@ -40,6 +40,7 @@ Tbl_user struct {
 	Kelurahan 	*Tbl_kelurahan `json:"kelurahan" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
 	Kecamatan 	*Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kecamatan;association_foreignkey:id_kecamatan"`
 	Kabupaten 	*Tbl_kabupaten `json:"kabupaten" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
+	Flag 			string 		`json:"flag"`
 }
 
 Tbl_kelurahan struct{
@@ -481,6 +482,11 @@ Dummy struct{
 	Monev *Monev
 }
 
+User struct{
+	*Tbl_user
+	Flag string `json:"flag'`
+}
+
 Data_monev struct{
 	Nama_dimensi 	string 	`json:"dimensi"`
 	Nama_Aspek 		string 	`json:"aspek"`
@@ -807,10 +813,6 @@ PaginateAktivitas struct{
 
 PaginateInventory struct{
 	*Tbl_inventory
-	// NamaUepKube 	string `json:"uep_kube"`
-	// Jenis_usaha 	string `json:"jenis_usaha"`
-	// Bantuan_modal 	string `json:"bantuan_modal"`
-	// Created_at  	string `json:"created_at"`
 }
 
 PaginateLapkeu struct{

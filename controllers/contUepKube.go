@@ -290,6 +290,68 @@ func GeAllJenisUsaha(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
+// @Summary GeAllUser
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Param nik query string true "string"
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/users [get]
+func GeAllUser(c echo.Context) (err error) {
+	nik 	:= c.QueryParam("nik")
+	// User 	:= models.Tbl_user{}
+	Users 	:= []models.Tbl_user{}
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	/*query user*/
+	q := con
+	q = q.Model(&Users)
+	q = q.Preload("Kelurahan")
+	q = q.Preload("Kecamatan")
+	q = q.Preload("Kabupaten")
+	q = q.Where("nik like ?", "%"+nik+"%")
+	q = q.Find(&Users)
+	
+	// Chceck in Uep
+	for i, _ := range Users {
+		var id_uep []int
+		q1 := con
+		q1 = q1.Table("tbl_uep")
+		q1 = q1.Where("id_uep = ?", Users[i].Id_user)
+		q1 = q1.Pluck("id_uep", &id_uep)
+		
+		if len(id_uep) != 0 {
+			Users[i].Flag = "UEP"
+			continue
+		}
+
+		var id_kube_members []int
+		var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}		
+		for o, _ := range KubesMember {
+			q2 := con
+			q2 = q2.Table("tbl_kube")
+			q2 = q2.Where(KubesMember[o] + " = ?", Users[i].Id_user)
+			q2 = q2.Pluck(KubesMember[o], &id_kube_members)
+
+			if len(id_kube_members) != 0 {
+				Users[i].Flag = "KUBE"
+			}
+		}
+	}
+
+	r := &models.Jn{Msg: Users}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
 // @Summary GetAllAddress
 // @Tags Lookup-Controller
 // @Accept  json
