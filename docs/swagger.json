@@ -1321,6 +1321,9 @@
                 "id_kube": {
                     "type": "integer"
                 },
+                "id_pendamping": {
+                    "type": "integer"
+                },
                 "id_periods": {
                     "type": "integer"
                 },
@@ -1373,8 +1376,60 @@
         "models.Kubes_items": {
             "type": "object",
             "properties": {
+                "alamat": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "fb": {
+                    "type": "string"
+                },
+                "flag": {
+                    "type": "string"
+                },
+                "id_kabupaten": {
+                    "type": "integer"
+                },
+                "id_kecamatan": {
+                    "type": "integer"
+                },
+                "id_kelurahan": {
+                    "type": "string"
+                },
                 "id_user": {
                     "type": "integer"
+                },
+                "ig": {
+                    "type": "string"
+                },
+                "jenis_kelamin": {
+                    "type": "string",
+                    "enum": [
+                        "L",
+                        " P"
+                    ]
+                },
+                "kabupaten": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kabupaten"
+                },
+                "kecamatan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kecamatan"
+                },
+                "kelurahan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_kelurahan"
+                },
+                "lat": {
+                    "type": "number"
+                },
+                "lng": {
+                    "type": "number"
                 },
                 "nama": {
                     "type": "string"
@@ -1382,7 +1437,25 @@
                 "nik": {
                     "type": "string"
                 },
+                "no_hp": {
+                    "type": "string"
+                },
+                "no_kk": {
+                    "type": "string"
+                },
                 "posisi": {
+                    "type": "string"
+                },
+                "tempat_lahir": {
+                    "type": "string"
+                },
+                "tgl_lahir": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "wa": {
                     "type": "string"
                 }
             }

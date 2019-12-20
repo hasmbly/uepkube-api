@@ -131,6 +131,8 @@ definitions:
         type: integer
       id_kube:
         type: integer
+      id_pendamping:
+        type: integer
       id_periods:
         type: integer
       ig:
@@ -166,13 +168,61 @@ definitions:
     type: object
   models.Kubes_items:
     properties:
+      alamat:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      fb:
+        type: string
+      flag:
+        type: string
+      id_kabupaten:
+        type: integer
+      id_kecamatan:
+        type: integer
+      id_kelurahan:
+        type: string
       id_user:
         type: integer
+      ig:
+        type: string
+      jenis_kelamin:
+        enum:
+        - L
+        - ' P'
+        type: string
+      kabupaten:
+        $ref: '#/definitions/models.Tbl_kabupaten'
+        type: object
+      kecamatan:
+        $ref: '#/definitions/models.Tbl_kecamatan'
+        type: object
+      kelurahan:
+        $ref: '#/definitions/models.Tbl_kelurahan'
+        type: object
+      lat:
+        type: number
+      lng:
+        type: number
       nama:
         type: string
       nik:
         type: string
+      no_hp:
+        type: string
+      no_kk:
+        type: string
       posisi:
+        type: string
+      tempat_lahir:
+        type: string
+      tgl_lahir:
+        type: string
+      updated_at:
+        type: string
+      wa:
         type: string
     type: object
   models.Lapkeu:

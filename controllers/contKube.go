@@ -85,7 +85,7 @@ func GetKube(c echo.Context) error {
 
 			for i, _ := range KubesMember {
 			
-				if err := con.Table("tbl_kube t1").Select("t2.id_user, t2.nama, t2.nik, '" +KubesMember[i] + "' as posisi").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[i]).Where("id_kube = ?", id).Scan(&tmp).Error; err != nil { return echo.ErrInternalServerError }
+				if err := con.Table("tbl_kube t1").Select("t2.*, '" +KubesMember[i] + "' as posisi").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[i]).Where("id_kube = ?", id).Scan(&tmp).Error; err != nil { return echo.ErrInternalServerError }
 
 				if len(tmp) != 0 {
 					Kube.Items = append(Kube.Items, tmp[0])
@@ -150,19 +150,80 @@ func AddKube(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id jenis usaha") 
 	}
 	if Kube.Id_periods == 0 { 
-		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill id_periods ( Bantuan Modal )") 
 	}
 	if Kube.Nama_usaha == "" { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha Modal") 
 	}	
+	if len(Kube.Items) == 0 { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Items as Member for Kube") 
+	}		
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	// create kube
 	kube := &models.Tbl_kube{}
-	kube = Kube.Tbl_kube
+	kube = Kube.Tbl_kube	
+
+	// validation for items as memberKube
+	if len(kube.Items) != 0 {
+		for i, _ := range kube.Items {
+			if kube.Items[i].Nik == "" {
+				return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") 
+			} else {
+				// validation NIK
+				if len(kube.Items[i].Nik) > 16 || len(kube.Items[i].Nik) < 16 {
+					return echo.NewHTTPError(http.StatusBadRequest, "Please fill NIK with 16 Digits")
+				}			
+			}
+			if kube.Items[i].Posisi == "" {
+				return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Posisi") 
+			}			
+			if kube.Items[i].Nama == "" {
+				return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama") 
+			}
+		}
+
+		// execute store memberKube
+		for o, _ := range kube.Items {
+			
+			Memberskube := &models.Tbl_user{}
+			Memberskube = kube.Items[o].Tbl_user
+
+			if Memberskube.Id_user == 0 {
+				// create
+				if err := con.Create(&Memberskube).Error; err != nil {return echo.ErrInternalServerError}
+			} else if Memberskube.Id_user != 0 {
+				// update
+				if err := con.Model(&models.Tbl_user{}).UpdateColumns(&Memberskube).Error; err != nil {
+					return echo.ErrInternalServerError
+				}				
+			}
+
+			if kube.Items[o].Posisi == "ketua" { kube.Ketua = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "sekertaris" || kube.Items[o].Posisi == "sekretaris" { kube.Sekertaris = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "bendahara" { kube.Bendahara = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "anggota1" { kube.Anggota1 = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "anggota2" { kube.Anggota2 = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "anggota3" { kube.Anggota3 = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "anggota4" { kube.Anggota4 = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "anggota5" { kube.Anggota5 = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "anggota6" { kube.Anggota6 = Memberskube.Id_user }
+			if kube.Items[o].Posisi == "anggota7" { kube.Anggota7 = Memberskube.Id_user }
+
+		}
+	}
+
+	// check kube is exist
+    var n_kube []string
+	con.Table("tbl_kube").Where("nama_kube = ?", kube.Nama_kube).Pluck("nama_kube", &n_kube)
+	if len(n_kube) > 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Maaf Nama Kube sudah digunakan")
+	}	
+
+	// create kube
+	// log.Println("kube : ", kube)
 	if err := con.Create(&kube).Error; err != nil {return echo.ErrInternalServerError}	
 
 	// store bantuan_periods history

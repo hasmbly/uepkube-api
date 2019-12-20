@@ -106,7 +106,7 @@ Tbl_uep struct {
 	Anggota5     	int 	`json:"-" sql:"DEFAULT:NULL"`
 	Anggota6     	int 	`json:"-" sql:"DEFAULT:NULL"`
 	Anggota7     	int 	`json:"-" sql:"DEFAULT:NULL"`
-	Id_pendamping	int 	`json:"-" sql:"DEFAULT:NULL"`
+	Id_pendamping	int 	`json:"id_pendamping" sql:"DEFAULT:NULL"`
 	Status       	int 	`json:"status" sql:"default:0"`
 	Ig 				string 		`json:"ig"`
 	Fb 				string 		`json:"fb"`
@@ -123,9 +123,7 @@ Tbl_uep struct {
 }
 
 Kubes_items struct{
-		Id_user int `json:"id_user"`
-		Nik string `json:"nik"`
-		Nama string `json:"nama"`
+		*Tbl_user
 		Posisi string `json:"posisi"`
 	}
 
