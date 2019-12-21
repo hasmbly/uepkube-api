@@ -71,8 +71,8 @@ func GetUep(c echo.Context) error {
 	q = q.First(&User, id)
 
 	for i,_ := range User.Photo {
-			ImageBlob := User.Photo[i].Photo
-			User.Photo[i].Photo = "data:image/png;base64," + ImageBlob	
+			ImageBlob := User.Photo[i].Files
+			User.Photo[i].Files = "data:image/png;base64," + ImageBlob	
 		}
 
 	//get all transac credit_debit
@@ -116,13 +116,15 @@ func GetPaginateUep(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /uep/add [post]*/
 func AddUep(c echo.Context) (err error) {
+
 	Uep := &models.Uep{}
 
 	if err := c.Bind(Uep); err != nil {
 		return err
 	}
 
-	// log.Println("Uploaded : ", Uep.Photo)
+	// log.Println("Uep_tbl_user : ", *Uep.Tbl_user)	
+	// log.Println("Uep : ", Uep)	
 
 	user := &models.Tbl_user{}
 	user = Uep.Tbl_user
@@ -171,6 +173,14 @@ func AddUep(c echo.Context) (err error) {
 	uep.Id_uep = user.Id_user
 	if err := con.Create(&uep).Error; err != nil {return echo.ErrInternalServerError}
 
+	// store usaha_uep
+	uepUsaha := &models.Tbl_usaha_uepkube{}
+	uepUsaha.Id_uep = user.Id_user
+	uepUsaha.Nama_usaha = Uep.Nama_usaha
+	uepUsaha.Id_jenis_usaha = Uep.Id_jenis_usaha
+	uepUsaha.Id_periods = Uep.Id_periods
+	if err := con.Create(&uepUsaha).Error; err != nil {return echo.ErrInternalServerError}	
+
 	// store bantuan_periods_history
 	uepPeriods := &models.Tbl_periods_uepkube{}
 	uepPeriods.Id_uep = user.Id_user
@@ -198,7 +208,7 @@ func AddUep(c echo.Context) (err error) {
 
 	defer con.Close()
 
-	r := &models.Jn{Msg: "Success Store Data"}
+	r := &models.Jn{Msg: "Success Store Data", Id: user.Id_user}
 	return c.JSON(http.StatusOK, r)
 }
 
@@ -223,7 +233,7 @@ func UpdateUep(c echo.Context) (err error) {
 
 	// validation
 	if Uep.Id_user == 0 {
-		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id_user")
 	}
 	if Uep.Nik == "" { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") 
@@ -254,6 +264,16 @@ func UpdateUep(c echo.Context) (err error) {
 	// update uep
 	uep.Id_uep = user.Id_user
 	if err := con.Model(&models.Tbl_uep{}).UpdateColumns(&uep).Error; err != nil {
+		return echo.ErrInternalServerError
+	}
+
+	// store usaha_uep
+	uepUsaha := &models.Tbl_usaha_uepkube{}
+	uepUsaha.Id_uep = user.Id_user
+	uepUsaha.Nama_usaha = Uep.Nama_usaha
+	uepUsaha.Id_jenis_usaha = Uep.Id_jenis_usaha
+	uepUsaha.Id_periods = Uep.Id_periods
+	if err := con.Model(&models.Tbl_usaha_uepkube{}).Where("id_uep = ?", uepUsaha.Id_uep).Where("id_jenis_usaha = ?", uepUsaha.Id_jenis_usaha).Where("id_periods = ?", uepUsaha.Id_periods).UpdateColumns(&uepUsaha).Error; err != nil {
 		return echo.ErrInternalServerError
 	}
 
@@ -292,7 +312,7 @@ func DeleteUep(c echo.Context) (err error) {
 	// delete user
 	if err := con.Delete(&user).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 	
-	// delete user_photo
+	// delete user_UepFiles
 	if err := con.Where("id_user = ?", user.Id_user).Delete(models.Tbl_user_photo{}).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	defer con.Close()
@@ -302,8 +322,13 @@ func DeleteUep(c echo.Context) (err error) {
 }
 
 func UploadUepFiles(c echo.Context) (err error) {
+	// query
 	id, _ 			:= strconv.Atoi(c.QueryParam("id"))
 	is_display, _ 	:= strconv.Atoi(c.QueryParam("is_display"))
+
+	// formValue
+	description := c.FormValue("description")
+	types 		:= c.FormValue("type")
 
 	if id == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
@@ -315,7 +340,7 @@ func UploadUepFiles(c echo.Context) (err error) {
 		return err
 	}
 
-	files := form.File["photo"]
+	files := form.File["files"]
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -338,14 +363,16 @@ func UploadUepFiles(c echo.Context) (err error) {
 	    // Encode as base64.
 	    encoded := base64.StdEncoding.EncodeToString(content)
 		
-		// init photo model
-		photo := &models.Tbl_user_photo{}
+		// init UepFiles model
+		UepFiles := &models.Tbl_uepkube_files{}
 
-		photo.Id_user = id
-		photo.Is_display = is_display
-		photo.Photo   = encoded
+		UepFiles.Id_uep = id
+		UepFiles.Files   = encoded
+		UepFiles.Description = description
+		UepFiles.Type = types
+		UepFiles.Is_display = is_display
 
-		if err := con.Create(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+		if err := con.Create(&UepFiles).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
 		
 		// log.Println("encoded : ", encoded)	
 

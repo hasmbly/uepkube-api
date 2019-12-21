@@ -255,3 +255,8 @@ func DeleteProduk(c echo.Context) (err error) {
 	r := &models.Jn{Msg: "Success Delete Data"	}
 	return c.JSON(http.StatusOK, r)	
 }
+
+func UploadProdukFiles(c echo.Context) (err error) {
+	return nil
+}
+

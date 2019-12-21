@@ -88,7 +88,7 @@ Tbl_uep struct {
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_uep"`	
-	Photo 			[]*Tbl_uepkube_photo `json:"photo" gorm:"foreignkey:id_uep"`
+	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_uep"`
 }
 
  Tbl_kube struct {
@@ -118,7 +118,7 @@ Tbl_uep struct {
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_kube"`	
-	Photo 			[]*Tbl_uepkube_photo `json:"photo" gorm:"foreignkey:id_kube"`
+	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_kube"`
 	Items 			[]Kubes_items `json:"items"`
 }
 
@@ -445,18 +445,28 @@ Tbl_usaha_uepkube struct{
 	Nama_usaha 		 	string		`json:"nama_usaha"`
 	Id_jenis_usaha 		int			`json:"id_jenis_usaha"`
 	JenisUsaha 			*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	AllProduk 			[]*Tbl_produk_uepkube `json:"all_produk" gorm:"foreignkey:id_usaha_uk;association_foreignkey:id"`
+	AllProduk 			[]*Tbl_produk_uepkube `json:"all_produk" gorm:"foreignkey:id_usaha_uke;association_foreignkey:id"`
 	Created_at			*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at			*time.Time 	`json:"-" gorm:"timestamp;null"`	
 }
 
 Tbl_produk_uepkube struct{
 	Id 					int	 		`json:"id" gorm:"primary_key"`
-	Id_usaha_uk 		int			`json:"id_usaha_uk"`
+	Id_usaha_uke 		int			`json:"id_usaha_uke"`
 	Id_produk 		 	int			`json:"id_produk"`
 	DetailProduk 		*Tbl_produk `json:"detail_produk" gorm:"foreignkey:id_produk;association_foreignkey:id_produk"`
 	Created_at			*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at			*time.Time 	`json:"-" gorm:"timestamp;null"`	
+}
+
+Tbl_uepkube_files struct {
+	Id				int 		`json:"id" gorm:"primary_key"`
+	Id_uep 			int			`json:"id_uep" sql:"default:null"`
+	Id_kube 		int			`json:"id_kube" sql:"default:null"`		
+	Files			string 		`json:"files"`	
+	Description		string 		`json:"description"`	
+	Type			string 		`json:"type" enums:"PDF, IMAGE"`
+	Is_display		int 		`json:"is_display"`	
 }
 
 /**

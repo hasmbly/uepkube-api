@@ -1298,6 +1298,9 @@
                     "type": "boolean",
                     "example": false
                 },
+                "id": {
+                    "type": "integer"
+                },
                 "message": {
                     "type": "object"
                 }
@@ -1373,7 +1376,7 @@
                 "photo": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_uepkube_photo"
+                        "$ref": "#/definitions/models.Tbl_uepkube_files"
                     }
                 },
                 "status": {
@@ -2055,14 +2058,20 @@
                 "id_produk": {
                     "type": "integer"
                 },
-                "id_usaha_uk": {
+                "id_usaha_uke": {
                     "type": "integer"
                 }
             }
         },
-        "models.Tbl_uepkube_photo": {
+        "models.Tbl_uepkube_files": {
             "type": "object",
             "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -2075,8 +2084,12 @@
                 "is_display": {
                     "type": "integer"
                 },
-                "photo": {
-                    "type": "string"
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "PDF",
+                        " IMAGE"
+                    ]
                 }
             }
         },

@@ -90,8 +90,13 @@ func GetKube(c echo.Context) error {
 				if len(tmp) != 0 {
 					Kube.Items = append(Kube.Items, tmp[0])
 				}
-
 			}
+
+			// rename photo
+			for i,_ := range Kube.Photo {
+					ImageBlob := Kube.Photo[i].Files
+					Kube.Photo[i].Files = "data:image/png;base64," + ImageBlob	
+				}			
 
 			r.Msg = Kube
 		}
@@ -226,6 +231,14 @@ func AddKube(c echo.Context) (err error) {
 	// log.Println("kube : ", kube)
 	if err := con.Create(&kube).Error; err != nil {return echo.ErrInternalServerError}	
 
+	// store usaha_kube
+	kubeUsaha := &models.Tbl_usaha_uepkube{}
+	kubeUsaha.Id_kube = Kube.Id_kube
+	kubeUsaha.Nama_usaha = Kube.Nama_usaha
+	kubeUsaha.Id_jenis_usaha = Kube.Id_jenis_usaha
+	kubeUsaha.Id_periods = Kube.Id_periods
+	if err := con.Create(&kubeUsaha).Error; err != nil {return echo.ErrInternalServerError}	
+
 	// store bantuan_periods history
 	kubePeriods := &models.Tbl_periods_uepkube{}
 	kubePeriods.Id_kube = Kube.Id_kube
@@ -253,7 +266,7 @@ func AddKube(c echo.Context) (err error) {
 
 	defer con.Close()
 
-	r := &models.Jn{Msg: "Success Store Data"}
+	r := &models.Jn{Msg: "Success Store Data", Id: Kube.Id_kube}
 	return c.JSON(http.StatusOK, r)
 }
 
@@ -270,13 +283,13 @@ func AddKube(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /kube [put]*/
 func UpdateKube(c echo.Context) (err error) {
-	kube := &models.Tbl_kube{}
+	Kube := &models.Kube{}
 
-	if err := c.Bind(kube); err != nil {
+	if err := c.Bind(Kube); err != nil {
 		return err
 	}
 
-	if kube.Id_kube == 0 {
+	if Kube.Id_kube == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
 	}
 
@@ -284,11 +297,26 @@ func UpdateKube(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
+	kube := &models.Tbl_kube{}
+	kube = Kube.Tbl_kube	
+
+	// update kube
 	if err := con.Model(&models.Tbl_kube{}).UpdateColumns(&kube).Error; err != nil {
 		return echo.ErrInternalServerError
 	}
 
+	// update kube status
 	if err := con.Table("tbl_kube").Where("id_kube = ?",kube.Id_kube).UpdateColumn("status", kube.Status).Error; err != nil {return echo.ErrInternalServerError}
+
+	// store usaha_kube
+	kubeUsaha := &models.Tbl_usaha_uepkube{}
+	kubeUsaha.Id_kube = Kube.Id_kube
+	kubeUsaha.Nama_usaha = Kube.Nama_usaha
+	kubeUsaha.Id_jenis_usaha = Kube.Id_jenis_usaha
+	kubeUsaha.Id_periods = Kube.Id_periods
+	if err := con.Model(&models.Tbl_usaha_uepkube{}).Where("id_kube = ?", kubeUsaha.Id_kube).Where("id_jenis_usaha = ?", kubeUsaha.Id_jenis_usaha).Where("id_periods = ?", kubeUsaha.Id_periods).UpdateColumns(&kubeUsaha).Error; err != nil {
+		return echo.ErrInternalServerError
+	}
 
 	defer con.Close()
 
@@ -336,8 +364,13 @@ func DeleteKube(c echo.Context) (err error) {
 
 
 func UploadKubeFiles(c echo.Context) (err error) {
-	id, _ 		:= strconv.Atoi(c.QueryParam("id"))
+	// query
+	id, _ 			:= strconv.Atoi(c.QueryParam("id"))
 	is_display, _ 	:= strconv.Atoi(c.QueryParam("is_display"))
+
+	// formValue
+	description := c.FormValue("description")
+	types 		:= c.FormValue("type")
 
 	if id == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
@@ -349,7 +382,7 @@ func UploadKubeFiles(c echo.Context) (err error) {
 		return err
 	}
 
-	files := form.File["photo"]
+	files := form.File["files"]
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -363,7 +396,7 @@ func UploadKubeFiles(c echo.Context) (err error) {
 		if err != nil {
 			return err
 		}
-		defer src.Close()
+		defer src.Close()	
 
 	    // Read entire JPG into byte slice.
 	    reader := bufio.NewReader(src)
@@ -372,17 +405,21 @@ func UploadKubeFiles(c echo.Context) (err error) {
 	    // Encode as base64.
 	    encoded := base64.StdEncoding.EncodeToString(content)
 		
-		// init photo model
-		photo := &models.Tbl_kube_photo{}
+		// init UepFiles model
+		UepFiles := &models.Tbl_uepkube_files{}
 
-		photo.Id_kube = id
-		photo.Is_display = is_display
-		photo.Photo   = encoded
+		UepFiles.Id_kube = id
+		UepFiles.Files   = encoded
+		UepFiles.Description = description
+		UepFiles.Type = types
+		UepFiles.Is_display = is_display
 
-		if err := con.Create(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+		if err := con.Create(&UepFiles).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
 		
+		// log.Println("encoded : ", encoded)	
+
 	}
-	
+
 	defer con.Close()
 
 	log.Println("Uploads Kube's file to id : ", id)

@@ -30,11 +30,13 @@ func main() {
 	if err != nil {
 	    e.Logger.Fatal("error opening file: %v", err)
 	}
+		
 	defer f.Close()
 
 	e.Logger.SetOutput(f)
 
 	e.Logger.SetHeader("${time_rfc3339} ${level}")
+
 	
 	log.Println("Go Started...")
 

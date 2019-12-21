@@ -107,6 +107,8 @@ definitions:
       error:
         example: false
         type: boolean
+      id:
+        type: integer
       message:
         type: object
     type: object
@@ -157,7 +159,7 @@ definitions:
         type: array
       photo:
         items:
-          $ref: '#/definitions/models.Tbl_uepkube_photo'
+          $ref: '#/definitions/models.Tbl_uepkube_files'
         type: array
       status:
         type: integer
@@ -610,11 +612,15 @@ definitions:
         type: integer
       id_produk:
         type: integer
-      id_usaha_uk:
+      id_usaha_uke:
         type: integer
     type: object
-  models.Tbl_uepkube_photo:
+  models.Tbl_uepkube_files:
     properties:
+      description:
+        type: string
+      files:
+        type: string
       id:
         type: integer
       id_kube:
@@ -623,7 +629,10 @@ definitions:
         type: integer
       is_display:
         type: integer
-      photo:
+      type:
+        enum:
+        - PDF
+        - ' IMAGE'
         type: string
     type: object
   models.Tbl_usaha_uepkube:
