@@ -1298,9 +1298,6 @@
                     "type": "boolean",
                     "example": false
                 },
-                "id": {
-                    "type": "integer"
-                },
                 "message": {
                     "type": "object"
                 }

@@ -107,8 +107,6 @@ definitions:
       error:
         example: false
         type: boolean
-      id:
-        type: integer
       message:
         type: object
     type: object

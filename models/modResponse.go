@@ -8,6 +8,11 @@ import (
 type Jn struct {
 	Err 	bool 	 	`json:"error" example:"false"`
 	Msg 	interface{} `json:"message"`
+}
+
+type Jn1 struct {
+	Err 	bool 	 	`json:"error" example:"false"`
+	Msg 	interface{} `json:"message"`
 	Id 		int 		`json:"id"`
 }
 

@@ -254,7 +254,7 @@ func GeAllPendamping(c echo.Context) (err error) {
 	con.SingularTable(true)
 
 	/*query user*/
-	if err := con.Table("tbl_pendamping t1").Select("t1.*, t2.nama as nama_pendamping").Joins("join tbl_user t2 on t2.id_user = t1.id_pendamping").Scan(&Pendampings).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Table("tbl_pendamping t1").Select("t1.*, t2.nama").Joins("join tbl_user t2 on t2.id_user = t1.id_pendamping").Scan(&Pendampings).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 	
 	// check how many pendamping in each uep/kube
 

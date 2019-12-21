@@ -266,7 +266,7 @@ func AddKube(c echo.Context) (err error) {
 
 	defer con.Close()
 
-	r := &models.Jn{Msg: "Success Store Data", Id: Kube.Id_kube}
+	r := &models.Jn1{Msg: "Success Store Data", Id: Kube.Id_kube}
 	return c.JSON(http.StatusOK, r)
 }
 

@@ -208,7 +208,7 @@ func AddUep(c echo.Context) (err error) {
 
 	defer con.Close()
 
-	r := &models.Jn{Msg: "Success Store Data", Id: user.Id_user}
+	r := &models.Jn1{Msg: "Success Store Data", Id: user.Id_user}
 	return c.JSON(http.StatusOK, r)
 }
 
