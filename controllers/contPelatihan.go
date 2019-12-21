@@ -10,6 +10,10 @@ import (
 	 "strconv"
 	 "uepkube-api/helpers"
 	 "log"
+
+	"bufio"
+	"encoding/base64"	
+	"io/ioutil"		
 )
 
 /*@Summary GetPelatihanById
@@ -42,24 +46,25 @@ func GetPelatihan(c echo.Context) error {
 	q = q.First(&Pelatihan, id)
 
     // get photo pelatihan
-	//    var photo []models.Tbl_pelatihan_photo
-	// if err := con.Table("tbl_pelatihan_photo").Where(&models.Tbl_pelatihan_photo{Id_pelatihan: Pelatihan.Id_pelatihan}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	//    var files []models.Tbl_pelatihan_files
+	// if err := con.Table("tbl_pelatihan_files").Where(&models.Tbl_pelatihan_files{Id_pelatihan: Pelatihan.Id_pelatihan}).Find(&files).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	// for i,_ := range photo {
+	for i,_ := range Pelatihan.Photo {
 
-	// 		if photo[i].Photo != "" {
-	// 			ImageBlob := photo[i].Photo
-	// 			photo[i].Photo = "data:image/png;base64," + ImageBlob	
-	// 		}
+			if Pelatihan.Photo[i].Files != "" {
+				Pelatihan.Photo[i].Files = "data:image/png;base64," + Pelatihan.Photo[i].Files
+			}
 
-	// 	}
-	// Pelatihan.Photo = photo
+		}
+	// Pelatihan.Photo = files
 	
 	// get Kehadiran Pelatihan
 	if err := con.Table("tbl_kehadiran t1").Select("t1.*, t2.nama").Joins("join tbl_user t2 on t2.id_user = t1.id_user").Where("t1.id_pelatihan = ?", Pelatihan.Id_pelatihan).Scan(&Pelatihan.Kehadiran).Error; err != nil { return echo.ErrInternalServerError }
 
 	r := &models.Jn{Msg: Pelatihan}
 	defer con.Close()
+
+
 
 	return c.JSON(http.StatusOK, r)
 }
@@ -281,4 +286,69 @@ func AddPelatihanKehadiran(c echo.Context) (err error) {
 
 	r := &models.Jn{Msg: "Success Store Data"}
 	return c.JSON(http.StatusOK, r)
+}
+
+func UploadPelatihanFiles(c echo.Context) (err error) {
+	// query
+	id, _ 			:= strconv.Atoi(c.QueryParam("id"))
+	is_display, _ 	:= strconv.Atoi(c.QueryParam("is_display"))
+
+	// formValue
+	description := c.FormValue("description")
+	types 		:= c.FormValue("type")
+
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
+
+	// Multipart form
+	form, err := c.MultipartForm()
+	if err != nil {
+		return err
+	}
+
+	files := form.File["files"]
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	log.Println("files : ", len(files))
+
+	for _,f := range files {
+
+		src, err := f.Open()
+		if err != nil {
+			return err
+		}
+		defer src.Close()	
+
+	    // Read entire JPG into byte slice.
+	    reader := bufio.NewReader(src)
+	    content, _ := ioutil.ReadAll(reader)
+
+	    // Encode as base64.
+	    encoded := base64.StdEncoding.EncodeToString(content)
+		
+		// execute
+		PelatihanFiles := &models.Tbl_pelatihan_files{}
+
+		PelatihanFiles.Id_pelatihan = id
+		PelatihanFiles.Files   = encoded
+		PelatihanFiles.Description = description
+		PelatihanFiles.Type = types
+		PelatihanFiles.Is_display = is_display
+
+		if err := con.Create(&PelatihanFiles).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+		
+		// log.Println("encoded : ", encoded)	
+
+	}
+
+	defer con.Close()
+
+	log.Println("Uploads Pelatihan's file to id : ", id)
+	r := &models.Jn{Msg: "Success Upload files"}	
+	return c.JSON(http.StatusOK, r)	
+	
 }

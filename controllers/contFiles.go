@@ -43,8 +43,12 @@ func UploadFiles(c echo.Context) (err error) {
 			return UploadUepFiles(c)
 		case "kube":
 			return UploadKubeFiles(c)
+		case "log_aktivitas":
+			return UploadAktivitasFiles(c)			
 		case "produk":
-			return UploadProdukFiles(c)		
+			return UploadProdukFiles(c)
+		case "pelatihan":
+			return UploadPelatihanFiles(c)					
 		case "pendamping":
 			return UploadUepFiles(c)
 		case "verifikator":

@@ -232,7 +232,7 @@ Tbl_pelatihan_files struct{
 	Id_pelatihan	int 		`json:"id_pelatihan"`
 	Files			string 		`json:"files"`	
 	Description		string 		`json:"description"`	
-	Type			string 		`json:"type"`	
+	Type			string 		`json:"type" enums:"PDF, IMAGE"`
 	Is_display		int 		`json:"is_display"`	
 }
 
@@ -244,15 +244,18 @@ Tbl_activity struct{
 	Rincian 			string 		`json:"rincian"`
 	Created_by   		*string 	`json:"created_by"`
 	Updated_by			*string	 	`json:"updated_by"` 	
-	Photo 		 		[]Tbl_activity_photo 	`json:"photo" gorm:"foreignkey:id"`
+	Photo 		 		[]Tbl_activity_files 	`json:"photo" gorm:"foreignkey:id_activity"`
 }
 
-Tbl_activity_photo struct{
+Tbl_activity_files struct{
 	Id				int 		`json:"id" gorm:"primary_key"`
-	id_activity		int 		`json:"id_activity"`
-	Photo			string 		`json:"photo"`	
+	Id_activity		int 		`json:"id_activity"`
+	Files			string 		`json:"files"`	
+	Description		string 		`json:"description"`	
+	Type			string 		`json:"type" enums:"PDF, IMAGE"`
 	Is_display		int 		`json:"is_display"`	
 }
+
 
 Tbl_faq struct{
 	Id_faq 		int 		`json:"id_faq" gorm:"primary_key"`
@@ -568,7 +571,7 @@ Pelatihan struct{
 
 Activity struct{
 	*Tbl_activity
-	Photo 		 		[]Tbl_activity_photo 	`json:"photo" gorm:"foreignkey:id_activity"`
+	Photo 		 		[]Tbl_activity_files 	`json:"photo" gorm:"foreignkey:id_activity"`
 }
 
 Kehadiran struct{

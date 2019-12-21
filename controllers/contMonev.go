@@ -42,7 +42,7 @@ func GetMonev(c echo.Context) error {
 	
 	if Monev.Id_kube == 0 {
 		FieldId = "id_uep"
-		TblType = "_uep"
+		TblType = "_uep"	
 		ValueId = Monev.Id_uep 
 	}
 	

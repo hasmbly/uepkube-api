@@ -12,7 +12,7 @@ definitions:
         type: string
       photo:
         items:
-          $ref: '#/definitions/models.Tbl_activity_photo'
+          $ref: '#/definitions/models.Tbl_activity_files'
         type: array
       rincian:
         type: string
@@ -430,15 +430,22 @@ definitions:
           $ref: '#/definitions/models.Tbl_produk_photo'
         type: array
     type: object
-  models.Tbl_activity_photo:
+  models.Tbl_activity_files:
     properties:
+      description:
+        type: string
+      files:
+        type: string
       id:
         type: integer
       id_activity:
         type: integer
       is_display:
         type: integer
-      photo:
+      type:
+        enum:
+        - PDF
+        - ' IMAGE'
         type: string
     type: object
   models.Tbl_bantuan_periods:
@@ -551,6 +558,9 @@ definitions:
       is_display:
         type: integer
       type:
+        enum:
+        - PDF
+        - ' IMAGE'
         type: string
     type: object
   models.Tbl_pendamping:

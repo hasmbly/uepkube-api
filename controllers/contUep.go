@@ -363,7 +363,7 @@ func UploadUepFiles(c echo.Context) (err error) {
 	    // Encode as base64.
 	    encoded := base64.StdEncoding.EncodeToString(content)
 		
-		// init UepFiles model
+		// execute
 		UepFiles := &models.Tbl_uepkube_files{}
 
 		UepFiles.Id_uep = id

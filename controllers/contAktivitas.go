@@ -9,6 +9,11 @@ import (
 	 "uepkube-api/models"
 	 "strconv"
 	 "uepkube-api/helpers"
+	 "log"
+
+	"bufio"
+	"encoding/base64"	
+	"io/ioutil"	
 )
 
 func GetAktivitas(c echo.Context) error {
@@ -23,6 +28,14 @@ func GetAktivitas(c echo.Context) error {
 	q = q.Model(&Activity)
 	q = q.Preload("Photo")
 	q = q.First(&Activity, id)
+
+	for i,_ := range Activity.Photo {
+
+			if Activity.Photo[i].Files != "" {
+				Activity.Photo[i].Files = "data:image/png;base64," + Activity.Photo[i].Files
+			}
+
+		}
 
 	r := &models.Jn{Msg: Activity}
 	defer con.Close()
@@ -107,4 +120,69 @@ func DeleteAktivitas(c echo.Context) (err error) {
 
 	r := &models.Jn{Msg: "Success Delete Data"	}
 	return c.JSON(http.StatusOK, r)	
+}
+
+func UploadAktivitasFiles(c echo.Context) (err error) {
+	// query
+	id, _ 			:= strconv.Atoi(c.QueryParam("id"))
+	is_display, _ 	:= strconv.Atoi(c.QueryParam("is_display"))
+
+	// formValue
+	description := c.FormValue("description")
+	types 		:= c.FormValue("type")
+
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
+
+	// Multipart form
+	form, err := c.MultipartForm()
+	if err != nil {
+		return err
+	}
+
+	files := form.File["files"]
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	log.Println("files : ", len(files))
+
+	for _,f := range files {
+
+		src, err := f.Open()
+		if err != nil {
+			return err
+		}
+		defer src.Close()	
+
+	    // Read entire JPG into byte slice.
+	    reader := bufio.NewReader(src)
+	    content, _ := ioutil.ReadAll(reader)
+
+	    // Encode as base64.
+	    encoded := base64.StdEncoding.EncodeToString(content)
+		
+		// execute
+		ActivityFiles := &models.Tbl_activity_files{}
+
+		ActivityFiles.Id_activity = id
+		ActivityFiles.Files   = encoded
+		ActivityFiles.Description = description
+		ActivityFiles.Type = types
+		ActivityFiles.Is_display = is_display
+
+		if err := con.Create(&ActivityFiles).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+		
+		// log.Println("encoded : ", encoded)	
+
+	}
+
+	defer con.Close()
+
+	log.Println("Uploads Activity's file to id : ", id)
+	r := &models.Jn{Msg: "Success Upload files"}	
+	return c.JSON(http.StatusOK, r)	
+	
 }

@@ -1159,7 +1159,7 @@
                 "photo": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_activity_photo"
+                        "$ref": "#/definitions/models.Tbl_activity_files"
                     }
                 },
                 "rincian": {
@@ -1780,9 +1780,15 @@
                 }
             }
         },
-        "models.Tbl_activity_photo": {
+        "models.Tbl_activity_files": {
             "type": "object",
             "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -1792,8 +1798,12 @@
                 "is_display": {
                     "type": "integer"
                 },
-                "photo": {
-                    "type": "string"
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "PDF",
+                        " IMAGE"
+                    ]
                 }
             }
         },
@@ -1965,7 +1975,11 @@
                     "type": "integer"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "PDF",
+                        " IMAGE"
+                    ]
                 }
             }
         },
