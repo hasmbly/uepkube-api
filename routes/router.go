@@ -19,7 +19,7 @@ import (
 
 	 // "image"
 	 // "image/png"
-	 "os"
+	 // "os"
 	 // "bytes"
 
 )
@@ -69,8 +69,8 @@ func Init() *echo.Echo {
 	e := echo.New()
 
 	// GOPATH
-	goPath := os.Getenv("GOPATH")
-	log.Println("gopath : ", goPath)
+	// goPath := os.Getenv("GOPATH")
+	// log.Println("gopath : ", goPath)
 
 	// Middleware
 	e.Use(middleware.Logger())
@@ -84,9 +84,9 @@ func Init() *echo.Echo {
 	}))
 
 	// for pdf
-	e.Static("/pdf", goPath + "/src/uepkube-api/static/assets/pdf")
+	e.Static("/pdf", "static/assets/pdf")
 	// for pdf
-	e.Static("/images", goPath + "/src/uepkube-api/static/assets/images")
+	e.Static("/images", "static/assets/images")
 
 	e.GET("/", Home)
 	e.GET("/bycrypt/:pass", BycriptPass)
