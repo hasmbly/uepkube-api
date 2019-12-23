@@ -79,6 +79,8 @@ func Init() *echo.Echo {
 		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
 	}))
 
+	e.Static("/pdf", "static/assets/pdf")
+
 	e.GET("/", Home)
 	e.GET("/bycrypt/:pass", BycriptPass)
 	e.GET("/photo", GetPhoto)
@@ -127,35 +129,6 @@ func Init() *echo.Echo {
 	
 	// uploads files
 	a.POST("/upload/files/:key", controllers.UploadFiles)
-
-	// uploads pdf
-	// a.POST("/uploads/pdf/:key", controllers.UploadFiles)
-	
-	// produk
-	// a.PUT("/produk", controllers.UpdateProduk)
-	// a.POST("/produk/add", controllers.AddProduk)
-	// a.POST("/produk/:id", controllers.DeleteProduk)
-
-	// Route::Restricted-Group-UEP
-	// u := e.Group("/api/v1")
-	// u.Use(middleware.JWTWithConfig(config))
-	// u.Use(middlewares.CheckUepRoles)
-	// // uep
-	// // u.GET("/uep", controllers.GetUep)
-	// // u.POST("/uep", controllers.GetPaginateUep)
-	// // u.PUT("/uep", controllers.UpdateUep)
-	// // u.POST("/uep/add", controllers.AddUep)
-	// // u.POST("/uep/:id", controllers.DeleteUep)
-
-	// Route::Restricted-Group-KUBE
-	// k := e.Group("/api/v1")
-	// k.Use(middleware.JWTWithConfig(config))
-	// k.Use(middlewares.CheckKubeRoles)	
-	// k.GET("/kube", controllers.GetKube)
-	// k.POST("/kube", controllers.GetPaginateKube)
-	// k.PUT("/kube", controllers.UpdateKube)
-	// k.POST("/kube/add", controllers.AddKube)
-	// k.POST("/kube/:id", controllers.DeleteKube)	
 
 	return e
 }

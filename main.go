@@ -30,7 +30,6 @@ func main() {
 	if err != nil {
 	    e.Logger.Fatal("error opening file: %v", err)
 	}
-
 	defer f.Close()
 
 	e.Logger.SetOutput(f)

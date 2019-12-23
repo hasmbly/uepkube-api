@@ -10,10 +10,13 @@ import (
 	 "strconv"
 	 "uepkube-api/helpers"
 	 "log"
+	 "os"
+	 "fmt"
+	 // "io"
 
 	"bufio"
 	"encoding/base64"	
-	"io/ioutil"		
+	"io/ioutil"	
 )
 
 /*@Summary GetPelatihanById
@@ -45,10 +48,6 @@ func GetPelatihan(c echo.Context) error {
 	})	
 	q = q.First(&Pelatihan, id)
 
-    // get photo pelatihan
-	//    var files []models.Tbl_pelatihan_files
-	// if err := con.Table("tbl_pelatihan_files").Where(&models.Tbl_pelatihan_files{Id_pelatihan: Pelatihan.Id_pelatihan}).Find(&files).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-
 	for i,_ := range Pelatihan.Photo {
 
 			if Pelatihan.Photo[i].Files != "" {
@@ -61,10 +60,44 @@ func GetPelatihan(c echo.Context) error {
 	// get Kehadiran Pelatihan
 	if err := con.Table("tbl_kehadiran t1").Select("t1.*, t2.nama").Joins("join tbl_user t2 on t2.id_user = t1.id_user").Where("t1.id_pelatihan = ?", Pelatihan.Id_pelatihan).Scan(&Pelatihan.Kehadiran).Error; err != nil { return echo.ErrInternalServerError }
 
+	// docs pdf
+	for i, _ := range Pelatihan.Files {
+		dec, err := base64.StdEncoding.DecodeString(Pelatihan.Files[i].Files)
+		if err != nil {
+		    log.Println("error decoding: %v", err)
+		}
+
+		// open | create
+		path := fmt.Sprintf("static/assets/pdf/%d_pelatihan.pdf", i)
+		f, err := os.OpenFile(path, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+		if err != nil {
+		    log.Println("error opening file: %v", err)
+		}
+		defer f.Close()
+
+		// write
+		if _, err := f.Write(dec); err != nil {
+		    log.Println("error creating file: %v", err)
+		}
+		if err := f.Sync(); err != nil {
+		    log.Println("error Sync file: %v", err)
+		}
+
+		Pelatihan.Files[i].Files = "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
+		
+		// go to begginng of file
+		// f.Seek(0, 0)
+		// output file contents
+		// io.Copy(os.Stdout, f)
+		
+		// delete file with interval time
+		// default interval = 12 Hours
+		go DeleteFile(path) // <- put to the channel and go routines/thread
+	}
+	
+
 	r := &models.Jn{Msg: Pelatihan}
 	defer con.Close()
-
-
 
 	return c.JSON(http.StatusOK, r)
 }
