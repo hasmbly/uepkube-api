@@ -394,7 +394,7 @@ func DownloadPelatihanFiles(c echo.Context) (err error) {
 
 		if PelatihanFile[i].Type == "PDF" {
 
-			tmpPath  = fmt.Sprintf("static/assets/pdf/%d_pelatihan.pdf", i)
+			tmpPath  = fmt.Sprintf("/root/go/src/uepkube-api/static/assets/pdf/%d_pelatihan.pdf", i)
 			urlPath  = "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
 			blobFile = PelatihanFile[i].Files
 
@@ -406,7 +406,7 @@ func DownloadPelatihanFiles(c echo.Context) (err error) {
 
 		} else if PelatihanFile[i].Type == "IMAGE" {
 
-			tmpPath	= fmt.Sprintf("static/assets/images/%d_pelatihan.png", i)
+			tmpPath	= fmt.Sprintf("/root/go/src/uepkube-api/static/assets/images/%d_pelatihan.png", i)
 			urlPath	= "http://" + c.Request().Host + "/images/" + strconv.Itoa(i) + "_pelatihan.png"
 			blobFile = PelatihanFile[i].Files
 
