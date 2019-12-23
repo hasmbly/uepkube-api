@@ -12,7 +12,7 @@ import (
 	 "log"
 	 "fmt"
 	 // "io"
-	 // "os"
+	 "os"
 
 	"bufio"
 	"encoding/base64"	
@@ -32,6 +32,7 @@ import (
 @Router /pelatihan [get]*/
 func GetPelatihan(c echo.Context) error {
 	id 		:= c.QueryParam("id")
+	goPath := os.Getenv("GOPATH")
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -60,7 +61,7 @@ func GetPelatihan(c echo.Context) error {
 
 	// docs pdf
 	for i, _ := range Pelatihan.Files {
-		tmpPath := fmt.Sprintf("static/assets/pdf/%d_pelatihan.pdf", i)
+		tmpPath := fmt.Sprintf(goPath + "/src/uepkube-api/static/assets/pdf/%d_pelatihan.pdf", i)
 		urlPath := "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
 		blobFile := Pelatihan.Files[i].Files
 
@@ -378,6 +379,8 @@ func DownloadPelatihanFiles(c echo.Context) (err error) {
 	id 		:= c.QueryParam("id")
 	
 	var tmpPath, urlPath, blobFile string
+	goPath := os.Getenv("GOPATH")
+	log.Println("gopath : ", goPath)
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -394,7 +397,7 @@ func DownloadPelatihanFiles(c echo.Context) (err error) {
 
 		if PelatihanFile[i].Type == "PDF" {
 
-			tmpPath  = fmt.Sprintf("/root/go/src/uepkube-api/static/assets/pdf/%d_pelatihan.pdf", i)
+			tmpPath  = fmt.Sprintf(goPath + "/src/uepkube-api/static/assets/pdf/%d_pelatihan.pdf", i)
 			urlPath  = "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
 			blobFile = PelatihanFile[i].Files
 
@@ -406,7 +409,7 @@ func DownloadPelatihanFiles(c echo.Context) (err error) {
 
 		} else if PelatihanFile[i].Type == "IMAGE" {
 
-			tmpPath	= fmt.Sprintf("/root/go/src/uepkube-api/static/assets/images/%d_pelatihan.png", i)
+			tmpPath	= fmt.Sprintf(goPath + "/src/uepkube-api/static/assets/images/%d_pelatihan.png", i)
 			urlPath	= "http://" + c.Request().Host + "/images/" + strconv.Itoa(i) + "_pelatihan.png"
 			blobFile = PelatihanFile[i].Files
 

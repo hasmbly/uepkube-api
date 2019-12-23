@@ -1267,3 +1267,161 @@ ____________________________________O/_______
                                     O\
 ⇨ http server started on [::]:9093
 {"time":"2019-12-23T09:36:07.830330986+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/download/files/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":203363011,"latency_human":"203.363011ms","bytes_in":0,"bytes_out":579}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-23T09:52:33.851195001+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/download/files/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":4549907,"latency_human":"4.549907ms","bytes_in":0,"bytes_out":579}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-23T09:53:11.494223984+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/download/files/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":4504737,"latency_human":"4.504737ms","bytes_in":0,"bytes_out":579}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-23T09:58:01.16629251+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/download/files/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":210237139,"latency_human":"210.237139ms","bytes_in":0,"bytes_out":579}
+2019-12-23T09:58:12+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T09:58:12.56038111+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/0_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":210912,"latency_human":"210.912µs","bytes_in":0,"bytes_out":85}
+2019-12-23T09:58:15+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T09:58:15.329743988+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":105199,"latency_human":"105.199µs","bytes_in":0,"bytes_out":85}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-23T09:59:43+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T09:59:43.115570625+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":171094,"latency_human":"171.094µs","bytes_in":0,"bytes_out":85}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-23T10:00:46.186852902+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/download/files/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":207968069,"latency_human":"207.968069ms","bytes_in":0,"bytes_out":579}
+2019-12-23T10:00:54+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:00:54.33711207+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":215169,"latency_human":"215.169µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:00:55+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:00:55.671839371+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":120420,"latency_human":"120.42µs","bytes_in":0,"bytes_out":83}
+2019-12-23T10:00:56+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:00:56.868719605+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":135919,"latency_human":"135.919µs","bytes_in":0,"bytes_out":85}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-23T10:01:28+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:01:28.224571801+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":277213,"latency_human":"277.213µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:01:29+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:01:29.380901007+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":145624,"latency_human":"145.624µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:01:29+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:01:29.903744935+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":144330,"latency_human":"144.33µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:01:30+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:01:30.288806461+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":102124,"latency_human":"102.124µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:01:30+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:01:30.5547232+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":115659,"latency_human":"115.659µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:01:30+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:01:30.72933341+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":120424,"latency_human":"120.424µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:01:30+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:01:30.892803222+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":122222,"latency_human":"122.222µs","bytes_in":0,"bytes_out":85}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-23T10:02:36+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:36.262160479+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":339797,"latency_human":"339.797µs","bytes_in":0,"bytes_out":85}
+{"time":"2019-12-23T10:02:39.131041182+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/download/files/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":220398008,"latency_human":"220.398008ms","bytes_in":0,"bytes_out":579}
+2019-12-23T10:02:41+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:41.03002151+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":135511,"latency_human":"135.511µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:02:41+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:41.626713423+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":119684,"latency_human":"119.684µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:02:42+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:42.083611771+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":133915,"latency_human":"133.915µs","bytes_in":0,"bytes_out":84}
+2019-12-23T10:02:42+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:42.432517372+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":130230,"latency_human":"130.23µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:02:42+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:42.663447814+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":167319,"latency_human":"167.319µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:02:42+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:42.839201966+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":152694,"latency_human":"152.694µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:02:42+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:42.983483011+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":143364,"latency_human":"143.364µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:02:43+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:43.13169033+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":131978,"latency_human":"131.978µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:02:43+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:43.311899062+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":136817,"latency_human":"136.817µs","bytes_in":0,"bytes_out":85}
+2019-12-23T10:02:43+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-23T10:02:43.503254045+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/1_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":152803,"latency_human":"152.803µs","bytes_in":0,"bytes_out":85}
+{"time":"2019-12-23T10:02:53.645647999+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/0_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":4395384,"latency_human":"4.395384ms","bytes_in":0,"bytes_out":15}
+{"time":"2019-12-23T10:03:05.884500936+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/3_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":670235,"latency_human":"670.235µs","bytes_in":0,"bytes_out":397830}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-23T10:03:26.075382151+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/3_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":80596,"latency_human":"80.596µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-23T10:03:26.760887952+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/3_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":102642,"latency_human":"102.642µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-23T10:03:27.123930279+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/3_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":81312,"latency_human":"81.312µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-23T10:03:29.592859847+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/download/files/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":201773254,"latency_human":"201.773254ms","bytes_in":0,"bytes_out":579}
+{"time":"2019-12-23T10:03:31.686506673+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/3_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":3560606,"latency_human":"3.560606ms","bytes_in":0,"bytes_out":477396}
+{"time":"2019-12-23T10:03:32.414394204+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/3_pelatihan.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":127767,"latency_human":"127.767µs","bytes_in":0,"bytes_out":0}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-23T10:03:59.416778423+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":121774463,"latency_human":"121.774463ms","bytes_in":0,"bytes_out":107121}
+{"time":"2019-12-23T10:04:13.767594872+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/1_pelatihan.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":3908734,"latency_human":"3.908734ms","bytes_in":0,"bytes_out":838779}
+{"time":"2019-12-23T10:04:16.933705949+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/0_pelatihan.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":280716,"latency_human":"280.716µs","bytes_in":0,"bytes_out":139796}
+{"time":"2019-12-23T10:04:19.812887141+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/0_pelatihan.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":87375,"latency_human":"87.375µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-23T10:04:20.760762804+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/0_pelatihan.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":82449,"latency_human":"82.449µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-23T10:04:21.576703001+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/0_pelatihan.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":71516,"latency_human":"71.516µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-23T10:04:44.796768868+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/1_pelatihan.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":89123,"latency_human":"89.123µs","bytes_in":0,"bytes_out":0}
