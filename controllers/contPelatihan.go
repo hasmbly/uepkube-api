@@ -12,7 +12,7 @@ import (
 	 "log"
 	 "fmt"
 	 // "io"
-	 "os"
+	 // "os"
 
 	"bufio"
 	"encoding/base64"	
