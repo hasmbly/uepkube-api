@@ -79,7 +79,10 @@ func Init() *echo.Echo {
 		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
 	}))
 
+	// for pdf
 	e.Static("/pdf", "static/assets/pdf")
+	// for pdf
+	e.Static("/images", "static/assets/images")
 
 	e.GET("/", Home)
 	e.GET("/bycrypt/:pass", BycriptPass)
@@ -129,6 +132,8 @@ func Init() *echo.Echo {
 	
 	// uploads files
 	a.POST("/upload/files/:key", controllers.UploadFiles)
+	// download files
+	a.GET("/download/files/:key", controllers.DownloadFiles)
 
 	return e
 }

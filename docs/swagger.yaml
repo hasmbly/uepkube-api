@@ -1099,6 +1099,51 @@ paths:
       summary: SignIn
       tags:
       - Auth-Controller
+  /download/files/{key}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Key (string) -> uep | kube | pendamping | verifikator | produk
+          | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev
+        in: path
+        name: key
+        required: true
+        type: string
+      - description: id (int)
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: UploadsFiles -> uep | kube | pendamping | verifikator | produk | pelatihan
+        | log_aktivitas | inventaris | lap_keu | kehadiran | monev
+      tags:
+      - DownloadFiles-Controller
   /lookup/address:
     get:
       consumes:

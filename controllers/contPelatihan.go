@@ -10,9 +10,9 @@ import (
 	 "strconv"
 	 "uepkube-api/helpers"
 	 "log"
-	 "os"
 	 "fmt"
 	 // "io"
+	 // "os"
 
 	"bufio"
 	"encoding/base64"	
@@ -53,48 +53,36 @@ func GetPelatihan(c echo.Context) error {
 			if Pelatihan.Photo[i].Files != "" {
 				Pelatihan.Photo[i].Files = "data:image/png;base64," + Pelatihan.Photo[i].Files
 			}
-
 		}
-	// Pelatihan.Photo = files
 	
 	// get Kehadiran Pelatihan
 	if err := con.Table("tbl_kehadiran t1").Select("t1.*, t2.nama").Joins("join tbl_user t2 on t2.id_user = t1.id_user").Where("t1.id_pelatihan = ?", Pelatihan.Id_pelatihan).Scan(&Pelatihan.Kehadiran).Error; err != nil { return echo.ErrInternalServerError }
 
 	// docs pdf
 	for i, _ := range Pelatihan.Files {
-		dec, err := base64.StdEncoding.DecodeString(Pelatihan.Files[i].Files)
-		if err != nil {
-		    log.Println("error decoding: %v", err)
+		tmpPath := fmt.Sprintf("static/assets/pdf/%d_pelatihan.pdf", i)
+		urlPath := "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
+		blobFile := Pelatihan.Files[i].Files
+
+		if check := CreateFile(tmpPath, blobFile); check == false {
+			log.Println("blob is empty : ", check)
 		}
 
-		// open | create
-		path := fmt.Sprintf("static/assets/pdf/%d_pelatihan.pdf", i)
-		f, err := os.OpenFile(path, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
-		if err != nil {
-		    log.Println("error opening file: %v", err)
-		}
-		defer f.Close()
-
-		// write
-		if _, err := f.Write(dec); err != nil {
-		    log.Println("error creating file: %v", err)
-		}
-		if err := f.Sync(); err != nil {
-		    log.Println("error Sync file: %v", err)
-		}
-
-		Pelatihan.Files[i].Files = "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
-		
-		// go to begginng of file
-		// f.Seek(0, 0)
-		// output file contents
-		// io.Copy(os.Stdout, f)
-		
-		// delete file with interval time
-		// default interval = 12 Hours
-		go DeleteFile(path) // <- put to the channel and go routines/thread
+		Pelatihan.Files[i].Files = urlPath
 	}
 	
+	// photos
+	// for i, _ := range Pelatihan.Files {
+	// 	tmpPath := fmt.Sprintf("static/assets/pdf/%d_pelatihan.pdf", i)
+	// 	urlPath := "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
+	// 	blobFile := Pelatihan.Files[i].Files
+
+	// 	if check := CreateFile(tmpPath, blobFile); check == false {
+	// 		log.Println("blob is empty : ", check)
+	// 	}
+
+	// 	Pelatihan.Files[i].Files = urlPath
+	// }	
 
 	r := &models.Jn{Msg: Pelatihan}
 	defer con.Close()
@@ -384,4 +372,55 @@ func UploadPelatihanFiles(c echo.Context) (err error) {
 	r := &models.Jn{Msg: "Success Upload files"}	
 	return c.JSON(http.StatusOK, r)	
 	
+}
+
+func DownloadPelatihanFiles(c echo.Context) (err error) {
+	id 		:= c.QueryParam("id")
+	
+	var tmpPath, urlPath, blobFile string
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	// get pdf blob
+	PelatihanFile := []models.Tbl_pelatihan_files{}
+	q := con
+	q = q.Table("tbl_pelatihan_files")
+	q = q.Where("id_pelatihan = ?", id)
+	q = q.Find(&PelatihanFile)
+	
+	for i, _ := range PelatihanFile {
+
+		if PelatihanFile[i].Type == "PDF" {
+
+			tmpPath  = fmt.Sprintf("static/assets/pdf/%d_pelatihan.pdf", i)
+			urlPath  = "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
+			blobFile = PelatihanFile[i].Files
+
+			if check := CreateFile(tmpPath, blobFile); check == false {
+				log.Println("blob is empty : ", check)
+			}
+
+			PelatihanFile[i].Files = urlPath
+
+		} else if PelatihanFile[i].Type == "IMAGE" {
+
+			tmpPath	= fmt.Sprintf("static/assets/images/%d_pelatihan.png", i)
+			urlPath	= "http://" + c.Request().Host + "/images/" + strconv.Itoa(i) + "_pelatihan.png"
+			blobFile = PelatihanFile[i].Files
+
+			if check := CreateFile(tmpPath, blobFile); check == false {
+				log.Println("blob is empty : ", check)
+			}
+		
+			PelatihanFile[i].Files = urlPath
+		}
+	}
+
+	defer con.Close()
+
+	r := &models.Jn{Msg: PelatihanFile}	
+	return c.JSON(http.StatusOK, r)
+	// return nil			
 }
