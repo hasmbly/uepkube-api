@@ -879,8 +879,7 @@
                         "type": "string",
                         "description": "Uploads Files",
                         "name": "description",
-                        "in": "formData",
-                        "required": true
+                        "in": "formData"
                     },
                     {
                         "type": "string",
@@ -1487,6 +1486,9 @@
                 "ig": {
                     "type": "string"
                 },
+                "is_eligible": {
+                    "type": "boolean"
+                },
                 "jenis_kelamin": {
                     "type": "string",
                     "enum": [
@@ -1721,6 +1723,9 @@
                 },
                 "ig": {
                     "type": "string"
+                },
+                "is_eligible": {
+                    "type": "boolean"
                 },
                 "jenis_kelamin": {
                     "type": "string",
@@ -2263,6 +2268,9 @@
                 "ig": {
                     "type": "string"
                 },
+                "is_eligible": {
+                    "type": "boolean"
+                },
                 "jenis_kelamin": {
                     "type": "string",
                     "enum": [
@@ -2355,6 +2363,9 @@
                 },
                 "ig": {
                     "type": "string"
+                },
+                "is_eligible": {
+                    "type": "boolean"
                 },
                 "jenis_kelamin": {
                     "type": "string",

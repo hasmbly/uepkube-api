@@ -32,7 +32,11 @@ import (
 @Router /pelatihan [get]*/
 func GetPelatihan(c echo.Context) error {
 	id 		:= c.QueryParam("id")
-	goPath := "/root/go"
+	// helpers.GoPath := os.Getenv("GOPATH")
+
+	var tmpPath, urlPath, blobFile,flag,host string
+	flag = "PELATIHAN"
+	host = c.Request().Host	
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -61,9 +65,11 @@ func GetPelatihan(c echo.Context) error {
 
 	// docs pdf
 	for i, _ := range Pelatihan.Files {
-		tmpPath := fmt.Sprintf(goPath + "/src/uepkube-api/static/assets/pdf/%d_pelatihan.pdf", i)
-		urlPath := "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
-		blobFile := Pelatihan.Files[i].Files
+		id_pdf := Pelatihan.Files[i].Id
+		
+		tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/pdf/%s_id_%s_pdf_id_%d.pdf", flag,id,id_pdf)
+		urlPath	= fmt.Sprintf("http://%s/pdf/%s_id_%s_pdf_id_%d.pdf", host,flag,id,id_pdf)
+		blobFile = Pelatihan.Files[i].Files
 
 		if check := CreateFile(tmpPath, blobFile); check == false {
 			log.Println("blob is empty : ", check)
@@ -378,9 +384,9 @@ func UploadPelatihanFiles(c echo.Context) (err error) {
 func DownloadPelatihanFiles(c echo.Context) (err error) {
 	id 		:= c.QueryParam("id")
 	
-	var tmpPath, urlPath, blobFile string
-	goPath := "/root/go"
-	log.Println("gopath : ", goPath)
+	var tmpPath, urlPath, blobFile,flag,host string
+	flag = "PELATIHAN"
+	host = c.Request().Host
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -397,8 +403,10 @@ func DownloadPelatihanFiles(c echo.Context) (err error) {
 
 		if PelatihanFile[i].Type == "PDF" {
 
-			tmpPath  = fmt.Sprintf(goPath + "/src/uepkube-api/static/assets/pdf/%d_pelatihan.pdf", i)
-			urlPath  = "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
+			id_pdf := PelatihanFile[i].Id
+			
+			tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/pdf/%s_id_%s_pdf_id_%d.pdf", flag,id,id_pdf)
+			urlPath	= fmt.Sprintf("http://%s/pdf/%s_id_%s_pdf_id_%d.pdf", host,flag,id,id_pdf)
 			blobFile = PelatihanFile[i].Files
 
 			if check := CreateFile(tmpPath, blobFile); check == false {
@@ -409,9 +417,12 @@ func DownloadPelatihanFiles(c echo.Context) (err error) {
 
 		} else if PelatihanFile[i].Type == "IMAGE" {
 
-			tmpPath	= fmt.Sprintf(goPath + "/src/uepkube-api/static/assets/images/%d_pelatihan.png", i)
-			urlPath	= "http://" + c.Request().Host + "/images/" + strconv.Itoa(i) + "_pelatihan.png"
+			id_photo := PelatihanFile[i].Id
+			
+			tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%s_photo_id_%d.png", flag,id,id_photo)
+			urlPath	= fmt.Sprintf("http://%s/images/%s_id_%s_photo_id_%d.png", host,flag,id,id_photo)
 			blobFile = PelatihanFile[i].Files
+
 
 			if check := CreateFile(tmpPath, blobFile); check == false {
 				log.Println("blob is empty : ", check)

@@ -41,6 +41,16 @@ Tbl_user struct {
 	Kecamatan 	*Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kecamatan;association_foreignkey:id_kecamatan"`
 	Kabupaten 	*Tbl_kabupaten `json:"kabupaten" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
 	Flag 			string 		`json:"flag" gorm:"-"`
+	Is_eligible 	bool 		`json:"is_eligible" gorm:"-"`
+}
+
+Tbl_user_files struct{
+	Id				int 		`json:"id" gorm:"primary_key"`
+	Id_user			int 		`json:"id_user"`
+	Files			string 		`json:"files"`	
+	Description		string 		`json:"description"`	
+	Type			string 		`json:"type" enums:"PDF, IMAGE"`
+	Is_display		int 		`json:"is_display"`	
 }
 
 Tbl_kelurahan struct{
@@ -317,6 +327,15 @@ Tbl_lapkeu_uepkube struct{
 	Updated_by		*string	 	`json:"updated_by"` 
 }
 
+Tbl_lapkeu_files struct{
+	Id				int 		`json:"id" gorm:"primary_key"`
+	Id_lapkeu		int 		`json:"id_lapkeu"`
+	Files			string 		`json:"files"`	
+	Description		string 		`json:"description"`	
+	Type			string 		`json:"type" enums:"PDF, IMAGE"`
+	Is_display		int 		`json:"is_display"`	
+}
+
 // dimensi uepkube
 Tbl_dimensi_uepkube struct{
 	Id_dimensi 		int 		`json:"id_dimensi" gorm:"primary_key"`
@@ -406,6 +425,16 @@ Tbl_inventory struct{
 	Updated_by			*string	 	`json:"updated_by"`
 }
 
+Tbl_inventory_files struct{
+	Id				int 		`json:"id" gorm:"primary_key"`
+	Id_inventory	int 		`json:"id_inventory"`
+	Files			string 		`json:"files"`	
+	Description		string 		`json:"description"`	
+	Type			string 		`json:"type" enums:"PDF, IMAGE"`
+	Is_display		int 		`json:"is_display"`	
+}
+
+
 Tbl_monev_category struct{
 	Id 				int	 		`json:"id" gorm:"primary_key"`
 	Rank			string 		`json:"rank" enums:"A, B, C"`
@@ -420,12 +449,13 @@ Tbl_monev_uepkube struct{
 	Id_category 		int			`json:"id_category" sql:"default:null"`
 	Category 			*Tbl_monev_category `json:"category" gorm:"foreignkey:id_category;association_foreignkey:id"`
 	Id_pendamping 		int			`json:"id_pendamping"`
+	Pendamping 			*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Is_monev			string 		`json:"is_monev" enums:"SUDAH, BELUM"`
 	Id_periods 			int			`json:"id_periods"`
 	Data_monev			[]*Data_monev `json:"data_monev"`
 	Created_at			*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at			*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
-	// Detail_info 		interface{} `json:"detail_info`
+	Detail 				interface{} `json:"detail`
 }
 
 Tbl_monev_result_uepkube struct{
@@ -698,14 +728,14 @@ UsahaUep struct {
 	Id_usaha   	  int 	 `json:"id_usaha"`
 	Nama_usaha    string `json:"nama_usaha"`
 	Jenis_usaha   string `json:"jenis_usaha"`
-	Photo 		 []Tbl_uepkube_photo `json:"photo"`
+	Photo 		 []Tbl_uepkube_files `json:"photo"`
 }
 
 UsahaKube struct {
 	Id_usaha   	  int 	 `json:"id_usaha"`
 	Nama_usaha    string `json:"nama_usaha"`
 	Jenis_usaha   string `json:"jenis_usaha"`
-	Photo 		 []Tbl_uepkube_photo `json:"photo"`
+	Photo 		 []Tbl_uepkube_files `json:"photo"`
 }
 
 CustomPendamping struct {
@@ -772,7 +802,7 @@ PaginateUep struct{
 	Alamat			string 	`json:"alamat"`
 	Status 		 	int 	`json:"status"`
 	Created_at 		string 	`json:"created_at"`
-	Pendamping 		CustomPendamping 	`json:"pendamping"`
+	Pendamping 		CustomPendamping	`json:"pendamping"`
 	Usaha 			UsahaUep 		`json:"jenis_usaha"`
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history"`
 }
@@ -789,7 +819,7 @@ PaginateProduks struct{
 }
 
 PaginatePendamping struct{
-	Id_pendamping      	int 		`json:"id"`	
+	Id_pendamping      	int 		`json:"id"`
 	Nama				string 		`json:"nama"`
 	Nik					string 		`json:"nik"`
 	Username			string 		`json:"username"`
@@ -815,7 +845,7 @@ PaginatePelatihan struct{
 	End 				string 		`json:"end"`
 	Peruntukan 			string 		`json:"peruntukan"`
 	Deskripsi 			string 		`json:"deskripsi"`
-	Photo 				[]Tbl_pelatihan_files 		`json:"photo"`
+	Files 				[]Tbl_pelatihan_files 		`json:"photo"`
 	Created_by   		*string 	`json:"created_by"`
 }
 

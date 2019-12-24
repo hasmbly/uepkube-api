@@ -10,6 +10,10 @@ import (
 	"uepkube-api/helpers"
 	"strconv"
 	// "fmt"
+	"log"
+	"bufio"
+	"encoding/base64"	
+	"io/ioutil"	
 )
 
 func GetLapKeu(c echo.Context) error {
@@ -112,4 +116,66 @@ func DeleteLapKeu(c echo.Context) (err error) {
 
 	r := &models.Jn{Msg: "Success Delete Data"	}
 	return c.JSON(http.StatusOK, r)	
+}
+
+func UploadLapKeuFiles(c echo.Context) (err error) {
+	// query
+	id, _ 			:= strconv.Atoi(c.QueryParam("id"))
+	is_display, _ 	:= strconv.Atoi(c.QueryParam("is_display"))
+
+	// formValue
+	description := c.FormValue("description")
+	types 		:= c.FormValue("type")
+
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
+
+	// Multipart form
+	form, err := c.MultipartForm()
+	if err != nil {
+		return err
+	}
+
+	files := form.File["files"]
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	log.Println("files : ", len(files))
+
+	for _,f := range files {
+
+		src, err := f.Open()
+		if err != nil {
+			return err
+		}
+		defer src.Close()	
+
+	    // Read entire JPG into byte slice.
+	    reader := bufio.NewReader(src)
+	    content, _ := ioutil.ReadAll(reader)
+
+	    // Encode as base64.
+	    encoded := base64.StdEncoding.EncodeToString(content)
+		
+		// execute
+		LapKeuFiles := &models.Tbl_lapkeu_files{}
+
+		LapKeuFiles.Id_lapkeu = id
+		LapKeuFiles.Files   = encoded
+		LapKeuFiles.Description = description
+		LapKeuFiles.Type = types
+		LapKeuFiles.Is_display = is_display
+
+		if err := con.Create(&LapKeuFiles).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+	}
+
+	defer con.Close()
+
+	log.Println("Uploads Lapkeu's file to id : ", id)
+	r := &models.Jn{Msg: "Success Upload files"}	
+	return c.JSON(http.StatusOK, r)	
+	
 }

@@ -9,7 +9,7 @@ import (
 	"uepkube-api/db"
 	"github.com/fatih/structs"
 	"fmt"
-	// "log"
+	"log"
 	"strconv"
 	// "github.com/ulule/paging"
 	"math"
@@ -97,6 +97,9 @@ func SetMemberNameKube(s *models.ShowKube, Kube models.Tbl_kube) error {
 }
 
 func PaginateKube(c echo.Context, r *models.ResPagin) (err error) {
+	flag = "KUBE"
+	host = c.Request().Host		
+
 	u := &models.PosPagin{}
 	num := 1
 
@@ -204,8 +207,7 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 	if len(kubes) != 0 {
 		for i,_ := range kubes {
 			var kube_usaha models.UsahaKube
- 			// var id_produk []int
-			var photos []models.Tbl_uepkube_photo
+			photos := []models.Tbl_uepkube_files{}
 
 			// log.Println("id_kube : ", kubes[i].Id_kube)
 			
@@ -217,13 +219,29 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 
 			if kube_usaha.Id_usaha != 0 { kubes[i].Usaha = kube_usaha }
 
-			con.Table("tbl_uepkube_photo").Where("id_kube = ?", kubes[i].Id_kube).Find(&photos)
+			con.Table("tbl_uepkube_files").Where("id_kube = ?", kubes[i].Id_kube).Find(&photos)
 
+			// exec for files
+			id := kubes[i].Id_kube
 			for index,_ := range photos {
-				ImageBlob := photos[index].Photo
-				photos[index].Photo = "data:image/png;base64," + ImageBlob			
-				kubes[i].Usaha.Photo = photos
-			}
+
+				if photos[index].Type == "IMAGE" {
+
+					id_photo := photos[index].Id
+					
+					tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+					urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+					blobFile = photos[index].Files
+
+					if check := CreateFile(tmpPath, blobFile); check == false {
+						log.Println("blob is empty : ", check)
+					}
+				
+					photos[index].Files = urlPath
+					kubes[i].Usaha.Photo = append(kubes[i].Usaha.Photo, photos[index])
+				}
+
+			}			
 			
 		}
 	}

@@ -43,6 +43,10 @@ type Tbl_user struct {
 func GetUep(c echo.Context) error {
 	id 		:= c.QueryParam("id")
 
+	var tmpPath, urlPath, blobFile, flag, host string
+	flag = "UEP"
+	host = c.Request().Host
+
 	/*prepare DB*/
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -70,13 +74,19 @@ func GetUep(c echo.Context) error {
 	})
 	q = q.First(&User, id)
 
-	for i,_ := range User.Photo {
-			ImageBlob := User.Photo[i].Files
-			User.Photo[i].Files = "data:image/png;base64," + ImageBlob	
-		}
+	for i, _ := range User.Photo {
+			id_photo := User.Photo[i].Id
 
-	//get all transac credit_debit
-	// con.Table("tbl_credit_debit").Select("*").Where("id_uep = ?", id).Scan(&User.BantuanPeriods.CreditDebit)
+			tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%s_photo_id_%d.png", flag,id,id_photo)
+			urlPath	= fmt.Sprintf("http://%s/images/%s_id_%s_photo_id_%d.png", host,flag,id,id_photo)
+			blobFile = User.Photo[i].Files
+
+			if check := CreateFile(tmpPath, blobFile); check == false {
+				log.Println("blob is empty : ", check)
+			}
+		
+			User.Photo[i].Files = urlPath
+	}
 
 	r := &models.Jn{Msg: User}
 	defer con.Close()

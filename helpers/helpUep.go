@@ -7,12 +7,17 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	// "log"
+	"log"
 	"math"	
 	"fmt"
 )
 
+// var tmpPath, urlPath, blobFile,flag,host string
+
 func PaginateUep(c echo.Context, r *models.ResPagin) (err error) {
+	flag = "UEP"
+	host = c.Request().Host	
+
 	u := &models.PosPagin{}
 	num := 1
 
@@ -120,7 +125,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	if len(Ueps) != 0 {
 		for i,_ := range Ueps {
 			var uep_usaha models.UsahaUep
-			var photos []models.Tbl_uepkube_photo
+			photos := []models.Tbl_uepkube_files{}
 
 			q := con.Table("tbl_uep t1")
 			q = q.Select("t1.id_uep, t1.nama_usaha, t2.id_usaha, t2.jenis_usaha")
@@ -130,13 +135,29 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 
 			if uep_usaha.Id_usaha != 0 { Ueps[i].Usaha = uep_usaha }
 
-			// get usaha_photo
-			con.Table("tbl_uepkube_photo").Where("id_uep = ?", Ueps[i].Id_uep).Find(&photos)
+			// get usaha_files
+			con.Table("tbl_uepkube_files").Where("id_uep = ?", Ueps[i].Id_uep).Find(&photos)
 
+			// exec for files
+			id := Ueps[i].Id_uep
 			for index,_ := range photos {
-				ImageBlob := photos[index].Photo
-				photos[index].Photo = "data:image/png;base64," + ImageBlob			
-				Ueps[i].Usaha.Photo = photos
+
+				if photos[index].Type == "IMAGE" {
+
+					id_photo := photos[index].Id
+					
+					tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+					urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+					blobFile = photos[index].Files
+
+					if check := CreateFile(tmpPath, blobFile); check == false {
+						log.Println("blob is empty : ", check)
+					}
+				
+					photos[index].Files = urlPath
+					Ueps[i].Usaha.Photo = append(Ueps[i].Usaha.Photo, photos[index])
+				}
+
 			}
 			
 		}

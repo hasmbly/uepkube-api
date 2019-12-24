@@ -3,16 +3,29 @@ package helpers
 import (
 	// "net/http"
 	"github.com/labstack/echo"
-	// "github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	// "log"
+	"log"
 	"math"	
 	"fmt"
 )
 
+type Tbl_pendamping struct {
+	*models.Tbl_pendamping
+	Nama string `json:"nama"`
+}
+
+type Tbl_user struct {
+	*models.Tbl_user
+	*models.Tbl_uep
+}
+
 func PaginateMonev(c echo.Context, r *models.ResPagin) (err error) {
+	flag = "UEP"
+	host = c.Request().Host
+
 	u := &models.PosPagin{}
 	num := 1
 
@@ -75,6 +88,7 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
 	q = q.Preload("Category")
+	q = q.Preload("Pendamping")
 	// q = q.Select("t1.id_pelatihan, t1.judul_pelatihan, t1.lokasi_pelatihan, t1.peruntukan, t1.start, t1.instruktur, t1.end, t1.deskripsi")
 
 	for i,_ := range f.Filters {
@@ -99,6 +113,93 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 	q = q.Find(&Monevs)
 	q = q.Limit(-1)
 	q = q.Offset(-1)
+
+	//getDetail
+	if len(Monevs) != 0 {
+
+		for i, _ := range Monevs {
+
+			if Monevs[i].Id_uep != 0 {
+				id := Monevs[i].Id_uep
+				
+				User 	:= Tbl_user{}
+				q := con
+				q = q.Model(&User)
+				q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
+				q = q.Select("tbl_uep.*, tbl_user.*")
+				q = q.Preload("JenisUsaha")
+				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_uep = ?", id).Preload("JenisUsaha")
+				})
+				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
+				q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_uep = ?", id)
+				})
+				q = q.Preload("Pendamping")
+				q = q.Preload("Kelurahan")
+				q = q.Preload("Kecamatan")
+				q = q.Preload("Kabupaten")
+				q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_uep = ?", id)	
+				})
+				q = q.First(&User, id)
+
+				for index, _ := range User.Photo {
+						id_photo := User.Photo[index].Id
+
+						tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+						urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+						blobFile = User.Photo[index].Files
+
+						if check := CreateFile(tmpPath, blobFile); check == false {
+							log.Println("blob is empty : ", check)
+						}
+					
+						User.Photo[index].Files = urlPath
+				}
+
+				Monevs[i].Detail = User
+
+			} else if Monevs[i].Id_kube != 0 {
+
+				id := Monevs[i].Id_kube
+				
+				Kube 	:= models.Tbl_kube{}
+				q := con
+				q = q.Model(&Kube)
+				q = q.Preload("JenisUsaha")
+				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_kube = ?", id).Preload("JenisUsaha")
+				})
+				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
+				q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_kube = ?", id)
+				})
+				q = q.Preload("Pendamping")
+				q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_kube = ?", id)	
+				})
+				q = q.First(&Kube, id)
+
+				for index, _ := range Kube.Photo {
+						id_photo := Kube.Photo[index].Id
+
+						tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+						urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+						blobFile = Kube.Photo[index].Files
+
+						if check := CreateFile(tmpPath, blobFile); check == false {
+							log.Println("blob is empty : ", check)
+						}
+					
+						Kube.Photo[index].Files = urlPath
+				}
+
+				Monevs[i].Detail = Kube
+
+			}
+		}
+	}
 
 	// get photos
 	// if len(Monevs) != 0 {

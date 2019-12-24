@@ -38,6 +38,10 @@ func GetKube(c echo.Context) error {
 	ShowKubes := models.ShowKube{}
 	var tempo []interface{}
 	
+	var tmpPath, urlPath, blobFile, flag, host string
+	flag = "KUBE"
+	host = c.Request().Host
+
 	r := &models.Jn{}
 
 	/*check if query key -> "val"*/
@@ -93,10 +97,19 @@ func GetKube(c echo.Context) error {
 			}
 
 			// rename photo
-			for i,_ := range Kube.Photo {
-					ImageBlob := Kube.Photo[i].Files
-					Kube.Photo[i].Files = "data:image/png;base64," + ImageBlob	
-				}			
+			for i, _ := range Kube.Photo {
+					id_photo := Kube.Photo[i].Id
+
+					tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+					urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+					blobFile = Kube.Photo[i].Files
+
+					if check := CreateFile(tmpPath, blobFile); check == false {
+						log.Println("blob is empty : ", check)
+					}
+				
+					Kube.Photo[i].Files = urlPath
+			}
 
 			r.Msg = Kube
 		}

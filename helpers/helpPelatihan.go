@@ -7,12 +7,22 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	// "log"
+	"log"
 	"math"	
 	"fmt"
+	// "os"
+
+	// "bufio"
+	// "encoding/base64"	
+	// "io/ioutil"	
 )
 
+var tmpPath, urlPath, blobFile,flag,host string
+
 func PaginatePelatihan(c echo.Context, r *models.ResPagin) (err error) {
+	flag = "PELATIHAN"
+	host = c.Request().Host
+
 	u := &models.PosPagin{}
 	num := 1
 
@@ -94,7 +104,7 @@ func ExecPaginatePelatihan(f *models.PosPagin, offset int, count *int64) (ur []m
 			}
 		}
 	}
-	q = q.Order(fmt.Sprintf("t1.%s %s",f.SortField,f.SortOrder))	
+	q = q.Order(fmt.Sprintf("t1.%s %s",f.SortField,f.SortOrder))
 	
 	q = q.Scan(&Pelatihans)
 	q = q.Limit(-1)
@@ -103,16 +113,27 @@ func ExecPaginatePelatihan(f *models.PosPagin, offset int, count *int64) (ur []m
 	// get photos
 	if len(Pelatihans) != 0 {
 		for i,_ := range Pelatihans {
-			var pelatihan_photos []models.Tbl_pelatihan_files
+			id := Pelatihans[i].Id_pelatihan
+			var pelatihan_files []models.Tbl_pelatihan_files
 			// var account = models.Tbl_account{}
 
-			con.Table("tbl_pelatihan_files").Where("type = 'IMAGE' ").Where("id_pelatihan = ?", Pelatihans[i].Id_pelatihan).Select("tbl_pelatihan_files.*").Find(&pelatihan_photos)
+			con.Table("tbl_pelatihan_files").Where("type = 'IMAGE' ").Where("id_pelatihan = ?", Pelatihans[i].Id_pelatihan).Select("tbl_pelatihan_files.*").Find(&pelatihan_files)
 
-			for i,_ := range pelatihan_photos {
-				ImageBlob := pelatihan_photos[i].Files
-				pelatihan_photos[i].Files = "data:image/png;base64," + ImageBlob			
+			for i,_ := range pelatihan_files {
+				id_photo := pelatihan_files[i].Id
+
+				tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+				urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+				blobFile = pelatihan_files[i].Files
+
+				if check := CreateFile(tmpPath, blobFile); check == false {
+					log.Println("blob is empty : ", check)
+				}
+
+				pelatihan_files[i].Files = urlPath
 			}
-			Pelatihans[i].Photo = pelatihan_photos
+
+			Pelatihans[i].Files = pelatihan_files
 		}
 	}
 

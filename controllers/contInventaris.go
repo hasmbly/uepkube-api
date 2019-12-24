@@ -10,6 +10,11 @@ import (
 	"uepkube-api/helpers"
 	"strconv"
 	"fmt"
+	"log"
+
+	"bufio"
+	"encoding/base64"	
+	"io/ioutil"		
 )
 
 func GetInventaris(c echo.Context) error {
@@ -143,4 +148,66 @@ func DeleteInventaris(c echo.Context) (err error) {
 
 	r := &models.Jn{Msg: "Success Delete Data"	}
 	return c.JSON(http.StatusOK, r)	
+}
+
+func UploadInventarisFiles(c echo.Context) (err error) {
+	// query
+	id, _ 			:= strconv.Atoi(c.QueryParam("id"))
+	is_display, _ 	:= strconv.Atoi(c.QueryParam("is_display"))
+
+	// formValue
+	description := c.FormValue("description")
+	types 		:= c.FormValue("type")
+
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
+	}
+
+	// Multipart form
+	form, err := c.MultipartForm()
+	if err != nil {
+		return err
+	}
+
+	files := form.File["files"]
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	log.Println("files : ", len(files))
+
+	for _,f := range files {
+
+		src, err := f.Open()
+		if err != nil {
+			return err
+		}
+		defer src.Close()
+
+	    // Read entire JPG into byte slice.
+	    reader := bufio.NewReader(src)
+	    content, _ := ioutil.ReadAll(reader)
+
+	    // Encode as base64.
+	    encoded := base64.StdEncoding.EncodeToString(content)
+		
+		// execute
+		InventoryFiles := &models.Tbl_inventory_files{}
+
+		InventoryFiles.Id_inventory = id
+		InventoryFiles.Files   = encoded
+		InventoryFiles.Description = description
+		InventoryFiles.Type = types
+		InventoryFiles.Is_display = is_display
+
+		if err := con.Create(&InventoryFiles).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+	}
+
+	defer con.Close()
+
+	log.Println("Uploads Inventory's file to id : ", id)
+	r := &models.Jn{Msg: "Success Upload files"}	
+	return c.JSON(http.StatusOK, r)	
+	
 }

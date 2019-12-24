@@ -188,6 +188,8 @@ definitions:
         type: integer
       ig:
         type: string
+      is_eligible:
+        type: boolean
       jenis_kelamin:
         enum:
         - L
@@ -345,6 +347,8 @@ definitions:
         type: integer
       ig:
         type: string
+      is_eligible:
+        type: boolean
       jenis_kelamin:
         enum:
         - L
@@ -704,6 +708,8 @@ definitions:
         type: integer
       ig:
         type: string
+      is_eligible:
+        type: boolean
       jenis_kelamin:
         enum:
         - L
@@ -767,6 +773,8 @@ definitions:
         type: integer
       ig:
         type: string
+      is_eligible:
+        type: boolean
       jenis_kelamin:
         enum:
         - L
@@ -1574,7 +1582,6 @@ paths:
       - description: Uploads Files
         in: formData
         name: description
-        required: true
         type: string
       - description: 'enums : ''IMAGE'', ''PDF'' '
         in: formData

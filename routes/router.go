@@ -15,7 +15,7 @@ import (
 	_ "uepkube-api/docs"
 
 	"github.com/jinzhu/gorm"
-	"uepkube-api/db"	
+	"uepkube-api/db"
 
 	 // "image"
 	 // "image/png"
@@ -53,7 +53,6 @@ func GetPhoto(c echo.Context) error {
 			"alt='testing img' /><br />"
 		photos = append(photos, html)
 	}
-
 	return c.HTML(http.StatusOK, photos[0] + photos[1])
 }
 
@@ -69,7 +68,7 @@ func Init() *echo.Echo {
 	e := echo.New()
 
 	// GOPATH
-	goPath := "/root/go"
+	goPath := helpers.GoPath
 	log.Println("gopath : ", goPath)
 
 	// Middleware

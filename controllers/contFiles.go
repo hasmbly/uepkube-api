@@ -19,7 +19,7 @@ import (
 // @Param key path string true "Key (string) -> uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev"
 // @Param id query int true "id (int)"
 // @Param files formData file true "Uploads Files"
-// @Param description formData string true "Uploads Files"
+// @Param description formData string false "Uploads Files"
 // @Param type formData string true "enums : 'IMAGE', 'PDF' "
 // @Param is_display query int false "int (int) -> 0 | 1"
 // @Success 200 {object} models.Jn
@@ -49,10 +49,14 @@ func UploadFiles(c echo.Context) (err error) {
 			return UploadProdukFiles(c)
 		case "pelatihan":
 			return UploadPelatihanFiles(c)					
+		case "lap_keu":
+			return UploadLapKeuFiles(c)
+		case "inventaris":
+			return UploadInventarisFiles(c)
 		case "pendamping":
-			return UploadUepFiles(c)
+			return UploadPendampingFiles(c)
 		case "verifikator":
-			return UploadUepFiles(c)
+			return UploadVerifikatorFiles(c)
 		default:
 			return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 	}
@@ -84,6 +88,8 @@ func DownloadFiles(c echo.Context) (err error) {
 	}
 
 	switch key {
+		case "pelatihan":
+			return DownloadPelatihanFiles(c)					
 		// case "uep":
 		// 	return UploadUepFiles(c)
 		// case "kube":
@@ -92,12 +98,16 @@ func DownloadFiles(c echo.Context) (err error) {
 		// 	return UploadAktivitasFiles(c)			
 		// case "produk":
 		// 	return UploadProdukFiles(c)
-		case "pelatihan":
-			return DownloadPelatihanFiles(c)					
+		// case "pelatihan":
+		// 	return UploadPelatihanFiles(c)					
+		// case "lap_keu":
+		// 	return UploadLapKeuFiles(c)
+		// case "inventaris":
+		// 	return UploadInventarisFiles(c)
 		// case "pendamping":
-		// 	return UploadUepFiles(c)
+		// 	return UploadPendampingFiles(c)
 		// case "verifikator":
-		// 	return UploadUepFiles(c)
+		// 	return UploadVerifikatorFiles(c)
 		default:
 			return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")
 	}

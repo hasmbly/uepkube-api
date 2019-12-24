@@ -11,6 +11,7 @@ import (
 	 "uepkube-api/helpers"
 	 // "log"
 	 // "fmt"
+	 // "fmt"
 	 // "time"
 )
 
@@ -329,9 +330,11 @@ func GeAllUser(c echo.Context) (err error) {
 		
 		if len(id_uep) != 0 {
 			Users[i].Flag = "UEP"
-			continue
+			Users[i].Is_eligible = false
+			// continue
 		}
 
+		// log.Println("Flag : ", Users[i].Flag)
 		var id_kube_members []int
 		var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}		
 		for o, _ := range KubesMember {
@@ -341,9 +344,20 @@ func GeAllUser(c echo.Context) (err error) {
 			q2 = q2.Pluck(KubesMember[o], &id_kube_members)
 
 			if len(id_kube_members) != 0 {
-				Users[i].Flag = "KUBE"
-			}
+				if len(id_uep) != 0 {
+					Users[i].Flag = "UEPKUBE"
+					Users[i].Is_eligible = false
+					// continue
+				} else if len(id_uep) == 0 {
+					Users[i].Flag = "KUBE"
+					Users[i].Is_eligible = false
+				}
+			} 
 		}
+
+		if Users[i].Flag == "" {
+			Users[i].Is_eligible = true
+		}		
 	}
 
 	r := &models.Jn{Msg: Users}

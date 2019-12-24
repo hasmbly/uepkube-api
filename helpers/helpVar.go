@@ -3,6 +3,7 @@ package helpers
 import (
 	"uepkube-api/models"
 	"github.com/astaxie/beego/utils/pagination"
+	 "os"
 )
 
 var (
@@ -33,4 +34,6 @@ var (
 
 	// count
 	CountRows int64
+
+	GoPath string = os.Getenv("GOPATH")	
 )
