@@ -275,6 +275,7 @@ func AddKube(c echo.Context) (err error) {
 	monev.Id_pendamping = Kube.Id_pendamping
 	monev.Is_monev = "BELUM"
 	monev.Id_periods = Kube.Id_periods
+	monev.Flag = "KUBE"
 	if err := con.Create(&monev).Error; err != nil {return echo.ErrInternalServerError}
 
 	defer con.Close()

@@ -14,8 +14,8 @@ import (
 	"fmt"
 
 	"bufio"
-	"encoding/base64"	
-	"io/ioutil"		
+	"encoding/base64"
+	"io/ioutil"
 )
 
 type Tbl_pendamping struct {
@@ -51,7 +51,7 @@ func GetUep(c echo.Context) error {
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
-	
+
 	User 	:= Tbl_user{}
 	q := con
 	q = q.Model(&User)
@@ -70,7 +70,7 @@ func GetUep(c echo.Context) error {
 	q = q.Preload("Kecamatan")
 	q = q.Preload("Kabupaten")
 	q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
-		return q.Where("id_uep = ?", id)	
+		return q.Where("id_uep = ?", id)
 	})
 	q = q.First(&User, id)
 
@@ -214,6 +214,7 @@ func AddUep(c echo.Context) (err error) {
 	monev.Id_pendamping = Uep.Id_pendamping
 	monev.Is_monev = "BELUM"
 	monev.Id_periods = Uep.Id_periods
+	monev.Flag = "UEP"
 	if err := con.Create(&monev).Error; err != nil {return echo.ErrInternalServerError}
 
 	defer con.Close()

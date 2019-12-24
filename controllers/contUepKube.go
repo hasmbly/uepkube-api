@@ -317,6 +317,7 @@ func GeAllUser(c echo.Context) (err error) {
 	q = q.Preload("Kelurahan")
 	q = q.Preload("Kecamatan")
 	q = q.Preload("Kabupaten")
+	q = q.Preload("Region")
 	q = q.Where("nik like ?", "%"+nik+"%")
 	q = q.Find(&Users)
 	

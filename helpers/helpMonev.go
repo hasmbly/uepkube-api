@@ -85,10 +85,12 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 	q := con
 	// q = q.Table("tbl_pelatihan t1")
 	q = q.Model(&Monevs)
+	// q = q.Select("tbl_monev_uepkube.id_uep")
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
 	q = q.Preload("Category")
 	q = q.Preload("Pendamping")
+	q = q.Preload("Periods")
 	// q = q.Select("t1.id_pelatihan, t1.judul_pelatihan, t1.lokasi_pelatihan, t1.peruntukan, t1.start, t1.instruktur, t1.end, t1.deskripsi")
 
 	for i,_ := range f.Filters {
@@ -96,10 +98,28 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 		o := f.Filters[i].Operation
 		v := f.Filters[i].Value
 
+		// if k == "periods" { continue }
+
+		if k == "periods" {
+			if o == ":" {
+				var id_periods []int
+				 con.Table("tbl_bantuan_periods").Where("start_date like ?", "%"+v+"%").Pluck("id", &id_periods)
+				 if len(id_periods) != 0 {
+					q = q.Where("id_periods = ?", id_periods[0])
+				 } else {
+				 	continue
+				 }
+			} else {
+				continue
+			}
+		}		
+		
 		if o == "LIKE" || o == "like" {
+			if k == "periods" { continue }
 			if v == "" { continue }
 			q = q.Where(fmt.Sprintf("%s %s",k,o) + "?", "%"+v+"%")
 		} else if o == ":" {
+			if k == "periods" { continue }
 			if v == "" {
 				continue 
 			} else {	
@@ -140,7 +160,7 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 				q = q.Preload("Kecamatan")
 				q = q.Preload("Kabupaten")
 				q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
-					return q.Where("id_uep = ?", id)	
+					return q.Where("id_uep = ?", id)
 				})
 				q = q.First(&User, id)
 

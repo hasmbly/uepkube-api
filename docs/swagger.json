@@ -1529,6 +1529,10 @@
                 "posisi": {
                     "type": "string"
                 },
+                "region": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.View_address"
+                },
                 "tempat_lahir": {
                     "type": "string"
                 },
@@ -1778,6 +1782,10 @@
                     "items": {
                         "$ref": "#/definitions/models.Tbl_user_photo"
                     }
+                },
+                "region": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.View_address"
                 },
                 "roles_name": {
                     "type": "string"
@@ -2311,6 +2319,10 @@
                 "no_kk": {
                     "type": "string"
                 },
+                "region": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.View_address"
+                },
                 "status": {
                     "type": "integer"
                 },
@@ -2413,6 +2425,10 @@
                         "$ref": "#/definitions/models.Tbl_user_photo"
                     }
                 },
+                "region": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.View_address"
+                },
                 "roles_name": {
                     "type": "string"
                 },
@@ -2429,6 +2445,23 @@
                     "type": "string"
                 },
                 "wa": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.View_address": {
+            "type": "object",
+            "properties": {
+                "id_kabupaten": {
+                    "type": "integer"
+                },
+                "id_kecamatan": {
+                    "type": "integer"
+                },
+                "id_kelurahan": {
+                    "type": "string"
+                },
+                "region": {
                     "type": "string"
                 }
             }

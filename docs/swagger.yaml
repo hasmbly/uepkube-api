@@ -218,6 +218,9 @@ definitions:
         type: string
       posisi:
         type: string
+      region:
+        $ref: '#/definitions/models.View_address'
+        type: object
       tempat_lahir:
         type: string
       tgl_lahir:
@@ -385,6 +388,9 @@ definitions:
         items:
           $ref: '#/definitions/models.Tbl_user_photo'
         type: array
+      region:
+        $ref: '#/definitions/models.View_address'
+        type: object
       roles_name:
         type: string
       tempat_lahir:
@@ -738,6 +744,9 @@ definitions:
         type: string
       no_kk:
         type: string
+      region:
+        $ref: '#/definitions/models.View_address'
+        type: object
       status:
         type: integer
       tempat_lahir:
@@ -807,6 +816,9 @@ definitions:
         items:
           $ref: '#/definitions/models.Tbl_user_photo'
         type: array
+      region:
+        $ref: '#/definitions/models.View_address'
+        type: object
       roles_name:
         type: string
       tempat_lahir:
@@ -818,6 +830,17 @@ definitions:
       username:
         type: string
       wa:
+        type: string
+    type: object
+  models.View_address:
+    properties:
+      id_kabupaten:
+        type: integer
+      id_kecamatan:
+        type: integer
+      id_kelurahan:
+        type: string
+      region:
         type: string
     type: object
 host: 157.245.55.185:9093

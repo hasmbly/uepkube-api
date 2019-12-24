@@ -36,7 +36,8 @@ Tbl_user struct {
 	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
 	Created_by   	*string 	`json:"-"`
-	Updated_by		*string	 	`json:"-"` 	
+	Updated_by		*string	 	`json:"-"` 
+	Region 			*View_address `json:"region" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
 	Kelurahan 	*Tbl_kelurahan `json:"kelurahan" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
 	Kecamatan 	*Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kecamatan;association_foreignkey:id_kecamatan"`
 	Kabupaten 	*Tbl_kabupaten `json:"kabupaten" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
@@ -71,8 +72,8 @@ Tbl_kabupaten struct{
 Tbl_user_photo struct {
 	Id				int 		`json:"id" gorm:"primary_key"`
 	Id_user			int 		`json:"id_user"`
-	Photo			string 		`json:"photo"`	
-	Is_display		int 		`json:"is_display"`	
+	Photo			string 		`json:"photo"`
+	Is_display		int 		`json:"is_display"`
 }
 
 Tbl_usaha_uep_photo struct {
@@ -434,7 +435,6 @@ Tbl_inventory_files struct{
 	Is_display		int 		`json:"is_display"`	
 }
 
-
 Tbl_monev_category struct{
 	Id 				int	 		`json:"id" gorm:"primary_key"`
 	Rank			string 		`json:"rank" enums:"A, B, C"`
@@ -452,10 +452,12 @@ Tbl_monev_uepkube struct{
 	Pendamping 			*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Is_monev			string 		`json:"is_monev" enums:"SUDAH, BELUM"`
 	Id_periods 			int			`json:"id_periods"`
+	Periods 			*Tbl_bantuan_periods `json:"periods" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+	Flag				string 		`json:"-" enums:"UEP, KUBE"`
 	Data_monev			[]*Data_monev `json:"data_monev"`
 	Created_at			*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at			*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
-	Detail 				interface{} `json:"detail`
+	Detail 				interface{} `json:"detail"`
 }
 
 Tbl_monev_result_uepkube struct{
