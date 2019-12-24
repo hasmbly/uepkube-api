@@ -56,6 +56,41 @@ func GetPhoto(c echo.Context) error {
 	return c.HTML(http.StatusOK, photos[0] + photos[1])
 }
 
+// func Shoot() (err error) {
+// 	Uep := []models.Tbl_uep{}
+// 	Kube := []models.Tbl_kube{}
+
+// 	con, err := db.CreateCon()
+// 	if err != nil { return echo.ErrInternalServerError }
+// 	con.SingularTable(true)
+
+// 	// uep
+// 	con.Model(&Uep).Find(&Uep)
+// 	if len(Uep) != 0 {
+// 		for i, _ := range Uep {
+// 			// Monev
+// 			Periods := models.Tbl_periods_uepkube{}
+// 			Periods.Id_uep = Uep[i].Id_uep
+// 			Periods.Id_periods = 2
+// 			if err := con.Create(&Periods).Error; err != nil {return echo.ErrInternalServerError}	
+// 		}
+// 	}
+
+// 	// kube
+// 	con.Model(&Kube).Find(&Kube)
+// 	if len(Kube) != 0 {
+// 		for i, _ := range Kube {
+// 			// Monev
+// 			Periods := models.Tbl_periods_uepkube{}
+// 			Periods.Id_kube = Kube[i].Id_kube
+// 			Periods.Id_periods = 1
+// 			if err := con.Create(&Periods).Error; err != nil {return echo.ErrInternalServerError}	
+// 		}
+// 	}	
+// 	defer con.Close()
+// 	return err
+// }
+
 // Middleware Custom Claims JWT
 var config = middleware.JWTConfig{
 	Claims:     &models.Claims{},

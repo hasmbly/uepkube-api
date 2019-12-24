@@ -18,7 +18,7 @@ import (
 )
 
 func GetInventaris(c echo.Context) error {
-	id 		:= c.QueryParam("id")
+	id := c.QueryParam("id")
 
 
 	var tmpPath, urlPath, blobFile, flag, host string
@@ -33,7 +33,7 @@ func GetInventaris(c echo.Context) error {
 	q := con
 	q = q.Model(&Inventory)
 	q = q.Preload("Photo")
-	q = q.Preload("Pendamping")	
+	q = q.Preload("Pendamping")
 	q = q.First(&Inventory, id)
 
 	// photo

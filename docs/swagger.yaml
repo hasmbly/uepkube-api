@@ -298,7 +298,9 @@ definitions:
         type: string
       deskripsi:
         type: string
-      end:
+      end_date:
+        type: string
+      end_time:
         type: string
       files:
         items:
@@ -328,7 +330,9 @@ definitions:
         type: array
       quota:
         type: integer
-      start:
+      start_date:
+        type: string
+      start_time:
         type: string
       status:
         type: integer

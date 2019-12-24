@@ -208,7 +208,6 @@ func UpdateProduk(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-
 	// update user
 	usaha_produk := &models.Tbl_usaha_produk{}
 	usaha_produk = produk.Tbl_usaha_produk

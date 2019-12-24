@@ -146,7 +146,7 @@ func AddItems(c echo.Context) (err error) {
 		return AddProduk(c)
 	case "pelatihan":
 		return AddPelatihan(c)
-	case "kehadiran | monev":
+	case "kehadiran":
 		return AddPelatihanKehadiran(c)		
 	case "log_aktivitas":
 		return AddAktivitas(c)

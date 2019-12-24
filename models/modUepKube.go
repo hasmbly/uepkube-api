@@ -224,8 +224,10 @@ Tbl_pelatihan struct{
 	Instruktur 			string 		`json:"instruktur"`
 	Lokasi_pelatihan 	string 		`json:"lokasi_pelatihan"`
 	Deskripsi 			string 		`json:"deskripsi"`
-	Start				string 		`json:"start"`
-	End					string 		`json:"end"`
+	Start_date			string 		`json:"start_date"`
+	End_date			string 		`json:"end_date"`
+	Start_time			string 		`json:"start_time"`
+	End_time			string 		`json:"end_time"`	
 	Peruntukan			string 		`json:"peruntukan" enums:"UEP, KUBE, UEP-KUBE"`
 	Quota				int 		`json:"quota"`
 	Status				int 		`json:"status"`
@@ -605,7 +607,6 @@ Produk struct{
 
 Pelatihan struct{
 	*Tbl_pelatihan
-	Files 		 		[]Tbl_pelatihan_files 	`json:"files" gorm:"foreignkey:id_pelatihan"`
 }
 
 Activity struct{

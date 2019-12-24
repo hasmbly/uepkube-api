@@ -3466,3 +3466,234 @@ ____________________________________O/_______
                                     O\
 ⇨ http server started on [::]:9093
 {"time":"2019-12-24T18:32:07.839487165+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":617224225,"latency_human":"617.224225ms","bytes_in":7659,"bytes_out":55}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T18:42:14.388795706+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/users?nik=31","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":4493195971,"latency_human":"4.493195971s","bytes_in":0,"bytes_out":762996}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T19:26:13.351265487+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/inventaris?id=18","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":2531001,"latency_human":"2.531001ms","bytes_in":0,"bytes_out":347}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T19:27:25.787557335+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/inventaris?id=17","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":2363096,"latency_human":"2.363096ms","bytes_in":0,"bytes_out":350}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T19:42:08.601376647+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":236174656,"latency_human":"236.174656ms","bytes_in":81,"bytes_out":5747}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T20:43:09.594583924+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pelatihan","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":20298477,"latency_human":"20.298477ms","bytes_in":81,"bytes_out":231}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T20:43:33.317272521+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pelatihan","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":643154162,"latency_human":"643.154162ms","bytes_in":81,"bytes_out":3527}
+{"time":"2019-12-24T20:43:59.536158511+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/PELATIHAN_id_7_photo_id_5.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":54901852,"latency_human":"54.901852ms","bytes_in":0,"bytes_out":3}
+{"time":"2019-12-24T20:44:07.460146098+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/PELATIHAN_id_7_photo_id_4.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":410104,"latency_human":"410.104µs","bytes_in":0,"bytes_out":139796}
+{"time":"2019-12-24T20:44:18.859278178+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/PELATIHAN_id_7_photo_id_2.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":146824,"latency_human":"146.824µs","bytes_in":0,"bytes_out":3}
+{"time":"2019-12-24T20:44:26.661414072+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/PELATIHAN_id_7_photo_id_6.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":230625,"latency_human":"230.625µs","bytes_in":0,"bytes_out":79566}
+{"time":"2019-12-24T20:44:41.586694501+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/pelatihan?id=17","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":1633603,"latency_human":"1.633603ms","bytes_in":0,"bytes_out":293}
+{"time":"2019-12-24T20:44:50.946986704+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":113566108,"latency_human":"113.566108ms","bytes_in":0,"bytes_out":107201}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T20:48:14.004646497+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":234631299,"latency_human":"234.631299ms","bytes_in":0,"bytes_out":1164}
+{"time":"2019-12-24T20:48:34.167364976+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/PELATIHAN_id_7_photo_id_6.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":4076441,"latency_human":"4.076441ms","bytes_in":0,"bytes_out":159132}
+{"time":"2019-12-24T20:48:36.1992816+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/PELATIHAN_id_7_photo_id_6.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":304,"error":"","latency":87444,"latency_human":"87.444µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-24T20:48:50.576850361+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":178436807,"latency_human":"178.436807ms","bytes_in":0,"bytes_out":1164}
+{"time":"2019-12-24T20:48:58.503664006+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/pelatihan?id=7","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":197583088,"latency_human":"197.583088ms","bytes_in":0,"bytes_out":1164}
+{"time":"2019-12-24T20:49:02.253060897+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/PELATIHAN_id_7_photo_id_6.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":255488,"latency_human":"255.488µs","bytes_in":0,"bytes_out":159132}
+2019-12-24T20:49:13+07:00 ERROR code=404, message=Not Found, internal=<nil>
+{"time":"2019-12-24T20:49:13.967844617+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/PELATIHAN_id_7_pdf_id_4.pd","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":404,"error":"code=404, message=Not Found, internal=\u003cnil\u003e","latency":200324,"latency_human":"200.324µs","bytes_in":0,"bytes_out":84}
+{"time":"2019-12-24T20:49:21.318844824+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/pdf/PELATIHAN_id_7_pdf_id_4.pdf","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":64008111,"latency_human":"64.008111ms","bytes_in":0,"bytes_out":838776}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T20:54:02.978986267+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/pelatihan","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":91413056,"latency_human":"91.413056ms","bytes_in":368,"bytes_out":47}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-24T21:10:15.791144254+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/member_pelatihan?id_pendamping=501","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":4874291,"latency_human":"4.874291ms","bytes_in":0,"bytes_out":537}
+2019-12-24T21:14:01+07:00 ERROR code=400, message=Syntax error: offset=167, error=invalid character ']' looking for beginning of value, internal=invalid character ']' looking for beginning of value
+{"time":"2019-12-24T21:14:01.051679509+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/pelatihan","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Syntax error: offset=167, error=invalid character ']' looking for beginning of value, internal=invalid character ']' looking for beginning of value","latency":308636,"latency_human":"308.636µs","bytes_in":169,"bytes_out":159}
+2019-12-24T21:14:24+07:00 ERROR code=400, message=Syntax error: offset=111, error=invalid character '}' looking for beginning of object key string, internal=invalid character '}' looking for beginning of object key string
+{"time":"2019-12-24T21:14:24.263258166+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/pelatihan","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Syntax error: offset=111, error=invalid character '}' looking for beginning of object key string, internal=invalid character '}' looking for beginning of object key string","latency":294351,"latency_human":"294.351µs","bytes_in":169,"bytes_out":172}
+{"time":"2019-12-24T21:15:40.219690843+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/pelatihan","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":1893265,"latency_human":"1.893265ms","bytes_in":168,"bytes_out":47}
+2019-12-24T21:16:26+07:00 ERROR code=400, message=please, choose the right key, internal=<nil>
+{"time":"2019-12-24T21:16:26.394992502+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kehadiran","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=please, choose the right key, internal=\u003cnil\u003e","latency":293829,"latency_human":"293.829µs","bytes_in":168,"bytes_out":104}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-24T21:18:07+07:00 ERROR code=400, message=Maaf Kapasitas Kehadiran User melebihi Kuota pelatihan, internal=<nil>
+{"time":"2019-12-24T21:18:07.404958955+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kehadiran","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Maaf Kapasitas Kehadiran User melebihi Kuota pelatihan, internal=\u003cnil\u003e","latency":17572312,"latency_human":"17.572312ms","bytes_in":168,"bytes_out":130}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-24T21:21:14+07:00 ERROR code=400, message=Maaf Kapasitas Kehadiran User melebihi Kuota pelatihan, internal=<nil>
+{"time":"2019-12-24T21:21:14.855833539+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kehadiran","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Maaf Kapasitas Kehadiran User melebihi Kuota pelatihan, internal=\u003cnil\u003e","latency":2554535,"latency_human":"2.554535ms","bytes_in":168,"bytes_out":130}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-24T21:22:01+07:00 ERROR code=500, message=Internal Server Error, internal=<nil>
+{"time":"2019-12-24T21:22:01.217434009+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kehadiran","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"code=500, message=Internal Server Error, internal=\u003cnil\u003e","latency":86900711,"latency_human":"86.900711ms","bytes_in":168,"bytes_out":97}
+2019-12-24T21:27:40+07:00 ERROR code=500, message=Internal Server Error, internal=<nil>
+{"time":"2019-12-24T21:27:40.128677126+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kehadiran","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"code=500, message=Internal Server Error, internal=\u003cnil\u003e","latency":78864172,"latency_human":"78.864172ms","bytes_in":168,"bytes_out":97}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-24T21:29:23+07:00 ERROR code=500, message=Internal Server Error, internal=<nil>
+{"time":"2019-12-24T21:29:23.946559928+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kehadiran","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"code=500, message=Internal Server Error, internal=\u003cnil\u003e","latency":93156831,"latency_human":"93.156831ms","bytes_in":168,"bytes_out":97}
+{"time":"2019-12-24T21:32:11.177230843+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kehadiran","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":337790187,"latency_human":"337.790187ms","bytes_in":168,"bytes_out":47}

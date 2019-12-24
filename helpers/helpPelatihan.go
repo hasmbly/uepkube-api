@@ -73,20 +73,21 @@ func PaginatePelatihan(c echo.Context, r *models.ResPagin) (err error) {
 	return err
 }
 
-func ExecPaginatePelatihan(f *models.PosPagin, offset int, count *int64) (ur []models.PaginatePelatihan, err error) {
+func ExecPaginatePelatihan(f *models.PosPagin, offset int, count *int64) (ur []models.Tbl_pelatihan, err error) {
 
 	// var Pelatihans []models.Tbl_pendamping
-	Pelatihans := []models.PaginatePelatihan{}
+	Pelatihans := []models.Tbl_pelatihan{}
 
 	con, err := db.CreateCon()
 	if err != nil { return ur, echo.ErrInternalServerError }
 	con.SingularTable(true)	
 
 	q := con
-	q = q.Table("tbl_pelatihan t1")
+	q = q.Model(&Pelatihans)
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Select("t1.id_pelatihan, t1.judul_pelatihan, t1.lokasi_pelatihan, t1.peruntukan, t1.start, t1.instruktur, t1.end, t1.deskripsi")
+	q = q.Preload("Files", "type = ?", "PDF")
+	q = q.Preload("Photo", "type = ?", "IMAGE")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -104,9 +105,9 @@ func ExecPaginatePelatihan(f *models.PosPagin, offset int, count *int64) (ur []m
 			}
 		}
 	}
-	q = q.Order(fmt.Sprintf("t1.%s %s",f.SortField,f.SortOrder))
+	q = q.Order(fmt.Sprintf("%s %s",f.SortField,f.SortOrder))
 	
-	q = q.Scan(&Pelatihans)
+	q = q.Find(&Pelatihans)
 	q = q.Limit(-1)
 	q = q.Offset(-1)
 
@@ -114,26 +115,36 @@ func ExecPaginatePelatihan(f *models.PosPagin, offset int, count *int64) (ur []m
 	if len(Pelatihans) != 0 {
 		for i,_ := range Pelatihans {
 			id := Pelatihans[i].Id_pelatihan
-			var pelatihan_files []models.Tbl_pelatihan_files
-			// var account = models.Tbl_account{}
 
-			con.Table("tbl_pelatihan_files").Where("type = 'IMAGE' ").Where("id_pelatihan = ?", Pelatihans[i].Id_pelatihan).Select("tbl_pelatihan_files.*").Find(&pelatihan_files)
-
-			for i,_ := range pelatihan_files {
-				id_photo := pelatihan_files[i].Id
+			// for Photo
+			for x,_ := range Pelatihans[i].Photo {
+				id_photo := Pelatihans[i].Photo[x].Id
 
 				tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
 				urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
-				blobFile = pelatihan_files[i].Files
+				blobFile = Pelatihans[i].Photo[x].Files
 
 				if check := CreateFile(tmpPath, blobFile); check == false {
 					log.Println("blob is empty : ", check)
 				}
 
-				pelatihan_files[i].Files = urlPath
+				Pelatihans[i].Photo[x].Files = urlPath
 			}
 
-			Pelatihans[i].Files = pelatihan_files
+			// for files pdf
+			for y,_ := range Pelatihans[i].Files {
+				id_pdf := Pelatihans[i].Files[y].Id
+
+				tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/pdf/%s_id_%d_pdf_id_%d.pdf", flag,id,id_pdf)
+				urlPath	= fmt.Sprintf("http://%s/pdf/%s_id_%d_pdf_id_%d.pdf", host,flag,id,id_pdf)
+				blobFile = Pelatihans[i].Files[y].Files
+
+				if check := CreateFile(tmpPath, blobFile); check == false {
+					log.Println("blob is empty : ", check)
+				}
+
+				Pelatihans[i].Files[y].Files = urlPath
+			}			
 		}
 	}
 

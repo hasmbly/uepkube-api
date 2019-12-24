@@ -53,12 +53,12 @@ func GetPelatihan(c echo.Context) error {
 	})	
 	q = q.First(&Pelatihan, id)
 
-	for i,_ := range Pelatihan.Photo {
+	// for i,_ := range Pelatihan.Photo {
 
-			if Pelatihan.Photo[i].Files != "" {
-				Pelatihan.Photo[i].Files = "data:image/png;base64," + Pelatihan.Photo[i].Files
-			}
-		}
+	// 		if Pelatihan.Photo[i].Files != "" {
+	// 			Pelatihan.Photo[i].Files = "data:image/png;base64," + Pelatihan.Photo[i].Files
+	// 		}
+	// 	}
 	
 	// get Kehadiran Pelatihan
 	if err := con.Table("tbl_kehadiran t1").Select("t1.*, t2.nama").Joins("join tbl_user t2 on t2.id_user = t1.id_user").Where("t1.id_pelatihan = ?", Pelatihan.Id_pelatihan).Scan(&Pelatihan.Kehadiran).Error; err != nil { return echo.ErrInternalServerError }
@@ -77,19 +77,20 @@ func GetPelatihan(c echo.Context) error {
 
 		Pelatihan.Files[i].Files = urlPath
 	}
-	
-	// photos
-	// for i, _ := range Pelatihan.Files {
-	// 	tmpPath := fmt.Sprintf("static/assets/pdf/%d_pelatihan.pdf", i)
-	// 	urlPath := "http://" + c.Request().Host + "/pdf/" + strconv.Itoa(i) + "_pelatihan.pdf"
-	// 	blobFile := Pelatihan.Files[i].Files
 
-	// 	if check := CreateFile(tmpPath, blobFile); check == false {
-	// 		log.Println("blob is empty : ", check)
-	// 	}
+	for i, _ := range Pelatihan.Photo {
+		id_photo := Pelatihan.Photo[i].Id
+		
+		tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%s_photo_id_%d.png", flag,id,id_photo)
+		urlPath	= fmt.Sprintf("http://%s/images/%s_id_%s_photo_id_%d.png", host,flag,id,id_photo)
+		blobFile = Pelatihan.Photo[i].Files
 
-	// 	Pelatihan.Files[i].Files = urlPath
-	// }	
+		if check := CreateFile(tmpPath, blobFile); check == false {
+			log.Println("blob is empty : ", check)
+		}
+
+		Pelatihan.Photo[i].Files = urlPath
+	}	
 
 	r := &models.Jn{Msg: Pelatihan}
 	defer con.Close()
@@ -293,7 +294,9 @@ func AddPelatihanKehadiran(c echo.Context) (err error) {
 		}
 
 		// check if mmember kehadiran is bigger than quota
-		if len(kehadirans.Kehadiran) > len(quota) {
+		if len(kehadirans.Kehadiran) > quota[0] {
+			log.Println("kehadiran : ", len(kehadirans.Kehadiran))
+			log.Println("quota : ", quota)
 			return echo.NewHTTPError(http.StatusBadRequest, "Maaf Kapasitas Kehadiran User melebihi Kuota pelatihan")
 		}
 
