@@ -330,7 +330,7 @@ Tbl_lapkeu_uepkube struct{
 	Created_by   	*string 	`json:"created_by"`
 	Updated_by		*string	 	`json:"updated_by"` 
 	Photo 		 	[]Tbl_lapkeu_files 	`json:"photo" gorm:"foreignkey:id_lapkeu"`
-	Detail 			interface{} `json:"detail"`
+	Detail 			interface{} `json:"detail" gorm:"-"`
 }
 
 Tbl_lapkeu_files struct{
@@ -430,7 +430,7 @@ Tbl_inventory struct{
 	Created_by   		*string 	`json:"created_by"`
 	Updated_by			*string	 	`json:"updated_by"`
 	Photo 		 		[]Tbl_activity_files 	`json:"photo" gorm:"foreignkey:id_activity"`
-	Detail 				interface{} `json:"detail"`
+	Detail 				interface{} `json:"detail" gorm:"-"`
 }
 
 Tbl_inventory_files struct{
@@ -464,7 +464,7 @@ Tbl_monev_uepkube struct{
 	Data_monev			[]*Data_monev `json:"data_monev"`
 	Created_at			*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at			*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
-	Detail 				interface{} `json:"detail"`
+	Detail 				interface{} `json:"detail" gorm:"-"`
 }
 
 Tbl_monev_result_uepkube struct{
