@@ -324,11 +324,13 @@ Tbl_lapkeu_uepkube struct{
 	Omset 			float32		`json:"omset" sql:"type:decimal(10,2);"`
 	Pendapatan 		float32		`json:"pendapatan" sql:"type:decimal(10,2);"`
 	Id_pendamping 	int			`json:"id_pendamping"`
+	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
 	Created_by   	*string 	`json:"created_by"`
 	Updated_by		*string	 	`json:"updated_by"` 
 	Photo 		 	[]Tbl_lapkeu_files 	`json:"photo" gorm:"foreignkey:id_lapkeu"`
+	Detail 			interface{} `json:"detail"`
 }
 
 Tbl_lapkeu_files struct{
@@ -421,12 +423,14 @@ Tbl_inventory struct{
 	Nama 				string 		`json:"nama"`
 	Merk 				string 		`json:"merk"`
 	Harga 				float32 	`json:"harga"`
-	File 				string 		`json:"file" sql:"default:null"`
 	Id_pendamping 		int			`json:"id_pendamping"`
+	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Created_at			*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at			*time.Time 	`json:"updated_at" gorm:"timestamp;null"`	
 	Created_by   		*string 	`json:"created_by"`
 	Updated_by			*string	 	`json:"updated_by"`
+	Photo 		 		[]Tbl_activity_files 	`json:"photo" gorm:"foreignkey:id_activity"`
+	Detail 				interface{} `json:"detail"`
 }
 
 Tbl_inventory_files struct{

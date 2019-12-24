@@ -95,7 +95,7 @@ func GetMonev(c echo.Context) error {
 		for index, _ := range User.Photo {
 				id_photo := User.Photo[index].Id
 
-				tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+				tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
 				urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
 				blobFile = User.Photo[index].Files
 
@@ -108,9 +108,9 @@ func GetMonev(c echo.Context) error {
 
 		Monev.Detail = User
 
-	} else if Monev[i].Id_kube != 0 {
+	} else if Monev.Id_kube != 0 {
 
-		id := Monev[i].Id_kube
+		id := Monev.Id_kube
 		
 		Kube 	:= models.Tbl_kube{}
 		q := con
@@ -132,7 +132,7 @@ func GetMonev(c echo.Context) error {
 		for index, _ := range Kube.Photo {
 				id_photo := Kube.Photo[index].Id
 
-				tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+				tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
 				urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
 				blobFile = Kube.Photo[index].Files
 

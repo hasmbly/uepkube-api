@@ -99,23 +99,8 @@ func ExecPaginateAktivitas(f *models.PosPagin, offset int, count *int64) (ur []m
 	q = q.Find(&Aktivitas)
 	q = q.Limit(-1)
 	q = q.Offset(-1)
-
-	// get photos
-	// if len(Aktivitas) != 0 {
-	// 	for i,_ := range Aktivitas {
-	// 		var pelatihan_photos []models.Tbl_pelatihan_files
-	// 		// var account = models.Tbl_account{}
-
-	// 		con.Table("tbl_activity_files").Where("type = 'IMAGE' ").Where("id = ?", Aktivitas[i].Id_pelatihan).Select("tbl_activity_files.*").Find(&pelatihan_photos)
-
-	// 		for i,_ := range pelatihan_photos {
-	// 			ImageBlob := pelatihan_photos[i].Files
-	// 			pelatihan_photos[i].Files = "data:image/png;base64," + ImageBlob			
-	// 		}
-	// 		Aktivitas[i].Photo = pelatihan_photos
-	// 	}
-	// }
 	
+	// photo
 	if len(Aktivitas) != 0 {
 		for i, _ := range Aktivitas {
 			id := Aktivitas[i].Id

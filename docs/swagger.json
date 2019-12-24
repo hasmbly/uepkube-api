@@ -1331,8 +1331,8 @@
                 "created_by": {
                     "type": "string"
                 },
-                "file": {
-                    "type": "string"
+                "detail": {
+                    "type": "object"
                 },
                 "harga": {
                     "type": "number"
@@ -1354,6 +1354,16 @@
                 },
                 "nama": {
                     "type": "string"
+                },
+                "pendamping": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_pendamping"
+                },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_activity_files"
+                    }
                 },
                 "updated_at": {
                     "type": "string"
@@ -1565,6 +1575,9 @@
                 "created_by": {
                     "type": "string"
                 },
+                "detail": {
+                    "type": "object"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -1582,6 +1595,10 @@
                 },
                 "omset": {
                     "type": "number"
+                },
+                "pendamping": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_pendamping"
                 },
                 "pendapatan": {
                     "type": "number"

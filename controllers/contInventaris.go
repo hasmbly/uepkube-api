@@ -20,6 +20,11 @@ import (
 func GetInventaris(c echo.Context) error {
 	id 		:= c.QueryParam("id")
 
+
+	var tmpPath, urlPath, blobFile, flag, host string
+	flag = "INVENTORY"
+	host = c.Request().Host
+
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
@@ -27,7 +32,24 @@ func GetInventaris(c echo.Context) error {
 	Inventory := models.Tbl_inventory{}
 	q := con
 	q = q.Model(&Inventory)
+	q = q.Preload("Photo")
+	q = q.Preload("Pendamping")	
 	q = q.First(&Inventory, id)
+
+	// photo
+	for i, _ := range Inventory.Photo {
+			id_photo := Inventory.Photo[i].Id
+
+			tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%s_photo_id_%d.png", flag,id,id_photo)
+			urlPath	= fmt.Sprintf("http://%s/images/%s_id_%s_photo_id_%d.png", host,flag,id,id_photo)
+			blobFile = Inventory.Photo[i].Files
+
+			if check := CreateFile(tmpPath, blobFile); check == false {
+				log.Println("blob is empty : ", check)
+			}
+		
+			Inventory.Photo[i].Files = urlPath
+	}	
 
 	r := &models.Jn{Msg: Inventory}
 	defer con.Close()

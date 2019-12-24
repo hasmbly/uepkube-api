@@ -31,8 +31,10 @@ func GetLapKeu(c echo.Context) error {
 	q := con
 	q = q.Model(&Lapkeu)
 	q = q.Preload("Photo")
+	q = q.Preload("Pendamping")
 	q = q.First(&Lapkeu, id)
 
+	// photo
 	for i, _ := range Lapkeu.Photo {
 			id_photo := Lapkeu.Photo[i].Id
 
@@ -47,6 +49,84 @@ func GetLapKeu(c echo.Context) error {
 			Lapkeu.Photo[i].Files = urlPath
 	}
 
+	// detail
+	if Lapkeu.Id_uep != 0 {
+		id := Lapkeu.Id_uep
+		
+		User 	:= Tbl_user{}
+		q := con
+		q = q.Model(&User)
+		q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
+		q = q.Select("tbl_uep.*, tbl_user.*")
+		q = q.Preload("JenisUsaha")
+		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id).Preload("JenisUsaha")
+		})
+		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
+		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})
+		q = q.Preload("Pendamping")
+		q = q.Preload("Kelurahan")
+		q = q.Preload("Kecamatan")
+		q = q.Preload("Kabupaten")
+		q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})
+		q = q.First(&User, id)
+
+		for index, _ := range User.Photo {
+				id_photo := User.Photo[index].Id
+
+				tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+				urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+				blobFile = User.Photo[index].Files
+
+				if check := CreateFile(tmpPath, blobFile); check == false {
+					log.Println("blob is empty : ", check)
+				}
+			
+				User.Photo[index].Files = urlPath
+		}
+
+		Lapkeu.Detail = User
+
+	} else if Lapkeu.Id_kube != 0 {
+
+		id := Lapkeu.Id_kube
+		
+		Kube 	:= models.Tbl_kube{}
+		q := con
+		q = q.Model(&Kube)
+		q = q.Preload("JenisUsaha")
+		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id).Preload("JenisUsaha")
+		})
+		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
+		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})
+		q = q.Preload("Pendamping")
+		q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)	
+		})
+		q = q.First(&Kube, id)
+
+		for index, _ := range Kube.Photo {
+				id_photo := Kube.Photo[index].Id
+
+				tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+				urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+				blobFile = Kube.Photo[index].Files
+
+				if check := CreateFile(tmpPath, blobFile); check == false {
+					log.Println("blob is empty : ", check)
+				}
+			
+				Kube.Photo[index].Files = urlPath
+		}
+		Lapkeu.Detail = Kube
+	}
 	r := &models.Jn{Msg: Lapkeu}
 	defer con.Close()
 

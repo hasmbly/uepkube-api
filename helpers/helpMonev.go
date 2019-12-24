@@ -23,7 +23,7 @@ type Tbl_user struct {
 }
 
 func PaginateMonev(c echo.Context, r *models.ResPagin) (err error) {
-	flag = "UEP"
+	flag = "MONEV"
 	host = c.Request().Host
 
 	u := &models.PosPagin{}
