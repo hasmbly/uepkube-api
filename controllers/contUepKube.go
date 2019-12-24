@@ -322,44 +322,45 @@ func GeAllUser(c echo.Context) (err error) {
 	q = q.Find(&Users)
 	
 	// Chceck in Uep
-	for i, _ := range Users {
-		var id_uep []int
-		q1 := con
-		q1 = q1.Table("tbl_uep")
-		q1 = q1.Where("id_uep = ?", Users[i].Id_user)
-		q1 = q1.Pluck("id_uep", &id_uep)
+	// for i, _ := range Users {
+	// 	var id_uep []int
+	// 	q1 := con
+	// 	q1 = q1.Table("tbl_uep")
+	// 	q1 = q1.Where("id_uep = ?", Users[i].Id_user)
+	// 	q1 = q1.Pluck("id_uep", &id_uep)
 		
-		if len(id_uep) != 0 {
-			Users[i].Flag = "UEP"
-			Users[i].Is_eligible = false
-			// continue
-		}
+	// 	if len(id_uep) != 0 {
+	// 		Users[i].Flag = "UEP"
+	// 		Users[i].Is_eligible = false
+	// 		// continue
+	// 	}
 
-		// log.Println("Flag : ", Users[i].Flag)
-		var id_kube_members []int
-		var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}		
-		for o, _ := range KubesMember {
-			q2 := con
-			q2 = q2.Table("tbl_kube")
-			q2 = q2.Where(KubesMember[o] + " = ?", Users[i].Id_user)
-			q2 = q2.Pluck(KubesMember[o], &id_kube_members)
+	// 	// log.Println("Flag : ", Users[i].Flag)
+	// 	// check in kube
+	// 	var id_kube_members []int
+	// 	var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}		
+	// 	for o, _ := range KubesMember {
+	// 		q2 := con
+	// 		q2 = q2.Table("tbl_kube")
+	// 		q2 = q2.Where(KubesMember[o] + " = ?", Users[i].Id_user)
+	// 		q2 = q2.Pluck(KubesMember[o], &id_kube_members)
 
-			if len(id_kube_members) != 0 {
-				if len(id_uep) != 0 {
-					Users[i].Flag = "UEPKUBE"
-					Users[i].Is_eligible = false
-					// continue
-				} else if len(id_uep) == 0 {
-					Users[i].Flag = "KUBE"
-					Users[i].Is_eligible = false
-				}
-			} 
-		}
+	// 		if len(id_kube_members) != 0 {
+	// 			if len(id_uep) != 0 {
+	// 				Users[i].Flag = "UEPKUBE"
+	// 				Users[i].Is_eligible = false
+	// 				// continue
+	// 			} else if len(id_uep) == 0 {
+	// 				Users[i].Flag = "KUBE"
+	// 				Users[i].Is_eligible = false
+	// 			}
+	// 		} 
+	// 	}
 
-		if Users[i].Flag == "" {
-			Users[i].Is_eligible = true
-		}		
-	}
+	// 	if Users[i].Flag == "" {
+	// 		Users[i].Is_eligible = true
+	// 	}		
+	// }
 
 	r := &models.Jn{Msg: Users}
 
