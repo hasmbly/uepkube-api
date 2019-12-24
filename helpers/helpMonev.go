@@ -83,15 +83,12 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 	con.SingularTable(true)	
 
 	q := con
-	// q = q.Table("tbl_pelatihan t1")
 	q = q.Model(&Monevs)
-	// q = q.Select("tbl_monev_uepkube.id_uep")
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
 	q = q.Preload("Category")
 	q = q.Preload("Pendamping")
 	q = q.Preload("Periods")
-	// q = q.Select("t1.id_pelatihan, t1.judul_pelatihan, t1.lokasi_pelatihan, t1.peruntukan, t1.start, t1.instruktur, t1.end, t1.deskripsi")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -129,7 +126,6 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 	}
 	q = q.Order(fmt.Sprintf("%s %s",f.SortField,f.SortOrder))	
 	
-	// q = q.Scan(&Monevs)
 	q = q.Find(&Monevs)
 	q = q.Limit(-1)
 	q = q.Offset(-1)

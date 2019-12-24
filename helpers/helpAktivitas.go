@@ -7,12 +7,15 @@ import (
 	_"github.com/jinzhu/gorm/dialects/mysql"
 	"uepkube-api/db"
 	"uepkube-api/models"
-	// "log"
+	"log"
 	"math"	
 	"fmt"
 )
 
 func PaginateAktivitas(c echo.Context, r *models.ResPagin) (err error) {
+	flag = "AKTIVITAS"
+	host = c.Request().Host		
+
 	u := &models.PosPagin{}
 	num := 1
 
@@ -61,19 +64,19 @@ func PaginateAktivitas(c echo.Context, r *models.ResPagin) (err error) {
 	return err
 }
 
-func ExecPaginateAktivitas(f *models.PosPagin, offset int, count *int64) (ur []models.PaginateAktivitas, err error) {
+func ExecPaginateAktivitas(f *models.PosPagin, offset int, count *int64) (ur []models.Tbl_activity, err error) {
 
-	Aktivitas := []models.PaginateAktivitas{}
+	Aktivitas := []models.Tbl_activity{}
 
 	con, err := db.CreateCon()
 	if err != nil { return ur, echo.ErrInternalServerError }
 	con.SingularTable(true)	
 
 	q := con
-	q = q.Table("tbl_activity t1")
+	q = q.Model(&Aktivitas)
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Select("t1.id, t1.id_pendamping, t1.tanggal, t1.nama_kegiatan, t1.rincian")
+	q = q.Preload("Photo")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -91,9 +94,9 @@ func ExecPaginateAktivitas(f *models.PosPagin, offset int, count *int64) (ur []m
 			}
 		}
 	}
-	q = q.Order(fmt.Sprintf("t1.%s %s",f.SortField,f.SortOrder))	
+	q = q.Order(fmt.Sprintf("%s %s",f.SortField,f.SortOrder))
 	
-	q = q.Scan(&Aktivitas)
+	q = q.Find(&Aktivitas)
 	q = q.Limit(-1)
 	q = q.Offset(-1)
 
@@ -112,6 +115,30 @@ func ExecPaginateAktivitas(f *models.PosPagin, offset int, count *int64) (ur []m
 	// 		Aktivitas[i].Photo = pelatihan_photos
 	// 	}
 	// }
+	
+	if len(Aktivitas) != 0 {
+		for i, _ := range Aktivitas {
+			id := Aktivitas[i].Id
+			if len(Aktivitas[i].Photo) != 0 {
+				for x, _ := range Aktivitas[i].Photo {
+
+					if Aktivitas[i].Photo[x].Type == "IMAGE" {
+
+						id_photo := Aktivitas[i].Photo[x].Id
+						
+						tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+						urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+						blobFile = Aktivitas[i].Photo[x].Files
+
+						if check := CreateFile(tmpPath, blobFile); check == false {
+							log.Println("blob is empty : ", check)
+						}
+						Aktivitas[i].Photo[x].Files = urlPath
+					}
+				}
+			}
+		}
+	}
 
 	if err := q.Count(count).Error; err != nil {
 		return ur, err

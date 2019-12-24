@@ -1210,6 +1210,9 @@
         "models.Activity": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "created_by": {
                     "type": "string"
                 },
@@ -1232,6 +1235,9 @@
                     "type": "string"
                 },
                 "tanggal": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 },
                 "updated_by": {
@@ -1553,6 +1559,9 @@
                 "bulan": {
                     "type": "integer"
                 },
+                "created_at": {
+                    "type": "string"
+                },
                 "created_by": {
                     "type": "string"
                 },
@@ -1577,7 +1586,16 @@
                 "pendapatan": {
                     "type": "number"
                 },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_lapkeu_files"
+                    }
+                },
                 "tahun": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 },
                 "updated_by": {
@@ -2033,6 +2051,33 @@
                 },
                 "kelurahan": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Tbl_lapkeu_files": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_lapkeu": {
+                    "type": "integer"
+                },
+                "is_display": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "PDF",
+                        " IMAGE"
+                    ]
                 }
             }
         },

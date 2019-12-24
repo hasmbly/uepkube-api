@@ -9,7 +9,7 @@ import (
 	"uepkube-api/models"
 	"uepkube-api/helpers"
 	"strconv"
-	// "fmt"
+	"fmt"
 	"log"
 	"bufio"
 	"encoding/base64"	
@@ -19,6 +19,10 @@ import (
 func GetLapKeu(c echo.Context) error {
 	id 		:= c.QueryParam("id")
 
+	var tmpPath, urlPath, blobFile, flag, host string
+	flag = "LAPKEU"
+	host = c.Request().Host
+
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
@@ -26,7 +30,22 @@ func GetLapKeu(c echo.Context) error {
 	Lapkeu := models.Tbl_lapkeu_uepkube{}
 	q := con
 	q = q.Model(&Lapkeu)
+	q = q.Preload("Photo")
 	q = q.First(&Lapkeu, id)
+
+	for i, _ := range Lapkeu.Photo {
+			id_photo := Lapkeu.Photo[i].Id
+
+			tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%s_photo_id_%d.png", flag,id,id_photo)
+			urlPath	= fmt.Sprintf("http://%s/images/%s_id_%s_photo_id_%d.png", host,flag,id,id_photo)
+			blobFile = Lapkeu.Photo[i].Files
+
+			if check := CreateFile(tmpPath, blobFile); check == false {
+				log.Println("blob is empty : ", check)
+			}
+		
+			Lapkeu.Photo[i].Files = urlPath
+	}
 
 	r := &models.Jn{Msg: Lapkeu}
 	defer con.Close()

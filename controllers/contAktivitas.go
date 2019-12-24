@@ -10,7 +10,8 @@ import (
 	 "strconv"
 	 "uepkube-api/helpers"
 	 "log"
-
+	 // "os"
+	 "fmt"
 	"bufio"
 	"encoding/base64"	
 	"io/ioutil"	
@@ -18,6 +19,10 @@ import (
 
 func GetAktivitas(c echo.Context) error {
 	id 		:= c.QueryParam("id")
+
+	var tmpPath, urlPath, blobFile, flag, host string
+	flag = "ACTIVITY"
+	host = c.Request().Host
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -29,13 +34,19 @@ func GetAktivitas(c echo.Context) error {
 	q = q.Preload("Photo")
 	q = q.First(&Activity, id)
 
-	for i,_ := range Activity.Photo {
+	for i, _ := range Activity.Photo {
+			id_photo := Activity.Photo[i].Id
 
-			if Activity.Photo[i].Files != "" {
-				Activity.Photo[i].Files = "data:image/png;base64," + Activity.Photo[i].Files
+			tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%s_photo_id_%d.png", flag,id,id_photo)
+			urlPath	= fmt.Sprintf("http://%s/images/%s_id_%s_photo_id_%d.png", host,flag,id,id_photo)
+			blobFile = Activity.Photo[i].Files
+
+			if check := CreateFile(tmpPath, blobFile); check == false {
+				log.Println("blob is empty : ", check)
 			}
-
-		}
+		
+			Activity.Photo[i].Files = urlPath
+	}
 
 	r := &models.Jn{Msg: Activity}
 	defer con.Close()

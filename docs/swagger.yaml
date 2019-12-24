@@ -2,6 +2,8 @@ basePath: /api/v1
 definitions:
   models.Activity:
     properties:
+      created_at:
+        type: string
       created_by:
         type: string
       id:
@@ -17,6 +19,8 @@ definitions:
       rincian:
         type: string
       tanggal:
+        type: string
+      updated_at:
         type: string
       updated_by:
         type: string
@@ -234,6 +238,8 @@ definitions:
     properties:
       bulan:
         type: integer
+      created_at:
+        type: string
       created_by:
         type: string
       id:
@@ -250,7 +256,13 @@ definitions:
         type: number
       pendapatan:
         type: number
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_lapkeu_files'
+        type: array
       tahun:
+        type: string
+      updated_at:
         type: string
       updated_by:
         type: string
@@ -553,6 +565,24 @@ definitions:
       id_kelurahan:
         type: string
       kelurahan:
+        type: string
+    type: object
+  models.Tbl_lapkeu_files:
+    properties:
+      description:
+        type: string
+      files:
+        type: string
+      id:
+        type: integer
+      id_lapkeu:
+        type: integer
+      is_display:
+        type: integer
+      type:
+        enum:
+        - PDF
+        - ' IMAGE'
         type: string
     type: object
   models.Tbl_pelatihan_files:

@@ -216,7 +216,7 @@ func AddKube(c echo.Context) (err error) {
 				// update
 				if err := con.Model(&models.Tbl_user{}).UpdateColumns(&Memberskube).Error; err != nil {
 					return echo.ErrInternalServerError
-				}				
+				}
 			}
 
 			if kube.Items[o].Posisi == "ketua" { kube.Ketua = Memberskube.Id_user }
