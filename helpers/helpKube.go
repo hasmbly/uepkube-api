@@ -185,6 +185,24 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 	q = q.Limit(-1)
 	q = q.Offset(-1)
 
+	// get kubes_member
+	if len(kubes) != 0 {
+		for i, _ := range kubes {
+			id := kubes[i].Id_kube
+			var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}
+			tmp := []models.Kubes_items{}
+
+			for x, _ := range KubesMember {
+			
+				con.Table("tbl_kube t1").Select("t2.*, '" + KubesMember[x] + "' as posisi").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[x]).Where("id_kube = ?", id).Scan(&tmp)
+
+				if len(tmp) != 0 {
+					kubes[i].Items = append(kubes[i].Items, tmp[0])
+				}
+			}	
+		}
+	}
+
 	// get Pendampings
 	if len(kubes) != 0 {
 		for i,_ := range kubes {
@@ -196,7 +214,7 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 			if len(id_pendamping) != 0 {
 
 				for i,_ := range id_pendamping {
-					con.Table("tbl_pendamping").Select("tbl_pendamping.*, tbl_user.nama as nama_pendamping").Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Find(&pendamping)
+					con.Table("tbl_pendamping").Select("tbl_pendamping.*, tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Find(&pendamping)
 				}
 					kubes[i].Pendamping = pendamping
 			}

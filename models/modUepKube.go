@@ -802,6 +802,7 @@ PaginateKubes struct{
 	Pendamping 		CustomPendamping 	`json:"pendamping"`
 	Usaha 			UsahaKube 		`json:"usaha"`
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history"`
+	Items 			[]Kubes_items `json:"items"`
 }
 
 PaginateUep struct{
