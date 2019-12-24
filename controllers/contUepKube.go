@@ -43,9 +43,8 @@ func GetUepKube(c echo.Context) error {
 		q1 = q1.Table("tbl_user")
 		q1 = q1.Where("nik like ?", "%"+val+"%")
 		q1 = q1.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
-		q1 = q1.Joins("join tbl_usaha_produk on tbl_usaha_produk.id_uep = tbl_uep.id_uep")
-		q1 = q1.Joins("join tbl_jenis_usaha on tbl_jenis_usaha.id_usaha = tbl_usaha_produk.id_usaha")		
-		q1 = q1.Select("tbl_user.id_user, tbl_user.nik, tbl_user.nama, tbl_user.alamat, tbl_user.lat, tbl_user.lng, tbl_user.photo, tbl_uep.*, tbl_jenis_usaha.jenis_usaha")
+		q1 = q1.Joins("join tbl_jenis_usaha on tbl_jenis_usaha.id_usaha = tbl_uep.id_jenis_usaha")		
+		q1 = q1.Select("tbl_user.id_user, tbl_user.nik, tbl_user.nama, tbl_user.alamat, tbl_user.lat, tbl_user.lng, tbl_uep.*, tbl_jenis_usaha.jenis_usaha")
 
 		if err := q1.Scan(&Uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
 	} else if errr == nil {

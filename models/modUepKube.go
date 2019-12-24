@@ -668,7 +668,7 @@ ShowKube struct {
 	Alamat			*string 	`json:"alamat"`
 	Lat				*string 	`json:"lat"`
 	Lng				*string 	`json:"lng"`
-	Photo 		 	[]Tbl_uepkube_photo 	`json:"photo"`
+	Photo 		 	[]Tbl_uepkube_files 	`json:"photo"`
 	Items 			Items 		`json:"items"`	
 	Flag 			string 		 `json:"flag"`	
 }
