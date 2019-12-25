@@ -1245,6 +1245,26 @@
                 }
             }
         },
+        "models.Data_monev": {
+            "type": "object",
+            "properties": {
+                "aspek": {
+                    "type": "string"
+                },
+                "bobot": {
+                    "type": "integer"
+                },
+                "dimensi": {
+                    "type": "string"
+                },
+                "skor": {
+                    "type": "integer"
+                },
+                "skor_total": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.Dummy": {
             "type": "object",
             "properties": {
@@ -1457,6 +1477,10 @@
                     "items": {
                         "$ref": "#/definitions/models.Tbl_uepkube_files"
                     }
+                },
+                "region": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.View_address"
                 },
                 "status": {
                     "type": "integer"
@@ -1946,6 +1970,12 @@
                 "id": {
                     "type": "integer"
                 },
+                "monev_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_monev_uepkube"
+                    }
+                },
                 "peruntukan": {
                     "type": "string"
                 },
@@ -2101,6 +2131,85 @@
                         "PDF",
                         " IMAGE"
                     ]
+                }
+            }
+        },
+        "models.Tbl_monev_category": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "rank": {
+                    "type": "string",
+                    "enum": [
+                        "A",
+                        " B",
+                        " C"
+                    ]
+                }
+            }
+        },
+        "models.Tbl_monev_uepkube": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_monev_category"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "data_monev": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Data_monev"
+                    }
+                },
+                "detail": {
+                    "type": "object"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_category": {
+                    "type": "integer"
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_periods": {
+                    "type": "integer"
+                },
+                "id_uep": {
+                    "type": "integer"
+                },
+                "is_monev": {
+                    "type": "string",
+                    "enum": [
+                        "SUDAH",
+                        " BELUM"
+                    ]
+                },
+                "pendamping": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_pendamping"
+                },
+                "periods": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_bantuan_periods"
+                },
+                "sum_total": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },

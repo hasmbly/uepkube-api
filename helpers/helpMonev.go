@@ -95,8 +95,6 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 		o := f.Filters[i].Operation
 		v := f.Filters[i].Value
 
-		// if k == "periods" { continue }
-
 		if k == "periods" {
 			if o == ":" {
 				var id_periods []int
@@ -110,7 +108,7 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 				continue
 			}
 		}		
-		
+
 		if o == "LIKE" || o == "like" {
 			if k == "periods" { continue }
 			if v == "" { continue }
@@ -143,14 +141,18 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 				q = q.Model(&User)
 				q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 				q = q.Select("tbl_uep.*, tbl_user.*")
+				q = q.Preload("Region")
 				q = q.Preload("JenisUsaha")
 				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
 					return q.Where("id_uep = ?", id).Preload("JenisUsaha")
 				})
 				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-				q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+				q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
 					return q.Where("id_uep = ?", id)
 				})
+				q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_uep = ?", id)
+				})		
 				q = q.Preload("Pendamping")
 				q = q.Preload("Kelurahan")
 				q = q.Preload("Kecamatan")
@@ -187,7 +189,10 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
 					return q.Where("id_kube = ?", id).Preload("JenisUsaha")
 				})
-				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
+				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
+				q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_kube = ?", id)
+				})					
 				q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
 					return q.Where("id_kube = ?", id)
 				})
@@ -211,8 +216,14 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 						Kube.Photo[index].Files = urlPath
 				}
 
+				// Region
+				// get region ketua
+				var id_kelurahan []string
+				con.Table("tbl_user").Where("id_user = ?", Kube.Ketua).Pluck("id_kelurahan", &id_kelurahan)
+				// get region from view_address
+				con.Table("view_address").Where("id_kelurahan = ?", id_kelurahan[0]).Scan(&Kube.Region)
+				
 				Monevs[i].Detail = Kube
-
 			}
 		}
 	}

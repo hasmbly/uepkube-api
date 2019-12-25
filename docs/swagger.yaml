@@ -25,6 +25,19 @@ definitions:
       updated_by:
         type: string
     type: object
+  models.Data_monev:
+    properties:
+      aspek:
+        type: string
+      bobot:
+        type: integer
+      dimensi:
+        type: string
+      skor:
+        type: integer
+      skor_total:
+        type: integer
+    type: object
   models.Dummy:
     properties:
       activity:
@@ -170,6 +183,9 @@ definitions:
         items:
           $ref: '#/definitions/models.Tbl_uepkube_files'
         type: array
+      region:
+        $ref: '#/definitions/models.View_address'
+        type: object
       status:
         type: integer
       updated_by:
@@ -498,6 +514,10 @@ definitions:
         type: string
       id:
         type: integer
+      monev_history:
+        items:
+          $ref: '#/definitions/models.Tbl_monev_uepkube'
+        type: array
       peruntukan:
         type: string
       quota:
@@ -599,6 +619,60 @@ definitions:
         enum:
         - PDF
         - ' IMAGE'
+        type: string
+    type: object
+  models.Tbl_monev_category:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      rank:
+        enum:
+        - A
+        - ' B'
+        - ' C'
+        type: string
+    type: object
+  models.Tbl_monev_uepkube:
+    properties:
+      category:
+        $ref: '#/definitions/models.Tbl_monev_category'
+        type: object
+      created_at:
+        type: string
+      data_monev:
+        items:
+          $ref: '#/definitions/models.Data_monev'
+        type: array
+      detail:
+        type: object
+      id:
+        type: integer
+      id_category:
+        type: integer
+      id_kube:
+        type: integer
+      id_pendamping:
+        type: integer
+      id_periods:
+        type: integer
+      id_uep:
+        type: integer
+      is_monev:
+        enum:
+        - SUDAH
+        - ' BELUM'
+        type: string
+      pendamping:
+        $ref: '#/definitions/models.Tbl_pendamping'
+        type: object
+      periods:
+        $ref: '#/definitions/models.Tbl_bantuan_periods'
+        type: object
+      sum_total:
+        type: integer
+      updated_at:
         type: string
     type: object
   models.Tbl_pelatihan_files:

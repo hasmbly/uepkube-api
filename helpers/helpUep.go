@@ -83,6 +83,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 	q = q.Offset(int(offset))
 	q = q.Select("t1.id_uep, t2.nama, t2.nik, t2.no_kk, t2.alamat, t1.status, t1.created_at")
 	q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_uep")
+	q = q.Joins("join tbl_periods_uepkube t3 on t3.id_uep = t1.id_uep")
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -93,7 +94,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 			if v == "" { continue }
 			q = q.Where(fmt.Sprintf("%s %s",k,o) + "?", "%"+v+"%")
 		} else if o == ":" {
-			if v == "" { 
+			if v == "" {
 				continue 
 			} else {
 			 	q = q.Where(fmt.Sprintf("%s ",k) + "=" + "?", v) 
@@ -153,11 +154,9 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []models.
 					if check := CreateFile(tmpPath, blobFile); check == false {
 						log.Println("blob is empty : ", check)
 					}
-				
 					photos[index].Files = urlPath
 					Ueps[i].Usaha.Photo = append(Ueps[i].Usaha.Photo, photos[index])
 				}
-
 			}
 			
 		}

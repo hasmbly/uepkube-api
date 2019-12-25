@@ -131,6 +131,7 @@ Tbl_uep struct {
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_kube"`	
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_kube"`
 	Items 			[]Kubes_items `json:"items"`
+	Region 			View_address `json:"region" gorm:"-"`
 }
 
 Kubes_items struct{
@@ -300,6 +301,7 @@ Tbl_bantuan_periods struct{
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Usaha 			*Tbl_usaha_uepkube `json:"usaha" gorm:"foreignkey:id_periods;association_foreignkey:id"`
 	CreditDebit 	[]*Tbl_credit_debit `json:"credit_debit" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+	MonevHistory 	[]*Tbl_monev_uepkube `json:"monev_history" gorm:"foreignkey:id_periods;association_foreignkey:id"`
 }
 
 Tbl_credit_debit struct{
