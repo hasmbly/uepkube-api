@@ -296,8 +296,7 @@ func AddMonev(c echo.Context) (err error) {
 	MonevFinal.Id_category = id_category
 	MonevFinal.Id_pendamping = monev.Id_pendamping
 	MonevFinal.Is_monev = "SUDAH"
-	MonevFinal.Flag = "SUDAH"
-
+	
 	// get id_periods
 	var id_periods []int
 	con.Table("tbl_periods_uepkube").Where(FieldId + " = ?", ValueId).Pluck("id_periods", &id_periods)
