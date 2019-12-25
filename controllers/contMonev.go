@@ -142,9 +142,7 @@ func GetMonev(c echo.Context) error {
 			
 				Kube.Photo[index].Files = urlPath
 		}
-
 		Monev.Detail = Kube
-
 	}
 
 	r := &models.Jn{Msg: Monev}
@@ -168,6 +166,9 @@ func AddMonev(c echo.Context) (err error) {
 	if err := c.Bind(monev); err != nil {
 		return err
 	}
+
+	// get log post
+	helpers.FetchPost(monev)	
 
 	// validation
 	if monev.Id_uep == 0 && monev.Id_kube == 0 {

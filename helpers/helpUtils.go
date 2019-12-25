@@ -5,6 +5,7 @@ import (
 	"os"
 	"log"
 	"encoding/base64"	
+	"encoding/json"	
 )
 
 func DeleteFile (path string, tm_optional ...int) {
@@ -69,4 +70,12 @@ func CreateFile (tmpPath string, blob string) bool {
 	}
 
 	return false
-}	
+}
+
+func FetchPost (i interface{}) {
+	b, err := json.MarshalIndent(i, "", " ")
+	if err != nil {
+	    log.Println("error:", err)
+	}
+	os.Stdout.Write(b)
+}

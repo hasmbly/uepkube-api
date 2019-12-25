@@ -67,6 +67,9 @@ func AddPendamping(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(Pendamping)	
+
 	// validation
 	if Pendamping.Nik == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") }
 

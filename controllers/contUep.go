@@ -126,15 +126,14 @@ func GetPaginateUep(c echo.Context) (err error) {
 @security ApiKeyAuth
 @Router /uep/add [post]*/
 func AddUep(c echo.Context) (err error) {
-
 	Uep := &models.Uep{}
 
 	if err := c.Bind(Uep); err != nil {
 		return err
 	}
 
-	// log.Println("Uep_tbl_user : ", *Uep.Tbl_user)	
-	// log.Println("Uep : ", Uep)	
+	// get log post
+	helpers.FetchPost(Uep)	
 
 	user := &models.Tbl_user{}
 	user = Uep.Tbl_user

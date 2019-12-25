@@ -73,6 +73,9 @@ func AddInventaris(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(inventory)
+
 	// validation
 	if inventory.Id_uep == 0 && inventory.Id_kube == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_uep or id_kube")

@@ -66,6 +66,9 @@ func AddVerifikator(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(Verifikator)
+
 	// validation
 	if Verifikator.Nik == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") }
 

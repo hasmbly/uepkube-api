@@ -13,7 +13,7 @@ import (
 	 "fmt"
 	 // "io"
 	 // "os"
-
+	// "encoding/json"
 	"bufio"
 	"encoding/base64"	
 	"io/ioutil"	
@@ -135,6 +135,9 @@ func AddPelatihan(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(pelatihan)
+
 	Pelatihan := &models.Tbl_pelatihan{}
 	Pelatihan = pelatihan.Tbl_pelatihan
 
@@ -233,6 +236,10 @@ func AddPelatihanKehadiran(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(kehadirans)
+
+	// validation
 	if kehadirans.Id_pelatihan == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_pelatihan")
 	}

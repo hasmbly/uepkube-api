@@ -160,6 +160,9 @@ func AddKube(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(Kube)	
+
 	// validation
 	if Kube.Id_pendamping == 0 { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id Pendamping") 

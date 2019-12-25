@@ -68,6 +68,9 @@ func AddAktivitas(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(activity)	
+
 	Activity := &models.Tbl_activity{}
 	Activity = activity.Tbl_activity
 

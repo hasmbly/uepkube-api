@@ -162,6 +162,9 @@ func AddProduk(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(produk)
+
 	usaha_produk := &models.Tbl_usaha_produk{}
 	usaha_produk = produk.Tbl_usaha_produk
 

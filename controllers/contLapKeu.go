@@ -147,6 +147,9 @@ func AddLapKeu(c echo.Context) (err error) {
 		return err
 	}
 
+	// get log post
+	helpers.FetchPost(lapkeu)
+
 	// validation
 	if lapkeu.Id_uep == 0 && lapkeu.Id_kube == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_uep or id_kube")
