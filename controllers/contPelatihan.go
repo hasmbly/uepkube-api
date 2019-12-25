@@ -149,8 +149,8 @@ func AddPelatihan(c echo.Context) (err error) {
 
 	defer con.Close()
 
-	r := &models.Jn{Msg: "Success Store Data"}
-	return c.JSON(http.StatusOK, r)
+	r := &models.Jn1{Msg: "Success Store Data", Id: Pelatihan.Id_pelatihan}
+	return c.JSON(http.StatusOK, r)	
 }
 
 /*
