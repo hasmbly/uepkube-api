@@ -5029,3 +5029,13 @@ ____________________________________O/_______
 2019-12-25T18:43:57+07:00 ERROR code=400, message=Maaf Indikator tidak ditemukan, internal=<nil>
 {"time":"2019-12-25T18:43:57.718621275+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/monev","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Maaf Indikator tidak ditemukan, internal=\u003cnil\u003e","latency":10134126,"latency_human":"10.134126ms","bytes_in":134,"bytes_out":106}
 {"time":"2019-12-25T18:44:02.003480928+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/monev","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":795164573,"latency_human":"795.164573ms","bytes_in":133,"bytes_out":99}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093

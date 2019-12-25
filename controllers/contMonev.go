@@ -195,11 +195,13 @@ func AddMonev(c echo.Context) (err error) {
 		FieldId = "id_uep"
 		TblType = "_uep"
 		MonevFinal.Id_uep = monev.Id_uep	
+		MonevFinal.Flag = "UEP"
 		ValueId = monev.Id_uep 
 	}
 	if monev.Id_uep == 0 { 
 		FieldId = "id_kube"
 		MonevFinal.Id_kube = monev.Id_kube	
+		MonevFinal.Flag = "KUBE"
 		TblType = "_kube"
 		ValueId = monev.Id_kube 
 	}
@@ -294,6 +296,7 @@ func AddMonev(c echo.Context) (err error) {
 	MonevFinal.Id_category = id_category
 	MonevFinal.Id_pendamping = monev.Id_pendamping
 	MonevFinal.Is_monev = "SUDAH"
+	MonevFinal.Flag = "SUDAH"
 
 	// get id_periods
 	var id_periods []int
