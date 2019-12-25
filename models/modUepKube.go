@@ -886,5 +886,19 @@ PaginateLapkeu struct{
 	TotalElements 	int64 			`json:"totalElements"`
 }
 
+ ResPaginMonev struct{
+	Content 		interface{}
+	First 			bool 			`json:"first"`
+	Last 			bool 			`json:"last"`
+	Number 			int 			`json:"number"`
+	NumberOfElement int64 			`json:"numberOfElements"`
+ 	Pageable 		Pageable		`json:"pageable"`
+	Sort 			Sort 			`json:"sort"`
+	TotalPages 		float64 		`json:"totalPages"`
+	TotalElements 	int64 			`json:"totalElements"`
+	SudahMonev 		int 			`json:"sudah_monev"`
+	BelumMonev 		int 			`json:"belum_monev"`
+}
+
 
 )

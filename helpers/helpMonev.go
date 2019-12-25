@@ -22,7 +22,9 @@ type Tbl_user struct {
 	*models.Tbl_uep
 }
 
-func PaginateMonev(c echo.Context, r *models.ResPagin) (err error) {
+var SudahMonev, BelumMonev int
+
+func PaginateMonev(c echo.Context, r *models.ResPaginMonev) (err error) {
 	flag = "MONEV"
 	host = c.Request().Host
 
@@ -51,7 +53,7 @@ func PaginateMonev(c echo.Context, r *models.ResPagin) (err error) {
 	if u.Page == 1 {f = true}
 	if u.Page == int(rtp) {la = true}
 
-	*r = models.ResPagin{
+	*r = models.ResPaginMonev{
 		Content:PaginateResult,
 		First:f,
 		Last:la,
@@ -70,6 +72,8 @@ func PaginateMonev(c echo.Context, r *models.ResPagin) (err error) {
 		},
 		TotalPages:rtp,
 		TotalElements:t,		
+		SudahMonev:SudahMonev,
+		BelumMonev:BelumMonev,
 	}
 	return err
 }
@@ -101,8 +105,6 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 				 con.Table("tbl_bantuan_periods").Where("start_date like ?", "%"+v+"%").Pluck("id", &id_periods)
 				 if len(id_periods) != 0 {
 					q = q.Where("id_periods = ?", id_periods[0])
-				 } else {
-				 	continue
 				 }
 			} else {
 				continue

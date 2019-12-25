@@ -152,10 +152,10 @@ func GetMonev(c echo.Context) error {
 }
 
 func GetPaginateMonev(c echo.Context) (err error) {	
-	if err := helpers.PaginateMonev(c, &r); err != nil {
+	if err := helpers.PaginateMonev(c, &rMonev); err != nil {
 		return echo.ErrInternalServerError
 	}	
-	return c.JSON(http.StatusOK, r)
+	return c.JSON(http.StatusOK, rMonev)
 	// return nil
 }
 
@@ -193,14 +193,14 @@ func AddMonev(c echo.Context) (err error) {
 
 	if monev.Id_kube == 0 { 
 		FieldId = "id_uep"
-		TblType = "_kube"
+		TblType = "_uep"
 		MonevFinal.Id_uep = monev.Id_uep	
 		ValueId = monev.Id_uep 
 	}
 	if monev.Id_uep == 0 { 
 		FieldId = "id_kube"
 		MonevFinal.Id_kube = monev.Id_kube	
-		TblType = "_uep"
+		TblType = "_kube"
 		ValueId = monev.Id_kube 
 	}
 
@@ -219,11 +219,27 @@ func AddMonev(c echo.Context) (err error) {
 		var skorIndikator []int
 
 		con.Table("tbl_indikator" + TblType).Where("id_indikator = ?", monev.Id_indikator[i]).Pluck("skor_indikator", &skorIndikator)
-		skor = append(skor, skorIndikator[0])
+
+		if len(skorIndikator) != 0 {
+			skor = append(skor, skorIndikator[0])
+		} else {
+			return echo.NewHTTPError(http.StatusBadRequest, "Maaf Indikator tidak ditemukan")
+		}
 
 		con.Table("tbl_indikator" + TblType).Where("id_indikator = ?", monev.Id_indikator[i]).Pluck("id_kriteria", &IdKriteria)
-		con.Table("tbl_kriteria" + TblType).Where("id_kriteria = ?", IdKriteria[0]).Pluck("bobot", &bobotKriteria)
-		bobot = append(bobot, bobotKriteria[0])
+
+		if len(IdKriteria) != 0 {
+			con.Table("tbl_kriteria" + TblType).Where("id_kriteria = ?", IdKriteria[0]).Pluck("bobot", &bobotKriteria)
+
+			if len(bobotKriteria) != 0 {
+				bobot = append(bobot, bobotKriteria[0])
+			}
+			
+		} else {
+			return echo.NewHTTPError(http.StatusBadRequest, "Maaf Kriteria tidak ditemukan")	
+		}
+
+
 
 	}
 
@@ -236,18 +252,19 @@ func AddMonev(c echo.Context) (err error) {
 		TotalSkor = append(TotalSkor, total)
 	}
 
-	for i, _ := range TotalSkor {
+	for x, _ := range TotalSkor {
 		
-
 		Monev := &models.Tbl_monev_result_uepkube{}	
 		if monev.Id_kube == 0 { Monev.Id_uep = monev.Id_uep }
 		if monev.Id_uep == 0 { Monev.Id_kube = monev.Id_kube }
-		Monev.Id_indikator = monev.Id_indikator[i]
-		Monev.Skor_total = TotalSkor[i]
+		Monev.Id_indikator = monev.Id_indikator[x]
+		Monev.Skor_total = TotalSkor[x]
 
 		log.Println("MonevResult : ", Monev)
 		// store total_skor to Tbl_monev_result_uepkube
-		if err := con.Create(&Monev).Error; err != nil {return echo.ErrInternalServerError}		
+		if err := con.Create(&Monev).Error; err != nil {
+			return echo.ErrInternalServerError
+		}		
 	}
 
 	// calculate sum_total
