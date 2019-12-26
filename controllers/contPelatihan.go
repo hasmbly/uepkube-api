@@ -51,7 +51,12 @@ func GetPelatihan(c echo.Context) error {
 	q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
 		return q.Where("id_pelatihan = ?", id).Where("type = 'IMAGE' ")	
 	})	
-	q = q.First(&Pelatihan, id)
+	// q = q.First(&Pelatihan, id)
+	if err := q.First(&Pelatihan, id).Error; gorm.IsRecordNotFoundError(err) {
+		return echo.ErrNotFound
+	} else if err != nil {
+		return echo.ErrInternalServerError
+	}	
 
 	// for i,_ := range Pelatihan.Photo {
 
@@ -263,8 +268,6 @@ func AddPelatihanKehadiran(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, "Maaf Pelatihan sudah Tidak Aktif")
 	}
 
-	// check if pelatihan is already started
-
 	// check if user is already added
 	for i, _ := range kehadirans.Kehadiran {
 		var id []int
@@ -307,10 +310,68 @@ func AddPelatihanKehadiran(c echo.Context) (err error) {
 			return echo.NewHTTPError(http.StatusBadRequest, "Maaf Kapasitas Kehadiran User melebihi Kuota pelatihan")
 		}
 
+		if kehadirans.Kehadiran[i].Flag == "UEP" {
+			var id_uep []int
+			if err := con.Table("tbl_uep").Where("id_uep = ?", kehadirans.Kehadiran[i].Id_user).Pluck("id_uep", &id_uep).Error; err != nil { return echo.ErrInternalServerError }
+			if len(id_uep) != 0 {
+				kehadirans.Kehadiran[i].Id_uep = id_uep[0]
+			}
+		} else if kehadirans.Kehadiran[i].Flag == "KUBE" {
+			var id_kube []int
+			var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}
+			for iKm, _ := range KubesMember {
+				if err := con.Table("tbl_kube").Where(KubesMember[iKm] + " = ?", kehadirans.Kehadiran[i].Id_user).Pluck("id_kube", &id_kube).Error; err != nil { return echo.ErrInternalServerError }
+				if len(id_kube) != 0 {
+					log.Println("id_kube", id_kube[0])
+					kehadirans.Kehadiran[i].Id_kube = id_kube[0]
+					log.Println("kehadiran.id_kube", kehadirans.Kehadiran[i].Id_kube)
+					break
+				}
+			}			
+		}
+
 		// store kehadiran pelatihan
 		Kehadiran = &kehadirans.Kehadiran[i]
 		log.Println(Kehadiran)
-		if err := con.Create(&Kehadiran).Error; err != nil { return echo.ErrInternalServerError }
+		if err := con.Create(&Kehadiran).Error; err != nil { 
+			return echo.ErrInternalServerError 
+		} else if err == nil {
+			// add uepkube_history_pelatihan
+			pelatihanHistory	:= &models.Tbl_pelatihan_uepkube{}	
+			
+			pelatihanHistory.Id_pelatihan = kehadirans.Kehadiran[i].Id_pelatihan
+
+			if kehadirans.Kehadiran[i].Flag == "UEP" { 
+				pelatihanHistory.Id_uep = kehadirans.Kehadiran[i].Id_user 
+				// get id_periods
+				var id_periods []int
+				if err := con.Table("tbl_periods_uepkube").Where("id_uep", kehadirans.Kehadiran[i].Id_uep).Pluck("id_periods", &id_periods).Error; err != nil { 
+					break
+					return echo.ErrInternalServerError 
+				}
+					if len(id_periods) != 0 {
+						pelatihanHistory.Id_periods = id_periods[0]
+					} else {
+						log.Println("sorry id_periods is Null")
+					}
+				}
+			if kehadirans.Kehadiran[i].Flag == "KUBE" {
+				pelatihanHistory.Id_kube = kehadirans.Kehadiran[i].Id_user 
+				// get id_periods
+				var id_periods []int
+				if err := con.Table("tbl_periods_uepkube").Where("id_kube", kehadirans.Kehadiran[i].Id_kube).Pluck("id_periods", &id_periods).Error; err != nil { 
+					break
+					return echo.ErrInternalServerError 
+				}
+					if len(id_periods) != 0 {
+						pelatihanHistory.Id_periods = id_periods[0]
+					} else {
+						log.Println("sorry id_periods is Null")
+					}	
+			}
+
+			if err := con.Create(&pelatihanHistory).Error; err != nil { return echo.ErrInternalServerError } 			
+		}
 
 		// decrease quota after adding user
 		if len(quota) != 0 {

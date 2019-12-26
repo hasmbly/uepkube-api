@@ -168,6 +168,10 @@ definitions:
       jenis_usaha:
         $ref: '#/definitions/models.Tbl_jenis_usaha'
         type: object
+      monev_history:
+        items:
+          $ref: '#/definitions/models.Tbl_lapkeu_uepkube'
+        type: array
       nama_kube:
         type: string
       nama_usaha:
@@ -281,6 +285,7 @@ definitions:
         type: number
       pendamping:
         $ref: '#/definitions/models.Tbl_pendamping'
+        description: "Id_periods \t\tint\t\t\t`json:\"id_periods\"`"
         type: object
       pendapatan:
         type: number
@@ -361,9 +366,13 @@ definitions:
         type: string
       id:
         type: integer
+      id_kube:
+        type: integer
       id_pelatihan:
         type: integer
       id_pendamping:
+        type: integer
+      id_uep:
         type: integer
       id_user:
         type: integer
@@ -518,6 +527,10 @@ definitions:
         items:
           $ref: '#/definitions/models.Tbl_monev_uepkube'
         type: array
+      pelatihan_history:
+        items:
+          $ref: '#/definitions/models.Tbl_pelatihan_uepkube'
+        type: array
       peruntukan:
         type: string
       quota:
@@ -589,9 +602,13 @@ definitions:
         type: string
       id:
         type: integer
+      id_kube:
+        type: integer
       id_pelatihan:
         type: integer
       id_pendamping:
+        type: integer
+      id_uep:
         type: integer
       id_user:
         type: integer
@@ -619,6 +636,45 @@ definitions:
         enum:
         - PDF
         - ' IMAGE'
+        type: string
+    type: object
+  models.Tbl_lapkeu_uepkube:
+    properties:
+      bulan:
+        type: integer
+      created_at:
+        type: string
+      created_by:
+        type: string
+      detail:
+        type: object
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      id_pendamping:
+        type: integer
+      id_uep:
+        type: integer
+      modal:
+        type: number
+      omset:
+        type: number
+      pendamping:
+        $ref: '#/definitions/models.Tbl_pendamping'
+        description: "Id_periods \t\tint\t\t\t`json:\"id_periods\"`"
+        type: object
+      pendapatan:
+        type: number
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_lapkeu_files'
+        type: array
+      tahun:
+        type: string
+      updated_at:
+        type: string
+      updated_by:
         type: string
     type: object
   models.Tbl_monev_category:
@@ -692,6 +748,19 @@ definitions:
         - PDF
         - ' IMAGE'
         type: string
+    type: object
+  models.Tbl_pelatihan_uepkube:
+    properties:
+      id:
+        type: integer
+      id_kube:
+        type: integer
+      id_pelatihan:
+        type: integer
+      id_periods:
+        type: integer
+      id_uep:
+        type: integer
     type: object
   models.Tbl_pendamping:
     properties:

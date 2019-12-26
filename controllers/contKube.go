@@ -70,10 +70,16 @@ func GetKube(c echo.Context) error {
 			q := con
 			q = q.Model(&Kube)
 			q = q.Preload("JenisUsaha")
+			q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
+				return q.Where("id_kube = ?", id)
+			})			
 			q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
 				return q.Where("id_kube = ?", id).Preload("JenisUsaha")
 			})
-			q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
+			q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
+			q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
+				return q.Where("id_kube = ?", id)
+			})				
 			q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
 				return q.Where("id_kube = ?", id)
 			})
@@ -88,11 +94,13 @@ func GetKube(c echo.Context) error {
 			tmp := []models.Kubes_items{}
 
 			for i, _ := range KubesMember {
-			
 				if err := con.Table("tbl_kube t1").Select("t2.*, '" +KubesMember[i] + "' as posisi").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[i]).Where("id_kube = ?", id).Scan(&tmp).Error; err != nil { return echo.ErrInternalServerError }
-
 				if len(tmp) != 0 {
+					Regions := models.View_address{}
+					if err := con.Table("view_address").Select("view_address.*").Where("id_kelurahan = ?", tmp[0].Id_kelurahan).Scan(&Regions).Error; err != nil { return echo.ErrInternalServerError }
 					Kube.Items = append(Kube.Items, tmp[0])
+					Kube.Region = Regions
+					log.Println("id_kelurahan kube : ", Kube.Region)
 				}
 			}
 

@@ -40,14 +40,23 @@ func GetInventaris(c echo.Context) error {
 		q = q.Preload("Photo")
 		q = q.Preload("Pendamping")
 		q = q.Where("id_uep = ?", id)
-		q = q.First(&Inventory)
+		// q = q.First(&Inventory)
+		if err := q.First(&Inventory).Error; gorm.IsRecordNotFoundError(err) {
+			return echo.ErrNotFound
+		} else if err != nil {
+			return echo.ErrInternalServerError
+		}		
 	} else if Field == 1 {
 		q := con
 		q = q.Model(&models.Tbl_lapkeu_uepkube{})
 		q = q.Preload("Photo")
 		q = q.Preload("Pendamping")
 		q = q.Where("id_kube = ?", id)
-		q = q.First(&Inventory)		
+		if err := q.First(&Inventory).Error; gorm.IsRecordNotFoundError(err) {
+			return echo.ErrNotFound
+		} else if err != nil {
+			return echo.ErrInternalServerError
+		}	
 	}
 
 	// photo

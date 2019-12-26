@@ -38,14 +38,22 @@ func GetLapKeu(c echo.Context) error {
 		q = q.Preload("Photo")
 		q = q.Preload("Pendamping")
 		q = q.Where("id_uep = ?", id)
-		q = q.First(&Lapkeu)
+		if err := q.First(&Lapkeu).Error; gorm.IsRecordNotFoundError(err) {
+			return echo.ErrNotFound
+		} else if err != nil {
+			return echo.ErrInternalServerError
+		}
 	} else if Field == 1 {
 		q := con
 		q = q.Model(&models.Tbl_lapkeu_uepkube{})
 		q = q.Preload("Photo")
 		q = q.Preload("Pendamping")
 		q = q.Where("id_kube = ?", id)
-		q = q.First(&Lapkeu)		
+		if err := q.First(&Lapkeu).Error; gorm.IsRecordNotFoundError(err) {
+			return echo.ErrNotFound
+		} else if err != nil {
+			return echo.ErrInternalServerError
+		}	
 	}
 
 	// photo
@@ -176,7 +184,7 @@ func AddLapKeu(c echo.Context) (err error) {
 	Lapkeu := &models.Tbl_lapkeu_uepkube{}
 	Lapkeu = lapkeu.Tbl_lapkeu_uepkube
 
-	if err := con.Create(&Lapkeu).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Create(&Lapkeu).Error; err != nil { return echo.ErrInternalServerError }
 
 	defer con.Close()
 

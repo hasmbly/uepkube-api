@@ -32,7 +32,12 @@ func GetAktivitas(c echo.Context) error {
 	q := con
 	q = q.Model(&Activity)
 	q = q.Preload("Photo")
-	q = q.First(&Activity, id)
+	// q = q.First(&Activity, id)
+	if err := q.First(&Activity, id).Error; gorm.IsRecordNotFoundError(err) {
+		return echo.ErrNotFound
+	} else if err != nil {
+		return echo.ErrInternalServerError
+	}		
 
 	for i, _ := range Activity.Photo {
 			id_photo := Activity.Photo[i].Id

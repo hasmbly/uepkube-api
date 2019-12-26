@@ -117,7 +117,8 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 				 if len(id_periods) != 0 {
 					q = q.Where("id_periods = ?", id_periods[0])
 				 } else {
-					q = q.Where("id_periods = ?", id_periods[0])
+					// q = q.Where("id_periods = ?", id_periods[0])
+					continue
 				 }
 			} else {
 				continue

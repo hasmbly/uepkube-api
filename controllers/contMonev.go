@@ -29,8 +29,12 @@ func GetMonev(c echo.Context) error {
 	q = q.Model(&Monev)
 	q = q.Preload("Category")
 	q = q.Preload("Pendamping")
-	q = q.First(&Monev, id)
-
+	// q = q.First(&Monev, id)
+	if err := q.First(&Monev, id).Error; gorm.IsRecordNotFoundError(err) {
+		return echo.ErrNotFound
+	} else if err != nil {
+		return echo.ErrInternalServerError
+	}
 	// Detail Uep_kube
 
 	// Data Monev
@@ -80,6 +84,9 @@ func GetMonev(c echo.Context) error {
 			return q.Where("id_uep = ?", id).Preload("JenisUsaha")
 		})
 		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
+		q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})				
 		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_uep = ?", id)
 		})
@@ -119,7 +126,10 @@ func GetMonev(c echo.Context) error {
 		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_kube = ?", id).Preload("JenisUsaha")
 		})
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
+		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
+		q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})			
 		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_kube = ?", id)
 		})

@@ -1456,6 +1456,12 @@
                     "type": "object",
                     "$ref": "#/definitions/models.Tbl_jenis_usaha"
                 },
+                "monev_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_lapkeu_uepkube"
+                    }
+                },
                 "nama_kube": {
                     "type": "string"
                 },
@@ -1621,6 +1627,7 @@
                     "type": "number"
                 },
                 "pendamping": {
+                    "description": "Id_periods \t\tint\t\t\t`json:\"id_periods\"`",
                     "type": "object",
                     "$ref": "#/definitions/models.Tbl_pendamping"
                 },
@@ -1743,10 +1750,16 @@
                 "id": {
                     "type": "integer"
                 },
+                "id_kube": {
+                    "type": "integer"
+                },
                 "id_pelatihan": {
                     "type": "integer"
                 },
                 "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_uep": {
                     "type": "integer"
                 },
                 "id_user": {
@@ -1976,6 +1989,12 @@
                         "$ref": "#/definitions/models.Tbl_monev_uepkube"
                     }
                 },
+                "pelatihan_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_pelatihan_uepkube"
+                    }
+                },
                 "peruntukan": {
                     "type": "string"
                 },
@@ -2085,10 +2104,16 @@
                 "id": {
                     "type": "integer"
                 },
+                "id_kube": {
+                    "type": "integer"
+                },
                 "id_pelatihan": {
                     "type": "integer"
                 },
                 "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_uep": {
                     "type": "integer"
                 },
                 "id_user": {
@@ -2131,6 +2156,64 @@
                         "PDF",
                         " IMAGE"
                     ]
+                }
+            }
+        },
+        "models.Tbl_lapkeu_uepkube": {
+            "type": "object",
+            "properties": {
+                "bulan": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "object"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "id_uep": {
+                    "type": "integer"
+                },
+                "modal": {
+                    "type": "number"
+                },
+                "omset": {
+                    "type": "number"
+                },
+                "pendamping": {
+                    "description": "Id_periods \t\tint\t\t\t`json:\"id_periods\"`",
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_pendamping"
+                },
+                "pendapatan": {
+                    "type": "number"
+                },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_lapkeu_files"
+                    }
+                },
+                "tahun": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
                 }
             }
         },
@@ -2237,6 +2320,26 @@
                         "PDF",
                         " IMAGE"
                     ]
+                }
+            }
+        },
+        "models.Tbl_pelatihan_uepkube": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "id_kube": {
+                    "type": "integer"
+                },
+                "id_pelatihan": {
+                    "type": "integer"
+                },
+                "id_periods": {
+                    "type": "integer"
+                },
+                "id_uep": {
+                    "type": "integer"
                 }
             }
         },

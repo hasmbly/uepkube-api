@@ -98,6 +98,7 @@ Tbl_uep struct {
 	Status			int 		`json:"status"`
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
+	LapkeuHistory 	[]*Tbl_lapkeu_uepkube `json:"monev_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`	
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_uep"`	
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_uep"`
 }
@@ -128,6 +129,7 @@ Tbl_uep struct {
 	Updated_by		*string 	`json:"updated_by"`
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
+	LapkeuHistory 	[]*Tbl_lapkeu_uepkube `json:"monev_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`	
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_kube"`	
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_kube"`
 	Items 			[]Kubes_items `json:"items"`
@@ -272,7 +274,6 @@ Tbl_activity_files struct{
 	Is_display		int 		`json:"is_display"`	
 }
 
-
 Tbl_faq struct{
 	Id_faq 		int 		`json:"id_faq" gorm:"primary_key"`
 	Pertanyaan 	string 		`json:"pertanyaan"`
@@ -302,6 +303,7 @@ Tbl_bantuan_periods struct{
 	Usaha 			*Tbl_usaha_uepkube `json:"usaha" gorm:"foreignkey:id_periods;association_foreignkey:id"`
 	CreditDebit 	[]*Tbl_credit_debit `json:"credit_debit" gorm:"foreignkey:id_periods;association_foreignkey:id"`
 	MonevHistory 	[]*Tbl_monev_uepkube `json:"monev_history" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+	PelatihanHistory 	[]*Tbl_pelatihan_uepkube `json:"pelatihan_history" gorm:"foreignkey:id_periods;association_foreignkey:id"`		
 }
 
 Tbl_credit_debit struct{
@@ -328,6 +330,7 @@ Tbl_lapkeu_uepkube struct{
 	Omset 			float32		`json:"omset" sql:"type:decimal(10,2);"`
 	Pendapatan 		float32		`json:"pendapatan" sql:"type:decimal(10,2);"`
 	Id_pendamping 	int			`json:"id_pendamping"`
+	// Id_periods 		int			`json:"id_periods"`
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
@@ -409,6 +412,8 @@ Tbl_kehadiran struct{
 	Id 				int 		`json:"id" gorm:"primary_key"`
 	Id_pelatihan 	int			`json:"id_pelatihan"`
 	Id_user 		int			`json:"id_user"`
+	Id_uep 			int			`json:"id_uep" sql:"default:null"`
+	Id_kube 		int			`json:"id_kube" sql:"default:null"`	
 	Id_pendamping 	int			`json:"id_pendamping"`
 	Flag 			string		`json:"flag"`
 }
@@ -513,6 +518,16 @@ Tbl_uepkube_files struct {
 	Description		string 		`json:"description"`	
 	Type			string 		`json:"type" enums:"PDF, IMAGE"`
 	Is_display		int 		`json:"is_display"`	
+}
+
+Tbl_pelatihan_uepkube struct {
+	Id 				int 		`json:"id" gorm:"primary_key"`
+	Id_uep 	 		int 		`json:"id_uep" sql:"DEFAULT:NULL"`
+	Id_kube 	 	int 		`json:"id_kube" sql:"DEFAULT:NULL"`
+	Id_pelatihan 	int 		`json:"id_pelatihan"`
+	Id_periods 	 	int 		`json:"id_periods"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 }
 
 /**
