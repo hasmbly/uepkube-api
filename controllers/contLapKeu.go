@@ -18,6 +18,9 @@ import (
 
 func GetLapKeu(c echo.Context) error {
 	id 		:= c.QueryParam("id")
+	
+	For, _	:= strconv.Atoi(c.QueryParam("for"))
+	var Field int = int(For) // flag uep : 0 | kube : 1
 
 	var tmpPath, urlPath, blobFile, flag, host string
 	flag = "LAPKEU"
@@ -26,13 +29,24 @@ func GetLapKeu(c echo.Context) error {
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
-
+	
 	Lapkeu := models.Tbl_lapkeu_uepkube{}
-	q := con
-	q = q.Model(&Lapkeu)
-	q = q.Preload("Photo")
-	q = q.Preload("Pendamping")
-	q = q.First(&Lapkeu, id)
+	
+	if Field == 0 {
+		q := con
+		q = q.Model(&models.Tbl_lapkeu_uepkube{})
+		q = q.Preload("Photo")
+		q = q.Preload("Pendamping")
+		q = q.Where("id_uep = ?", id)
+		q = q.First(&Lapkeu)
+	} else if Field == 1 {
+		q := con
+		q = q.Model(&models.Tbl_lapkeu_uepkube{})
+		q = q.Preload("Photo")
+		q = q.Preload("Pendamping")
+		q = q.Where("id_kube = ?", id)
+		q = q.First(&Lapkeu)		
+	}
 
 	// photo
 	for i, _ := range Lapkeu.Photo {

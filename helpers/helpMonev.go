@@ -11,6 +11,7 @@ import (
 	"math"	
 	"fmt"
 	"time"
+	"strconv"
 )
 
 type Tbl_pendamping struct {
@@ -107,8 +108,10 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 					 con.Table("tbl_bantuan_periods").Where("start_date like ?", "%"+v+"%").Pluck("id", &id_periods)					
 					} else if v == "" {
 						var CurrYear string
-						year, _ , _ := time.Now().Date()						
-						log.Println("currYear : ", year)
+						year, _ , _ := time.Now().Date()
+						CurrYear = strconv.Itoa(year)
+						log.Println("currYear : ", CurrYear)
+					 	con.Table("tbl_bantuan_periods").Where("start_date like ?", "%"+ CurrYear +"%").Pluck("id", &id_periods)						
 					}
 
 				 if len(id_periods) != 0 {
@@ -119,7 +122,7 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 			} else {
 				continue
 			}
-		}		
+		}
 
 		if o == "LIKE" || o == "like" {
 			if k == "periods" { continue }
@@ -144,6 +147,9 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 	if len(Monevs) != 0 {
 
 		for i, _ := range Monevs {
+
+			if Monevs[i].Is_monev == "BELUM" { BelumMonev = BelumMonev+1 }
+			if Monevs[i].Is_monev == "SUDAH" { SudahMonev = SudahMonev+1 }
 
 			if Monevs[i].Id_uep != 0 {
 				id := Monevs[i].Id_uep
