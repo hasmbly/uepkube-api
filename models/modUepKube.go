@@ -98,7 +98,7 @@ Tbl_uep struct {
 	Status			int 		`json:"status"`
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	LapkeuHistory 	[]*Tbl_lapkeu_uepkube `json:"monev_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`	
+	LapkeuHistory 	[]*Tbl_lapkeu_uepkube `json:"lapkeu_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`	
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_uep"`	
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_uep"`
 }
@@ -129,7 +129,7 @@ Tbl_uep struct {
 	Updated_by		*string 	`json:"updated_by"`
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	LapkeuHistory 	[]*Tbl_lapkeu_uepkube `json:"monev_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`	
+	LapkeuHistory 	[]*Tbl_lapkeu_uepkube `json:"lapkeu_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`	
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_kube"`	
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_kube"`
 	Items 			[]Kubes_items `json:"items"`

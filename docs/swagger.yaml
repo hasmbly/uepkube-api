@@ -168,7 +168,7 @@ definitions:
       jenis_usaha:
         $ref: '#/definitions/models.Tbl_jenis_usaha'
         type: object
-      monev_history:
+      lapkeu_history:
         items:
           $ref: '#/definitions/models.Tbl_lapkeu_uepkube'
         type: array

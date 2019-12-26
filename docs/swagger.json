@@ -1456,7 +1456,7 @@
                     "type": "object",
                     "$ref": "#/definitions/models.Tbl_jenis_usaha"
                 },
-                "monev_history": {
+                "lapkeu_history": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.Tbl_lapkeu_uepkube"

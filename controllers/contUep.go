@@ -65,9 +65,6 @@ func GetUep(c echo.Context) error {
 		return q.Where("id_uep = ?", id).Preload("JenisUsaha")
 	})
 	q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-	q = q.Preload("PeriodsHistory.BantuanPeriods.LapkeuHistory", func(q *gorm.DB) *gorm.DB {
-		return q.Where("id_uep = ?", id)
-	})	
 	// q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
 	// 	return q.Where("id_uep = ?", id)
 	// })	
