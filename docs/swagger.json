@@ -1627,7 +1627,6 @@
                     "type": "number"
                 },
                 "pendamping": {
-                    "description": "Id_periods \t\tint\t\t\t`json:\"id_periods\"`",
                     "type": "object",
                     "$ref": "#/definitions/models.Tbl_pendamping"
                 },
@@ -2193,7 +2192,6 @@
                     "type": "number"
                 },
                 "pendamping": {
-                    "description": "Id_periods \t\tint\t\t\t`json:\"id_periods\"`",
                     "type": "object",
                     "$ref": "#/definitions/models.Tbl_pendamping"
                 },

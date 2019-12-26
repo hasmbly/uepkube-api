@@ -330,12 +330,11 @@ Tbl_lapkeu_uepkube struct{
 	Omset 			float32		`json:"omset" sql:"type:decimal(10,2);"`
 	Pendapatan 		float32		`json:"pendapatan" sql:"type:decimal(10,2);"`
 	Id_pendamping 	int			`json:"id_pendamping"`
-	// Id_periods 		int			`json:"id_periods"`
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
-	Created_by   	*string 	`json:"created_by"`
-	Updated_by		*string	 	`json:"updated_by"` 
+	Created_by   	*string 	`json:"created_by" sql:"default:null"`
+	Updated_by		*string	 	`json:"updated_by" sql:"default:null"` 
 	Photo 		 	[]Tbl_lapkeu_files 	`json:"photo" gorm:"foreignkey:id_lapkeu"`
 	Detail 			interface{} `json:"detail" gorm:"-"`
 }

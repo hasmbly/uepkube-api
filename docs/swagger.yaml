@@ -285,7 +285,6 @@ definitions:
         type: number
       pendamping:
         $ref: '#/definitions/models.Tbl_pendamping'
-        description: "Id_periods \t\tint\t\t\t`json:\"id_periods\"`"
         type: object
       pendapatan:
         type: number
@@ -662,7 +661,6 @@ definitions:
         type: number
       pendamping:
         $ref: '#/definitions/models.Tbl_pendamping'
-        description: "Id_periods \t\tint\t\t\t`json:\"id_periods\"`"
         type: object
       pendapatan:
         type: number
