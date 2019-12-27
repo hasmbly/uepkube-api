@@ -66,9 +66,9 @@ func PaginateLapkeu(c echo.Context, r *models.ResPagin) (err error) {
 	return err
 }
 
-func ExecPaginateLapkeu(f *models.PosPagin, offset int, count *int64) (ur []models.Tbl_lapkeu_uepkube, err error) {
+func ExecPaginateLapkeu(f *models.PosPagin, offset int, count *int64) (ur []models.Tbl_lapkeu, err error) {
 
-	Lapkeu := []models.Tbl_lapkeu_uepkube{}
+	Lapkeu := []models.Tbl_lapkeu{}
 
 	con, err := db.CreateCon()
 	if err != nil { return ur, echo.ErrInternalServerError }
@@ -78,7 +78,9 @@ func ExecPaginateLapkeu(f *models.PosPagin, offset int, count *int64) (ur []mode
 	q = q.Model(&Lapkeu)
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Preload("Pendamping")
+	q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+		return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+	})
 	q = q.Preload("Photo")
 
 	for i,_ := range f.Filters {
@@ -117,14 +119,15 @@ func ExecPaginateLapkeu(f *models.PosPagin, offset int, count *int64) (ur []mode
 				q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 				q = q.Select("tbl_uep.*, tbl_user.*")
 				q = q.Preload("JenisUsaha")
-				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-					return q.Where("id_uep = ?", id).Preload("JenisUsaha")
+				q = q.Preload("JenisUsaha")
+				q = q.Preload("LapkeuHistory")
+				q = q.Preload("MonevHistory")
+				q = q.Preload("InventarisHistory")
+				q = q.Preload("PelatihanHistory")
+				q = q.Preload("Region")
+				q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+					return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
 				})
-				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-				q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
-					return q.Where("id_uep = ?", id)
-				})
-				q = q.Preload("Pendamping")
 				q = q.Preload("Kelurahan")
 				q = q.Preload("Kecamatan")
 				q = q.Preload("Kabupaten")
@@ -146,7 +149,7 @@ func ExecPaginateLapkeu(f *models.PosPagin, offset int, count *int64) (ur []mode
 					
 						User.Photo[index].Files = urlPath
 				}
-
+				
 				Lapkeu[i].Detail = User
 
 			} else if Lapkeu[i].Id_kube != 0 {
@@ -157,14 +160,21 @@ func ExecPaginateLapkeu(f *models.PosPagin, offset int, count *int64) (ur []mode
 				q := con
 				q = q.Model(&Kube)
 				q = q.Preload("JenisUsaha")
-				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-					return q.Where("id_kube = ?", id).Preload("JenisUsaha")
-				})
-				q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
-				q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+				q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
 					return q.Where("id_kube = ?", id)
 				})
-				q = q.Preload("Pendamping")
+				q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_kube = ?", id)
+				})	
+				q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_kube = ?", id)
+				})
+				q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+					return q.Where("id_kube = ?", id)
+				})	
+				q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+					return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+				})
 				q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
 					return q.Where("id_kube = ?", id)	
 				})

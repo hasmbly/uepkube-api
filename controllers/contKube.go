@@ -72,18 +72,29 @@ func GetKube(c echo.Context) error {
 			q = q.Preload("JenisUsaha")
 			q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
 				return q.Where("id_kube = ?", id)
+			})
+			q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
+				return q.Where("id_kube = ?", id)
+			})	
+			q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
+				return q.Where("id_kube = ?", id)
+			})
+			q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+				return q.Where("id_kube = ?", id)
 			})			
-			q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-				return q.Where("id_kube = ?", id).Preload("JenisUsaha")
+			// q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
+			// 	return q.Where("id_kube = ?", id).Preload("JenisUsaha")
+			// })
+			// q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
+			// q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
+			// 	return q.Where("id_kube = ?", id)
+			// })				
+			// q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+			// 	return q.Where("id_kube = ?", id)
+			// })
+			q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+				return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
 			})
-			q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-			q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
-				return q.Where("id_kube = ?", id)
-			})				
-			q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
-				return q.Where("id_kube = ?", id)
-			})
-			q = q.Preload("Pendamping")
 			q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
 				return q.Where("id_kube = ?", id)	
 			})
@@ -100,7 +111,7 @@ func GetKube(c echo.Context) error {
 					if err := con.Table("view_address").Select("view_address.*").Where("id_kelurahan = ?", tmp[0].Id_kelurahan).Scan(&Regions).Error; err != nil { return echo.ErrInternalServerError }
 					Kube.Items = append(Kube.Items, tmp[0])
 					Kube.Region = Regions
-					log.Println("id_kelurahan kube : ", Kube.Region)
+					// log.Println("id_kelurahan kube : ", Kube.Region)
 				}
 			}
 
@@ -178,9 +189,9 @@ func AddKube(c echo.Context) (err error) {
 	if Kube.Id_jenis_usaha == 0 { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id jenis usaha") 
 	}
-	if Kube.Id_periods == 0 { 
-		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill id_periods ( Bantuan Modal )") 
-	}
+	// if Kube.Id_periods == 0 { 
+	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please Fill id_periods ( Bantuan Modal )") 
+	// }
 	if Kube.Nama_usaha == "" { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha Modal") 
 	}	
@@ -256,36 +267,35 @@ func AddKube(c echo.Context) (err error) {
 	if err := con.Create(&kube).Error; err != nil {return echo.ErrInternalServerError}	
 
 	// store usaha_kube
-	kubeUsaha := &models.Tbl_usaha_uepkube{}
-	kubeUsaha.Id_kube = Kube.Id_kube
-	kubeUsaha.Nama_usaha = Kube.Nama_usaha
-	kubeUsaha.Id_jenis_usaha = Kube.Id_jenis_usaha
-	kubeUsaha.Id_periods = Kube.Id_periods
-	if err := con.Create(&kubeUsaha).Error; err != nil {return echo.ErrInternalServerError}	
+	// kubeUsaha := &models.Tbl_usaha_uepkube{}
+	// kubeUsaha.Id_kube = Kube.Id_kube
+	// kubeUsaha.Nama_usaha = Kube.Nama_usaha
+	// kubeUsaha.Id_jenis_usaha = Kube.Id_jenis_usaha
+	// kubeUsaha.Id_periods = Kube.Id_periods
+	// if err := con.Create(&kubeUsaha).Error; err != nil {return echo.ErrInternalServerError}	
 
 	// store bantuan_periods history
-	kubePeriods := &models.Tbl_periods_uepkube{}
-	kubePeriods.Id_kube = Kube.Id_kube
-	kubePeriods.Id_periods = Kube.Id_periods
-	if err := con.Create(&kubePeriods).Error; err != nil {return echo.ErrInternalServerError}	
+	// kubePeriods := &models.Tbl_periods_uepkube{}
+	// kubePeriods.Id_kube = Kube.Id_kube
+	// kubePeriods.Id_periods = Kube.Id_periods
+	// if err := con.Create(&kubePeriods).Error; err != nil {return echo.ErrInternalServerError}	
 
 	// store credit_debit
-	creditDebit := &models.Tbl_credit_debit{}
+	creditDebit := &models.Tbl_inventory{}
 	creditDebit.Id_kube = Kube.Id_kube
 	creditDebit.Debit = 1
-	creditDebit.Id_periods = Kube.Id_periods
-	var nilai []float32
-	con.Table("tbl_bantuan_periods").Where("id = ?", creditDebit.Id_periods).Pluck("bantuan_modal", &nilai)
-	creditDebit.Nilai = nilai[0]
-	creditDebit.Deskripsi = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
+	// var nilai []float32
+	// con.Table("tbl_bantuan_periods").Where("id = ?", creditDebit.Id_periods).Pluck("bantuan_modal", &nilai)
+	// creditDebit.Nilai = nilai[0]
+	// creditDebit.Description = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
 	if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
 
 	// add queue monev_uepkube
-	monev := &models.Tbl_monev_uepkube{}
+	monev := &models.Tbl_monev_final{}
 	monev.Id_kube = Kube.Id_kube
 	monev.Id_pendamping = Kube.Id_pendamping
 	monev.Is_monev = "BELUM"
-	monev.Id_periods = Kube.Id_periods
+	// monev.Id_periods = Kube.Id_periods
 	monev.Flag = "KUBE"
 	if err := con.Create(&monev).Error; err != nil {return echo.ErrInternalServerError}
 
@@ -334,14 +344,14 @@ func UpdateKube(c echo.Context) (err error) {
 	if err := con.Table("tbl_kube").Where("id_kube = ?",kube.Id_kube).UpdateColumn("status", kube.Status).Error; err != nil {return echo.ErrInternalServerError}
 
 	// store usaha_kube
-	kubeUsaha := &models.Tbl_usaha_uepkube{}
-	kubeUsaha.Id_kube = Kube.Id_kube
-	kubeUsaha.Nama_usaha = Kube.Nama_usaha
-	kubeUsaha.Id_jenis_usaha = Kube.Id_jenis_usaha
-	kubeUsaha.Id_periods = Kube.Id_periods
-	if err := con.Model(&models.Tbl_usaha_uepkube{}).Where("id_kube = ?", kubeUsaha.Id_kube).Where("id_jenis_usaha = ?", kubeUsaha.Id_jenis_usaha).Where("id_periods = ?", kubeUsaha.Id_periods).UpdateColumns(&kubeUsaha).Error; err != nil {
-		return echo.ErrInternalServerError
-	}
+	// kubeUsaha := &models.Tbl_usaha_uepkube{}
+	// kubeUsaha.Id_kube = Kube.Id_kube
+	// kubeUsaha.Nama_usaha = Kube.Nama_usaha
+	// kubeUsaha.Id_jenis_usaha = Kube.Id_jenis_usaha
+	// kubeUsaha.Id_periods = Kube.Id_periods
+	// if err := con.Model(&models.Tbl_usaha_uepkube{}).Where("id_kube = ?", kubeUsaha.Id_kube).Where("id_jenis_usaha = ?", kubeUsaha.Id_jenis_usaha).Where("id_periods = ?", kubeUsaha.Id_periods).UpdateColumns(&kubeUsaha).Error; err != nil {
+	// 	return echo.ErrInternalServerError
+	// }
 
 	defer con.Close()
 

@@ -30,11 +30,11 @@ func GetLapKeu(c echo.Context) error {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 	
-	Lapkeu := models.Tbl_lapkeu_uepkube{}
+	Lapkeu := models.Tbl_lapkeu{}
 	
 	if Field == 0 {
 		q := con
-		q = q.Model(&models.Tbl_lapkeu_uepkube{})
+		q = q.Model(&models.Tbl_lapkeu{})
 		q = q.Preload("Photo")
 		q = q.Preload("Pendamping")
 		q = q.Where("id_uep = ?", id)
@@ -45,7 +45,7 @@ func GetLapKeu(c echo.Context) error {
 		}
 	} else if Field == 1 {
 		q := con
-		q = q.Model(&models.Tbl_lapkeu_uepkube{})
+		q = q.Model(&models.Tbl_lapkeu{})
 		q = q.Preload("Photo")
 		q = q.Preload("Pendamping")
 		q = q.Where("id_kube = ?", id)
@@ -81,14 +81,22 @@ func GetLapKeu(c echo.Context) error {
 		q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 		q = q.Select("tbl_uep.*, tbl_user.*")
 		q = q.Preload("JenisUsaha")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-			return q.Where("id_uep = ?", id).Preload("JenisUsaha")
-		})
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+		q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})			
+		q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})	
+		q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_uep = ?", id)
 		})
-		q = q.Preload("Pendamping")
+		q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})
+		q = q.Preload("Region")
+		q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+			return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+		})
 		q = q.Preload("Kelurahan")
 		q = q.Preload("Kecamatan")
 		q = q.Preload("Kabupaten")
@@ -121,14 +129,21 @@ func GetLapKeu(c echo.Context) error {
 		q := con
 		q = q.Model(&Kube)
 		q = q.Preload("JenisUsaha")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-			return q.Where("id_kube = ?", id).Preload("JenisUsaha")
-		})
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
-		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+		q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_kube = ?", id)
 		})
-		q = q.Preload("Pendamping")
+		q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})	
+		q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})
+		q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})	
+		q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+			return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+		})
 		q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_kube = ?", id)	
 		})
@@ -181,8 +196,8 @@ func AddLapKeu(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	Lapkeu := &models.Tbl_lapkeu_uepkube{}
-	Lapkeu = lapkeu.Tbl_lapkeu_uepkube
+	Lapkeu := &models.Tbl_lapkeu{}
+	Lapkeu = lapkeu.Tbl_lapkeu
 
 	if err := con.Create(&Lapkeu).Error; err != nil { return echo.ErrInternalServerError }
 
@@ -203,14 +218,14 @@ func UpdateLapKeu(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
 	}
 
-	Lapkeu := &models.Tbl_lapkeu_uepkube{}
-	Lapkeu = lapkeu.Tbl_lapkeu_uepkube
+	Lapkeu := &models.Tbl_lapkeu{}
+	Lapkeu = lapkeu.Tbl_lapkeu
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	if err := con.Model(&models.Tbl_lapkeu_uepkube{}).UpdateColumns(&Lapkeu).Error; err != nil {
+	if err := con.Model(&models.Tbl_lapkeu{}).UpdateColumns(&Lapkeu).Error; err != nil {
 		return echo.ErrInternalServerError
 	}
 
@@ -227,7 +242,7 @@ func DeleteLapKeu(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id")
 	}
 
-	lapkeu := &models.Tbl_lapkeu_uepkube{}
+	lapkeu := &models.Tbl_lapkeu{}
 	lapkeu.Id = id
 
 	con, err := db.CreateCon()

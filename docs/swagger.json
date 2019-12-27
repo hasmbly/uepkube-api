@@ -1345,17 +1345,17 @@
         "models.Inventory": {
             "type": "object",
             "properties": {
-                "created_at": {
-                    "type": "string"
+                "credit": {
+                    "type": "number"
                 },
-                "created_by": {
+                "debit": {
+                    "type": "number"
+                },
+                "deskripsi": {
                     "type": "string"
                 },
                 "detail": {
                     "type": "object"
-                },
-                "harga": {
-                    "type": "number"
                 },
                 "id": {
                     "type": "integer"
@@ -1369,26 +1369,13 @@
                 "id_uep": {
                     "type": "integer"
                 },
-                "merk": {
-                    "type": "string"
-                },
-                "nama": {
-                    "type": "string"
-                },
-                "pendamping": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Tbl_pendamping"
-                },
                 "photo": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_activity_files"
+                        "$ref": "#/definitions/models.Tbl_inventory_files"
                     }
                 },
-                "updated_at": {
-                    "type": "string"
-                },
-                "updated_by": {
+                "transaction_at": {
                     "type": "string"
                 }
             }
@@ -1425,6 +1412,9 @@
         "models.Kube": {
             "type": "object",
             "properties": {
+                "bantuan": {
+                    "type": "number"
+                },
                 "created_by": {
                     "type": "string"
                 },
@@ -1440,11 +1430,14 @@
                 "id_pendamping": {
                     "type": "integer"
                 },
-                "id_periods": {
-                    "type": "integer"
-                },
                 "ig": {
                     "type": "string"
+                },
+                "inventaris_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_inventory"
+                    }
                 },
                 "items": {
                     "type": "array",
@@ -1459,7 +1452,13 @@
                 "lapkeu_history": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_lapkeu_uepkube"
+                        "$ref": "#/definitions/models.Tbl_lapkeu"
+                    }
+                },
+                "monev_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_monev_final"
                     }
                 },
                 "nama_kube": {
@@ -1468,15 +1467,15 @@
                 "nama_usaha": {
                     "type": "string"
                 },
+                "pelatihan_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_kehadiran"
+                    }
+                },
                 "pendamping": {
                     "type": "object",
                     "$ref": "#/definitions/models.Tbl_pendamping"
-                },
-                "periods_history": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Tbl_periods_uepkube"
-                    }
                 },
                 "photo": {
                     "type": "array",
@@ -1743,6 +1742,9 @@
         "models.PelatihanKehadiran": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "flag": {
                     "type": "string"
                 },
@@ -1765,6 +1767,9 @@
                     "type": "integer"
                 },
                 "nama": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -1914,25 +1919,32 @@
         "models.Produk": {
             "type": "object",
             "properties": {
+                "deskripsi": {
+                    "type": "string"
+                },
                 "id": {
+                    "type": "integer"
+                },
+                "id_jp": {
                     "type": "integer"
                 },
                 "id_kube": {
                     "type": "integer"
                 },
-                "id_produk": {
-                    "type": "integer"
-                },
                 "id_uep": {
                     "type": "integer"
                 },
-                "id_usaha": {
-                    "type": "integer"
+                "jenis_produk": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_jenis_produk"
+                },
+                "nama_produk": {
+                    "type": "string"
                 },
                 "photo": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_produk_photo"
+                        "$ref": "#/definitions/models.Tbl_produk_files"
                     }
                 }
             }
@@ -1970,29 +1982,11 @@
                 "bantuan_modal": {
                     "type": "number"
                 },
-                "credit_debit": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Tbl_credit_debit"
-                    }
-                },
                 "end_date": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
-                },
-                "monev_history": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Tbl_monev_uepkube"
-                    }
-                },
-                "pelatihan_history": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Tbl_pelatihan_uepkube"
-                    }
                 },
                 "peruntukan": {
                     "type": "string"
@@ -2005,27 +1999,23 @@
                 },
                 "status": {
                     "type": "integer"
-                },
-                "usaha": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Tbl_usaha_uepkube"
                 }
             }
         },
-        "models.Tbl_credit_debit": {
+        "models.Tbl_inventory": {
             "type": "object",
             "properties": {
                 "credit": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "debit": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "deskripsi": {
                     "type": "string"
                 },
-                "file": {
-                    "type": "string"
+                "detail": {
+                    "type": "object"
                 },
                 "id": {
                     "type": "integer"
@@ -2033,20 +2023,47 @@
                 "id_kube": {
                     "type": "integer"
                 },
-                "id_periods": {
+                "id_pendamping": {
                     "type": "integer"
                 },
                 "id_uep": {
                     "type": "integer"
                 },
-                "nilai": {
-                    "type": "number"
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_inventory_files"
+                    }
                 },
                 "transaction_at": {
                     "type": "string"
-                },
-                "updated_at": {
+                }
+            }
+        },
+        "models.Tbl_inventory_files": {
+            "type": "object",
+            "properties": {
+                "description": {
                     "type": "string"
+                },
+                "files": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_inventory": {
+                    "type": "integer"
+                },
+                "is_display": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "PDF",
+                        " IMAGE"
+                    ]
                 }
             }
         },
@@ -2097,6 +2114,9 @@
         "models.Tbl_kehadiran": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "flag": {
                     "type": "string"
                 },
@@ -2117,6 +2137,9 @@
                 },
                 "id_user": {
                     "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
@@ -2131,34 +2154,7 @@
                 }
             }
         },
-        "models.Tbl_lapkeu_files": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "files": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "id_lapkeu": {
-                    "type": "integer"
-                },
-                "is_display": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "PDF",
-                        " IMAGE"
-                    ]
-                }
-            }
-        },
-        "models.Tbl_lapkeu_uepkube": {
+        "models.Tbl_lapkeu": {
             "type": "object",
             "properties": {
                 "bulan": {
@@ -2215,6 +2211,33 @@
                 }
             }
         },
+        "models.Tbl_lapkeu_files": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_lapkeu": {
+                    "type": "integer"
+                },
+                "is_display": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "PDF",
+                        " IMAGE"
+                    ]
+                }
+            }
+        },
         "models.Tbl_monev_category": {
             "type": "object",
             "properties": {
@@ -2234,7 +2257,7 @@
                 }
             }
         },
-        "models.Tbl_monev_uepkube": {
+        "models.Tbl_monev_final": {
             "type": "object",
             "properties": {
                 "category": {
@@ -2321,26 +2344,6 @@
                 }
             }
         },
-        "models.Tbl_pelatihan_uepkube": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "id_kube": {
-                    "type": "integer"
-                },
-                "id_pelatihan": {
-                    "type": "integer"
-                },
-                "id_periods": {
-                    "type": "integer"
-                },
-                "id_uep": {
-                    "type": "integer"
-                }
-            }
-        },
         "models.Tbl_pendamping": {
             "type": "object",
             "properties": {
@@ -2350,56 +2353,23 @@
                 "jenis_pendamping": {
                     "type": "string"
                 },
+                "nama": {
+                    "type": "string"
+                },
                 "periode": {
                     "type": "string"
                 }
             }
         },
-        "models.Tbl_periods_uepkube": {
+        "models.Tbl_produk_files": {
             "type": "object",
             "properties": {
-                "bantuan_periods": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Tbl_bantuan_periods"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "id_kube": {
-                    "type": "integer"
-                },
-                "id_periods": {
-                    "type": "integer"
-                },
-                "id_uep": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.Tbl_produk": {
-            "type": "object",
-            "properties": {
-                "deskripsi": {
+                "description": {
                     "type": "string"
                 },
-                "id_jp": {
-                    "type": "integer"
-                },
-                "id_produk": {
-                    "type": "integer"
-                },
-                "jenis_produk": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Tbl_jenis_produk"
-                },
-                "nama_produk": {
+                "files": {
                     "type": "string"
-                }
-            }
-        },
-        "models.Tbl_produk_photo": {
-            "type": "object",
-            "properties": {
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -2409,26 +2379,12 @@
                 "is_display": {
                     "type": "integer"
                 },
-                "photo": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.Tbl_produk_uepkube": {
-            "type": "object",
-            "properties": {
-                "detail_produk": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Tbl_produk"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "id_produk": {
-                    "type": "integer"
-                },
-                "id_usaha_uke": {
-                    "type": "integer"
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "PDF",
+                        " IMAGE"
+                    ]
                 }
             }
         },
@@ -2462,39 +2418,6 @@
                 }
             }
         },
-        "models.Tbl_usaha_uepkube": {
-            "type": "object",
-            "properties": {
-                "all_produk": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Tbl_produk_uepkube"
-                    }
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "id_jenis_usaha": {
-                    "type": "integer"
-                },
-                "id_kube": {
-                    "type": "integer"
-                },
-                "id_periods": {
-                    "type": "integer"
-                },
-                "id_uep": {
-                    "type": "integer"
-                },
-                "jenis_usaha": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Tbl_jenis_usaha"
-                },
-                "nama_usaha": {
-                    "type": "string"
-                }
-            }
-        },
         "models.Tbl_user_photo": {
             "type": "object",
             "properties": {
@@ -2517,6 +2440,10 @@
             "properties": {
                 "alamat": {
                     "type": "string"
+                },
+                "bantuan": {
+                    "description": "Id_periods\t\tint \t`json:\"id_periods\"`",
+                    "type": "number"
                 },
                 "created_at": {
                     "type": "string"
@@ -2543,9 +2470,6 @@
                     "type": "string"
                 },
                 "id_pendamping": {
-                    "type": "integer"
-                },
-                "id_periods": {
                     "type": "integer"
                 },
                 "id_user": {

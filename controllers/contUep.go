@@ -47,7 +47,7 @@ func GetUep(c echo.Context) error {
 	flag = "UEP"
 	host = c.Request().Host
 
-	/*prepare DB*/
+	/* prepare DB */
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
@@ -61,24 +61,29 @@ func GetUep(c echo.Context) error {
 	q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
 		return q.Where("id_uep = ?", id)
 	})			
-	q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-		return q.Where("id_uep = ?", id).Preload("JenisUsaha")
-	})
-	q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-	q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
+	q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
 		return q.Where("id_uep = ?", id)
 	})	
-	q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+	q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
 		return q.Where("id_uep = ?", id)
 	})
-	q = q.Preload("Pendamping")
+	q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+		return q.Where("id_uep = ?", id)
+	})
 	q = q.Preload("Region")
+	q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+		return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+	})
 	q = q.Preload("Kelurahan")
 	q = q.Preload("Kecamatan")
 	q = q.Preload("Kabupaten")
 	q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
 		return q.Where("id_uep = ?", id)
 	})
+	// q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
+	// 	return q.Where("id_uep = ?", id).Preload("JenisUsaha")
+	// })
+	// q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
 	q = q.First(&User, id)
 
 	for i, _ := range User.Photo {
@@ -148,8 +153,8 @@ func AddUep(c echo.Context) (err error) {
 	// validation
 	if Uep.Id_pendamping == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id Pendamping") }
 	if Uep.Id_jenis_usaha == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id jenis usaha") }
-	if Uep.Id_periods == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") }
-	if Uep.Nama_usaha == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha Modal") }	
+	if Uep.Bantuan == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") }
+	if Uep.Nama_usaha == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha") }	
 	if Uep.Nik == "" { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") 
 	} else {
@@ -190,36 +195,36 @@ func AddUep(c echo.Context) (err error) {
 	if err := con.Create(&uep).Error; err != nil {return echo.ErrInternalServerError}
 
 	// store usaha_uep
-	uepUsaha := &models.Tbl_usaha_uepkube{}
-	uepUsaha.Id_uep = user.Id_user
-	uepUsaha.Nama_usaha = Uep.Nama_usaha
-	uepUsaha.Id_jenis_usaha = Uep.Id_jenis_usaha
-	uepUsaha.Id_periods = Uep.Id_periods
-	if err := con.Create(&uepUsaha).Error; err != nil {return echo.ErrInternalServerError}	
+	// uepUsaha := &models.Tbl_usaha_uepkube{}
+	// uepUsaha.Id_uep = user.Id_user
+	// uepUsaha.Nama_usaha = Uep.Nama_usaha
+	// uepUsaha.Id_jenis_usaha = Uep.Id_jenis_usaha
+	// uepUsaha.Id_periods = Uep.Id_periods
+	// if err := con.Create(&uepUsaha).Error; err != nil {return echo.ErrInternalServerError}	
 
 	// store bantuan_periods_history
-	uepPeriods := &models.Tbl_periods_uepkube{}
-	uepPeriods.Id_uep = user.Id_user
-	uepPeriods.Id_periods = Uep.Id_periods
-	if err := con.Create(&uepPeriods).Error; err != nil {return echo.ErrInternalServerError}
+	// uepPeriods := &models.Tbl_periods_uepkube{}
+	// uepPeriods.Id_uep = user.Id_user
+	// uepPeriods.Id_periods = Uep.Id_periods
+	// if err := con.Create(&uepPeriods).Error; err != nil {return echo.ErrInternalServerError}
 
 	// store creditDebit
-	creditDebit := &models.Tbl_credit_debit{}
-	creditDebit.Id_uep = user.Id_user
-	creditDebit.Debit = 1
-	creditDebit.Id_periods = Uep.Id_periods
-	var nilai []float32
-	con.Table("tbl_bantuan_periods").Where("id = ?", creditDebit.Id_periods).Pluck("bantuan_modal", &nilai)
-	creditDebit.Nilai = nilai[0]
-	creditDebit.Deskripsi = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
-	if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
+	// creditDebit := &models.Tbl_credit_debit{}
+	// creditDebit.Id_uep = user.Id_user
+	// creditDebit.Debit = 1
+	// creditDebit.Id_periods = Uep.Id_periods
+	// var nilai []float32
+	// con.Table("tbl_bantuan_periods").Where("id = ?", creditDebit.Id_periods).Pluck("bantuan_modal", &nilai)
+	// creditDebit.Nilai = nilai[0]
+	// creditDebit.Deskripsi = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
+	// if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
 
 	// add queue monev_uepkube
-	monev := &models.Tbl_monev_uepkube{}
+	monev := &models.Tbl_monev_final{}
 	monev.Id_uep = user.Id_user
 	monev.Id_pendamping = Uep.Id_pendamping
 	monev.Is_monev = "BELUM"
-	monev.Id_periods = Uep.Id_periods
+	// monev.Id_periods = Uep.Id_periods
 	monev.Flag = "UEP"
 	if err := con.Create(&monev).Error; err != nil {return echo.ErrInternalServerError}
 
@@ -285,14 +290,14 @@ func UpdateUep(c echo.Context) (err error) {
 	}
 
 	// store usaha_uep
-	uepUsaha := &models.Tbl_usaha_uepkube{}
-	uepUsaha.Id_uep = user.Id_user
-	uepUsaha.Nama_usaha = Uep.Nama_usaha
-	uepUsaha.Id_jenis_usaha = Uep.Id_jenis_usaha
-	uepUsaha.Id_periods = Uep.Id_periods
-	if err := con.Model(&models.Tbl_usaha_uepkube{}).Where("id_uep = ?", uepUsaha.Id_uep).Where("id_jenis_usaha = ?", uepUsaha.Id_jenis_usaha).Where("id_periods = ?", uepUsaha.Id_periods).UpdateColumns(&uepUsaha).Error; err != nil {
-		return echo.ErrInternalServerError
-	}
+	// uepUsaha := &models.Tbl_usaha_uepkube{}
+	// uepUsaha.Id_uep = user.Id_user
+	// uepUsaha.Nama_usaha = Uep.Nama_usaha
+	// uepUsaha.Id_jenis_usaha = Uep.Id_jenis_usaha
+	// uepUsaha.Id_periods = Uep.Id_periods
+	// if err := con.Model(&models.Tbl_usaha_uepkube{}).Where("id_uep = ?", uepUsaha.Id_uep).Where("id_jenis_usaha = ?", uepUsaha.Id_jenis_usaha).Where("id_periods = ?", uepUsaha.Id_periods).UpdateColumns(&uepUsaha).Error; err != nil {
+	// 	return echo.ErrInternalServerError
+	// }
 
 	defer con.Close()
 

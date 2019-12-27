@@ -38,7 +38,9 @@ func GetInventaris(c echo.Context) error {
 		q := con
 		q = q.Model(&models.Tbl_inventory{})
 		q = q.Preload("Photo")
-		q = q.Preload("Pendamping")
+		// q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+		// 	return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+		// })
 		q = q.Where("id_uep = ?", id)
 		// q = q.First(&Inventory)
 		if err := q.First(&Inventory).Error; gorm.IsRecordNotFoundError(err) {
@@ -48,9 +50,11 @@ func GetInventaris(c echo.Context) error {
 		}		
 	} else if Field == 1 {
 		q := con
-		q = q.Model(&models.Tbl_lapkeu_uepkube{})
+		q = q.Model(&models.Tbl_lapkeu{})
 		q = q.Preload("Photo")
-		q = q.Preload("Pendamping")
+		q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+			return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+		})
 		q = q.Where("id_kube = ?", id)
 		if err := q.First(&Inventory).Error; gorm.IsRecordNotFoundError(err) {
 			return echo.ErrNotFound
@@ -70,9 +74,9 @@ func GetInventaris(c echo.Context) error {
 			if check := CreateFile(tmpPath, blobFile); check == false {
 				log.Println("blob is empty : ", check)
 			}
-		
+				
 			Inventory.Photo[i].Files = urlPath
-	}	
+	}
 
 	// detail
 	if Inventory.Id_uep != 0 {
@@ -84,14 +88,22 @@ func GetInventaris(c echo.Context) error {
 		q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 		q = q.Select("tbl_uep.*, tbl_user.*")
 		q = q.Preload("JenisUsaha")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-			return q.Where("id_uep = ?", id).Preload("JenisUsaha")
-		})
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+		q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})			
+		q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})	
+		q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_uep = ?", id)
 		})
-		q = q.Preload("Pendamping")
+		q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})
+		q = q.Preload("Region")
+		q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+			return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+		})
 		q = q.Preload("Kelurahan")
 		q = q.Preload("Kecamatan")
 		q = q.Preload("Kabupaten")
@@ -124,14 +136,21 @@ func GetInventaris(c echo.Context) error {
 		q := con
 		q = q.Model(&Kube)
 		q = q.Preload("JenisUsaha")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-			return q.Where("id_kube = ?", id).Preload("JenisUsaha")
-		})
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")			
-		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+		q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_kube = ?", id)
 		})
-		q = q.Preload("Pendamping")
+		q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})	
+		q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})
+		q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})	
+		q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+			return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+		})
 		q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_kube = ?", id)	
 		})
@@ -169,8 +188,6 @@ func GetPaginateInventaris(c echo.Context) (err error) {
 func AddInventaris(c echo.Context) (err error) {
 	inventory := &models.Inventory{}
 	
-	var id_periods []int
-
 	if err := c.Bind(inventory); err != nil {
 		return err
 	}
@@ -191,35 +208,27 @@ func AddInventaris(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-
-	creditDebit := &models.Tbl_credit_debit{}
+	creditDebit := &models.Tbl_inventory{}
 	
 	if inventory.Id_uep == 0 { 
 		creditDebit.Id_kube = inventory.Id_kube
-		con.Table("tbl_credit_debit").Where("id_kube = ?", creditDebit.Id_kube).Pluck("id_periods", &id_periods)
 	}
+
 	if inventory.Id_kube == 0 { 
-		creditDebit.Id_uep = inventory.Id_uep 
-		con.Table("tbl_credit_debit").Where("id_uep = ?", creditDebit.Id_uep).Pluck("id_periods", &id_periods)
+		creditDebit.Id_uep = inventory.Id_uep
 	}
-
-	if len(id_periods) == 0 {
-		return echo.NewHTTPError(http.StatusBadRequest, "Maaf UEP atau Kube belum mendapatkan bantuan_periods")
-	}
-
 
 	Inventory := &models.Tbl_inventory{}
 	Inventory = inventory.Tbl_inventory
 
-
 	if err := con.Create(&Inventory).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	// store creditDebit
-	creditDebit.Credit = 1
-	if len(id_periods) != 0 { creditDebit.Id_periods = id_periods[0] }
-	creditDebit.Nilai = inventory.Harga
-	creditDebit.Deskripsi = fmt.Sprintf("Debit dengan nilai : Rp. %.2f,-", inventory.Harga)
-	if err := con.Create(&creditDebit).Error; err != nil { return echo.ErrInternalServerError }
+	// creditDebit.Credit = 1
+	// if len(id_periods) != 0 { creditDebit.Id_periods = id_periods[0] }
+	// creditDebit.Nilai = inventory.Harga
+	// creditDebit.Deskripsi = fmt.Sprintf("Debit dengan nilai : Rp. %.2f,-", inventory.Harga)
+	// if err := con.Create(&creditDebit).Error; err != nil { return echo.ErrInternalServerError }
 
 	defer con.Close()
 
@@ -323,12 +332,12 @@ func UploadInventarisFiles(c echo.Context) (err error) {
 		InventoryFiles := &models.Tbl_inventory_files{}
 
 		InventoryFiles.Id_inventory = id
-		InventoryFiles.Files   = encoded
+		InventoryFiles.Files = encoded
 		InventoryFiles.Description = description
 		InventoryFiles.Type = types
 		InventoryFiles.Is_display = is_display
 
-		if err := con.Create(&InventoryFiles).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
+		if err := con.Create(&InventoryFiles).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 	}
 
 	defer con.Close()

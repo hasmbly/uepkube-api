@@ -32,7 +32,6 @@ func GetAktivitas(c echo.Context) error {
 	q := con
 	q = q.Model(&Activity)
 	q = q.Preload("Photo")
-	// q = q.First(&Activity, id)
 	if err := q.First(&Activity, id).Error; gorm.IsRecordNotFoundError(err) {
 		return echo.ErrNotFound
 	} else if err != nil {

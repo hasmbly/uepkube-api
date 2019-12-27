@@ -9,7 +9,7 @@ import (
 	"uepkube-api/db"
 	"github.com/fatih/structs"
 	"fmt"
-	"log"
+	// "log"
 	"strconv"
 	// "github.com/ulule/paging"
 	"math"
@@ -19,7 +19,7 @@ func SetMemberNameKube(s *models.ShowKube, Kube models.Tbl_kube) error {
 	/*prepare DB*/
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
-	con.SingularTable(true)		
+	con.SingularTable(true)
 	/*
 	begin:find member name of Kube
 	 */
@@ -65,7 +65,7 @@ func SetMemberNameKube(s *models.ShowKube, Kube models.Tbl_kube) error {
 	// 			photo[i].Photo = "data:image/png;base64," + ImageBlob	
 	// 		}
 
-	// 	}	
+	// 	}
 
     /*
 	end:find member name of Kube
@@ -149,20 +149,30 @@ func PaginateKube(c echo.Context, r *models.ResPagin) (err error) {
 	return err
 }
 
-func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models.PaginateKubes, err error) {
+func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models.Tbl_kube, err error) {
 
-	// var Pelatihans []models.Tbl_pendamping
-	kubes := []models.PaginateKubes{}
+	kubes := []models.Tbl_kube{}
 
 	con, err := db.CreateCon()
 	if err != nil { return ur, echo.ErrInternalServerError }
 	con.SingularTable(true)	
 
 	q := con
-	q = q.Table("tbl_kube t1")
+	q = q.Model(&kubes)
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
-	q = q.Select("t1.id_kube, t1.nama_kube, t1.status, t1.created_at")
+	q = q.Preload("JenisUsaha")
+	q = q.Preload("LapkeuHistory")
+	q = q.Preload("MonevHistory")
+	q = q.Preload("InventarisHistory")
+	q = q.Preload("PelatihanHistory")
+	q = q.Preload("Region")
+	q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+		return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+	})
+	q = q.Preload("Kelurahan")
+	q = q.Preload("Kecamatan")
+	q = q.Preload("Kabupaten")	
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -180,9 +190,8 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 			}
 		}
 	}
-	q = q.Order(fmt.Sprintf("t1.%s %s",f.SortField,f.SortOrder))	
-	
-	q = q.Scan(&kubes)
+	q = q.Order(fmt.Sprintf("%s %s",f.SortField,f.SortOrder))
+	q = q.Find(&kubes)
 	q = q.Limit(-1)
 	q = q.Offset(-1)
 
@@ -204,112 +213,112 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 		}
 	}
 
-	// get Pendampings
-	if len(kubes) != 0 {
-		for i,_ := range kubes {
-			var id_pendamping []int
-			var pendamping models.CustomPendamping
+	// // get Pendampings
+	// if len(kubes) != 0 {
+	// 	for i,_ := range kubes {
+	// 		var id_pendamping []int
+	// 		var pendamping models.CustomPendamping
 
-			con.Table("tbl_kube").Where("id_kube = ?", kubes[i].Id_kube).Pluck("id_pendamping", &id_pendamping)
+	// 		con.Table("tbl_kube").Where("id_kube = ?", kubes[i].Id_kube).Pluck("id_pendamping", &id_pendamping)
 
-			if len(id_pendamping) != 0 {
+	// 		if len(id_pendamping) != 0 {
 
-				for i,_ := range id_pendamping {
-					con.Table("tbl_pendamping").Select("tbl_pendamping.*, tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Find(&pendamping)
-				}
-					kubes[i].Pendamping = pendamping
-			}
-		}
-	}
+	// 			for i,_ := range id_pendamping {
+	// 				con.Table("tbl_pendamping").Select("tbl_pendamping.*, tbl_user.nama").Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Where("id_pendamping = ?", id_pendamping[i]).Find(&pendamping)
+	// 			}
+	// 				kubes[i].Pendamping = pendamping
+	// 		}
+	// 	}
+	// }
 
-	// get Usaha
-	if len(kubes) != 0 {
-		for i,_ := range kubes {
-			var kube_usaha models.UsahaKube
-			photos := []models.Tbl_uepkube_files{}
+	// // get Usaha
+	// if len(kubes) != 0 {
+	// 	for i,_ := range kubes {
+	// 		var kube_usaha models.UsahaKube
+	// 		photos := []models.Tbl_uepkube_files{}
 
-			// log.Println("id_kube : ", kubes[i].Id_kube)
+	// 		// log.Println("id_kube : ", kubes[i].Id_kube)
 			
-			q := con.Table("tbl_kube t1")
-			q = q.Select("t1.id_kube, t1.nama_usaha, t2.id_usaha, t2.jenis_usaha")
-			q = q.Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_jenis_usaha")
-			q = q.Where("t1.id_kube = ?", kubes[i].Id_kube)
-			q = q.Scan(&kube_usaha)
+	// 		q := con.Table("tbl_kube t1")
+	// 		q = q.Select("t1.id_kube, t1.nama_usaha, t2.id_usaha, t2.jenis_usaha")
+	// 		q = q.Joins("join tbl_jenis_usaha t2 on t2.id_usaha = t1.id_jenis_usaha")
+	// 		q = q.Where("t1.id_kube = ?", kubes[i].Id_kube)
+	// 		q = q.Scan(&kube_usaha)
 
-			if kube_usaha.Id_usaha != 0 { kubes[i].Usaha = kube_usaha }
+	// 		if kube_usaha.Id_usaha != 0 { kubes[i].Usaha = kube_usaha }
 
-			con.Table("tbl_uepkube_files").Where("id_kube = ?", kubes[i].Id_kube).Find(&photos)
+	// 		con.Table("tbl_uepkube_files").Where("id_kube = ?", kubes[i].Id_kube).Find(&photos)
 
-			// exec for files
-			id := kubes[i].Id_kube
-			for index,_ := range photos {
+	// 		// exec for files
+	// 		id := kubes[i].Id_kube
+	// 		for index,_ := range photos {
 
-				if photos[index].Type == "IMAGE" {
+	// 			if photos[index].Type == "IMAGE" {
 
-					id_photo := photos[index].Id
+	// 				id_photo := photos[index].Id
 					
-					tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
-					urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
-					blobFile = photos[index].Files
+	// 				tmpPath	= fmt.Sprintf(GoPath + "/src/uepkube-api/static/assets/images/%s_id_%d_photo_id_%d.png", flag,id,id_photo)
+	// 				urlPath	= fmt.Sprintf("http://%s/images/%s_id_%d_photo_id_%d.png", host,flag,id,id_photo)
+	// 				blobFile = photos[index].Files
 
-					if check := CreateFile(tmpPath, blobFile); check == false {
-						log.Println("blob is empty : ", check)
-					}
+	// 				if check := CreateFile(tmpPath, blobFile); check == false {
+	// 					log.Println("blob is empty : ", check)
+	// 				}
 				
-					photos[index].Files = urlPath
-					kubes[i].Usaha.Photo = append(kubes[i].Usaha.Photo, photos[index])
-				}
+	// 				photos[index].Files = urlPath
+	// 				kubes[i].Usaha.Photo = append(kubes[i].Usaha.Photo, photos[index])
+	// 			}
 
-			}			
+	// 		}			
 			
-		}
-	}
+	// 	}
+	// }
 
-	// get hitory_periods
-	if len(kubes) != 0 {
-		for i,_ := range kubes {
-			history_periods := []*models.Tbl_periods_uepkube{}
-			con.Table("tbl_periods_uepkube").Select("*").Where("id_kube = ?", kubes[i].Id_kube).Scan(&history_periods)
+	// // get hitory_periods
+	// if len(kubes) != 0 {
+	// 	for i,_ := range kubes {
+	// 		history_periods := []*models.Tbl_periods_uepkube{}
+	// 		con.Table("tbl_periods_uepkube").Select("*").Where("id_kube = ?", kubes[i].Id_kube).Scan(&history_periods)
 			
-			if len(history_periods) != 0 {
-				for index, _ := range history_periods {
-					kubes[i].PeriodsHistory = append(kubes[i].PeriodsHistory, history_periods[index])
-				}
-			}
-		}
-	}		
+	// 		if len(history_periods) != 0 {
+	// 			for index, _ := range history_periods {
+	// 				kubes[i].PeriodsHistory = append(kubes[i].PeriodsHistory, history_periods[index])
+	// 			}
+	// 		}
+	// 	}
+	// }		
 
-	// get bantuan_periods
-	if len(kubes) != 0 {
-		for i,_ := range kubes {
-			bantuan_periods := models.Tbl_bantuan_periods{}
+	// // get bantuan_periods
+	// if len(kubes) != 0 {
+	// 	for i,_ := range kubes {
+	// 		bantuan_periods := models.Tbl_bantuan_periods{}
 			
-			if len(kubes[i].PeriodsHistory) != 0 {
-				for index, _ := range kubes[i].PeriodsHistory {
-					con.Table("tbl_bantuan_periods").Select("*").Where("id = ?", kubes[i].PeriodsHistory[index].Id_periods).Scan(&bantuan_periods)
+	// 		if len(kubes[i].PeriodsHistory) != 0 {
+	// 			for index, _ := range kubes[i].PeriodsHistory {
+	// 				con.Table("tbl_bantuan_periods").Select("*").Where("id = ?", kubes[i].PeriodsHistory[index].Id_periods).Scan(&bantuan_periods)
 
-						kubes[i].PeriodsHistory[index].BantuanPeriods = &bantuan_periods
-				}
-			}
-		}
-	}	
+	// 					kubes[i].PeriodsHistory[index].BantuanPeriods = &bantuan_periods
+	// 			}
+	// 		}
+	// 	}
+	// }	
 
-	// get credit_debit
-	if len(kubes) != 0 {
-		for i,_ := range kubes {
-			credit_debit := []*models.Tbl_credit_debit{}
+	// // get credit_debit
+	// if len(kubes) != 0 {
+	// 	for i,_ := range kubes {
+	// 		credit_debit := []*models.Tbl_inventaris{}
 
-			con.Table("tbl_credit_debit").Select("*").Where("id_kube = ?", kubes[i].Id_kube).Scan(&credit_debit)
+	// 		con.Table("tbl_credit_debit").Select("*").Where("id_kube = ?", kubes[i].Id_kube).Scan(&credit_debit)
 			
-			if len(credit_debit) != 0 {
-				for indexDebit, _ := range credit_debit {
-					for indexPeriods, _ := range kubes[i].PeriodsHistory {
-						kubes[i].PeriodsHistory[indexPeriods].BantuanPeriods.CreditDebit = append(kubes[i].PeriodsHistory[indexPeriods].BantuanPeriods.CreditDebit, credit_debit[indexDebit])
-					}
-				}
-			}
-		}
-	}	
+	// 		if len(credit_debit) != 0 {
+	// 			for indexDebit, _ := range credit_debit {
+	// 				for indexPeriods, _ := range kubes[i].PeriodsHistory {
+	// 					kubes[i].PeriodsHistory[indexPeriods].BantuanPeriods.CreditDebit = append(kubes[i].PeriodsHistory[indexPeriods].BantuanPeriods.CreditDebit, credit_debit[indexDebit])
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }	
 
 	if err := q.Count(count).Error; err != nil {
 		return ur, err

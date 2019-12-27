@@ -33,16 +33,16 @@ Tbl_user struct {
 	Ig 				string 		`json:"ig"`
 	Fb 				string 		`json:"fb"`
 	Wa 				string 		`json:"wa"`
-	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`
-	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
-	Created_by   	*string 	`json:"-"`
-	Updated_by		*string	 	`json:"-"` 
 	Region 			*View_address `json:"region" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
 	Kelurahan 	*Tbl_kelurahan `json:"kelurahan" gorm:"foreignkey:id_kelurahan;association_foreignkey:id_kelurahan"`
 	Kecamatan 	*Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kecamatan;association_foreignkey:id_kecamatan"`
 	Kabupaten 	*Tbl_kabupaten `json:"kabupaten" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
 	Flag 			string 		`json:"flag" gorm:"-"`
 	Is_eligible 	bool 		`json:"is_eligible" gorm:"-"`
+	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
+	Created_by   	*string 	`json:"-"`
+	Updated_by		*string	 	`json:"-"` 
 }
 
 Tbl_user_files struct{
@@ -92,21 +92,28 @@ Tbl_usaha_kube_photo struct {
 
 Tbl_uep struct {
 	Id_uep			int 		`json:"id_uep" gorm:"primary_key"`
-	Id_pendamping	int 		`json:"-"`
 	Nama_usaha		string 		`json:"nama_usaha"`
-	Id_jenis_usaha	int 		`json:"-"`
+	Bantuan			float32 	`json:"bantuan"`
 	Status			int 		`json:"status"`
-	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
+	Id_jenis_usaha	int 		`json:"id_jenis_usaha"`
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	LapkeuHistory 	[]*Tbl_lapkeu_uepkube `json:"lapkeu_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`	
-	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_uep"`	
+	Id_pendamping	int 		`json:"id_pendamping"`
+	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
+	LapkeuHistory 	[]*Tbl_lapkeu `json:"lapkeu_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`	
+	InventarisHistory 	[]*Tbl_inventory `json:"inventaris_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`
+	MonevHistory 	[]*Tbl_monev_final `json:"monev_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`
+	PelatihanHistory 	[]*Tbl_kehadiran `json:"pelatihan_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`		
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_uep"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	// PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_uep"`
 }
 
  Tbl_kube struct {
 	Id_kube      	int 	`json:"id_kube" gorm:"primary_key"`
 	Nama_kube    	string 	`json:"nama_kube"`
 	Nama_usaha  	string 	`json:"nama_usaha"`
+	Bantuan			float32 `json:"bantuan"`
 	Id_jenis_usaha  int 	`json:"id_jenis_usaha"`
 	Ketua        	int 	`json:"-" sql:"DEFAULT:NULL"`
 	Sekertaris   	int 	`json:"-" sql:"DEFAULT:NULL"`
@@ -123,17 +130,20 @@ Tbl_uep struct {
 	Ig 				string 		`json:"ig"`
 	Fb 				string 		`json:"fb"`
 	Wa 				string 		`json:"wa"`	
+	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
+	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
+	Region 			View_address `json:"region" gorm:"-"`
+	LapkeuHistory 	[]*Tbl_lapkeu `json:"lapkeu_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`
+	InventarisHistory 	[]*Tbl_inventory `json:"inventaris_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`
+	MonevHistory 	[]*Tbl_monev_final `json:"monev_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`
+	PelatihanHistory 	[]*Tbl_kehadiran `json:"pelatihan_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`			
+	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_kube"`
+	Items 			[]Kubes_items `json:"items"`
 	Created_at   	*time.Time `json:"-" gorm:"timestamp;null"`
 	Updated_at   	*time.Time `json:"-" gorm:"timestamp;null"`
 	Created_by   	*string 	`json:"created_by"`
 	Updated_by		*string 	`json:"updated_by"`
-	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
-	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	LapkeuHistory 	[]*Tbl_lapkeu_uepkube `json:"lapkeu_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`	
-	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_kube"`	
-	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_kube"`
-	Items 			[]Kubes_items `json:"items"`
-	Region 			View_address `json:"region" gorm:"-"`
+	// PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_kube"`	
 }
 
 Kubes_items struct{
@@ -152,6 +162,7 @@ Tbl_pendamping struct {
 	Id_pendamping		int 		`json:"id_pendamping" gorm:"primary_key"`
 	Jenis_pendamping	string 		`json:"jenis_pendamping"`
 	Periode				string 		`json:"periode"`
+	Nama				string 		`json:"nama" gorm:"-"`
 }
 
 Tbl_account struct {
@@ -177,26 +188,29 @@ Tbl_uepkube_photo struct{
 }
 
 Tbl_produk struct{
-	Id_produk 		int 		`json:"id_produk" gorm:"primary_key"`
+	Id 				int 		`json:"id" gorm:"primary_key"`
+	Id_uep 	 		int 		`json:"id_uep" sql:"DEFAULT:NULL"`
+	Id_kube 	 	int 		`json:"id_kube" sql:"DEFAULT:NULL"`	
 	Nama_produk 	string 		`json:"nama_produk"`
 	Id_jp 			int 		`json:"id_jp" sql:"DEFAULT:NULL"`
 	JenisProduk 	*Tbl_jenis_produk `json:"jenis_produk" gorm:"foreignkey:id_jp;association_foreignkey:id"`
 	Deskripsi 		string 		`json:"deskripsi"`
+	Photo 		 	[]Tbl_produk_files 	`json:"photo" gorm:"foreignkey:id"`	
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
-	Created_by   	*string 	`json:"-"`
-	Updated_by		*string	 	`json:"-"` 	
 }
 
-Tbl_produk_photo struct {
+Tbl_produk_files struct{
 	Id				int 		`json:"id" gorm:"primary_key"`
 	Id_produk		int 		`json:"id_produk"`
-	Photo			string 		`json:"photo"`	
+	Files			string 		`json:"files"`	
+	Description		string 		`json:"description"`	
+	Type			string 		`json:"type" enums:"PDF, IMAGE"`
 	Is_display		int 		`json:"is_display"`	
 }
 
 Tbl_jenis_usaha struct{
-	Id_usaha 		int 		`json:"id_usaha" gorm:"primary_key"`
+	Id_usaha 		int 		`json:"id_usaha" gorm:"<pri></pri>mary_key"`
 	Jenis_usaha 	string 		`json:"jenis_usaha"`
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
@@ -207,16 +221,6 @@ Tbl_jenis_usaha struct{
 Tbl_jenis_produk struct{
 	Id 				int 		`json:"id" gorm:"primary_key"`
 	Name 			string 		`json:"name"`
-	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
-	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
-}
-
-Tbl_usaha_produk struct{
-	Id 				int 		`json:"id" gorm:"primary_key"`
-	Id_uep 	 		int 		`json:"id_uep" sql:"DEFAULT:NULL"`
-	Id_kube 	 	int 		`json:"id_kube" sql:"DEFAULT:NULL"`
-	Id_usaha 	 	int 		`json:"id_usaha"`
-	Id_produk 	 	int 		`json:"id_produk"`
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 }
@@ -292,7 +296,7 @@ Tbl_periods_uepkube struct{
 
 Tbl_bantuan_periods struct{
 	Id 				int 		`json:"id" gorm:"primary_key"`
-	Bantuan_modal 	float32			`json:"bantuan_modal" sql:"type:decimal(10,2);"`
+	Bantuan_modal 	float32		`json:"bantuan_modal" sql:"type:decimal(10,2);"`
 	Start_date 		*time.Time 	`json:"start_date"`
 	End_date 		*time.Time 	`json:"end_date"`
 	Peruntukan		string 		`json:"peruntukan" enums:"UEP, KUBE`
@@ -300,27 +304,26 @@ Tbl_bantuan_periods struct{
 	Status 			int 		`json:"status"`
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
-	Usaha 			*Tbl_usaha_uepkube `json:"usaha" gorm:"foreignkey:id_periods;association_foreignkey:id"`
-	CreditDebit 	[]*Tbl_credit_debit `json:"credit_debit" gorm:"foreignkey:id_periods;association_foreignkey:id"`
-	MonevHistory 	[]*Tbl_monev_uepkube `json:"monev_history" gorm:"foreignkey:id_periods;association_foreignkey:id"`
-	PelatihanHistory 	[]*Tbl_pelatihan_uepkube `json:"pelatihan_history" gorm:"foreignkey:id_periods;association_foreignkey:id"`		
+	// Usaha 			*Tbl_usaha_uepkube `json:"usaha" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+	// InventarisHistory 	[]*Tbl_inventory `json:"inventaris_history" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+	// MonevHistory 	[]*Tbl_monev_final `json:"monev_history" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+	// PelatihanHistory 	[]*Tbl_pelatihan_uepkube `json:"pelatihan_history" gorm:"foreignkey:id_periods;association_foreignkey:id"`		
 }
 
-Tbl_credit_debit struct{
+Tbl_inventory struct{
 	Id 				int 		`json:"id" gorm:"primary_key"`
 	Id_uep 			int			`json:"id_uep" sql:"default:null"`
 	Id_kube 		int			`json:"id_kube" sql:"default:null"`
-	Credit 			int			`json:"credit"`
-	Debit 			int			`json:"debit"`
-	Nilai 			float32		`json:"nilai" sql:"type:decimal(10,2);"`
+	Credit 			float32		`json:"credit" sql:"type:decimal(10,2);"`
+	Debit 			float32		`json:"debit" sql:"type:decimal(10,2);"`
 	Deskripsi 		string		`json:"deskripsi"`
-	File 			string		`json:"file" sql:"default:null"`
-	Id_periods 		int			`json:"id_periods"`
+	Id_pendamping 	int			`json:"id_pendamping"`
+	Photo 		 	[]Tbl_inventory_files `json:"photo" gorm:"foreignkey:id_inventory"`
+	Detail 			interface{} `json:"detail" gorm:"-"`
 	Transaction_at	*time.Time 	`json:"transaction_at" gorm:"timestamp;null"`
-	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
 }
 
-Tbl_lapkeu_uepkube struct{
+Tbl_lapkeu struct{
 	Id 				int 		`json:"id" gorm:"primary_key"`
 	Id_uep 			int			`json:"id_uep" sql:"default:null"`
 	Id_kube 		int			`json:"id_kube" sql:"default:null"`
@@ -415,6 +418,8 @@ Tbl_kehadiran struct{
 	Id_kube 		int			`json:"id_kube" sql:"default:null"`	
 	Id_pendamping 	int			`json:"id_pendamping"`
 	Flag 			string		`json:"flag"`
+	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
 }
 
 View_address struct{
@@ -424,22 +429,22 @@ View_address struct{
 	Region 			string 		`json:"region"`
 }
 
-Tbl_inventory struct{
-	Id 					int	 		`json:"id" gorm:"primary_key"`
-	Id_uep 				int			`json:"id_uep" sql:"default:null"`
-	Id_kube 			int			`json:"id_kube" sql:"default:null"`
-	Nama 				string 		`json:"nama"`
-	Merk 				string 		`json:"merk"`
-	Harga 				float32 	`json:"harga"`
-	Id_pendamping 		int			`json:"id_pendamping"`
-	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
-	Created_at			*time.Time 	`json:"created_at" gorm:"timestamp;null"`
-	Updated_at			*time.Time 	`json:"updated_at" gorm:"timestamp;null"`	
-	Created_by   		*string 	`json:"created_by"`
-	Updated_by			*string	 	`json:"updated_by"`
-	Photo 		 		[]Tbl_activity_files 	`json:"photo" gorm:"foreignkey:id_activity"`
-	Detail 				interface{} `json:"detail" gorm:"-"`
-}
+// Tbl_inventory struct{
+// 	Id 					int	 		`json:"id" gorm:"primary_key"`
+// 	Id_uep 				int			`json:"id_uep" sql:"default:null"`
+// 	Id_kube 			int			`json:"id_kube" sql:"default:null"`
+// 	Nama 				string 		`json:"nama"`
+// 	Merk 				string 		`json:"merk"`
+// 	Harga 				float32 	`json:"harga"`
+// 	Id_pendamping 		int			`json:"id_pendamping"`
+// 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
+// 	Created_at			*time.Time 	`json:"created_at" gorm:"timestamp;null"`
+// 	Updated_at			*time.Time 	`json:"updated_at" gorm:"timestamp;null"`	
+// 	Created_by   		*string 	`json:"created_by"`
+// 	Updated_by			*string	 	`json:"updated_by"`
+// 	Photo 		 		[]Tbl_activity_files 	`json:"photo" gorm:"foreignkey:id_activity"`
+// 	Detail 				interface{} `json:"detail" gorm:"-"`
+// }
 
 Tbl_inventory_files struct{
 	Id				int 		`json:"id" gorm:"primary_key"`
@@ -456,7 +461,7 @@ Tbl_monev_category struct{
 	Description 	string 		`json:"description"`
 }
 
-Tbl_monev_uepkube struct{
+Tbl_monev_final struct{
 	Id 					int	 		`json:"id" gorm:"primary_key"`
 	Id_uep 				int			`json:"id_uep" sql:"default:null"`
 	Id_kube 			int			`json:"id_kube" sql:"default:null"`
@@ -475,7 +480,7 @@ Tbl_monev_uepkube struct{
 	Detail 				interface{} `json:"detail" gorm:"-"`
 }
 
-Tbl_monev_result_uepkube struct{
+Tbl_monev_calculate struct{
 	Id 					int	 		`json:"id" gorm:"primary_key"`
 	Id_uep 				int			`json:"id_uep" sql:"default:null"`
 	Id_kube 			int			`json:"id_kube" sql:"default:null"`	
@@ -487,18 +492,18 @@ Tbl_monev_result_uepkube struct{
 	Updated_by			*string	 	`json:"-"`
 }
 
-Tbl_usaha_uepkube struct{
-	Id 					int	 		`json:"id" gorm:"primary_key"`
-	Id_uep 				int			`json:"id_uep" sql:"default:null"`
-	Id_kube 			int			`json:"id_kube" sql:"default:null"`	
-	Id_periods 			int			`json:"id_periods"`
-	Nama_usaha 		 	string		`json:"nama_usaha"`
-	Id_jenis_usaha 		int			`json:"id_jenis_usaha"`
-	JenisUsaha 			*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
-	AllProduk 			[]*Tbl_produk_uepkube `json:"all_produk" gorm:"foreignkey:id_usaha_uke;association_foreignkey:id"`
-	Created_at			*time.Time 	`json:"-" gorm:"timestamp;null"`
-	Updated_at			*time.Time 	`json:"-" gorm:"timestamp;null"`	
-}
+// Tbl_usaha_uepkube struct{
+// 	Id 					int	 		`json:"id" gorm:"primary_key"`
+// 	Id_uep 				int			`json:"id_uep" sql:"default:null"`
+// 	Id_kube 			int			`json:"id_kube" sql:"default:null"`	
+// 	// Id_periods 			int			`json:"id_periods"`
+// 	Nama_usaha 		 	string		`json:"nama_usaha"`
+// 	Id_jenis_usaha 		int			`json:"id_jenis_usaha"`
+// 	JenisUsaha 			*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
+// 	AllProduk 			[]*Tbl_produk_uepkube `json:"all_produk" gorm:"foreignkey:id_usaha_uke;association_foreignkey:id"`
+// 	Created_at			*time.Time 	`json:"-" gorm:"timestamp;null"`
+// 	Updated_at			*time.Time 	`json:"-" gorm:"timestamp;null"`	
+// }
 
 Tbl_produk_uepkube struct{
 	Id 					int	 		`json:"id" gorm:"primary_key"`
@@ -578,7 +583,8 @@ PelatihanKehadiran struct{
 Uep struct{
 	*Tbl_user
 	Id_pendamping	int 		`json:"id_pendamping"`
-	Id_periods		int 		`json:"id_periods"`
+	// Id_periods		int 	`json:"id_periods"`
+	Bantuan			float32 	`json:"bantuan"`
 	Nama_usaha		string 		`json:"nama_usaha"`
 	Id_jenis_usaha	int 		`json:"id_jenis_usaha"`
 	Status			int 		`json:"status"`
@@ -586,7 +592,6 @@ Uep struct{
 
 Kube struct{
 	*Tbl_kube
-	Id_periods		int 		`json:"id_periods"`
 }
 
 Monev struct{
@@ -617,8 +622,7 @@ Verifikator struct{
 }
 
 Produk struct{
-	*Tbl_usaha_produk
-	Photo 		 		[]Tbl_produk_photo 	`json:"photo"`
+	*Tbl_produk
 }
 
 Pelatihan struct{
@@ -637,7 +641,7 @@ Kehadiran struct{
 }
 
 Lapkeu struct{
-	*Tbl_lapkeu_uepkube
+	*Tbl_lapkeu
 }
 
 Inventory struct{
@@ -710,7 +714,7 @@ ShowProduks struct{
 	Nama_produk 	string 		`json:"nama_produk"`
 	Deskripsi 		string 		`json:"deskripsi"`
 	Jenis_usaha 	string 		`json:"jenis_usaha"`
-	Photo 			[]Tbl_produk_photo `json:"photo"`
+	Photo 			[]Tbl_produk_files `json:"photo"`
 }
 
  Ktype struct {
@@ -719,8 +723,8 @@ ShowProduks struct{
 	Jenis_usaha  	string	`json:"jenis_usaha"`
 	Bantuan_modal	int 	`json:"bantuan_modal"`
 	Alamat			*string 	`json:"alamat"`
-	Lat			*string 	`json:"lat"`
-	Lng			*string 	`json:"lng"`
+	Lat				*string 	`json:"lat"`
+	Lng				*string 	`json:"lng"`
 	Ketua 			string 	`json:"ketua"`
 	Sekertaris 		string 	`json:"sekertaris"`
 	Bendahara 		string 	`json:"bendahara"`
@@ -750,14 +754,14 @@ ShowProduks struct{
 	Flag 			string 		 `json:"flag"`
 }
 
-UsahaUep struct {
+UsahaUep struct{
 	Id_usaha   	  int 	 `json:"id_usaha"`
 	Nama_usaha    string `json:"nama_usaha"`
 	Jenis_usaha   string `json:"jenis_usaha"`
 	Photo 		 []Tbl_uepkube_files `json:"photo"`
 }
 
-UsahaKube struct {
+UsahaKube struct{
 	Id_usaha   	  int 	 `json:"id_usaha"`
 	Nama_usaha    string `json:"nama_usaha"`
 	Jenis_usaha   string `json:"jenis_usaha"`
@@ -807,7 +811,7 @@ Sort struct{
  */
 
 PaginateMonev struct{
-	*Tbl_monev_uepkube
+	*Tbl_monev_final
 }
 
 PaginateKubes struct{
@@ -828,9 +832,9 @@ PaginateUep struct{
 	No_kk			string 	`json:"no_kk"`
 	Alamat			string 	`json:"alamat"`
 	Status 		 	int 	`json:"status"`
-	Created_at 		string 	`json:"created_at"`
 	Pendamping 		CustomPendamping	`json:"pendamping"`
 	Usaha 			UsahaUep 		`json:"jenis_usaha"`
+	Created_at 		string 	`json:"created_at"`
 	PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history"`
 }
 
@@ -885,7 +889,7 @@ PaginateInventory struct{
 }
 
 PaginateLapkeu struct{
-	*Tbl_lapkeu_uepkube
+	*Tbl_lapkeu
 }
 
  ResPagin struct{

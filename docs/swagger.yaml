@@ -94,14 +94,14 @@ definitions:
     type: object
   models.Inventory:
     properties:
-      created_at:
-        type: string
-      created_by:
+      credit:
+        type: number
+      debit:
+        type: number
+      deskripsi:
         type: string
       detail:
         type: object
-      harga:
-        type: number
       id:
         type: integer
       id_kube:
@@ -110,20 +110,11 @@ definitions:
         type: integer
       id_uep:
         type: integer
-      merk:
-        type: string
-      nama:
-        type: string
-      pendamping:
-        $ref: '#/definitions/models.Tbl_pendamping'
-        type: object
       photo:
         items:
-          $ref: '#/definitions/models.Tbl_activity_files'
+          $ref: '#/definitions/models.Tbl_inventory_files'
         type: array
-      updated_at:
-        type: string
-      updated_by:
+      transaction_at:
         type: string
     type: object
   models.Jn:
@@ -147,6 +138,8 @@ definitions:
     type: object
   models.Kube:
     properties:
+      bantuan:
+        type: number
       created_by:
         type: string
       fb:
@@ -157,10 +150,12 @@ definitions:
         type: integer
       id_pendamping:
         type: integer
-      id_periods:
-        type: integer
       ig:
         type: string
+      inventaris_history:
+        items:
+          $ref: '#/definitions/models.Tbl_inventory'
+        type: array
       items:
         items:
           $ref: '#/definitions/models.Kubes_items'
@@ -170,19 +165,23 @@ definitions:
         type: object
       lapkeu_history:
         items:
-          $ref: '#/definitions/models.Tbl_lapkeu_uepkube'
+          $ref: '#/definitions/models.Tbl_lapkeu'
+        type: array
+      monev_history:
+        items:
+          $ref: '#/definitions/models.Tbl_monev_final'
         type: array
       nama_kube:
         type: string
       nama_usaha:
         type: string
+      pelatihan_history:
+        items:
+          $ref: '#/definitions/models.Tbl_kehadiran'
+        type: array
       pendamping:
         $ref: '#/definitions/models.Tbl_pendamping'
         type: object
-      periods_history:
-        items:
-          $ref: '#/definitions/models.Tbl_periods_uepkube'
-        type: array
       photo:
         items:
           $ref: '#/definitions/models.Tbl_uepkube_files'
@@ -361,6 +360,8 @@ definitions:
     type: object
   models.PelatihanKehadiran:
     properties:
+      created_at:
+        type: string
       flag:
         type: string
       id:
@@ -376,6 +377,8 @@ definitions:
       id_user:
         type: integer
       nama:
+        type: string
+      updated_at:
         type: string
     type: object
   models.Pendamping:
@@ -477,19 +480,24 @@ definitions:
     type: object
   models.Produk:
     properties:
+      deskripsi:
+        type: string
       id:
+        type: integer
+      id_jp:
         type: integer
       id_kube:
         type: integer
-      id_produk:
-        type: integer
       id_uep:
         type: integer
-      id_usaha:
-        type: integer
+      jenis_produk:
+        $ref: '#/definitions/models.Tbl_jenis_produk'
+        type: object
+      nama_produk:
+        type: string
       photo:
         items:
-          $ref: '#/definitions/models.Tbl_produk_photo'
+          $ref: '#/definitions/models.Tbl_produk_files'
         type: array
     type: object
   models.Tbl_activity_files:
@@ -514,22 +522,10 @@ definitions:
     properties:
       bantuan_modal:
         type: number
-      credit_debit:
-        items:
-          $ref: '#/definitions/models.Tbl_credit_debit'
-        type: array
       end_date:
         type: string
       id:
         type: integer
-      monev_history:
-        items:
-          $ref: '#/definitions/models.Tbl_monev_uepkube'
-        type: array
-      pelatihan_history:
-        items:
-          $ref: '#/definitions/models.Tbl_pelatihan_uepkube'
-        type: array
       peruntukan:
         type: string
       quota:
@@ -538,33 +534,48 @@ definitions:
         type: string
       status:
         type: integer
-      usaha:
-        $ref: '#/definitions/models.Tbl_usaha_uepkube'
-        type: object
     type: object
-  models.Tbl_credit_debit:
+  models.Tbl_inventory:
     properties:
       credit:
-        type: integer
+        type: number
       debit:
-        type: integer
+        type: number
       deskripsi:
         type: string
-      file:
-        type: string
+      detail:
+        type: object
       id:
         type: integer
       id_kube:
         type: integer
-      id_periods:
+      id_pendamping:
         type: integer
       id_uep:
         type: integer
-      nilai:
-        type: number
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_inventory_files'
+        type: array
       transaction_at:
         type: string
-      updated_at:
+    type: object
+  models.Tbl_inventory_files:
+    properties:
+      description:
+        type: string
+      files:
+        type: string
+      id:
+        type: integer
+      id_inventory:
+        type: integer
+      is_display:
+        type: integer
+      type:
+        enum:
+        - PDF
+        - ' IMAGE'
         type: string
     type: object
   models.Tbl_jenis_produk:
@@ -597,6 +608,8 @@ definitions:
     type: object
   models.Tbl_kehadiran:
     properties:
+      created_at:
+        type: string
       flag:
         type: string
       id:
@@ -611,6 +624,8 @@ definitions:
         type: integer
       id_user:
         type: integer
+      updated_at:
+        type: string
     type: object
   models.Tbl_kelurahan:
     properties:
@@ -619,25 +634,7 @@ definitions:
       kelurahan:
         type: string
     type: object
-  models.Tbl_lapkeu_files:
-    properties:
-      description:
-        type: string
-      files:
-        type: string
-      id:
-        type: integer
-      id_lapkeu:
-        type: integer
-      is_display:
-        type: integer
-      type:
-        enum:
-        - PDF
-        - ' IMAGE'
-        type: string
-    type: object
-  models.Tbl_lapkeu_uepkube:
+  models.Tbl_lapkeu:
     properties:
       bulan:
         type: integer
@@ -675,6 +672,24 @@ definitions:
       updated_by:
         type: string
     type: object
+  models.Tbl_lapkeu_files:
+    properties:
+      description:
+        type: string
+      files:
+        type: string
+      id:
+        type: integer
+      id_lapkeu:
+        type: integer
+      is_display:
+        type: integer
+      type:
+        enum:
+        - PDF
+        - ' IMAGE'
+        type: string
+    type: object
   models.Tbl_monev_category:
     properties:
       description:
@@ -688,7 +703,7 @@ definitions:
         - ' C'
         type: string
     type: object
-  models.Tbl_monev_uepkube:
+  models.Tbl_monev_final:
     properties:
       category:
         $ref: '#/definitions/models.Tbl_monev_category'
@@ -747,78 +762,34 @@ definitions:
         - ' IMAGE'
         type: string
     type: object
-  models.Tbl_pelatihan_uepkube:
-    properties:
-      id:
-        type: integer
-      id_kube:
-        type: integer
-      id_pelatihan:
-        type: integer
-      id_periods:
-        type: integer
-      id_uep:
-        type: integer
-    type: object
   models.Tbl_pendamping:
     properties:
       id_pendamping:
         type: integer
       jenis_pendamping:
         type: string
+      nama:
+        type: string
       periode:
         type: string
     type: object
-  models.Tbl_periods_uepkube:
+  models.Tbl_produk_files:
     properties:
-      bantuan_periods:
-        $ref: '#/definitions/models.Tbl_bantuan_periods'
-        type: object
-      id:
-        type: integer
-      id_kube:
-        type: integer
-      id_periods:
-        type: integer
-      id_uep:
-        type: integer
-    type: object
-  models.Tbl_produk:
-    properties:
-      deskripsi:
+      description:
         type: string
-      id_jp:
-        type: integer
-      id_produk:
-        type: integer
-      jenis_produk:
-        $ref: '#/definitions/models.Tbl_jenis_produk'
-        type: object
-      nama_produk:
+      files:
         type: string
-    type: object
-  models.Tbl_produk_photo:
-    properties:
       id:
         type: integer
       id_produk:
         type: integer
       is_display:
         type: integer
-      photo:
+      type:
+        enum:
+        - PDF
+        - ' IMAGE'
         type: string
-    type: object
-  models.Tbl_produk_uepkube:
-    properties:
-      detail_produk:
-        $ref: '#/definitions/models.Tbl_produk'
-        type: object
-      id:
-        type: integer
-      id_produk:
-        type: integer
-      id_usaha_uke:
-        type: integer
     type: object
   models.Tbl_uepkube_files:
     properties:
@@ -840,28 +811,6 @@ definitions:
         - ' IMAGE'
         type: string
     type: object
-  models.Tbl_usaha_uepkube:
-    properties:
-      all_produk:
-        items:
-          $ref: '#/definitions/models.Tbl_produk_uepkube'
-        type: array
-      id:
-        type: integer
-      id_jenis_usaha:
-        type: integer
-      id_kube:
-        type: integer
-      id_periods:
-        type: integer
-      id_uep:
-        type: integer
-      jenis_usaha:
-        $ref: '#/definitions/models.Tbl_jenis_usaha'
-        type: object
-      nama_usaha:
-        type: string
-    type: object
   models.Tbl_user_photo:
     properties:
       id:
@@ -877,6 +826,9 @@ definitions:
     properties:
       alamat:
         type: string
+      bantuan:
+        description: "Id_periods\t\tint \t`json:\"id_periods\"`"
+        type: number
       created_at:
         type: string
       email:
@@ -894,8 +846,6 @@ definitions:
       id_kelurahan:
         type: string
       id_pendamping:
-        type: integer
-      id_periods:
         type: integer
       id_user:
         type: integer

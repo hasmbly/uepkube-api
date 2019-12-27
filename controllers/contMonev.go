@@ -24,7 +24,7 @@ func GetMonev(c echo.Context) error {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	Monev := models.Tbl_monev_uepkube{}
+	Monev := models.Tbl_monev_final{}
 	q := con
 	q = q.Model(&Monev)
 	q = q.Preload("Category")
@@ -80,17 +80,22 @@ func GetMonev(c echo.Context) error {
 		q = q.Joins("join tbl_uep on tbl_uep.id_uep = tbl_user.id_user")
 		q = q.Select("tbl_uep.*, tbl_user.*")
 		q = q.Preload("JenisUsaha")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-			return q.Where("id_uep = ?", id).Preload("JenisUsaha")
-		})
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
+		q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_uep = ?", id)
-		})				
-		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+		})			
+		q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})	
+		q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_uep = ?", id)
 		})
-		q = q.Preload("Pendamping")
+		q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_uep = ?", id)
+		})
+		q = q.Preload("Region")
+		q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+			return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+		})
 		q = q.Preload("Kelurahan")
 		q = q.Preload("Kecamatan")
 		q = q.Preload("Kabupaten")
@@ -123,17 +128,21 @@ func GetMonev(c echo.Context) error {
 		q := con
 		q = q.Model(&Kube)
 		q = q.Preload("JenisUsaha")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-			return q.Where("id_kube = ?", id).Preload("JenisUsaha")
-		})
-		q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-		q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
-			return q.Where("id_kube = ?", id)
-		})			
-		q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
+		q = q.Preload("LapkeuHistory", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_kube = ?", id)
 		})
-		q = q.Preload("Pendamping")
+		q = q.Preload("MonevHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})	
+		q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})
+		q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
+			return q.Where("id_kube = ?", id)
+		})	
+		q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
+			return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
+		})
 		q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
 			return q.Where("id_kube = ?", id)	
 		})
@@ -171,7 +180,7 @@ func GetPaginateMonev(c echo.Context) (err error) {
 
 func AddMonev(c echo.Context) (err error) {
 	monev := &models.Monev{}
-	MonevFinal := &models.Tbl_monev_uepkube{}	
+	MonevFinal := &models.Tbl_monev_final{}	
 
 	if err := c.Bind(monev); err != nil {
 		return err
@@ -266,7 +275,7 @@ func AddMonev(c echo.Context) (err error) {
 
 	for x, _ := range TotalSkor {
 		
-		Monev := &models.Tbl_monev_result_uepkube{}	
+		Monev := &models.Tbl_monev_calculate{}	
 		if monev.Id_kube == 0 { Monev.Id_uep = monev.Id_uep }
 		if monev.Id_uep == 0 { Monev.Id_kube = monev.Id_kube }
 		Monev.Id_indikator = monev.Id_indikator[x]

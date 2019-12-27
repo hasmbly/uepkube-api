@@ -21,7 +21,7 @@ var (
 	PaginProducts = []models.PaginateProduks{}
 
 	// usaha-produk
-	UsahaProducts = []*models.Tbl_usaha_produk{}
+	// UsahaProducts = []*models.Tbl_usaha_produk{}
 
 	// kubes
 	kubes = []*models.Tbl_kube{}

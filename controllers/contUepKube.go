@@ -82,9 +82,9 @@ func GetUepKube(c echo.Context) error {
 // @Failure 500 {object} models.HTTPError
 // @Router /lookup/uepkube/produk [post]
 func GetPaginateProdukUepKube(c echo.Context) (err error) {
-	if err := helpers.PaginateProduk(c, &r); err != nil {
-		return err
-	}
+	// if err := helpers.PaginateProduk(c, &r); err != nil {
+	// 	return err
+	// }
 	return c.JSON(http.StatusOK, r)
 }
 
