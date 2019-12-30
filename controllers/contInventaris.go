@@ -33,7 +33,6 @@ func GetInventaris(c echo.Context) error {
 
 	Inventory := models.Tbl_inventory{}
 
-
 	if Field == 0 {
 		q := con
 		q = q.Model(&models.Tbl_inventory{})

@@ -177,7 +177,7 @@ definitions:
         type: string
       pelatihan_history:
         items:
-          $ref: '#/definitions/models.Tbl_kehadiran'
+          $ref: '#/definitions/models.Tbl_pelatihan'
         type: array
       pendamping:
         $ref: '#/definitions/models.Tbl_pendamping'
@@ -332,8 +332,9 @@ definitions:
       judul_pelatihan:
         type: string
       kehadiran:
+        description: "Kehadiran \t\t\t[]PelatihanKehadiran\t`json:\"kehadiran\"`"
         items:
-          $ref: '#/definitions/models.PelatihanKehadiran'
+          $ref: '#/definitions/models.Tbl_kehadiran'
         type: array
       lokasi_pelatihan:
         type: string
@@ -356,29 +357,6 @@ definitions:
       status:
         type: integer
       updated_by:
-        type: string
-    type: object
-  models.PelatihanKehadiran:
-    properties:
-      created_at:
-        type: string
-      flag:
-        type: string
-      id:
-        type: integer
-      id_kube:
-        type: integer
-      id_pelatihan:
-        type: integer
-      id_pendamping:
-        type: integer
-      id_uep:
-        type: integer
-      id_user:
-        type: integer
-      nama:
-        type: string
-      updated_at:
         type: string
     type: object
   models.Pendamping:
@@ -608,8 +586,6 @@ definitions:
     type: object
   models.Tbl_kehadiran:
     properties:
-      created_at:
-        type: string
       flag:
         type: string
       id:
@@ -624,8 +600,11 @@ definitions:
         type: integer
       id_user:
         type: integer
-      updated_at:
+      nama:
         type: string
+      pelatihan:
+        $ref: '#/definitions/models.Tbl_pelatihan'
+        type: object
     type: object
   models.Tbl_kelurahan:
     properties:
@@ -742,6 +721,54 @@ definitions:
       sum_total:
         type: integer
       updated_at:
+        type: string
+    type: object
+  models.Tbl_pelatihan:
+    properties:
+      created_by:
+        type: string
+      deskripsi:
+        type: string
+      end_date:
+        type: string
+      end_time:
+        type: string
+      files:
+        items:
+          $ref: '#/definitions/models.Tbl_pelatihan_files'
+        type: array
+      id_pelatihan:
+        type: integer
+      instruktur:
+        type: string
+      judul_pelatihan:
+        type: string
+      kehadiran:
+        description: "Kehadiran \t\t\t[]PelatihanKehadiran\t`json:\"kehadiran\"`"
+        items:
+          $ref: '#/definitions/models.Tbl_kehadiran'
+        type: array
+      lokasi_pelatihan:
+        type: string
+      peruntukan:
+        enum:
+        - UEP
+        - ' KUBE'
+        - ' UEP-KUBE'
+        type: string
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_pelatihan_files'
+        type: array
+      quota:
+        type: integer
+      start_date:
+        type: string
+      start_time:
+        type: string
+      status:
+        type: integer
+      updated_by:
         type: string
     type: object
   models.Tbl_pelatihan_files:
@@ -980,7 +1007,7 @@ definitions:
       region:
         type: string
     type: object
-host: 157.245.55.185:9093
+host: localhost:9093
 info:
   contact:
     email: justhasby@gmail.com

@@ -102,7 +102,7 @@ Tbl_uep struct {
 	LapkeuHistory 	[]*Tbl_lapkeu `json:"lapkeu_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`	
 	InventarisHistory 	[]*Tbl_inventory `json:"inventaris_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`
 	MonevHistory 	[]*Tbl_monev_final `json:"monev_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`
-	PelatihanHistory 	[]*Tbl_kehadiran `json:"pelatihan_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`		
+	PelatihanHistory 	[]*Tbl_pelatihan `json:"pelatihan_history" gorm:"many2many:tbl_kehadiran;foreignkey:id_uep;association_foreignkey:id_pelatihan;association_jointable_foreignkey:id_pelatihan;jointable_foreignkey:id_uep"`		
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_uep"`
 	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
@@ -136,7 +136,7 @@ Tbl_uep struct {
 	LapkeuHistory 	[]*Tbl_lapkeu `json:"lapkeu_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`
 	InventarisHistory 	[]*Tbl_inventory `json:"inventaris_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`
 	MonevHistory 	[]*Tbl_monev_final `json:"monev_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`
-	PelatihanHistory 	[]*Tbl_kehadiran `json:"pelatihan_history" gorm:"foreignkey:id_kube;association_foreignkey:id_kube"`			
+	PelatihanHistory 	[]*Tbl_pelatihan `json:"pelatihan_history" gorm:"many2many:tbl_kehadiran;foreignkey:id_kube;association_foreignkey:id_pelatihan;association_jointable_foreignkey:id_pelatihan;jointable_foreignkey:id_kube"`		
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_kube"`
 	Items 			[]Kubes_items `json:"items"`
 	Created_at   	*time.Time `json:"-" gorm:"timestamp;null"`
@@ -244,7 +244,9 @@ Tbl_pelatihan struct{
 	Updated_by			*string	 	`json:"updated_by"` 	
 	Files 		 		[]Tbl_pelatihan_files 	`json:"files" gorm:"foreignkey:id_pelatihan"`
 	Photo 		 		[]Tbl_pelatihan_files 	`json:"photo" gorm:"foreignkey:id_pelatihan"`
-	Kehadiran 			[]PelatihanKehadiran	`json:"kehadiran"`
+	// Kehadiran 			[]PelatihanKehadiran	`json:"kehadiran"`
+	Kehadiran 			[]*Tbl_kehadiran `json:"kehadiran" gorm:"foreignkey:id_pelatihan;association_foreignkey:id_pelatihan"`
+
 }
 
 Tbl_pelatihan_files struct{
@@ -418,8 +420,10 @@ Tbl_kehadiran struct{
 	Id_kube 		int			`json:"id_kube" sql:"default:null"`	
 	Id_pendamping 	int			`json:"id_pendamping"`
 	Flag 			string		`json:"flag"`
-	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`
-	Updated_at		*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
+	Pelatihan 		*Tbl_pelatihan `json:"pelatihan" gorm:"foreignkey:id_pelatihan;association_foreignkey:id_pelatihan"`	
+	Nama 			string		`json:"nama" gorm:"-"`
+	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
 }
 
 View_address struct{
@@ -529,9 +533,7 @@ Tbl_pelatihan_uepkube struct {
 	Id_uep 	 		int 		`json:"id_uep" sql:"DEFAULT:NULL"`
 	Id_kube 	 	int 		`json:"id_kube" sql:"DEFAULT:NULL"`
 	Id_pelatihan 	int 		`json:"id_pelatihan"`
-	Id_periods 	 	int 		`json:"id_periods"`
-	Created_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
-	Updated_at		*time.Time 	`json:"-" gorm:"timestamp;null"`
+	Pelatihan 		[]*Tbl_pelatihan `json:"pelatihan" gorm:"foreignkey:id_pelatihan;association_foreignkey:id_pelatihan"`
 }
 
 /**

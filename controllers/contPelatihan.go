@@ -272,7 +272,7 @@ func AddPelatihanKehadiran(c echo.Context) (err error) {
 	for i, _ := range kehadirans.Kehadiran {
 		var id []int
 		var nama []string
-		if err := con.Table("tbl_kehadiran").Where("id_user = ?", kehadirans.Kehadiran[i].Id_user).Pluck("id_user", &id).Error; err != nil { return echo.ErrInternalServerError }
+		if err := con.Table("tbl_kehadiran").Where("id_pelatihan = ?", kehadirans.Kehadiran[i].Id_pelatihan).Where("id_user = ?", kehadirans.Kehadiran[i].Id_user).Pluck("id_user", &id).Error; err != nil { return echo.ErrInternalServerError }
 		if len(id) != 0 {
 			con.Table("tbl_user").Where("id_user = ?", id[0]).Pluck("nama", &nama)
 			return echo.NewHTTPError(http.StatusBadRequest, "Maaf User " + nama[0] + " telah terdaftar dalam pelatihan ini")
@@ -322,7 +322,6 @@ func AddPelatihanKehadiran(c echo.Context) (err error) {
 			for iKm, _ := range KubesMember {
 				if err := con.Table("tbl_kube").Where(KubesMember[iKm] + " = ?", kehadirans.Kehadiran[i].Id_user).Pluck("id_kube", &id_kube).Error; err != nil { return echo.ErrInternalServerError }
 				if len(id_kube) != 0 {
-					log.Println("id_kube", id_kube[0])
 					kehadirans.Kehadiran[i].Id_kube = id_kube[0]
 					log.Println("kehadiran.id_kube", kehadirans.Kehadiran[i].Id_kube)
 					break
@@ -335,42 +334,6 @@ func AddPelatihanKehadiran(c echo.Context) (err error) {
 		log.Println(Kehadiran)
 		if err := con.Create(&Kehadiran).Error; err != nil { 
 			return echo.ErrInternalServerError 
-		} else if err == nil {
-			// add uepkube_history_pelatihan
-			pelatihanHistory	:= &models.Tbl_pelatihan_uepkube{}	
-			
-			pelatihanHistory.Id_pelatihan = kehadirans.Kehadiran[i].Id_pelatihan
-
-			if kehadirans.Kehadiran[i].Flag == "UEP" { 
-				pelatihanHistory.Id_uep = kehadirans.Kehadiran[i].Id_user 
-				// get id_periods
-				var id_periods []int
-				if err := con.Table("tbl_periods_uepkube").Where("id_uep", kehadirans.Kehadiran[i].Id_uep).Pluck("id_periods", &id_periods).Error; err != nil { 
-					break
-					return echo.ErrInternalServerError 
-				}
-					if len(id_periods) != 0 {
-						pelatihanHistory.Id_periods = id_periods[0]
-					} else {
-						log.Println("sorry id_periods is Null")
-					}
-				}
-			if kehadirans.Kehadiran[i].Flag == "KUBE" {
-				pelatihanHistory.Id_kube = kehadirans.Kehadiran[i].Id_user 
-				// get id_periods
-				var id_periods []int
-				if err := con.Table("tbl_periods_uepkube").Where("id_kube", kehadirans.Kehadiran[i].Id_kube).Pluck("id_periods", &id_periods).Error; err != nil { 
-					break
-					return echo.ErrInternalServerError 
-				}
-					if len(id_periods) != 0 {
-						pelatihanHistory.Id_periods = id_periods[0]
-					} else {
-						log.Println("sorry id_periods is Null")
-					}	
-			}
-
-			if err := con.Create(&pelatihanHistory).Error; err != nil { return echo.ErrInternalServerError } 			
 		}
 
 		// decrease quota after adding user

@@ -80,18 +80,11 @@ func GetKube(c echo.Context) error {
 				return q.Where("id_kube = ?", id)
 			})
 			q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
-				return q.Where("id_kube = ?", id)
-			})			
-			// q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-			// 	return q.Where("id_kube = ?", id).Preload("JenisUsaha")
-			// })
-			// q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
-			// q = q.Preload("PeriodsHistory.BantuanPeriods.MonevHistory", func(q *gorm.DB) *gorm.DB {
-			// 	return q.Where("id_kube = ?", id)
-			// })				
-			// q = q.Preload("PeriodsHistory.BantuanPeriods.CreditDebit", func(q *gorm.DB) *gorm.DB {
-			// 	return q.Where("id_kube = ?", id)
-			// })
+				return q.Select("distinct *").Group("id_kube")
+			})
+			q = q.Preload("PelatihanHistory.Kehadiran", func(q *gorm.DB) *gorm.DB {
+				return q.Joins("join tbl_user on tbl_user.id_user = tbl_kehadiran.id_user").Select("tbl_kehadiran.*,tbl_user.nama").Where("tbl_kehadiran.id_kube = ?", id)
+			})
 			q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
 				return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
 			})
@@ -114,6 +107,17 @@ func GetKube(c echo.Context) error {
 					// log.Println("id_kelurahan kube : ", Kube.Region)
 				}
 			}
+
+			// get pelatihan history
+			// var id_pelatihan []int
+			// if err := con.Table("tbl_kehadiran").Where("id_kube = ?", Kube.Id_kube).Pluck("id_pelatihan", &id_pelatihan).Error; err != nil { return echo.ErrInternalServerError }
+			// if len(id_pelatihan) != 0 {
+			// 	for x, _ := range id_pelatihan {
+			// 		Pelatihan := models.Tbl_pelatihan{}
+			// 		if err := con.Table("tbl_pelatihan").Where("id_pelatihan = ?", id_pelatihan[x]).First(&Pelatihan).Error; err != nil { return echo.ErrInternalServerError }
+			// 		Kube.PelatihanHistory = append(Kube.PelatihanHistory, &Pelatihan)
+			// 	}
+			// }
 
 			// rename photo
 			for i, _ := range Kube.Photo {

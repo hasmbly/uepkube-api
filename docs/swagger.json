@@ -13,7 +13,7 @@
         },
         "version": "1.0"
     },
-    "host": "157.245.55.185:9093",
+    "host": "localhost:9093",
     "basePath": "/api/v1",
     "paths": {
         "/add/{key}": {
@@ -1470,7 +1470,7 @@
                 "pelatihan_history": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_kehadiran"
+                        "$ref": "#/definitions/models.Tbl_pelatihan"
                     }
                 },
                 "pendamping": {
@@ -1700,9 +1700,10 @@
                     "type": "string"
                 },
                 "kehadiran": {
+                    "description": "Kehadiran \t\t\t[]PelatihanKehadiran\t`json:\"kehadiran\"`",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.PelatihanKehadiran"
+                        "$ref": "#/definitions/models.Tbl_kehadiran"
                     }
                 },
                 "lokasi_pelatihan": {
@@ -1735,41 +1736,6 @@
                     "type": "integer"
                 },
                 "updated_by": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.PelatihanKehadiran": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "flag": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "id_kube": {
-                    "type": "integer"
-                },
-                "id_pelatihan": {
-                    "type": "integer"
-                },
-                "id_pendamping": {
-                    "type": "integer"
-                },
-                "id_uep": {
-                    "type": "integer"
-                },
-                "id_user": {
-                    "type": "integer"
-                },
-                "nama": {
-                    "type": "string"
-                },
-                "updated_at": {
                     "type": "string"
                 }
             }
@@ -2114,9 +2080,6 @@
         "models.Tbl_kehadiran": {
             "type": "object",
             "properties": {
-                "created_at": {
-                    "type": "string"
-                },
                 "flag": {
                     "type": "string"
                 },
@@ -2138,8 +2101,12 @@
                 "id_user": {
                     "type": "integer"
                 },
-                "updated_at": {
+                "nama": {
                     "type": "string"
+                },
+                "pelatihan": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_pelatihan"
                 }
             }
         },
@@ -2313,6 +2280,77 @@
                     "type": "integer"
                 },
                 "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Tbl_pelatihan": {
+            "type": "object",
+            "properties": {
+                "created_by": {
+                    "type": "string"
+                },
+                "deskripsi": {
+                    "type": "string"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_pelatihan_files"
+                    }
+                },
+                "id_pelatihan": {
+                    "type": "integer"
+                },
+                "instruktur": {
+                    "type": "string"
+                },
+                "judul_pelatihan": {
+                    "type": "string"
+                },
+                "kehadiran": {
+                    "description": "Kehadiran \t\t\t[]PelatihanKehadiran\t`json:\"kehadiran\"`",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_kehadiran"
+                    }
+                },
+                "lokasi_pelatihan": {
+                    "type": "string"
+                },
+                "peruntukan": {
+                    "type": "string",
+                    "enum": [
+                        "UEP",
+                        " KUBE",
+                        " UEP-KUBE"
+                    ]
+                },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_pelatihan_files"
+                    }
+                },
+                "quota": {
+                    "type": "integer"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "updated_by": {
                     "type": "string"
                 }
             }

@@ -67,9 +67,7 @@ func GetUep(c echo.Context) error {
 	q = q.Preload("InventarisHistory", func(q *gorm.DB) *gorm.DB {
 		return q.Where("id_uep = ?", id)
 	})
-	q = q.Preload("PelatihanHistory", func(q *gorm.DB) *gorm.DB {
-		return q.Where("id_uep = ?", id)
-	})
+	q = q.Preload("PelatihanHistory")
 	q = q.Preload("Region")
 	q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
 		return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
@@ -80,10 +78,6 @@ func GetUep(c echo.Context) error {
 	q = q.Preload("Photo", func(q *gorm.DB) *gorm.DB {
 		return q.Where("id_uep = ?", id)
 	})
-	// q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha", func(q *gorm.DB) *gorm.DB {
-	// 	return q.Where("id_uep = ?", id).Preload("JenisUsaha")
-	// })
-	// q = q.Preload("PeriodsHistory.BantuanPeriods.Usaha.AllProduk.DetailProduk.JenisProduk")
 	q = q.First(&User, id)
 
 	for i, _ := range User.Photo {

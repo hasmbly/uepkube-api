@@ -17,6 +17,8 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host 157.245.55.185:9093
+/*@host localhost:9093*/
+
 // @BasePath /api/v1
 
 // @securityDefinitions.apikey ApiKeyAuth
