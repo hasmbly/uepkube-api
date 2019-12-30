@@ -7788,3 +7788,19 @@ https://echo.labstack.com
 ____________________________________O/_______
                                     O\
 ⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-30T12:01:54.661484704+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/index.html","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":309932,"latency_human":"309.932µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-30T12:01:54.711293416+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/swagger-ui.css","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":6051181,"latency_human":"6.051181ms","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-30T12:01:54.711445516+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/swagger-ui-bundle.js","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":5940077,"latency_human":"5.940077ms","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-30T12:01:54.712306315+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/swagger-ui-standalone-preset.js","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":337273,"latency_human":"337.273µs","bytes_in":0,"bytes_out":0}
+{"time":"2019-12-30T12:01:55.099430461+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/doc.json","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":3210715,"latency_human":"3.210715ms","bytes_in":0,"bytes_out":90592}
+{"time":"2019-12-30T12:01:55.640832762+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/favicon-32x32.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":85395,"latency_human":"85.395µs","bytes_in":0,"bytes_out":0}
