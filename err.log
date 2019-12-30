@@ -7778,3 +7778,13 @@ ____________________________________O/_______
 {"time":"2019-12-30T11:54:34.228664452+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/doc.json","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":2789109,"latency_human":"2.789109ms","bytes_in":0,"bytes_out":90592}
 {"time":"2019-12-30T11:54:34.250269373+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/favicon-32x32.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":76181,"latency_human":"76.181µs","bytes_in":0,"bytes_out":0}
 {"time":"2019-12-30T11:54:39.699272143+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/address_detail","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":1944608,"latency_human":"1.944608ms","bytes_in":0,"bytes_out":3710}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
