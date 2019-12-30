@@ -270,6 +270,52 @@
                 }
             }
         },
+        "/lookup/address_detail": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lookup-Controller"
+                ],
+                "summary": "GetAllAddressDetail",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Jn"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/lookup/bantuan_periods": {
             "get": {
                 "consumes": [
@@ -2063,12 +2109,21 @@
                 },
                 "kabupaten": {
                     "type": "string"
+                },
+                "kecamatan": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_kecamatan"
+                    }
                 }
             }
         },
         "models.Tbl_kecamatan": {
             "type": "object",
             "properties": {
+                "id_kabupaten": {
+                    "type": "string"
+                },
                 "id_kecamatan": {
                     "type": "string"
                 },

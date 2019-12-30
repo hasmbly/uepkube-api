@@ -395,6 +395,34 @@ func GeAllAddress(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
+// @Summary GetAllAddressDetail
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/address_detail [get]
+func GetAllAddressDetail(c echo.Context) (err error) {
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	Address := []models.Tbl_kabupaten{}
+	q := con
+	q = q.Model(&Address)
+	q = q.Preload("Kecamatan")
+	q = q.Find(&Address)	
+	
+	r := &models.Jn{Msg: Address}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
 // @Summary GeAllMonevItems
 // @Tags Lookup-Controller
 // @Accept  json

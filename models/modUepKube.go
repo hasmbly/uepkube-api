@@ -62,11 +62,13 @@ Tbl_kelurahan struct{
 Tbl_kecamatan struct{
 	Id_kecamatan 		string 		`json:"id_kecamatan" gorm:"primary_key"`
 	Kecamatan 			string 		`json:"kecamatan"`
+	Id_kabupaten 		string 		`json:"id_kabupaten"`
 }
 
 Tbl_kabupaten struct{
 	Id_kabupaten 		string 		`json:"id_kabupaten" gorm:"primary_key"`
 	Kabupaten 			string 		`json:"kabupaten"`
+	Kecamatan 			[]*Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
 }
 
 Tbl_user_photo struct {
@@ -99,6 +101,8 @@ Tbl_uep struct {
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
 	Id_pendamping	int 		`json:"id_pendamping"`
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
+	// LapkeuLabaPercent	float32 	`json:"lapkeu_laba_percentase"`
+	// LapkeuLabaRata2		float32 	`json:"lapkeu_laba_rata2"`
 	LapkeuHistory 	[]*Tbl_lapkeu `json:"lapkeu_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`	
 	InventarisHistory 	[]*Tbl_inventory `json:"inventaris_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`
 	MonevHistory 	[]*Tbl_monev_final `json:"monev_history" gorm:"foreignkey:id_uep;association_foreignkey:id_uep"`

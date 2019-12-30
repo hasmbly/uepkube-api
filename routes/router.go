@@ -141,8 +141,10 @@ func Init() *echo.Echo {
 	o.GET("/lookup/faq", controllers.GeAllFaq)
 	// persebaran
 	o.GET("/lookup/persebaran", controllers.GeAllUepKubeDetail)
-	// kelurahan-kabupaten
+	// address -> kelurahan-kabupaten
 	o.GET("/lookup/address", controllers.GeAllAddress)
+	// address_detail
+	o.GET("/lookup/address_detail", controllers.GetAllAddressDetail)
 	// jenis_usaha
 	o.GET("/lookup/jenis_usaha", controllers.GeAllJenisUsaha)
 	// pendamping
