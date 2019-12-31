@@ -160,6 +160,7 @@ func AddUep(c echo.Context) (err error) {
 	uep := &models.Tbl_uep{}
 	uep.Id_pendamping = Uep.Id_pendamping
 	uep.Nama_usaha = Uep.Nama_usaha
+	uep.Bantuan = Uep.Bantuan
 	uep.Id_jenis_usaha = Uep.Id_jenis_usaha
 	uep.Status = Uep.Status
 
@@ -182,11 +183,17 @@ func AddUep(c echo.Context) (err error) {
 	}	
 
 	// create user
-	if err := con.Create(&user).Error; err != nil {return echo.ErrInternalServerError}
+	if err := con.Create(&user).Error; err != nil {
+		log.Println(err)
+		return echo.ErrInternalServerError
+	}
 
 	// create uep
 	uep.Id_uep = user.Id_user
-	if err := con.Create(&uep).Error; err != nil {return echo.ErrInternalServerError}
+	if err := con.Create(&uep).Error; err != nil {
+		log.Println(err)
+		return echo.ErrInternalServerError
+	}
 
 	// store usaha_uep
 	// uepUsaha := &models.Tbl_usaha_uepkube{}
@@ -218,9 +225,12 @@ func AddUep(c echo.Context) (err error) {
 	monev.Id_uep = user.Id_user
 	monev.Id_pendamping = Uep.Id_pendamping
 	monev.Is_monev = "BELUM"
-	// monev.Id_periods = Uep.Id_periods
 	monev.Flag = "UEP"
-	if err := con.Create(&monev).Error; err != nil {return echo.ErrInternalServerError}
+	// monev.Id_periods = Uep.Id_periods
+	if err := con.Create(&monev).Error; err != nil {
+		log.Println(err)
+		return echo.ErrInternalServerError
+	}
 
 	defer con.Close()
 

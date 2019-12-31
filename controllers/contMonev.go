@@ -207,22 +207,22 @@ func AddMonev(c echo.Context) (err error) {
 	con.SingularTable(true)
 
 	var TblType string
-	var FieldId string
-	var ValueId int
+	// var FieldId string
+	// var ValueId int
 
 	if monev.Id_kube == 0 { 
-		FieldId = "id_uep"
+		// FieldId = "id_uep"
+		// ValueId = monev.Id_uep 
 		TblType = "_uep"
 		MonevFinal.Id_uep = monev.Id_uep	
 		MonevFinal.Flag = "UEP"
-		ValueId = monev.Id_uep 
 	}
 	if monev.Id_uep == 0 { 
-		FieldId = "id_kube"
+		// FieldId = "id_kube"
+		// ValueId = monev.Id_kube 
 		MonevFinal.Id_kube = monev.Id_kube	
 		MonevFinal.Flag = "KUBE"
 		TblType = "_kube"
-		ValueId = monev.Id_kube 
 	}
 
 	var IdKriteria []int
@@ -317,10 +317,10 @@ func AddMonev(c echo.Context) (err error) {
 	MonevFinal.Is_monev = "SUDAH"
 	
 	// get id_periods
-	var id_periods []int
-	con.Table("tbl_periods_uepkube").Where(FieldId + " = ?", ValueId).Pluck("id_periods", &id_periods)
+	// var id_periods []int
+	// con.Table("tbl_periods_uepkube").Where(FieldId + " = ?", ValueId).Pluck("id_periods", &id_periods)
 	
-	MonevFinal.Id_periods = id_periods[0]
+	// MonevFinal.Id_periods = id_periods[0]
 
 	log.Println("monevFInal : ", MonevFinal)
 

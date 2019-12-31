@@ -479,10 +479,10 @@ Tbl_monev_final struct{
 	Id_pendamping 		int			`json:"id_pendamping"`
 	Pendamping 			*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Is_monev			string 		`json:"is_monev" enums:"SUDAH, BELUM"`
-	Id_periods 			int			`json:"id_periods"`
-	Periods 			*Tbl_bantuan_periods `json:"periods" gorm:"foreignkey:id_periods;association_foreignkey:id"`
+	// Id_periods 			int			`json:"id_periods"`
+	// Periods 			*Tbl_bantuan_periods `json:"periods" gorm:"foreignkey:id_periods;association_foreignkey:id"`
 	Flag				string 		`json:"-" enums:"UEP, KUBE"`
-	Data_monev			[]*Data_monev `json:"data_monev"`
+	Data_monev			[]*Data_monev `json:"data_monev" gorm:"-"`
 	Created_at			*time.Time 	`json:"created_at" gorm:"timestamp;null"`
 	Updated_at			*time.Time 	`json:"updated_at" gorm:"timestamp;null"`
 	Detail 				interface{} `json:"detail" gorm:"-"`

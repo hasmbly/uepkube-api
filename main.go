@@ -18,12 +18,17 @@ import (
 
 // @host 157.245.55.185:9093
 
+/**
+ * // @host localhost:9093
+ */
+
 // @BasePath /api/v1
 
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
 func main() {
+
 	e := routes.Init()
 
 	// log

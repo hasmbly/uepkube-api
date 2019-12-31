@@ -190,7 +190,25 @@ func AddLapKeu(c echo.Context) (err error) {
 	// validation
 	if lapkeu.Id_uep == 0 && lapkeu.Id_kube == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_uep or id_kube")
+	}
+	if lapkeu.Id_pendamping == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_pendamping")
 	}	
+	if lapkeu.Bulan == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill bulan")
+	}
+	if lapkeu.Tahun == "" {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill tahun")
+	}
+	if lapkeu.Modal == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill modal")
+	}		
+	if lapkeu.Omset == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Omset")
+	}		
+	if lapkeu.Pendapatan == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Pendapatan")
+	}					
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }

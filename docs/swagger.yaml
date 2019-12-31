@@ -496,23 +496,6 @@ definitions:
         - ' IMAGE'
         type: string
     type: object
-  models.Tbl_bantuan_periods:
-    properties:
-      bantuan_modal:
-        type: number
-      end_date:
-        type: string
-      id:
-        type: integer
-      peruntukan:
-        type: string
-      quota:
-        type: integer
-      start_date:
-        type: string
-      status:
-        type: integer
-    type: object
   models.Tbl_inventory:
     properties:
       credit:
@@ -709,8 +692,6 @@ definitions:
         type: integer
       id_pendamping:
         type: integer
-      id_periods:
-        type: integer
       id_uep:
         type: integer
       is_monev:
@@ -720,9 +701,6 @@ definitions:
         type: string
       pendamping:
         $ref: '#/definitions/models.Tbl_pendamping'
-        type: object
-      periods:
-        $ref: '#/definitions/models.Tbl_bantuan_periods'
         type: object
       sum_total:
         type: integer

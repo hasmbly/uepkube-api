@@ -1988,32 +1988,6 @@
                 }
             }
         },
-        "models.Tbl_bantuan_periods": {
-            "type": "object",
-            "properties": {
-                "bantuan_modal": {
-                    "type": "number"
-                },
-                "end_date": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "peruntukan": {
-                    "type": "string"
-                },
-                "quota": {
-                    "type": "integer"
-                },
-                "start_date": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "integer"
-                }
-            }
-        },
         "models.Tbl_inventory": {
             "type": "object",
             "properties": {
@@ -2310,9 +2284,6 @@
                 "id_pendamping": {
                     "type": "integer"
                 },
-                "id_periods": {
-                    "type": "integer"
-                },
                 "id_uep": {
                     "type": "integer"
                 },
@@ -2326,10 +2297,6 @@
                 "pendamping": {
                     "type": "object",
                     "$ref": "#/definitions/models.Tbl_pendamping"
-                },
-                "periods": {
-                    "type": "object",
-                    "$ref": "#/definitions/models.Tbl_bantuan_periods"
                 },
                 "sum_total": {
                     "type": "integer"

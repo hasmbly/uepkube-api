@@ -198,24 +198,32 @@ func AddInventaris(c echo.Context) (err error) {
 	if inventory.Id_uep == 0 && inventory.Id_kube == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_uep or id_kube")
 	}	
-
 	if inventory.Id_pendamping == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_pendamping")
 	}	
+	if inventory.Credit == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Credit")
+	}	
+	if inventory.Debit == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Debit")
+	}		
+	if inventory.Deskripsi == "" {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Deskripsi")
+	}					
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	creditDebit := &models.Tbl_inventory{}
+	// creditDebit := &models.Tbl_inventory{}
 	
-	if inventory.Id_uep == 0 { 
-		creditDebit.Id_kube = inventory.Id_kube
-	}
+	// if inventory.Id_uep == 0 { 
+	// 	creditDebit.Id_kube = inventory.Id_kube
+	// }
 
-	if inventory.Id_kube == 0 { 
-		creditDebit.Id_uep = inventory.Id_uep
-	}
+	// if inventory.Id_kube == 0 { 
+	// 	creditDebit.Id_uep = inventory.Id_uep
+	// }
 
 	Inventory := &models.Tbl_inventory{}
 	Inventory = inventory.Tbl_inventory

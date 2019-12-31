@@ -75,6 +75,16 @@ func AddAktivitas(c echo.Context) (err error) {
 	// get log post
 	helpers.FetchPost(activity)	
 
+	if activity.Id_pendamping == 0 { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id_pendamping") 
+	}	
+	if activity.Tanggal == "" { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Tanggal") 
+	}
+	if activity.Nama_kegiatan == "" { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama_kegiatan") 
+	}	
+
 	Activity := &models.Tbl_activity{}
 	Activity = activity.Tbl_activity
 

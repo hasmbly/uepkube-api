@@ -108,17 +108,6 @@ func GetKube(c echo.Context) error {
 				}
 			}
 
-			// get pelatihan history
-			// var id_pelatihan []int
-			// if err := con.Table("tbl_kehadiran").Where("id_kube = ?", Kube.Id_kube).Pluck("id_pelatihan", &id_pelatihan).Error; err != nil { return echo.ErrInternalServerError }
-			// if len(id_pelatihan) != 0 {
-			// 	for x, _ := range id_pelatihan {
-			// 		Pelatihan := models.Tbl_pelatihan{}
-			// 		if err := con.Table("tbl_pelatihan").Where("id_pelatihan = ?", id_pelatihan[x]).First(&Pelatihan).Error; err != nil { return echo.ErrInternalServerError }
-			// 		Kube.PelatihanHistory = append(Kube.PelatihanHistory, &Pelatihan)
-			// 	}
-			// }
-
 			// rename photo
 			for i, _ := range Kube.Photo {
 					id_photo := Kube.Photo[i].Id
@@ -193,9 +182,9 @@ func AddKube(c echo.Context) (err error) {
 	if Kube.Id_jenis_usaha == 0 { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id jenis usaha") 
 	}
-	// if Kube.Id_periods == 0 { 
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please Fill id_periods ( Bantuan Modal )") 
-	// }
+	if Kube.Bantuan == 0 { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan fot KUBE") 
+	}	
 	if Kube.Nama_usaha == "" { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha Modal") 
 	}	
@@ -285,14 +274,14 @@ func AddKube(c echo.Context) (err error) {
 	// if err := con.Create(&kubePeriods).Error; err != nil {return echo.ErrInternalServerError}	
 
 	// store credit_debit
-	creditDebit := &models.Tbl_inventory{}
-	creditDebit.Id_kube = Kube.Id_kube
-	creditDebit.Debit = 1
+	// creditDebit := &models.Tbl_inventory{}
+	// creditDebit.Id_kube = Kube.Id_kube
+	// creditDebit.Debit = 1
 	// var nilai []float32
 	// con.Table("tbl_bantuan_periods").Where("id = ?", creditDebit.Id_periods).Pluck("bantuan_modal", &nilai)
 	// creditDebit.Nilai = nilai[0]
 	// creditDebit.Description = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
-	if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
+	// if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
 
 	// add queue monev_uepkube
 	monev := &models.Tbl_monev_final{}
