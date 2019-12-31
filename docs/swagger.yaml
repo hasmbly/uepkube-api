@@ -419,7 +419,7 @@ definitions:
         type: string
       photo:
         items:
-          $ref: '#/definitions/models.Tbl_user_photo'
+          $ref: '#/definitions/models.Tbl_user_files'
         type: array
       region:
         $ref: '#/definitions/models.View_address'
@@ -778,6 +778,10 @@ definitions:
       id_pendamping:
         type: integer
       jenis_pendamping:
+        enum:
+        - UEP
+        - ' KUBE'
+        - ' UEPKUBE'
         type: string
       nama:
         type: string
@@ -822,15 +826,22 @@ definitions:
         - ' IMAGE'
         type: string
     type: object
-  models.Tbl_user_photo:
+  models.Tbl_user_files:
     properties:
+      description:
+        type: string
+      files:
+        type: string
       id:
         type: integer
       id_user:
         type: integer
       is_display:
         type: integer
-      photo:
+      type:
+        enum:
+        - PDF
+        - ' IMAGE'
         type: string
     type: object
   models.Uep:
@@ -962,7 +973,7 @@ definitions:
         type: string
       photo:
         items:
-          $ref: '#/definitions/models.Tbl_user_photo'
+          $ref: '#/definitions/models.Tbl_user_files'
         type: array
       region:
         $ref: '#/definitions/models.View_address'
@@ -1057,7 +1068,7 @@ paths:
       - application/json
       parameters:
       - description: Key -> uep | kube | pendamping | verifikator | produk | pelatihan
-          | log_aktivitas | inventaris | lap_keu | kehadiran | monev
+          | log_aktivitas | inventaris | lap_keu | kehadiran | monev | pkt
         in: path
         name: key
         required: true
@@ -1095,7 +1106,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Paginate -> uep | kube | pendamping | verifikator | produk | pelatihan
-        | log_aktivitas | inventaris | lap_keu | kehadiran | monev
+        | log_aktivitas | inventaris | lap_keu | kehadiran | monev | pkt
       tags:
       - Universal-Controller
     put:

@@ -220,6 +220,17 @@ func AddUep(c echo.Context) (err error) {
 	// creditDebit.Deskripsi = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
 	// if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
 
+	// store credit into inventory
+	credit := &models.Tbl_inventory{}
+	credit.Id_uep = user.Id_user
+	credit.Credit = &Uep.Bantuan
+	credit.Deskripsi = "Dana Bantuan Masuk"
+	credit.Id_pendamping = Uep.Id_pendamping
+	if err := con.Create(&credit).Error; err != nil {
+		log.Println(err)
+		return echo.ErrInternalServerError
+	}	
+
 	// add queue monev_uepkube
 	monev := &models.Tbl_monev_final{}
 	monev.Id_uep = user.Id_user
@@ -339,7 +350,7 @@ func DeleteUep(c echo.Context) (err error) {
 	if err := con.Delete(&user).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 	
 	// delete user_UepFiles
-	if err := con.Where("id_user = ?", user.Id_user).Delete(models.Tbl_user_photo{}).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Where("id_user = ?", user.Id_user).Delete(models.Tbl_user_files{}).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	defer con.Close()
 

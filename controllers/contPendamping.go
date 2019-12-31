@@ -10,6 +10,7 @@ import (
 	 "uepkube-api/models"
 	 "uepkube-api/helpers"
 	 "log"
+	 "fmt"
 	 "strconv"
 	"bufio"
 	"encoding/base64"	
@@ -18,6 +19,10 @@ import (
 
 func GetPendamping(c echo.Context) error {
 	qk 		:= c.QueryParam("id")
+
+	var tmpPath, urlPath, blobFile, flag, host string
+	flag = "PENDAMPING"
+	host = c.Request().Host
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -37,17 +42,24 @@ func GetPendamping(c echo.Context) error {
 	}
 
     // get photo user
-    var photo []models.Tbl_user_photo
-	if err := con.Table("tbl_user_photo").Where(&models.Tbl_user_photo{Id_user: Pendamping.Id_user}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+    var photo []models.Tbl_user_files
+	if err := con.Table("tbl_user_files").Where(&models.Tbl_user_files{Id_user: Pendamping.Id_user}).Where("type = ?", "IMAGE").Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	for i,_ := range photo {
 
-			if photo[i].Photo != "" {
-				ImageBlob := photo[i].Photo
-				photo[i].Photo = "data:image/png;base64," + ImageBlob	
-			}
+			id_photo := photo[i].Id
 
+			tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%s_photo_id_%d.png", flag,qk,id_photo)
+			urlPath	= fmt.Sprintf("http://%s/images/%s_id_%s_photo_id_%d.png", host,flag,qk,id_photo)
+			blobFile = photo[i].Files
+
+			if check := CreateFile(tmpPath, blobFile); check == false {
+				log.Println("blob is empty : ", check)
+			}
+		
+			photo[i].Files = urlPath
 		}
+
 	Pendamping.Photo = photo
 
 	// Pendamping.Password = s.Repeat("*", len(Pendamping.Password))
@@ -72,6 +84,11 @@ func AddPendamping(c echo.Context) (err error) {
 
 	// validation
 	if Pendamping.Nik == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") }
+	if Pendamping.Jenis_pendamping == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill jenis_pendamping") }
+	if Pendamping.Periode == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill periode") }
+	if Pendamping.Username == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill username") }
+	if Pendamping.Password == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill password") }
+	if Pendamping.Id_roles == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill id_roles") }
 
 	// init DB Con
 	con, err := db.CreateCon()
@@ -82,7 +99,10 @@ func AddPendamping(c echo.Context) (err error) {
 	user := &models.Tbl_user{}
 	user = Pendamping.Tbl_user
 
-	if err := con.Create(&user).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Create(&user).Error; err != nil { 
+		log.Println(err)
+		return echo.ErrInternalServerError 
+	}
 
 	// store pendamping
 	pendamping 					:= &models.Tbl_pendamping{}
@@ -90,7 +110,10 @@ func AddPendamping(c echo.Context) (err error) {
 	pendamping.Jenis_pendamping = Pendamping.Jenis_pendamping
 	pendamping.Periode 			= Pendamping.Periode
 
-	if err := con.Create(&pendamping).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Create(&pendamping).Error; err != nil {
+		log.Println(err)
+		return echo.ErrInternalServerError
+	}
 
 	// store account_pendamping
 	account 			:= &models.Tbl_account{}
@@ -105,12 +128,16 @@ func AddPendamping(c echo.Context) (err error) {
     }
 	account.Password  	= string(hash)
 
-	if err := con.Create(&account).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}		
+	if err := con.Create(&account).Error; err != nil {
+		log.Println(err)
+		return echo.ErrInternalServerError
+	}		
+
 	// close DB Con
 	defer con.Close()
 
-	r := &models.Jn{Msg: "Success Store Data"}
-	return c.JSON(http.StatusOK, r)
+	r := &models.Jn1{Msg: "Success Store Data", Id: user.Id_user}
+	return c.JSON(http.StatusOK, r)	
 }
 
 func UpdatePendamping(c echo.Context) (err error) {

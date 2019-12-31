@@ -190,7 +190,7 @@ func AddKube(c echo.Context) (err error) {
 	}	
 	if len(Kube.Items) == 0 { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Items as Member for Kube") 
-	}		
+	}
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -282,6 +282,17 @@ func AddKube(c echo.Context) (err error) {
 	// creditDebit.Nilai = nilai[0]
 	// creditDebit.Description = fmt.Sprintf("Credit dengan nilai : Rp. %.2f,-", nilai[0])
 	// if err := con.Create(&creditDebit).Error; err != nil {return echo.ErrInternalServerError}
+
+	// store credit into inventory
+	credit := &models.Tbl_inventory{}
+	credit.Id_kube = Kube.Id_kube
+	credit.Credit = &Kube.Bantuan
+	credit.Deskripsi = "Dana Bantuan Masuk"
+	credit.Id_pendamping = Kube.Id_pendamping
+	if err := con.Create(&credit).Error; err != nil {
+		log.Println(err)
+		return echo.ErrInternalServerError
+	}
 
 	// add queue monev_uepkube
 	monev := &models.Tbl_monev_final{}

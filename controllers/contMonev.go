@@ -178,6 +178,13 @@ func GetPaginateMonev(c echo.Context) (err error) {
 	// return nil
 }
 
+func GetPaginatePkt(c echo.Context) (err error) {	
+	if err := helpers.PaginatePkt(c, &r); err != nil {
+		return echo.ErrInternalServerError
+	}	
+	return c.JSON(http.StatusOK, r)
+}
+
 func AddMonev(c echo.Context) (err error) {
 	monev := &models.Monev{}
 	MonevFinal := &models.Tbl_monev_final{}	

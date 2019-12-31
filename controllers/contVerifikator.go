@@ -10,6 +10,7 @@ import (
 	 "uepkube-api/models"
 	 "uepkube-api/helpers"
 	 "log"
+	 "fmt"
 	"bufio"
 	"encoding/base64"	
 	"io/ioutil"	
@@ -18,6 +19,10 @@ import (
 
 func GetVerifikator(c echo.Context) error {
 	qk 		:= c.QueryParam("id")
+
+	var tmpPath, urlPath, blobFile, flag, host string
+	flag = "VERIFIKATOR"
+	host = c.Request().Host
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -37,17 +42,25 @@ func GetVerifikator(c echo.Context) error {
 	}
 
     // get photo user
-    var photo []models.Tbl_user_photo
-	if err := con.Table("tbl_user_photo").Where(&models.Tbl_user_photo{Id_user: Verifikator.Id_user}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+    var photo []models.Tbl_user_files
+	if err := con.Table("tbl_user_files").Where(&models.Tbl_user_files{Id_user: Verifikator.Id_user}).Find(&photo).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	for i,_ := range photo {
 
-			if photo[i].Photo != "" {
-				ImageBlob := photo[i].Photo
-				photo[i].Photo = "data:image/png;base64," + ImageBlob	
+			id_photo := photo[i].Id
+
+			tmpPath	= fmt.Sprintf(helpers.GoPath + "/src/uepkube-api/static/assets/images/%s_id_%s_photo_id_%d.png", flag,qk,id_photo)
+			urlPath	= fmt.Sprintf("http://%s/images/%s_id_%s_photo_id_%d.png", host,flag,qk,id_photo)
+			blobFile = photo[i].Files
+
+			if check := CreateFile(tmpPath, blobFile); check == false {
+				log.Println("blob is empty : ", check)
 			}
+		
+			photo[i].Files = urlPath
 
 		}
+
 	Verifikator.Photo = photo
 
 	Verifikator.Password = "******"

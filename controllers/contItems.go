@@ -6,11 +6,11 @@ import (
 	 "log"
 )
 
-// @Summary Paginate -> uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev
+// @Summary Paginate -> uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev | pkt
 // @Tags Universal-Controller
 // @Accept  json
 // @Produce  json
-// @Param key path string true "Key -> uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev"
+// @Param key path string true "Key -> uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev | pkt"
 // @Param sample body models.PosPagin true "Paginate ItemsUepKubePendamping| verifikator"
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
@@ -50,6 +50,8 @@ func GetPaginateItems(c echo.Context) (err error) {
 		return GetPaginateLapKeu(c)	
 	case "monev":
 		return GetPaginateMonev(c)	
+	case "pkt":
+		return GetPaginatePkt(c)			
 
 	default:
 		return echo.NewHTTPError(http.StatusBadRequest, "please, choose the right key")

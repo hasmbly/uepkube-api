@@ -7977,3 +7977,1583 @@ https://echo.labstack.com
 ____________________________________O/_______
                                     O\
 ⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T10:13:42+07:00 ERROR code=400, message=please, choose the right key, internal=<nil>
+{"time":"2019-12-31T10:13:42.501549776+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventory","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=please, choose the right key, internal=\u003cnil\u003e","latency":338658,"latency_human":"338.658µs","bytes_in":90,"bytes_out":104}
+{"time":"2019-12-31T10:13:49.520554272+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":101297802,"latency_human":"101.297802ms","bytes_in":90,"bytes_out":47}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T10:15:26.068726436+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":144893945,"latency_human":"144.893945ms","bytes_in":88,"bytes_out":47}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T10:50:30+07:00 ERROR code=400, message=Please Fill Bantuan fot KUBE, internal=<nil>
+{"time":"2019-12-31T10:50:30.876736132+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Please Fill Bantuan fot KUBE, internal=\u003cnil\u003e","latency":2909286,"latency_human":"2.909286ms","bytes_in":7657,"bytes_out":103}
+2019-12-31T10:50:48+07:00 ERROR code=400, message=Maaf Nama Kube sudah digunakan, internal=<nil>
+{"time":"2019-12-31T10:50:48.863092923+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Maaf Nama Kube sudah digunakan, internal=\u003cnil\u003e","latency":854917232,"latency_human":"854.917232ms","bytes_in":7675,"bytes_out":106}
+2019-12-31T10:51:47+07:00 ERROR code=400, message=Maaf Nama Kube sudah digunakan, internal=<nil>
+{"time":"2019-12-31T10:51:47.033670671+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Maaf Nama Kube sudah digunakan, internal=\u003cnil\u003e","latency":60548234,"latency_human":"60.548234ms","bytes_in":7675,"bytes_out":106}
+2019-12-31T10:51:57+07:00 ERROR code=500, message=Internal Server Error, internal=<nil>
+{"time":"2019-12-31T10:51:57.860061685+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"code=500, message=Internal Server Error, internal=\u003cnil\u003e","latency":228422424,"latency_human":"228.422424ms","bytes_in":7670,"bytes_out":97}
+2019-12-31T10:53:37+07:00 ERROR code=400, message=Maaf Nama Kube sudah digunakan, internal=<nil>
+{"time":"2019-12-31T10:53:37.095101331+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Maaf Nama Kube sudah digunakan, internal=\u003cnil\u003e","latency":50769041,"latency_human":"50.769041ms","bytes_in":7649,"bytes_out":106}
+2019-12-31T10:54:17+07:00 ERROR code=500, message=Internal Server Error, internal=<nil>
+{"time":"2019-12-31T10:54:17.486380958+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"code=500, message=Internal Server Error, internal=\u003cnil\u003e","latency":201147459,"latency_human":"201.147459ms","bytes_in":7653,"bytes_out":97}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T10:56:19.112748554+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/kube","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":251021137,"latency_human":"251.021137ms","bytes_in":7653,"bytes_out":56}
+{"time":"2019-12-31T10:58:56.370137026+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":115284521,"latency_human":"115.284521ms","bytes_in":113,"bytes_out":47}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:12:40+07:00 ERROR code=400, message=Unmarshal type error: expected=[]models.Tbl_inventory_files, got=string, field=photo, offset=499, internal=json: cannot unmarshal string into Go struct field Inventory.photo of type []models.Tbl_inventory_files
+{"time":"2019-12-31T11:12:40.495677609+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Unmarshal type error: expected=[]models.Tbl_inventory_files, got=string, field=photo, offset=499, internal=json: cannot unmarshal string into Go struct field Inventory.photo of type []models.Tbl_inventory_files","latency":466448,"latency_human":"466.448µs","bytes_in":621,"bytes_out":172}
+2019-12-31T11:12:49+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 9 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xb52e190)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xb52e190, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xb52e190, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xb52e190, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xb52e190, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xb52e190, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xb52e190, 0x0, 0x1f1151ca)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xb52e190, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xb52e190, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb518120, 0x870db60, 0xa88ab40, 0xa89a200)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb516120, 0x870db60, 0xa88ab40, 0xa89a200)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa9262a0, 0x870ea00, 0xa920020)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6a16f80, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb52e104, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xb52e0f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xb52e0f0, 0x0, 0x80f7d2f, 0x5e0acab8)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb4fc150, 0x0, 0xa9262a0, 0x1d811fa5)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb4fc150, 0x0, 0x0, 0xa931e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb4fc150, 0xacab800, 0x807b99d, 0xa931df8, 0xa8000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb516120, 0x870d340, 0xb4f64c8, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb518120, 0xb516120, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 20 [runnable]:
+internal/poll.(*fdMutex).rwlock(0xa888050, 0x1, 0x0)
+	/snap/go/4896/src/internal/poll/fd_mutex.go:117 +0x187
+internal/poll.(*FD).readLock(...)
+	/snap/go/4896/src/internal/poll/fd_mutex.go:221
+internal/poll.(*FD).Read(0xa888050, 0xa92004d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:146 +0x44
+net.(*netFD).Read(0xa888050, 0xa92004d, 0x1, 0x1, 0xa85c000, 0x0, 0xa9200d0)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa91e000, 0xa92004d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/net.go:184 +0x56
+net/http.(*connReader).backgroundRead(0xa920040)
+	/snap/go/4896/src/net/http/server.go:677 +0x4
+
+2019-12-31T11:12:49+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:12:49.52180412+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":573784,"latency_human":"573.784µs","bytes_in":600,"bytes_out":76}
+2019-12-31T11:13:24+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 9 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xa888320)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xa888320, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xa888320, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xa888320, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xa888320, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xa888320, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xa888320, 0x0, 0xb70bc2b)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xa888320, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xa888320, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb518120, 0x870db60, 0xb36e000, 0xb25a000)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb516120, 0x870db60, 0xb36e000, 0xb25a000)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa9262a0, 0x870ea00, 0xa920020)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6a16f80, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb52e104, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xb52e0f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xb52e0f0, 0x0, 0x80f7d2f, 0x5e0acab8)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb4fc150, 0x0, 0xa9262a0, 0x1d811fa5)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb4fc150, 0x0, 0x0, 0xa931e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb4fc150, 0xacab800, 0x807b99d, 0xa931df8, 0xa8000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb516120, 0x870d340, 0xb4f64c8, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb518120, 0xb516120, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 10 [syscall]:
+syscall.Syscall(0x3, 0x6, 0xa92004d, 0x1, 0x81005f7, 0xa6a16efc, 0x72)
+	/snap/go/4896/src/syscall/asm_linux_386.s:19 +0x5
+syscall.read(0x6, 0xa92004d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/syscall/zsyscall_linux_386.go:732 +0x49
+syscall.Read(...)
+	/snap/go/4896/src/syscall/syscall_unix.go:183
+internal/poll.(*FD).Read(0xa888050, 0xa92004d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:165 +0x118
+net.(*netFD).Read(0xa888050, 0xa92004d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa91e000, 0xa92004d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/net.go:184 +0x56
+
+
+2019-12-31T11:13:24+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:13:24.19256651+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":627030,"latency_human":"627.03µs","bytes_in":600,"bytes_out":76}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:13:49+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 35 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xa4883c0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xa4883c0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xa4883c0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xa4883c0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xa4883c0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xa4883c0, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xa4883c0, 0x0, 0x390325d0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xa4883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xa4883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb110120, 0x870db60, 0xa48a5a0, 0xa49a180)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb12e090, 0x870db60, 0xa48a5a0, 0xa49a180)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa5262a0, 0x870ea00, 0xaa2a080)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6010bb8, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb144064, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xb144050, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xb144050, 0x0, 0x80f7d2f, 0x5e0acafd)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb0f4140, 0x0, 0xa5262a0, 0x78ff7212)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb0f4140, 0x0, 0x0, 0xa531e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb0f4140, 0xacafd00, 0x807b99d, 0xa531df8, 0xa4000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb12e090, 0x870d340, 0xb0f2498, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb110120, 0xb12e090, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 36 [IO wait]:
+internal/poll.runtime_pollWait(0xa6010b34, 0x72, 0xffffffff)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xa488064, 0x72, 0x0, 0x1, 0xffffffff)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Read(0xa488050, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:169 +0x16d
+net.(*netFD).Read(0xa488050, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa51e000, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/s
+
+2019-12-31T11:13:49+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:13:49.957122489+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":610821,"latency_human":"610.821µs","bytes_in":600,"bytes_out":76}
+2019-12-31T11:13:52+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 35 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xa4883c0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xa4883c0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xa4883c0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xa4883c0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xa4883c0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xa4883c0, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xa4883c0, 0x0, 0x127a7c8d)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xa4883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xa4883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb110120, 0x870db60, 0xa48ad80, 0xa49a200)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb12e090, 0x870db60, 0xa48ad80, 0xa49a200)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa5262a0, 0x870ea00, 0xaa2a080)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6010bb8, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb144064, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xb144050, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xb144050, 0x0, 0x80f7d2f, 0x5e0acafd)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb0f4140, 0x0, 0xa5262a0, 0x78ff7212)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb0f4140, 0x0, 0x0, 0xa531e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb0f4140, 0xacafd00, 0x807b99d, 0xa531df8, 0xa4000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb12e090, 0x870d340, 0xb0f2498, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb110120, 0xb12e090, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 37 [runnable]:
+net/http.(*connReader).backgroundRead(0xaa2a0a0)
+	/snap/go/4896/src/net/http/server.go:676
+created by net/http.(*connReader).startBackgroundRead
+	/snap/go/4896/src/net/http/server.go:673 +0xae
+
+
+2019-12-31T11:13:52+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:13:52.311895009+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":1876605,"latency_human":"1.876605ms","bytes_in":600,"bytes_out":76}
+2019-12-31T11:13:54+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 35 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xb1440a0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xb1440a0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xb1440a0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xb1440a0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xb1440a0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xb1440a0, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xb1440a0, 0x0, 0x4c52202)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xb1440a0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xb1440a0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb110120, 0x870db60, 0xaf70000, 0xae5c000)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb12e090, 0x870db60, 0xaf70000, 0xae5c000)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa5262a0, 0x870ea00, 0xaa2a080)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6010bb8, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb144064, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xb144050, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xb144050, 0x0, 0x80f7d2f, 0x5e0acafd)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb0f4140, 0x0, 0xa5262a0, 0x78ff7212)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb0f4140, 0x0, 0x0, 0xa531e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb0f4140, 0xacafd00, 0x807b99d, 0xa531df8, 0xa4000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb12e090, 0x870d340, 0xb0f2498, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb110120, 0xb12e090, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 20 [runnable]:
+syscall.Syscall(0x3, 0x6, 0xaa2a0ad, 0x1, 0xffffffff, 0x0, 0xb)
+	/snap/go/4896/src/syscall/asm_linux_386.s:19 +0x5
+syscall.read(0x6, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/syscall/zsyscall_linux_386.go:732 +0x49
+syscall.Read(...)
+	/snap/go/4896/src/syscall/syscall_unix.go:183
+internal/poll.(*FD).Read(0xa488050, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:165 +0x118
+net.(*netFD).Read(0xa488050, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa51e000, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/net.go:184 +0x56
+net/h
+
+2019-12-31T11:13:54+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:13:54.080560006+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":529706,"latency_human":"529.706µs","bytes_in":600,"bytes_out":76}
+2019-12-31T11:15:33+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 35 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xb1340a0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xb1340a0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xb1340a0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xb1340a0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xb1340a0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xb1340a0, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xb1340a0, 0x0, 0x1e7bf845)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xb1340a0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xb1340a0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb110120, 0x870db60, 0xb0e0000, 0xae84000)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb12e090, 0x870db60, 0xb0e0000, 0xae84000)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa5262a0, 0x870ea00, 0xaa2a080)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6010bb8, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb144064, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xb144050, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xb144050, 0x0, 0x80f7d2f, 0x5e0acafd)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb0f4140, 0x0, 0xa5262a0, 0x78ff7212)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb0f4140, 0x0, 0x0, 0xa531e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb0f4140, 0xacafd00, 0x807b99d, 0xa531df8, 0xa4000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb12e090, 0x870d340, 0xb0f2498, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb110120, 0xb12e090, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 8 [runnable]:
+syscall.Syscall(0x3, 0x6, 0xaa2a0ad, 0x1, 0xffffffff, 0x0, 0xb)
+	/snap/go/4896/src/syscall/asm_linux_386.s:19 +0x5
+syscall.read(0x6, 0xaa2a0ad, 0x1, 0x1, 0x0, 0xa4385a0, 0x8658f28)
+	/snap/go/4896/src/syscall/zsyscall_linux_386.go:732 +0x49
+syscall.Read(...)
+	/snap/go/4896/src/syscall/syscall_unix.go:183
+internal/poll.(*FD).Read(0xa488050, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:165 +0x118
+net.(*netFD).Read(0xa488050, 0xaa2a0ad, 0x1, 0x1, 0x1, 0x0, 0x86157a7)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa51e000, 0xaa2a0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/net.
+
+2019-12-31T11:15:33+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:15:33.512018465+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":575347,"latency_human":"575.347µs","bytes_in":604,"bytes_out":76}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:16:50+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 19 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0x9c883c0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0x9c883c0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0x9c883c0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0x9c883c0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0x9c883c0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0x9c883c0, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0x9c883c0, 0x0, 0x5e7754d)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0x9c883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0x9c883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xa90e120, 0x870db60, 0x9c8a1b0, 0x9c9a180)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xa90c240, 0x870db60, 0x9c8a1b0, 0x9c9a180)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0x9d26240, 0x870ea00, 0xa22e080)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa4d80bb8, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xa922104, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xa9220f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xa9220f0, 0x0, 0x80f7d2f, 0x5e0acbb2)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xa738000, 0x0, 0x9d26240, 0x85e480ed)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xa738000, 0x0, 0x0, 0x9d31e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xa738000, 0xacbb200, 0x807b99d, 0x9d31df8, 0x9c000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xa90c240, 0x870d340, 0xa7fe010, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xa90e120, 0xa90c240, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 20 [IO wait]:
+internal/poll.runtime_pollWait(0xa4d80b34, 0x72, 0xffffffff)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0x9c88064, 0x72, 0x0, 0x1, 0xffffffff)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Read(0x9c88050, 0xa22e0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:169 +0x16d
+net.(*netFD).Read(0x9c88050, 0xa22e0ad, 0x1, 0x1, 0x1, 0x0, 0x86157a7)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0x9d1e000, 0xa22e0ad, 0x1, 0x1, 0x0, 0x0, 0x0
+
+2019-12-31T11:16:50+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:16:50.099667906+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":610377,"latency_human":"610.377µs","bytes_in":604,"bytes_out":76}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:19:27+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 35 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xb07e1e0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xb07e1e0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xb07e1e0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xb07e1e0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xb07e1e0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xb07e1e0, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xb07e1e0, 0x0, 0x5c1d633)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xb07e1e0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xb07e1e0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb074120, 0x870db60, 0xb0723f0, 0xb062080)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb072120, 0x870db60, 0xb0723f0, 0xb062080)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xb068120, 0x870ea00, 0xb053600)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6a2eff8, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb07e104, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xb07e0f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xb07e0f0, 0x0, 0x80f7d2f, 0x5e0acc4f)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb056160, 0x2, 0xb068120, 0xc5be666f)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb056160, 0x0, 0x0, 0xaf8be78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb056160, 0xacc4f00, 0x807b99d, 0xaf8bdf8, 0xa4000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb072120, 0x870d340, 0xb0544d8, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb074120, 0xb072120, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 36 [IO wait]:
+internal/poll.runtime_pollWait(0xa6a2ef74, 0x72, 0xffffffff)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb07e154, 0x72, 0x0, 0x1, 0xffffffff)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Read(0xb07e140, 0xb05362d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:169 +0x16d
+net.(*netFD).Read(0xb07e140, 0xb05362d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xb054510, 0xb05362d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/sn
+
+2019-12-31T11:19:27+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:19:27.097414318+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":821446,"latency_human":"821.446µs","bytes_in":575,"bytes_out":76}
+2019-12-31T11:19:43+07:00 ERROR code=400, message=Unmarshal type error: expected=[]models.Tbl_inventory_files, got=string, field=photo, offset=499, internal=json: cannot unmarshal string into Go struct field Inventory.photo of type []models.Tbl_inventory_files
+{"time":"2019-12-31T11:19:43.328210763+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Unmarshal type error: expected=[]models.Tbl_inventory_files, got=string, field=photo, offset=499, internal=json: cannot unmarshal string into Go struct field Inventory.photo of type []models.Tbl_inventory_files","latency":304702,"latency_human":"304.702µs","bytes_in":621,"bytes_out":172}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:21:07+07:00 ERROR code=400, message=Unmarshal type error: expected=[]models.Tbl_inventory_files, got=string, field=photo, offset=499, internal=json: cannot unmarshal string into Go struct field Inventory.photo of type []models.Tbl_inventory_files
+{"time":"2019-12-31T11:21:07.095150297+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":400,"error":"code=400, message=Unmarshal type error: expected=[]models.Tbl_inventory_files, got=string, field=photo, offset=499, internal=json: cannot unmarshal string into Go struct field Inventory.photo of type []models.Tbl_inventory_files","latency":494574,"latency_human":"494.574µs","bytes_in":621,"bytes_out":172}
+2019-12-31T11:21:12+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 22 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xa8a4000)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xa8a4000, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xa8a4000, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xa8a4000, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xa8a4000, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xa8a4000, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xa8a4000, 0x0, 0x335774c6)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xa8a4000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xa8a4000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xa833e60, 0x870db60, 0xa8a0000, 0xa88a000)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xa850630, 0x870db60, 0xa8a0000, 0xa88a000)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa829980, 0x870ea00, 0xa857680)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6ac2460, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0x9c96604, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0x9c965f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0x9c965f0, 0x0, 0x80f7d2f, 0x5e0accb3)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xa82abf0, 0x0, 0xa829980, 0xc5a0aed5)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xa82abf0, 0x0, 0x0, 0xa7a7e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xa82abf0, 0xaccb300, 0x807b99d, 0xa7a7df8, 0x9c000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xa850630, 0x870d340, 0xa84e780, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xa833e60, 0xa850630, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 36 [runnable]:
+net/http.(*connReader).backgroundRead(0xa8576a0)
+	/snap/go/4896/src/net/http/server.go:676
+created by net/http.(*connReader).startBackgroundRead
+	/snap/go/4896/src/net/http/server.go:673 +0xae
+
+
+2019-12-31T11:21:12+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:21:12.861966479+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":594323,"latency_human":"594.323µs","bytes_in":600,"bytes_out":76}
+2019-12-31T11:21:15+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 22 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xa8da000)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xa8da000, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xa8da000, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xa8da000, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xa8da000, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xa8da000, 0x0, 0x30dc0b0d)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xa833e60, 0x870db60, 0xa8d6000, 0xa8be000)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xa850630, 0x870db60, 0xa8d6000, 0xa8be000)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa829980, 0x870ea00, 0xa857680)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6ac2460, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0x9c96604, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0x9c965f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0x9c965f0, 0x0, 0x80f7d2f, 0x5e0accb3)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xa82abf0, 0x0, 0xa829980, 0xc5a0aed5)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xa82abf0, 0x0, 0x0, 0xa7a7e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xa82abf0, 0xaccb300, 0x807b99d, 0xa7a7df8, 0x9c000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xa850630, 0x870d340, 0xa84e780, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xa833e60, 0xa850630, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 5 [runnable]:
+net/http.(*connReader).backgroundRead(0xa8576a0)
+	/snap/go/4896/src/net/http/server.go:676
+created by net/http.(*connReader).startBackgroundRead
+	/snap/go/4896/src/net/http/server.go:673 +0xae
+
+
+2019-12-31T11:21:15+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:21:15.820222788+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":493460,"latency_human":"493.46µs","bytes_in":600,"bytes_out":75}
+2019-12-31T11:21:26+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 22 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0x9c96730)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0x9c96730, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0x9c96730, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0x9c96730, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0x9c96730, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0x9c96730, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0x9c96730, 0x0, 0x3454bf99)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0x9c96730, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0x9c96730, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xa833e60, 0x870db60, 0xa850d80, 0x9cbc480)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xa850630, 0x870db60, 0xa850d80, 0x9cbc480)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa829980, 0x870ea00, 0xa857680)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6ac2460, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0x9c96604, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0x9c965f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0x9c965f0, 0x0, 0x80f7d2f, 0x5e0accb3)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xa82abf0, 0x0, 0xa829980, 0xc5a0aed5)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xa82abf0, 0x0, 0x0, 0xa7a7e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xa82abf0, 0xaccb300, 0x807b99d, 0xa7a7df8, 0x9c000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xa850630, 0x870d340, 0xa84e780, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xa833e60, 0xa850630, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 24 [runnable]:
+syscall.Syscall(0x3, 0x6, 0xa8576ad, 0x1, 0xffffffff, 0x0, 0xb)
+	/snap/go/4896/src/syscall/asm_linux_386.s:19 +0x5
+syscall.read(0x6, 0xa8576ad, 0x1, 0x1, 0x0, 0x7, 0x8050e7a)
+	/snap/go/4896/src/syscall/zsyscall_linux_386.go:732 +0x49
+syscall.Read(...)
+	/snap/go/4896/src/syscall/syscall_unix.go:183
+internal/poll.(*FD).Read(0x9c96640, 0xa8576ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:165 +0x118
+net.(*netFD).Read(0x9c96640, 0xa8576ad, 0x1, 0x1, 0x9d38540, 0x0, 0xa857750)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa84e7b8, 0xa8576ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/net
+
+2019-12-31T11:21:26+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:21:26.878482995+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":512452,"latency_human":"512.452µs","bytes_in":582,"bytes_out":76}
+2019-12-31T11:21:32+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 22 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xa8da000)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xa8da000, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xa8da000, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xa8da000, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xa8da000, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xa8da000, 0x0, 0x32a3900)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xa833e60, 0x870db60, 0xa8d6240, 0xa8be080)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xa850630, 0x870db60, 0xa8d6240, 0xa8be080)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa829980, 0x870ea00, 0xa857680)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6ac2460, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0x9c96604, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0x9c965f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0x9c965f0, 0x0, 0x80f7d2f, 0x5e0accb3)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xa82abf0, 0x0, 0xa829980, 0xc5a0aed5)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xa82abf0, 0x0, 0x0, 0xa7a7e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xa82abf0, 0xaccb300, 0x807b99d, 0xa7a7df8, 0x9c000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xa850630, 0x870d340, 0xa84e780, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xa833e60, 0xa850630, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 6 [runnable]:
+syscall.Syscall(0x3, 0x6, 0xa8576ad, 0x1, 0xffffffff, 0x0, 0xb)
+	/snap/go/4896/src/syscall/asm_linux_386.s:19 +0x5
+syscall.read(0x6, 0xa8576ad, 0x1, 0x1, 0x0, 0x28, 0x85d1ea0)
+	/snap/go/4896/src/syscall/zsyscall_linux_386.go:732 +0x49
+syscall.Read(...)
+	/snap/go/4896/src/syscall/syscall_unix.go:183
+internal/poll.(*FD).Read(0x9c96640, 0xa8576ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:165 +0x118
+net.(*netFD).Read(0x9c96640, 0xa8576ad, 0x1, 0x1, 0x9d38580, 0x0, 0xa857750)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa84e7b8, 0xa8576ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/net.
+
+2019-12-31T11:21:32+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:21:32.054748453+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":1648581,"latency_human":"1.648581ms","bytes_in":600,"bytes_out":76}
+2019-12-31T11:22:42+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 22 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xa8a4000)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xa8a4000, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xa8a4000, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xa8a4000, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xa8a4000, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xa8a4000, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xa8a4000, 0x0, 0x1ae3ebcc)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xa8a4000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xa8a4000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xa833e60, 0x870db60, 0xa8a01b0, 0xa88a080)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xa850630, 0x870db60, 0xa8a01b0, 0xa88a080)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa829980, 0x870ea00, 0xa857680)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6ac2460, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0x9c96604, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0x9c965f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0x9c965f0, 0x0, 0x80f7d2f, 0x5e0accb3)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xa82abf0, 0x0, 0xa829980, 0xc5a0aed5)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xa82abf0, 0x0, 0x0, 0xa7a7e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xa82abf0, 0xaccb300, 0x807b99d, 0xa7a7df8, 0x9c000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xa850630, 0x870d340, 0xa84e780, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xa833e60, 0xa850630, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 37 [runnable]:
+net/http.(*connReader).backgroundRead(0xa8576a0)
+	/snap/go/4896/src/net/http/server.go:676
+created by net/http.(*connReader).startBackgroundRead
+	/snap/go/4896/src/net/http/server.go:673 +0xae
+
+
+2019-12-31T11:22:42+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:22:42.451521755+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":375256,"latency_human":"375.256µs","bytes_in":596,"bytes_out":75}
+2019-12-31T11:22:43+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 22 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xa8da000)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xa8da000, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xa8da000, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xa8da000, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xa8da000, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xa8da000, 0x0, 0x1757d25)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xa8da000, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xa833e60, 0x870db60, 0xa8d63f0, 0xa8be100)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xa850630, 0x870db60, 0xa8d63f0, 0xa8be100)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa829980, 0x870ea00, 0xa857680)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6ac2460, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0x9c96604, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0x9c965f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0x9c965f0, 0x0, 0x80f7d2f, 0x5e0accb3)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xa82abf0, 0x0, 0xa829980, 0xc5a0aed5)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xa82abf0, 0x0, 0x0, 0xa7a7e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xa82abf0, 0xaccb300, 0x807b99d, 0xa7a7df8, 0x9c000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xa850630, 0x870d340, 0xa84e780, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xa833e60, 0xa850630, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 7 [runnable]:
+syscall.Syscall(0x3, 0x6, 0xa8576ad, 0x1, 0xffffffff, 0x0, 0xb)
+	/snap/go/4896/src/syscall/asm_linux_386.s:19 +0x5
+syscall.read(0x6, 0xa8576ad, 0x1, 0x1, 0x0, 0x28, 0x85d1ea0)
+	/snap/go/4896/src/syscall/zsyscall_linux_386.go:732 +0x49
+syscall.Read(...)
+	/snap/go/4896/src/syscall/syscall_unix.go:183
+internal/poll.(*FD).Read(0x9c96640, 0xa8576ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:165 +0x118
+net.(*netFD).Read(0x9c96640, 0xa8576ad, 0x1, 0x1, 0x9d38580, 0x0, 0xa857750)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa84e7b8, 0xa8576ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/net.
+
+2019-12-31T11:22:43+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:22:43.024931718+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":453439,"latency_human":"453.439µs","bytes_in":596,"bytes_out":76}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:23:27+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 9 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715ce0, 0xa0883c0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715ce0, 0xa0883c0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715ce0, 0xa0883c0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715ce0, 0xa0883c0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715ce0, 0xa0883c0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715ce0, 0xa0883c0, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715ce0, 0xa0883c0, 0x0, 0xc7a9885)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715ce0, 0xa0883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715ce0, 0xa0883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xad06120, 0x870db40, 0xa08a510, 0xa09a180)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xad04120, 0x870db40, 0xa08a510, 0xa09a180)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa126240, 0x870e9e0, 0xa61e080)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa4cc0bb8, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xad1c104, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xad1c0f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xad1c0f0, 0x0, 0x80f7d2f, 0x5e0acd3f)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xace8150, 0x0, 0xa126240, 0xcc76784c)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xace8150, 0x0, 0x0, 0xa131e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xace8150, 0xacd3f00, 0x807b99d, 0xa131df8, 0xa0000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xad04120, 0x870d320, 0xace64c8, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xad06120, 0xad04120, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 10 [IO wait]:
+internal/poll.runtime_pollWait(0xa4cc0b34, 0x72, 0xffffffff)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xa088064, 0x72, 0x0, 0x1, 0xffffffff)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Read(0xa088050, 0xa61e0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:169 +0x16d
+net.(*netFD).Read(0xa088050, 0xa61e0ad, 0x1, 0x1, 0x1, 0x0, 0x86157a7)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xa11e000, 0xa61e0ad, 0x1, 0x1, 0x0, 0x0, 0x0)
+
+2019-12-31T11:23:27+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:23:27.210060342+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":695206,"latency_human":"695.206µs","bytes_in":596,"bytes_out":76}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:24:26+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 9 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x865894c, 0x1000, 0x0, 0x8715b00, 0xa8883c0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715b00, 0xa8883c0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715b00, 0xa8883c0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715b00, 0xa8883c0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715b00, 0xa8883c0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715b00, 0xa8883c0, 0x86274e4, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715b00, 0xa8883c0, 0x0, 0x98d738a)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715b00, 0xa8883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715b00, 0xa8883c0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb508120, 0x870d9a0, 0xa88a480, 0xa89a180)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb506240, 0x870d9a0, 0xa88a480, 0xa89a180)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xa9262a0, 0x870e840, 0xae28080)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa6a07ff8, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xb51e104, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xb51e0f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xb51e0f0, 0x0, 0x80f7d2f, 0x5e0acd7a)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb4ea150, 0x0, 0xa9262a0, 0x898aff94)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb4ea150, 0x0, 0x0, 0xa931e78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb4ea150, 0xacd7a00, 0x807b99d, 0xa931df8, 0xa8000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb506240, 0x870d180, 0xb4e84c8, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb508120, 0xb506240, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 10 [runnable]:
+net/http.(*connReader).backgroundRead(0xae280a0)
+	/snap/go/4896/src/net/http/server.go:676
+created by net/http.(*connReader).startBackgroundRead
+	/snap/go/4896/src/net/http/server.go:673 +0xae
+
+
+2019-12-31T11:24:26+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:24:26.160975862+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":707286,"latency_human":"707.286µs","bytes_in":596,"bytes_out":76}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:24:51+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 34 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589b4, 0x1000, 0x0, 0x8715d00, 0xc0721e0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d00, 0xc0721e0, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d00, 0xc0721e0, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d00, 0xc0721e0, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d00, 0xc0721e0, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d00, 0xc0721e0, 0x8627533, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d00, 0xc0721e0, 0x0, 0x88fcbb8)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d00, 0xc0721e0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d00, 0xc0721e0, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xc068120, 0x870db60, 0xc0663f0, 0xc056080)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xc066120, 0x870db60, 0xc0663f0, 0xc056080)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xc05c120, 0x870ea00, 0xc04b5a0)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa4c80010, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xc072104, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xc0720f0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xc0720f0, 0x0, 0x80f7d2f, 0x5e0acd93)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xc04e150, 0x1, 0xc05c120, 0xc88c2a06)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xc04e150, 0x0, 0x0, 0xbeade78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xc04e150, 0xacd9300, 0x807b99d, 0xbeaddf8, 0xb4000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xc066120, 0x870d340, 0xc04c4c0, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xc068120, 0xc066120, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 35 [IO wait]:
+internal/poll.runtime_pollWait(0xa4c7ff8c, 0x72, 0xffffffff)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xc072154, 0x72, 0x0, 0x1, 0xffffffff)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Read(0xc072140, 0xc04b5cd, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:169 +0x16d
+net.(*netFD).Read(0xc072140, 0xc04b5cd, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xc04c4f8, 0xc04b5cd, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/sn
+
+2019-12-31T11:24:51+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:24:51.144246421+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":601583,"latency_human":"601.583µs","bytes_in":596,"bytes_out":76}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+2019-12-31T11:25:10+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 10 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589c0, 0x1000, 0x0, 0x8715d20, 0xa47aa00)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d20, 0xa47aa00, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d20, 0xa47aa00, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d20, 0xa47aa00, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d20, 0xa47aa00, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d20, 0xa47aa00, 0x862753c, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d20, 0xa47aa00, 0x0, 0x3fc7f67)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d20, 0xa47aa00, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d20, 0xa47aa00, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb0b77a0, 0x870db70, 0xb0d6b40, 0xa48c500)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb0d6990, 0x870db70, 0xb0d6b40, 0xa48c500)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xb0da660, 0x870ea20, 0xb100e00)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa61cc218, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xa47a924, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xa47a910, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xa47a910, 0x0, 0x80f7d2f, 0x5e0acda6)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb0aeda0, 0x0, 0xb0da660, 0x83f36a06)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb0aeda0, 0x0, 0x0, 0xae8de78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb0aeda0, 0xacda600, 0x807b99d, 0xae8ddf8, 0xa4000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb0d6990, 0x870d350, 0xb0cecb8, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb0b77a0, 0xb0d6990, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 11 [IO wait]:
+internal/poll.runtime_pollWait(0xa61cc194, 0x72, 0xffffffff)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xa47a974, 0x72, 0x0, 0x1, 0xffffffff)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Read(0xa47a960, 0xb100e2d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:169 +0x16d
+net.(*netFD).Read(0xa47a960, 0xb100e2d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xb0cecf0, 0xb100e2d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/sn
+
+2019-12-31T11:25:10+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:25:10.068308408+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":1425183,"latency_human":"1.425183ms","bytes_in":596,"bytes_out":76}
+2019-12-31T11:25:12+07:00 - [PANIC RECOVER] runtime error: invalid memory address or nil pointer dereference goroutine 10 [running]:
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1.1(0x86589c0, 0x1000, 0x0, 0x8715d20, 0xa47aa00)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:71 +0xaa
+panic(0x85a21a0, 0x9389848)
+	/snap/go/4896/src/runtime/panic.go:679 +0x16b
+uepkube-api/controllers.AddInventaris(0x8715d20, 0xa47aa00, 0x0, 0x0)
+	/home/unknown/go/src/uepkube-api/controllers/contInventaris.go:198 +0x9c
+uepkube-api/controllers.AddItems(0x8715d20, 0xa47aa00, 0x8617afb, 0x6)
+	/home/unknown/go/src/uepkube-api/controllers/contItems.go:154 +0x3bc
+uepkube-api/middlewares.CheckAllRoles.func1(0x8715d20, 0xa47aa00, 0x4, 0x85a3d20)
+	/home/unknown/go/src/uepkube-api/middlewares/midAll.go:22 +0x13f
+github.com/labstack/echo/middleware.JWTWithConfig.func2.1(0x8715d20, 0xa47aa00, 0x0, 0x856b680)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/jwt.go:207 +0x28a
+github.com/labstack/echo.(*Echo).add.func1(0x8715d20, 0xa47aa00, 0x862753c, 0x1b)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:505 +0x66
+github.com/labstack/echo/middleware.CORSWithConfig.func1.1(0x8715d20, 0xa47aa00, 0x0, 0x2a461265)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/cors.go:121 +0x376
+github.com/labstack/echo/middleware.RecoverWithConfig.func1.1(0x8715d20, 0xa47aa00, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/recover.go:78 +0xc4
+github.com/labstack/echo/middleware.LoggerWithConfig.func2.1(0x8715d20, 0xa47aa00, 0x0, 0x0)
+	/home/unknown/go/src/github.com/labstack/echo/middleware/logger.go:117 +0xdb
+github.com/labstack/echo.(*Echo).ServeHTTP(0xb0b77a0, 0x870db70, 0xb0d6120, 0xa48c180)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:616 +0x202
+net/http.serverHandler.ServeHTTP(0xb0d6990, 0x870db70, 0xb0d6120, 0xa48c180)
+	/snap/go/4896/src/net/http/server.go:2802 +0x84
+net/http.(*conn).serve(0xb0da660, 0x870ea20, 0xb100e00)
+	/snap/go/4896/src/net/http/server.go:1890 +0x7ad
+created by net/http.(*Server).Serve
+	/snap/go/4896/src/net/http/server.go:2928 +0x30d
+
+goroutine 1 [IO wait]:
+internal/poll.runtime_pollWait(0xa61cc218, 0x72, 0x0)
+	/snap/go/4896/src/runtime/netpoll.go:184 +0x4b
+internal/poll.(*pollDesc).wait(0xa47a924, 0x72, 0x0, 0x0, 0x8618e92)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:87 +0x37
+internal/poll.(*pollDesc).waitRead(...)
+	/snap/go/4896/src/internal/poll/fd_poll_runtime.go:92
+internal/poll.(*FD).Accept(0xa47a910, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:384 +0x19a
+net.(*netFD).accept(0xa47a910, 0x0, 0x80f7d2f, 0x5e0acda6)
+	/snap/go/4896/src/net/fd_unix.go:238 +0x27
+net.(*TCPListener).accept(0xb0aeda0, 0x0, 0xb0da660, 0x83f36a06)
+	/snap/go/4896/src/net/tcpsock_posix.go:139 +0x27
+net.(*TCPListener).AcceptTCP(0xb0aeda0, 0x0, 0x0, 0xae8de78)
+	/snap/go/4896/src/net/tcpsock.go:248 +0x3c
+github.com/labstack/echo.tcpKeepAliveListener.Accept(0xb0aeda0, 0xacda600, 0x807b99d, 0xae8ddf8, 0xa4000e0)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:821 +0x25
+net/http.(*Server).Serve(0xb0d6990, 0x870d350, 0xb0cecb8, 0x0, 0x0)
+	/snap/go/4896/src/net/http/server.go:2896 +0x22b
+github.com/labstack/echo.(*Echo).StartServer(0xb0b77a0, 0xb0d6990, 0x1, 0x1b6)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:707 +0x2a6
+github.com/labstack/echo.(*Echo).Start(...)
+	/home/unknown/go/src/github.com/labstack/echo/echo.go:627
+main.main()
+	/home/unknown/go/src/uepkube-api/main.go:48 +0x1cc
+
+goroutine 34 [runnable]:
+syscall.Syscall(0x3, 0x6, 0xb100e2d, 0x1, 0xffffffff, 0x0, 0xb)
+	/snap/go/4896/src/syscall/asm_linux_386.s:19 +0x5
+syscall.read(0x6, 0xb100e2d, 0x1, 0x1, 0x0, 0x7, 0x8050e7a)
+	/snap/go/4896/src/syscall/zsyscall_linux_386.go:732 +0x49
+syscall.Read(...)
+	/snap/go/4896/src/syscall/syscall_unix.go:183
+internal/poll.(*FD).Read(0xa47a960, 0xb100e2d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/internal/poll/fd_unix.go:165 +0x118
+net.(*netFD).Read(0xa47a960, 0xb100e2d, 0x1, 0x1, 0xa45c000, 0x0, 0xb100ed0)
+	/snap/go/4896/src/net/fd_unix.go:202 +0x3f
+net.(*conn).Read(0xb0cecf0, 0xb100e2d, 0x1, 0x1, 0x0, 0x0, 0x0)
+	/snap/go/4896/src/net/net
+
+2019-12-31T11:25:12+07:00 ERROR runtime error: invalid memory address or nil pointer dereference
+{"time":"2019-12-31T11:25:12.709774532+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/inventaris","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":500,"error":"","latency":538492,"latency_human":"538.492µs","bytes_in":596,"bytes_out":76}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T11:26:14.429196776+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/add/pendamping","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":250755788,"latency_human":"250.755788ms","bytes_in":596,"bytes_out":57}
+{"time":"2019-12-31T11:30:28.795322929+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/upload/files/pendamping?id=1459&is_display=1","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":334920089,"latency_human":"334.920089ms","bytes_in":354226,"bytes_out":49}
+{"time":"2019-12-31T11:30:42.81190384+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/pendamping?id=1459","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":60511046,"latency_human":"60.511046ms","bytes_in":0,"bytes_out":734}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T11:41:20.848318215+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/pendamping?id=1459","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":145541926,"latency_human":"145.541926ms","bytes_in":0,"bytes_out":896}
+{"time":"2019-12-31T11:41:36.083469167+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/images/PENDAMPING_id_1459_photo_id_3.png","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":421151955,"latency_human":"421.151955ms","bytes_in":0,"bytes_out":353806}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T13:18:21.424442709+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pkt","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":67418841,"latency_human":"67.418841ms","bytes_in":81,"bytes_out":265}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T13:20:15.206913392+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pkt","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":3116506,"latency_human":"3.116506ms","bytes_in":81,"bytes_out":6096}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T13:21:44.908784201+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pkt","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":3276328,"latency_human":"3.276328ms","bytes_in":81,"bytes_out":608}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T13:22:45.156285121+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pkt","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":31331164,"latency_human":"31.331164ms","bytes_in":81,"bytes_out":3380}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2019-12-31T13:24:06.824349517+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pkt","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":8339715,"latency_human":"8.339715ms","bytes_in":189,"bytes_out":3380}
+{"time":"2019-12-31T13:24:12.733241003+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pkt","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":26931586,"latency_human":"26.931586ms","bytes_in":186,"bytes_out":229}
+{"time":"2019-12-31T13:24:22.664084091+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pkt","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":1640571,"latency_human":"1.640571ms","bytes_in":189,"bytes_out":229}
+{"time":"2019-12-31T13:24:27.43925539+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"POST","uri":"/api/v1/pkt","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":5637785,"latency_human":"5.637785ms","bytes_in":189,"bytes_out":3380}

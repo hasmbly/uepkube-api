@@ -71,13 +71,6 @@ Tbl_kabupaten struct{
 	Kecamatan 			[]*Tbl_kecamatan `json:"kecamatan" gorm:"foreignkey:id_kabupaten;association_foreignkey:id_kabupaten"`
 }
 
-Tbl_user_photo struct {
-	Id				int 		`json:"id" gorm:"primary_key"`
-	Id_user			int 		`json:"id_user"`
-	Photo			string 		`json:"photo"`
-	Is_display		int 		`json:"is_display"`
-}
-
 Tbl_usaha_uep_photo struct {
 	Id				int 		`json:"id" gorm:"primary_key"`
 	Id_uep			int 		`json:"id_uep"`
@@ -164,7 +157,7 @@ Tbl_kube_photo struct {
 
 Tbl_pendamping struct {
 	Id_pendamping		int 		`json:"id_pendamping" gorm:"primary_key"`
-	Jenis_pendamping	string 		`json:"jenis_pendamping"`
+	Jenis_pendamping	string 		`json:"jenis_pendamping" enums:"UEP, KUBE, UEPKUBE"`
 	Periode				string 		`json:"periode"`
 	Nama				string 		`json:"nama" gorm:"-"`
 }
@@ -320,8 +313,8 @@ Tbl_inventory struct{
 	Id 				int 		`json:"id" gorm:"primary_key"`
 	Id_uep 			int			`json:"id_uep" sql:"default:null"`
 	Id_kube 		int			`json:"id_kube" sql:"default:null"`
-	Credit 			float32		`json:"credit" sql:"type:decimal(10,2);"`
-	Debit 			float32		`json:"debit" sql:"type:decimal(10,2);"`
+	Credit 			*float32	`json:"credit" sql:"type:decimal(10,2);"`
+	Debit 			*float32	`json:"debit" sql:"type:decimal(10,2);"`
 	Deskripsi 		string		`json:"deskripsi"`
 	Id_pendamping 	int			`json:"id_pendamping"`
 	Photo 		 	[]Tbl_inventory_files `json:"photo" gorm:"foreignkey:id_inventory"`
@@ -615,7 +608,7 @@ Pendamping struct{
 	Password			string 		`json:"password"`
 	Jenis_pendamping	string 		`json:"jenis_pendamping"`
 	Periode 			string 		`json:"periode"`
-	Photo 		 		[]Tbl_user_photo 	`json:"photo"`
+	Photo 		 		[]Tbl_user_files 	`json:"photo"`
 }
 
 Verifikator struct{
@@ -624,7 +617,7 @@ Verifikator struct{
 	Roles_name			string 		`json:"roles_name"`
 	Username			string 		`json:"username"`
 	Password			string 		`json:"password"`
-	Photo 		 		[]Tbl_user_photo 	`json:"photo"`
+	Photo 		 		[]Tbl_user_files 	`json:"photo"`
 }
 
 Produk struct{
@@ -756,7 +749,7 @@ ShowProduks struct{
 	Nama_pendamping string `json:"nama_pendamping"`
 	Bantuan_modal 	int `json:"bantuan_modal"`
 	Status 			int `json:"status"`
-	Photo 		 	[]Tbl_user_photo 	`json:"photo"`
+	Photo 		 	[]Tbl_user_files 	`json:"photo"`
 	Flag 			string 		 `json:"flag"`
 }
 

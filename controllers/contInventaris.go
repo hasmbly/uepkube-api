@@ -201,10 +201,10 @@ func AddInventaris(c echo.Context) (err error) {
 	if inventory.Id_pendamping == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_pendamping")
 	}	
-	if inventory.Credit == 0 {
-		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Credit")
-	}	
-	if inventory.Debit == 0 {
+	// if inventory.Credit != 0 {
+	// 	return echo.NewHTTPError(http.StatusBadRequest, "Sorry, fill Credit")
+	// }	
+	if *inventory.Debit == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Debit")
 	}		
 	if inventory.Deskripsi == "" {

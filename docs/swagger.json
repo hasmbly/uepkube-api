@@ -1130,11 +1130,11 @@
                 "tags": [
                     "Universal-Controller"
                 ],
-                "summary": "Paginate -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
+                "summary": "Paginate -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev | pkt",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev",
+                        "description": "Key -\u003e uep | kube | pendamping | verifikator | produk | pelatihan | log_aktivitas | inventaris | lap_keu | kehadiran | monev | pkt",
                         "name": "key",
                         "in": "path",
                         "required": true
@@ -1874,7 +1874,7 @@
                 "photo": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_user_photo"
+                        "$ref": "#/definitions/models.Tbl_user_files"
                     }
                 },
                 "region": {
@@ -2411,7 +2411,12 @@
                     "type": "integer"
                 },
                 "jenis_pendamping": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "UEP",
+                        " KUBE",
+                        " UEPKUBE"
+                    ]
                 },
                 "nama": {
                     "type": "string"
@@ -2478,9 +2483,15 @@
                 }
             }
         },
-        "models.Tbl_user_photo": {
+        "models.Tbl_user_files": {
             "type": "object",
             "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -2490,8 +2501,12 @@
                 "is_display": {
                     "type": "integer"
                 },
-                "photo": {
-                    "type": "string"
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "PDF",
+                        " IMAGE"
+                    ]
                 }
             }
         },
@@ -2684,7 +2699,7 @@
                 "photo": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Tbl_user_photo"
+                        "$ref": "#/definitions/models.Tbl_user_files"
                     }
                 },
                 "region": {
