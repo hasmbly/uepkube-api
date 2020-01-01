@@ -427,7 +427,7 @@ View_address struct{
 	Id_kabupaten 	int 		`json:"id_kabupaten"`
 	Id_kecamatan 	int 		`json:"id_kecamatan"`
 	Id_kelurahan 	string 		`json:"id_kelurahan"`
-	Region 			string 		`json:"region"`
+	Region 			string 		`json:"region" gorm:"-"`
 }
 
 // Tbl_inventory struct{

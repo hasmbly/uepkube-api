@@ -9,7 +9,7 @@ import (
 	"uepkube-api/db"
 	"github.com/fatih/structs"
 	"fmt"
-	// "log"
+	"log"
 	"strconv"
 	// "github.com/ulule/paging"
 	"math"
@@ -166,13 +166,14 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 	q = q.Preload("MonevHistory")
 	q = q.Preload("InventarisHistory")
 	q = q.Preload("PelatihanHistory")
-	q = q.Preload("Region")
 	q = q.Preload("Pendamping", func(q *gorm.DB) *gorm.DB {
 		return q.Joins("join tbl_user on tbl_user.id_user = tbl_pendamping.id_pendamping").Select("tbl_pendamping.*,tbl_user.nama")
 	})
-	q = q.Preload("Kelurahan")
-	q = q.Preload("Kecamatan")
-	q = q.Preload("Kabupaten")	
+
+	// q = q.Preload("Region")
+	// q = q.Preload("Kelurahan")
+	// q = q.Preload("Kecamatan")
+	// q = q.Preload("Kabupaten")	
 
 	for i,_ := range f.Filters {
 		k := f.Filters[i].Key
@@ -207,10 +208,17 @@ func ExecPaginateKube(f *models.PosPagin, offset int, count *int64) (ur []models
 				con.Table("tbl_kube t1").Select("t2.*, '" + KubesMember[x] + "' as posisi").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[x]).Where("id_kube = ?", id).Scan(&tmp)
 
 				if len(tmp) != 0 {
+				// get region from ketua
+				Regions := models.View_address{}
+				if err := con.Table("view_address").Select("view_address.*").Where("id_kelurahan = ?", tmp[0].Id_kelurahan).Scan(&Regions).Error; err != nil { 
+					log.Println("err : ", err)
+					continue
+				}								
+					kubes[i].Region = Regions
 					kubes[i].Items = append(kubes[i].Items, tmp[0])
 				}
 			}	
-		}
+		}		
 	}
 
 	// // get Pendampings
