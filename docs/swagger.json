@@ -2571,7 +2571,6 @@
                     "type": "string"
                 },
                 "bantuan": {
-                    "description": "Id_periods\t\tint \t`json:\"id_periods\"`",
                     "type": "number"
                 },
                 "created_at": {

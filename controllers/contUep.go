@@ -160,7 +160,7 @@ func AddUep(c echo.Context) (err error) {
 	uep.Nama_usaha = Uep.Nama_usaha
 	uep.Bantuan = Uep.Bantuan
 	uep.Id_jenis_usaha = Uep.Id_jenis_usaha
-	uep.Status = Uep.Status
+	uep.Status = &Uep.Status
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -270,13 +270,6 @@ func UpdateUep(c echo.Context) (err error) {
 	if Uep.Id_user == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id_user")
 	}
-	if Uep.Nik == "" { 
-		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") 
-	} else {
-		if len(Uep.Nik) > 16 || len(Uep.Nik) < 16 {
-			return echo.NewHTTPError(http.StatusBadRequest, "Please fill NIK with 16 Digits")
-		}
-	}	
 	
 	user := &models.Tbl_user{}
 	user = Uep.Tbl_user
@@ -285,7 +278,8 @@ func UpdateUep(c echo.Context) (err error) {
 	uep.Id_pendamping = Uep.Id_pendamping
 	uep.Nama_usaha = Uep.Nama_usaha
 	uep.Id_jenis_usaha = Uep.Id_jenis_usaha
-	uep.Status = Uep.Status
+	// if Uep.Status == 0 { uep.Status = 0 }		
+	uep.Status = &Uep.Status
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
@@ -301,16 +295,6 @@ func UpdateUep(c echo.Context) (err error) {
 	if err := con.Model(&models.Tbl_uep{}).UpdateColumns(&uep).Error; err != nil {
 		return echo.ErrInternalServerError
 	}
-
-	// store usaha_uep
-	// uepUsaha := &models.Tbl_usaha_uepkube{}
-	// uepUsaha.Id_uep = user.Id_user
-	// uepUsaha.Nama_usaha = Uep.Nama_usaha
-	// uepUsaha.Id_jenis_usaha = Uep.Id_jenis_usaha
-	// uepUsaha.Id_periods = Uep.Id_periods
-	// if err := con.Model(&models.Tbl_usaha_uepkube{}).Where("id_uep = ?", uepUsaha.Id_uep).Where("id_jenis_usaha = ?", uepUsaha.Id_jenis_usaha).Where("id_periods = ?", uepUsaha.Id_periods).UpdateColumns(&uepUsaha).Error; err != nil {
-	// 	return echo.ErrInternalServerError
-	// }
 
 	defer con.Close()
 

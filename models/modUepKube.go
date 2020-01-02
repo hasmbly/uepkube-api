@@ -89,7 +89,7 @@ Tbl_uep struct {
 	Id_uep			int 		`json:"id_uep" gorm:"primary_key"`
 	Nama_usaha		string 		`json:"nama_usaha"`
 	Bantuan			float32 	`json:"bantuan"`
-	Status			int 		`json:"status"`
+	Status			*int 		`json:"status" sql:"DEFAULT:NULL"`
 	Id_jenis_usaha	int 		`json:"id_jenis_usaha"`
 	JenisUsaha 		*Tbl_jenis_usaha `json:"jenis_usaha" gorm:"foreignkey:id_jenis_usaha;association_foreignkey:id_usaha"`
 	Id_pendamping	int 		`json:"id_pendamping"`
@@ -583,7 +583,6 @@ PelatihanKehadiran struct{
 Uep struct{
 	*Tbl_user
 	Id_pendamping	int 		`json:"id_pendamping"`
-	// Id_periods		int 	`json:"id_periods"`
 	Bantuan			float32 	`json:"bantuan"`
 	Nama_usaha		string 		`json:"nama_usaha"`
 	Id_jenis_usaha	int 		`json:"id_jenis_usaha"`
