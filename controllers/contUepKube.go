@@ -166,8 +166,8 @@ type HasilMonev struct {
 
 type Persebaran struct {
 	Labels 	[]string 		`json:"labels"`
-	Uep 	[]interface{}	`json:"uep"`
-	Kube 	[]interface{}	`json:"kube"`
+	Uep 	[]int			`json:"uep"`
+	Kube 	[]int			`json:"kube"`
 }
 
 // @Summary GetChartDasboard
@@ -195,6 +195,7 @@ func GetChartDasboard(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
+	// get datasheet hasilMonev : UEPKUBE
 	LabelsM := []string{"Sangat Baik", "Cukup Baik", "Kurang Baik"}
 	for i, _ := range LabelsM {
 		HasilMonev.Labels = append(HasilMonev.Labels, LabelsM[i])
@@ -211,7 +212,6 @@ func GetChartDasboard(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	// get datasheet hasilMonev : UEPKUBE
 	For := []string{"UEP", "KUBE"}
 	for f, _ := range For {
 		for x, _ := range yearsM {
@@ -232,6 +232,10 @@ func GetChartDasboard(c echo.Context) (err error) {
 		if For[f] == "KUBE" { HasilMonev.Kube = Years }
 	}
 
+	for i, _ := range LabelsP {
+		Persebaran.Uep = append(Persebaran.Uep, i)
+		Persebaran.Kube = append(Persebaran.Kube, i)
+	}
 
 	ChartDashBoard.HasilMonev = HasilMonev
 	ChartDashBoard.Persebaran = Persebaran
