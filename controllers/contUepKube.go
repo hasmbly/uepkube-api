@@ -160,8 +160,8 @@ type ChartDashBoard struct {
 
 type HasilMonev struct {
 	Labels 	[]string 		`json:"labels"`
-	Uep 	[]map[string]interface{} `json:"uep"`
-	Kube 	[]interface{}	`json:"kube"`
+	Uep 	interface{} 	`json:"uep"`
+	Kube 	interface{}		`json:"kube"`
 }
 
 type Persebaran struct {
@@ -228,8 +228,8 @@ func GetChartDasboard(c echo.Context) (err error) {
 			}
 			Years[yearsM[x]] = dataM
 		}
-		if For[f] == "UEP" { HasilMonev.Uep = append(HasilMonev.Uep, Years) }
-		if For[f] == "KUBE" { HasilMonev.Kube = append(HasilMonev.Kube, Years) }
+		if For[f] == "UEP" { HasilMonev.Uep = Years }
+		if For[f] == "KUBE" { HasilMonev.Kube = Years }
 	}
 
 

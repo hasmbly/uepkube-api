@@ -14105,3 +14105,18 @@ ____________________________________O/_______
 ⇨ http server started on [::]:9093
 {"time":"2020-01-02T20:37:14.602805431+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/chart_dashboard","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":4949895,"latency_human":"4.949895ms","bytes_in":0,"bytes_out":282}
 {"time":"2020-01-02T20:39:58.154779592+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/chart_dashboard","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":52338669,"latency_human":"52.338669ms","bytes_in":0,"bytes_out":282}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2020-01-02T20:56:28.938167221+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/swagger-ui.css","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":68380665,"latency_human":"68.380665ms","bytes_in":0,"bytes_out":0}
+{"time":"2020-01-02T20:56:28.939386499+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/swagger-ui-standalone-preset.js.map","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":54949649,"latency_human":"54.949649ms","bytes_in":0,"bytes_out":0}
+{"time":"2020-01-02T20:56:28.940998423+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/swagger-ui-bundle.js.map","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":58130754,"latency_human":"58.130754ms","bytes_in":0,"bytes_out":0}
+{"time":"2020-01-02T20:56:29.126571987+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/swagger-api/swagger-ui.css.map","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":117791,"latency_human":"117.791µs","bytes_in":0,"bytes_out":0}
+{"time":"2020-01-02T20:56:30.96948319+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/chart_dashboard","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":5136193,"latency_human":"5.136193ms","bytes_in":0,"bytes_out":278}
