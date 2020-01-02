@@ -188,7 +188,6 @@ func GetChartDasboard(c echo.Context) (err error) {
 	Persebaran := &Persebaran{}
 
 	var (
-		dataM []int
 		yearsM []string
 	)
 
@@ -206,37 +205,33 @@ func GetChartDasboard(c echo.Context) (err error) {
 		Persebaran.Labels = append(Persebaran.Labels, LabelsP[i])
 	}
 
-	UepM := make(map[string]interface{})
+	Years := make(map[string]interface{})
 	// get all years
 	if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", "UEP").Pluck("distinct YEAR(created_at) as created_at", &yearsM).Group("created_at").Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	log.Println("years : ", yearsM)
-	for x, _ := range yearsM {
-		// count category per years
-		// var Count *int64
-		log.Println("years : ", yearsM[x])
-		for i := 1; i <= len(LabelsM); i++ {
-			// year := strconv.Itoa(x)
-			var id_category []int
+	// get datasheet hasilMonev : UEPKUBE
+	For := []string{"UEP", "KUBE"}
+	for f, _ := range For {
+		for x, _ := range yearsM {
+			var dataM []int
+			// log.Println("years : ", yearsM[x])
+			for i := 1; i <= len(LabelsM); i++ {
+				var id_category []int
 
-			if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", "UEP").Where("created_at like ?", "%"+ yearsM[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
-				return echo.NewHTTPError(http.StatusBadRequest, err)
+				if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsM[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
+					return echo.NewHTTPError(http.StatusBadRequest, err)
+				}
+
+				dataM = append(dataM, len(id_category))
 			}
-
-			log.Println("id_category : ", i)
-			log.Println("total : ", len(id_category))
-			dataM = append(dataM, len(id_category))
+			Years[yearsM[x]] = dataM
 		}
-		// UepM[yearsM[x]] = dataM
+		if For[f] == "UEP" { HasilMonev.Uep = append(HasilMonev.Uep, Years) }
+		if For[f] == "KUBE" { HasilMonev.Kube = append(HasilMonev.Kube, Years) }
 	}
-	
-	log.Println("dataM", dataM)
-	HasilMonev.Uep = append(HasilMonev.Uep, UepM)
 
-	/*query user*/
-	// if err := con.Find(&Periods).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	ChartDashBoard.HasilMonev = HasilMonev
 	ChartDashBoard.Persebaran = Persebaran
