@@ -159,7 +159,7 @@ type ChartDashBoard struct {
 
 type HasilMonev struct {
 	Labels 	[]string 		`json:"labels"`
-	Uep 	[]interface{}	`json:"uep"`
+	Uep 	[]map[string]interface{} `json:"uep"`
 	Kube 	[]interface{}	`json:"kube"`
 }
 
@@ -181,22 +181,46 @@ type Persebaran struct {
 // @Router /lookup/chart_dashboard [get]
 func GetChartDasboard(c echo.Context) (err error) {
 	// AllHasilMonev := []HasilMonev{}
-	HasilMonev := &HasilMonev{}
 	ChartDashBoard := &ChartDashBoard{}
+	
+	HasilMonev := &HasilMonev{}
+	Persebaran := &Persebaran{}
+
+	var (
+		dataM []int = []int{10,20,30}
+		yearsM []string
+	)
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	Labels := []string{"Sangat Baik", "Cukup Baik", "Kurang Baik"}
-	for i, _ := range Labels {
-		HasilMonev.Labels = append(HasilMonev.Labels, Labels[i])
+	LabelsM := []string{"Sangat Baik", "Cukup Baik", "Kurang Baik"}
+	for i, _ := range LabelsM {
+		HasilMonev.Labels = append(HasilMonev.Labels, LabelsM[i])
+	}
+
+	LabelsP := []string{"Jakarta Pusat", "Jakarta Timur", "Jakarta Barat", "Jakarta Selatan", "Jakarta Utara"}
+	for i, _ := range LabelsP {
+		Persebaran.Labels = append(Persebaran.Labels, LabelsP[i])
+	}
+
+	UepM := make(map[string]interface{})
+	// get all years
+	if err := con.Model(&models.Tbl_monev_final{}).Pluck("distinct YEAR(created_at) as created_at", &yearsM).Group("created_at").Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
+	}
+
+	for x, _ := range yearsM {
+		UepM[yearsM[x]] = dataM
+		HasilMonev.Uep = append(HasilMonev.Uep, UepM)
 	}
 
 	/*query user*/
 	// if err := con.Find(&Periods).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	ChartDashBoard.HasilMonev = HasilMonev
+	ChartDashBoard.Persebaran = Persebaran
 
 	// r := &models.Jn{Msg: ChartDashBoard}
 

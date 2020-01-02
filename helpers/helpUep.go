@@ -86,7 +86,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []Tbl_uep
 	q := con
 	q = q.Model(&Ueps)
 	q = q.Joins("join tbl_user on tbl_user.id_user = tbl_uep.id_uep")
-	q = q.Select("tbl_uep.id_uep,tbl_uep.id_pendamping,tbl_uep.nama_usaha,tbl_uep.id_jenis_usaha,tbl_uep.status,tbl_uep.nama_usaha,tbl_uep.bantuan,tbl_user.*")
+	q = q.Select("tbl_uep.id_uep,tbl_uep.id_pendamping,tbl_uep.nama_usaha,tbl_uep.id_jenis_usaha,tbl_uep.status,tbl_uep.nama_usaha,tbl_uep.created_at,tbl_uep.updated_at,tbl_uep.bantuan,tbl_user.*")
 	q = q.Limit(int(f.Size))
 	q = q.Offset(int(offset))
 	q = q.Preload("JenisUsaha")
@@ -118,7 +118,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []Tbl_uep
 			}
 		}
 	}
-	q = q.Order(fmt.Sprintf("%s %s",f.SortField,f.SortOrder))	
+	q = q.Order(fmt.Sprintf("tbl_uep.%s %s",f.SortField,f.SortOrder))	
 	
 	q = q.Find(&Ueps)
 	q = q.Limit(-1)
