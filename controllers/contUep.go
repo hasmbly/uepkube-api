@@ -266,6 +266,8 @@ func UpdateUep(c echo.Context) (err error) {
 		return err
 	}
 
+	helpers.FetchPost(Uep)
+
 	// validation
 	if Uep.Id_user == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id_user")

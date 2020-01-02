@@ -9,7 +9,8 @@ import (
 	 "uepkube-api/db"
 	 "regexp"
 	 "uepkube-api/helpers"
-	 // "log"
+	 "log"
+	 // "strconv"
 	 // "fmt"
 	 // "fmt"
 	 // "time"
@@ -182,12 +183,12 @@ type Persebaran struct {
 func GetChartDasboard(c echo.Context) (err error) {
 	// AllHasilMonev := []HasilMonev{}
 	ChartDashBoard := &ChartDashBoard{}
-	
+
 	HasilMonev := &HasilMonev{}
 	Persebaran := &Persebaran{}
 
 	var (
-		dataM []int = []int{10,20,30}
+		// dataM []int
 		yearsM []string
 	)
 
@@ -207,14 +208,30 @@ func GetChartDasboard(c echo.Context) (err error) {
 
 	UepM := make(map[string]interface{})
 	// get all years
-	if err := con.Model(&models.Tbl_monev_final{}).Pluck("distinct YEAR(created_at) as created_at", &yearsM).Group("created_at").Error; err != nil {
+	if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", "UEP").Pluck("distinct YEAR(created_at) as created_at", &yearsM).Group("created_at").Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
+	log.Println("years : ", yearsM)
 	for x, _ := range yearsM {
-		UepM[yearsM[x]] = dataM
-		HasilMonev.Uep = append(HasilMonev.Uep, UepM)
+		// count category per years
+		// var Count *int64
+		log.Println("years : ", yearsM[x])
+		for i := 1; i <= len(LabelsM); i++ {
+			// year := strconv.Itoa(x)
+			// var id_category []int
+
+			// if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", "UEP").Where("created_at like ?", "%"+ year +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
+			// 	return echo.NewHTTPError(http.StatusBadRequest, err)
+			// }
+
+			log.Println("id_category : ", i)
+			// log.Println("id_category : ", id_category)
+		}
+		// UepM[yearsM[x]] = dataM
 	}
+	
+	HasilMonev.Uep = append(HasilMonev.Uep, UepM)
 
 	/*query user*/
 	// if err := con.Find(&Periods).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
