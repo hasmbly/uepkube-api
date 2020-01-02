@@ -152,6 +152,34 @@ func GeAllBantuanPeriods(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
+// @Summary GetChartDasboard
+// @Tags Lookup-Controller
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.Jn
+// @Failure 400 {object} models.HTTPError
+// @Failure 401 {object} models.HTTPError
+// @Failure 404 {object} models.HTTPError
+// @Failure 500 {object} models.HTTPError
+// @Router /lookup/chart_dashboard [get]
+func GetChartDasboard(c echo.Context) (err error) {
+	Periods := []models.Tbl_bantuan_periods{}
+	// timeFormat := "2006-01-02 15:04:05"
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
+
+	/*query user*/
+	if err := con.Find(&Periods).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	r := &models.Jn{Msg: Periods}
+
+	defer con.Close()
+	return c.JSON(http.StatusOK, r)
+}
+
+
 // @Summary GeAllMemberPelatihan
 // @Tags Lookup-Controller
 // @Accept  json

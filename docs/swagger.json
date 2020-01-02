@@ -362,6 +362,52 @@
                 }
             }
         },
+        "/lookup/chart_dashboard": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lookup-Controller"
+                ],
+                "summary": "GetChartDasboard",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Jn"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/lookup/faq": {
             "get": {
                 "consumes": [
@@ -1415,6 +1461,10 @@
                 "id_uep": {
                     "type": "integer"
                 },
+                "pendamping": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_pendamping"
+                },
                 "photo": {
                     "type": "array",
                     "items": {
@@ -2014,6 +2064,10 @@
                 },
                 "id_uep": {
                     "type": "integer"
+                },
+                "pendamping": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Tbl_pendamping"
                 },
                 "photo": {
                     "type": "array",

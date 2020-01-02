@@ -110,6 +110,9 @@ definitions:
         type: integer
       id_uep:
         type: integer
+      pendamping:
+        $ref: '#/definitions/models.Tbl_pendamping'
+        type: object
       photo:
         items:
           $ref: '#/definitions/models.Tbl_inventory_files'
@@ -514,6 +517,9 @@ definitions:
         type: integer
       id_uep:
         type: integer
+      pendamping:
+        $ref: '#/definitions/models.Tbl_pendamping'
+        type: object
       photo:
         items:
           $ref: '#/definitions/models.Tbl_inventory_files'
@@ -1428,6 +1434,36 @@ paths:
           schema:
             $ref: '#/definitions/models.HTTPError'
       summary: GeAllBantuanPeriods
+      tags:
+      - Lookup-Controller
+  /lookup/chart_dashboard:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Jn'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      summary: GetChartDasboard
       tags:
       - Lookup-Controller
   /lookup/faq:

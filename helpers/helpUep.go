@@ -91,7 +91,7 @@ func ExecPaginateUep(f *models.PosPagin, offset int, count *int64) (ur []Tbl_uep
 	q = q.Offset(int(offset))
 	q = q.Preload("JenisUsaha")
 	q = q.Preload("LapkeuHistory")
-	q = q.Preload("MonevHistory")
+	q = q.Preload("MonevHistory.Category")
 	q = q.Preload("InventarisHistory")
 	q = q.Preload("PelatihanHistory")
 	q = q.Preload("Region")

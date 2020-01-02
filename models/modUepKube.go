@@ -317,6 +317,7 @@ Tbl_inventory struct{
 	Debit 			*float32	`json:"debit" sql:"type:decimal(10,2);"`
 	Deskripsi 		string		`json:"deskripsi"`
 	Id_pendamping 	int			`json:"id_pendamping"`
+	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Photo 		 	[]Tbl_inventory_files `json:"photo" gorm:"foreignkey:id_inventory"`
 	Detail 			interface{} `json:"detail" gorm:"-"`
 	Transaction_at	*time.Time 	`json:"transaction_at" gorm:"timestamp;null"`

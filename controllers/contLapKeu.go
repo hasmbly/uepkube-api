@@ -32,6 +32,8 @@ func GetLapKeu(c echo.Context) error {
 	
 	Lapkeu := models.Tbl_lapkeu{}
 	
+	// if For == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please fill key : for") }
+
 	if Field == 0 {
 		q := con
 		q = q.Model(&models.Tbl_lapkeu{})

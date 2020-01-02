@@ -105,23 +105,26 @@ func ExecPaginateMonev(f *models.PosPagin, offset int, count *int64) (ur []model
 
 		if k == "periods" {
 			if o == ":" {
-				var id_periods []int
+				// var id_periods []int
 				if v != "" {
-					 con.Table("tbl_bantuan_periods").Where("start_date like ?", "%"+v+"%").Pluck("id", &id_periods)					
+					 // con.Table("tbl_bantuan_periods").Where("start_date like ?", "%"+v+"%").Pluck("id", &id_periods)		
+					q = q.Where("created_at like ?", "%"+v+"%")
 					} else if v == "" {
 						var CurrYear string
 						year, _ , _ := time.Now().Date()
 						CurrYear = strconv.Itoa(year)
+
 						log.Println("currYear : ", CurrYear)
-					 	con.Table("tbl_bantuan_periods").Where("start_date like ?", "%"+ CurrYear +"%").Pluck("id", &id_periods)						
+					 	// con.Table("tbl_bantuan_periods").Where("start_date like ?", "%"+ CurrYear +"%").Pluck("id", &id_periods)			
+						q = q.Where("created_at like ?", "%"+CurrYear+"%")
 					}
 
-				 if len(id_periods) != 0 {
-					q = q.Where("id_periods = ?", id_periods[0])
-				 } else {
-					// q = q.Where("id_periods = ?", id_periods[0])
-					continue
-				 }
+				 // if len(id_periods) != 0 {
+					// q = q.Where("created_at like ?", "%" + id_periods[0] + "%")
+				 // } else {
+					// // q = q.Where("id_periods = ?", id_periods[0])
+					// continue
+				 // }
 			} else {
 				continue
 			}
@@ -266,7 +269,7 @@ func PaginatePkt(c echo.Context, r *models.ResPagin) (err error) {
 	num := 1
 
 	// GetLoggedUser(c,"roles")
-
+	
 	if err := c.Bind(u); err != nil {
 		return err
 	}

@@ -56,7 +56,7 @@ func GetMonev(c echo.Context) error {
 	}
 	
 	q2 := con
-	q2 = q2.Table("tbl_monev_result_uepkube t1")
+	q2 = q2.Table("tbl_monev_calculate t1")
 	q2 = q2.Select("t1.skor_total, t2.skor_indikator, t3.bobot, t4.nama_aspek, t5.nama_dimensi")
 	q2 = q2.Joins("join tbl_indikator" + TblType + " t2 on t2.id_indikator = t1.id_indikator")
 	q2 = q2.Joins("join tbl_kriteria" + TblType + " t3 on t3.id_kriteria = t2.id_kriteria")
