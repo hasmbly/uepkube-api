@@ -223,7 +223,6 @@ func GetChartDasboard(c echo.Context) (err error) {
 				if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsM[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
 					return echo.NewHTTPError(http.StatusBadRequest, err)
 				}
-
 				dataM = append(dataM, len(id_category))
 			}
 			Years[yearsM[x]] = dataM
