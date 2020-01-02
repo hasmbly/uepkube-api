@@ -157,6 +157,8 @@ func Init() *echo.Echo {
 	o.GET("/lookup/monev_items", controllers.GeAllMonevItems)
 	// users
 	o.GET("/lookup/users", controllers.GeAllUser)
+	// chart_dashboard
+	o.GET("/lookup/chart_dashboard", controllers.GetChartDasboard)	
 
 	// Routes::All Roles
 	a := e.Group("/api/v1")

@@ -244,31 +244,31 @@ func AddInventaris(c echo.Context) (err error) {
 }
 
 func UpdateInventaris(c echo.Context) (err error) {
-	// inventaris := &models.Tbl_inventaris{}
+	inventaris := &models.Tbl_inventory{}
 
-	// if err := c.Bind(inventaris); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(inventaris); err != nil {
+		return err
+	}
 
-	// if inventaris.Id_inventaris == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
-	// }
+	if inventaris.Id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id")
+	}
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// if err := con.Model(&models.Tbl_inventaris{}).UpdateColumns(&inventaris).Error; err != nil {
-	// 	return echo.ErrInternalServerError
-	// }
+	if err := con.Model(&models.Tbl_inventory{}).UpdateColumns(&inventaris).Error; err != nil {
+		return echo.ErrInternalServerError
+	}
 
 	// if err := con.Table("tbl_inventaris").Where("id_inventaris = ?",inventaris.Id_inventaris).UpdateColumn("status", inventaris.Status).Error; err != nil {return echo.ErrInternalServerError}
 
-	// defer con.Close()
+	defer con.Close()
 
-	// r := &models.Jn{Msg: "Success Update Data"}
-	// return c.JSON(http.StatusOK, r)
-	return nil	
+	r := &models.Jn{Msg: "Success Update Data"}
+	return c.JSON(http.StatusOK, r)
+	// return nil	
 }
 
 func DeleteInventaris(c echo.Context) (err error) {

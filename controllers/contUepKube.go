@@ -152,6 +152,23 @@ func GeAllBantuanPeriods(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
+type ChartDashBoard struct {
+	HasilMonev *HasilMonev `json:"hasil_monev"`
+	Persebaran *Persebaran `json:"persebaran"`
+}
+
+type HasilMonev struct {
+	Labels 	[]string 		`json:"labels"`
+	Uep 	[]interface{}	`json:"uep"`
+	Kube 	[]interface{}	`json:"kube"`
+}
+
+type Persebaran struct {
+	Labels 	[]string 		`json:"labels"`
+	Uep 	[]interface{}	`json:"uep"`
+	Kube 	[]interface{}	`json:"kube"`
+}
+
 // @Summary GetChartDasboard
 // @Tags Lookup-Controller
 // @Accept  json
@@ -163,20 +180,28 @@ func GeAllBantuanPeriods(c echo.Context) (err error) {
 // @Failure 500 {object} models.HTTPError
 // @Router /lookup/chart_dashboard [get]
 func GetChartDasboard(c echo.Context) (err error) {
-	Periods := []models.Tbl_bantuan_periods{}
-	// timeFormat := "2006-01-02 15:04:05"
+	// AllHasilMonev := []HasilMonev{}
+	HasilMonev := &HasilMonev{}
+	ChartDashBoard := &ChartDashBoard{}
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	/*query user*/
-	if err := con.Find(&Periods).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	Labels := []string{"Sangat Baik", "Cukup Baik", "Kurang Baik"}
+	for i, _ := range Labels {
+		HasilMonev.Labels = append(HasilMonev.Labels, Labels[i])
+	}
 
-	r := &models.Jn{Msg: Periods}
+	/*query user*/
+	// if err := con.Find(&Periods).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	ChartDashBoard.HasilMonev = HasilMonev
+
+	// r := &models.Jn{Msg: ChartDashBoard}
 
 	defer con.Close()
-	return c.JSON(http.StatusOK, r)
+	return c.JSON(http.StatusOK, ChartDashBoard)
 }
 
 
