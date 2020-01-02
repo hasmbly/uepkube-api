@@ -1511,6 +1511,9 @@
                 "bantuan": {
                     "type": "number"
                 },
+                "created_at": {
+                    "type": "string"
+                },
                 "created_by": {
                     "type": "string"
                 },
@@ -1585,6 +1588,9 @@
                 },
                 "status": {
                     "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
                 },
                 "updated_by": {
                     "type": "string"

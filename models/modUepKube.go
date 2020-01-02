@@ -136,8 +136,8 @@ Tbl_uep struct {
 	PelatihanHistory 	[]*Tbl_pelatihan `json:"pelatihan_history" gorm:"many2many:tbl_kehadiran;foreignkey:id_kube;association_foreignkey:id_pelatihan;association_jointable_foreignkey:id_pelatihan;jointable_foreignkey:id_kube"`		
 	Photo 			[]*Tbl_uepkube_files `json:"photo" gorm:"foreignkey:id_kube"`
 	Items 			[]Kubes_items `json:"items"`
-	Created_at   	*time.Time `json:"-" gorm:"timestamp;null"`
-	Updated_at   	*time.Time `json:"-" gorm:"timestamp;null"`
+	Created_at   	*time.Time `json:"created_at" gorm:"timestamp;null"`
+	Updated_at   	*time.Time `json:"updated_at" gorm:"timestamp;null"`
 	Created_by   	*string 	`json:"created_by"`
 	Updated_by		*string 	`json:"updated_by"`
 	// PeriodsHistory 	[]*Tbl_periods_uepkube `json:"periods_history" gorm:"foreignkey:id_kube"`	

@@ -188,7 +188,7 @@ func GetChartDasboard(c echo.Context) (err error) {
 	Persebaran := &Persebaran{}
 
 	var (
-		// dataM []int
+		dataM []int
 		yearsM []string
 	)
 
@@ -219,18 +219,20 @@ func GetChartDasboard(c echo.Context) (err error) {
 		log.Println("years : ", yearsM[x])
 		for i := 1; i <= len(LabelsM); i++ {
 			// year := strconv.Itoa(x)
-			// var id_category []int
+			var id_category []int
 
-			// if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", "UEP").Where("created_at like ?", "%"+ year +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
-			// 	return echo.NewHTTPError(http.StatusBadRequest, err)
-			// }
+			if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", "UEP").Where("created_at like ?", "%"+ yearsM[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
+				return echo.NewHTTPError(http.StatusBadRequest, err)
+			}
 
 			log.Println("id_category : ", i)
-			// log.Println("id_category : ", id_category)
+			log.Println("total : ", len(id_category))
+			dataM = append(dataM, len(id_category))
 		}
 		// UepM[yearsM[x]] = dataM
 	}
 	
+	log.Println("dataM", dataM)
 	HasilMonev.Uep = append(HasilMonev.Uep, UepM)
 
 	/*query user*/
