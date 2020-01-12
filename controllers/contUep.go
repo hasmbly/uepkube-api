@@ -145,7 +145,9 @@ func AddUep(c echo.Context) (err error) {
 	// validation
 	if Uep.Id_pendamping == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id Pendamping") }
 	if Uep.Id_jenis_usaha == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Id jenis usaha") }
-	if Uep.Bantuan == 0 { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") }
+	if Uep.Bantuan == 0 { 
+		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Bantuan Modal") 
+	}
 	if Uep.Nama_usaha == "" { return echo.NewHTTPError(http.StatusBadRequest, "Please Fill Nama Usaha") }	
 	if Uep.Nik == "" { 
 		return echo.NewHTTPError(http.StatusBadRequest, "Please Fill NIK") 

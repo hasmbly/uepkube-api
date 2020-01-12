@@ -856,6 +856,8 @@ PaginatePendamping struct{
 	Roles_name			string 		`json:"roles_name"`
 	Jenis_pendamping	string 		`json:"jenis_pendamping"`
 	Periode 			string 		`json:"periode"`
+	Total_uep 	     	int64 		`json:"total_uep"`
+	Total_kube      	int64 		`json:"total_kube"`
 }
 
 PaginateVerifikator struct{

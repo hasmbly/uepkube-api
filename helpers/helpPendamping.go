@@ -117,9 +117,27 @@ func PaginatePen(f *models.PosPagin, offset int, count *int64) (ur []models.Pagi
 		for i,_ := range Pendampings {
 			var roles_name []string
 			var account = models.Tbl_account{}
+			
+			var total_uep 	int64
+			var total_kube 	int64
 
 			con.Table("tbl_account").Where("id_user = ?", Pendampings[i].Id_pendamping).Select("username, id_roles").Find(&account)
 			Pendampings[i].Username = account.Username
+
+			// count total_uep
+			qcu := con
+			qcu = qcu.Table("tbl_uep")
+			qcu = qcu.Where("id_pendamping = ?", Pendampings[i].Id_pendamping)
+			qcu = qcu.Count(&total_uep)
+
+			// count total_kube
+			qck := con
+			qck = qck.Table("tbl_kube")
+			qck = qck.Where("id_pendamping = ?", Pendampings[i].Id_pendamping)
+			qck = qck.Count(&total_kube)			
+
+			Pendampings[i].Total_uep 	= total_uep
+			Pendampings[i].Total_kube 	= total_kube			
 
 			if account.Id_roles == 0 {
 				continue
@@ -132,6 +150,7 @@ func PaginatePen(f *models.PosPagin, offset int, count *int64) (ur []models.Pagi
 			log.Println("Username : ", account.Username)
 			log.Println("Id_roles : ", account.Id_roles)
 			log.Println("Roles_name : ", roles_name[0])
+
 		}
 	}
 
