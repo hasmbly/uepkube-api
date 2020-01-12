@@ -602,8 +602,8 @@ func GeAllMonevItems(c echo.Context) (err error) {
 func GeAllUepKubeDetail(c echo.Context) (err error) {
 	
 	Uep 	:= []models.ShowUep{}
-	Kube 	:= []models.Tbl_kube{}
-	ShowKubes := models.ShowKube{}
+	// Kube 	:= []models.Tbl_kube{}
+	// ShowKubes := models.ShowKube{}
 	var tempo []interface{}	
 
 	log.Println("youre in persebaran ")
@@ -621,16 +621,16 @@ func GeAllUepKubeDetail(c echo.Context) (err error) {
 	if err := q1.Find(&Uep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
 	/*query kube*/
-	if err := con.Find(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
-		return echo.NewHTTPError(http.StatusNotFound, "Kube Not Found")
-	}		
+	// if err := con.Find(&Kube).Error; gorm.IsRecordNotFoundError(err)  {
+	// 	return echo.NewHTTPError(http.StatusNotFound, "Kube Not Found")
+	// }		
 		
-	for i,_ := range Kube {
+	// for i,_ := range Kube {
 		
-		helpers.SetMemberNameKube(&ShowKubes, Kube[i])
+	// 	helpers.SetMemberNameKube(&ShowKubes, Kube[i])
 
-		tempo = append(tempo, ShowKubes)
-	}	
+	// 	tempo = append(tempo, ShowKubes)
+	// }	
 
 	for i,_ := range Uep {
 		Uep[i].Flag = "UEP"
