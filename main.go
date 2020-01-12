@@ -4,7 +4,22 @@ import (
 	"uepkube-api/routes"
 	"log"
 	"os"
+	// "fmt"
 )
+
+// func Testing() {
+// 	Input := []int{3,5}
+// 	for in, _ := range Input {
+// 		fmt.Println("Input 	= ", Input[in])
+// 		fmt.Println("Output = ")
+// 		for i := 0; i < Input[in]; i++ {
+// 			for x := 0; x <= i; x++ {
+// 				fmt.Print("|")
+// 			}
+// 		fmt.Println("\n")
+// 		}
+// 	}
+// }
 
 // @title UepKube API
 // @version 1.0
@@ -17,7 +32,7 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host 157.245.55.185:9093
-
+ 
 /**
  * // @host localhost:9093
  */
@@ -42,8 +57,11 @@ func main() {
 
 	e.Logger.SetHeader("${time_rfc3339} ${level}")
 	
+	// Testing()
+
 	log.Println("Go Started...")
 
 	// serve on port 
 	e.Logger.Fatal(e.Start(":9093"))
-}	
+
+}

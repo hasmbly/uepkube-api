@@ -331,7 +331,7 @@ Tbl_lapkeu struct{
 	Tahun 			string		`json:"tahun"`
 	Modal 			float32		`json:"modal" sql:"type:decimal(10,2);"`
 	Omset 			float32		`json:"omset" sql:"type:decimal(10,2);"`
-	Pendapatan 		float32		`json:"pendapatan" sql:"type:decimal(10,2);"`
+	Pendapatan 		float32		`json:"pendapatan" sql:"type:decimal(10,2);sql:"default:null"`
 	Id_pendamping 	int			`json:"id_pendamping"`
 	Pendamping 		*Tbl_pendamping `json:"pendamping" gorm:"foreignkey:id_pendamping;association_foreignkey:id_pendamping"`
 	Created_at		*time.Time 	`json:"created_at" gorm:"timestamp;null"`

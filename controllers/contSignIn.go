@@ -64,7 +64,7 @@ func SignIn(c echo.Context) error {
 			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		},
 	}
-
+	
 	// Create token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 

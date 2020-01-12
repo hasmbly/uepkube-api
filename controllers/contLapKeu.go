@@ -208,9 +208,9 @@ func AddLapKeu(c echo.Context) (err error) {
 	if lapkeu.Omset == 0 {
 		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Omset")
 	}		
-	if lapkeu.Pendapatan == 0 {
-		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Pendapatan")
-	}					
+	// if lapkeu.Pendapatan == 0 {
+	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please, fill Pendapatan")
+	// }					
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }
