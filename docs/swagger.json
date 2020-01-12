@@ -1802,7 +1802,6 @@
                     "type": "string"
                 },
                 "kehadiran": {
-                    "description": "Kehadiran \t\t\t[]PelatihanKehadiran\t`json:\"kehadiran\"`",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.Tbl_kehadiran"
@@ -1835,6 +1834,9 @@
                     "type": "string"
                 },
                 "status": {
+                    "type": "integer"
+                },
+                "total_kehadiran": {
                     "type": "integer"
                 },
                 "updated_by": {
@@ -2397,7 +2399,6 @@
                     "type": "string"
                 },
                 "kehadiran": {
-                    "description": "Kehadiran \t\t\t[]PelatihanKehadiran\t`json:\"kehadiran\"`",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.Tbl_kehadiran"
@@ -2430,6 +2431,9 @@
                     "type": "string"
                 },
                 "status": {
+                    "type": "integer"
+                },
+                "total_kehadiran": {
                     "type": "integer"
                 },
                 "updated_by": {

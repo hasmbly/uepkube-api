@@ -234,6 +234,7 @@ Tbl_pelatihan struct{
 	End_time			string 		`json:"end_time"`	
 	Peruntukan			string 		`json:"peruntukan" enums:"UEP, KUBE, UEP-KUBE"`
 	Quota				int 		`json:"quota"`
+	Total_kehadiran		int 		`json:"total_kehadiran"`
 	Status				int 		`json:"status"`
 	Created_at			*time.Time 	`json:"-" gorm:"timestamp;null"`
 	Updated_at			*time.Time 	`json:"-" gorm:"timestamp;null"`
@@ -241,7 +242,6 @@ Tbl_pelatihan struct{
 	Updated_by			*string	 	`json:"updated_by"` 	
 	Files 		 		[]Tbl_pelatihan_files 	`json:"files" gorm:"foreignkey:id_pelatihan"`
 	Photo 		 		[]Tbl_pelatihan_files 	`json:"photo" gorm:"foreignkey:id_pelatihan"`
-	// Kehadiran 			[]PelatihanKehadiran	`json:"kehadiran"`
 	Kehadiran 			[]*Tbl_kehadiran `json:"kehadiran" gorm:"foreignkey:id_pelatihan;association_foreignkey:id_pelatihan"`
 
 }

@@ -204,7 +204,8 @@ func GetChartDasboard(c echo.Context) (err error) {
 	}
 
 	// PERSEBARAN
-	LabelsP := []string{"Jakarta Pusat", "Jakarta Utara", "Jakarta Barat", "Jakarta Selatan", "Jakarta Timur"}
+	LabelsP := []string{"Jakarta Pusat", "Jakarta Utara", "Jakarta Barat", "Jakarta Selatan", "Jakarta Timur", "Kep. Seribu"}
+	// LabelPId := []
 	for i, _ := range LabelsP {
 		Persebaran.Labels = append(Persebaran.Labels, LabelsP[i])
 	}
@@ -243,13 +244,13 @@ func GetChartDasboard(c echo.Context) (err error) {
 		for x, _ := range yearsP {
 			var dataP []int
 			// log.Println("years : ", yearsP[x])
-			for i := 1; i <= len(LabelsP); i++ {
-				var id_category []int
-				if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsP[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
-					return echo.NewHTTPError(http.StatusBadRequest, err)
-				}
-				dataP = append(dataP, len(id_category))
-			}
+			// for i,_ := range Kabupaten {
+			// 	var id_kabupaten []int
+			// 	if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsP[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
+			// 		return echo.NewHTTPError(http.StatusBadRequest, err)
+			// 	}
+			// 	dataP = append(dataP, len(id_category))
+			// }
 			PersebaranYears[yearsP[x]] = dataP
 		}
 		if For[f] == "UEP" { Persebaran.Uep = PersebaranYears }
@@ -604,6 +605,8 @@ func GeAllUepKubeDetail(c echo.Context) (err error) {
 	Kube 	:= []models.Tbl_kube{}
 	ShowKubes := models.ShowKube{}
 	var tempo []interface{}	
+
+	log.Println("youre in persebaran ")
 
 	con, err := db.CreateCon()
 	if err != nil { return echo.ErrInternalServerError }

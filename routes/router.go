@@ -163,10 +163,10 @@ func Init() *echo.Echo {
 	// Routes::All Roles
 	a := e.Group("/api/v1")
 	a.Use(middleware.JWTWithConfig(config))
-	a.Use(middlewares.CheckAllRoles)	
+	a.Use(middlewares.CheckAllRoles)
 
-	// CRUD Pendamping, UEP, KUBE, Verifikator
-	a.POST("/:key", controllers.GetPaginateItems)	
+	// CRUD Universal
+	a.POST("/:key", controllers.GetPaginateItems)
 	a.GET("/:key", controllers.GetItems)
 	a.POST("/add/:key", controllers.AddItems)
 	a.PUT("/:key", controllers.UpdateItems)
