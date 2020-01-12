@@ -14,8 +14,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	_ "uepkube-api/docs"
 
-	"github.com/jinzhu/gorm"
-	"uepkube-api/db"
+	// "github.com/jinzhu/gorm"
+	// "uepkube-api/db"
 
 	 // "image"
 	 // "image/png"
@@ -36,59 +36,43 @@ func BycriptPass(c echo.Context) error {
 	return c.JSON(http.StatusOK, string(hash))
 }
 
-func GetPhoto(c echo.Context) error {
-	con, err := db.CreateCon()
-	if err != nil { return echo.ErrInternalServerError }
-	con.SingularTable(true)	
-
-    var imgByte []string
-	if err := con.Table("tbl_user_photo").Where("id_user = ?", 6).Pluck("photo", &imgByte).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}	
-   
-	defer con.Close()	
-
-	var photos []string
-	for i,_ := range imgByte {
-		var html string
-		html = "<img src='data:image/png;base64," + imgByte[i] +
-			"alt='testing img' /><br />"
-		photos = append(photos, html)
-	}
-	return c.HTML(http.StatusOK, photos[0] + photos[1])
-}
-
-// func Shoot() (err error) {
-// 	Uep := []models.Tbl_uep{}
-// 	Kube := []models.Tbl_kube{}
-
+// func monevDummy(c echo.Context) error {
 // 	con, err := db.CreateCon()
 // 	if err != nil { return echo.ErrInternalServerError }
-// 	con.SingularTable(true)
+// 	con.SingularTable(true)	
 
-// 	// uep
-// 	con.Model(&Uep).Find(&Uep)
-// 	if len(Uep) != 0 {
+// 	Uep 	:= []models.Tbl_uep{}
+// 	Kube 	:= []models.Tbl_kube{}
+
+// 	// get Uep
+// 	if err := con.Find(&Uep).Error; err != nil { 
+// 		return echo.NewHTTPError(http.StatusInternalServerError, err) 
+// 	} else if err == nil {
 // 		for i, _ := range Uep {
-// 			// Monev
-// 			Periods := models.Tbl_periods_uepkube{}
-// 			Periods.Id_uep = Uep[i].Id_uep
-// 			Periods.Id_periods = 2
-// 			if err := con.Create(&Periods).Error; err != nil {return echo.ErrInternalServerError}	
+// 			monevUep := &models.Tbl_monev_final{}
+// 			monevUep.Id_uep 		= Uep[i].Id_uep
+// 			monevUep.Id_pendamping 	= Uep[i].Id_pendamping
+// 			monevUep.Is_monev 		= "BELUM"
+// 			monevUep.Flag 			= "UEP"
+// 			if err := con.Create(&monevUep).Error; err != nil {return echo.ErrInternalServerError}
 // 		}
 // 	}
 
-// 	// kube
-// 	con.Model(&Kube).Find(&Kube)
-// 	if len(Kube) != 0 {
+// 	if err := con.Find(&Kube).Error; err != nil { 
+// 		return echo.NewHTTPError(http.StatusInternalServerError, err) 
+// 	} else if err == nil {
 // 		for i, _ := range Kube {
-// 			// Monev
-// 			Periods := models.Tbl_periods_uepkube{}
-// 			Periods.Id_kube = Kube[i].Id_kube
-// 			Periods.Id_periods = 1
-// 			if err := con.Create(&Periods).Error; err != nil {return echo.ErrInternalServerError}	
+// 			monevKube := &models.Tbl_monev_final{}
+// 			monevKube.Id_kube 		= Kube[i].Id_kube
+// 			monevKube.Id_pendamping = Kube[i].Id_pendamping
+// 			monevKube.Is_monev 		= "BELUM"
+// 			monevKube.Flag 			= "KUBE"
+// 			if err := con.Create(&monevKube).Error; err != nil {return echo.ErrInternalServerError}
 // 		}
 // 	}	
-// 	defer con.Close()
-// 	return err
+
+// 	defer con.Close()	
+// 	return c.JSON(http.StatusOK, "Success")
 // }
 
 // Middleware Custom Claims JWT
@@ -124,7 +108,7 @@ func Init() *echo.Echo {
 
 	e.GET("/", Home)
 	e.GET("/bycrypt/:pass", BycriptPass)
-	e.GET("/photo", GetPhoto)
+	// e.GET("/monevDummy", monevDummy)
 	e.GET("/swagger-api/*", echoSwagger.WrapHandler)
 
 	// Route::Unauthenticated-Group

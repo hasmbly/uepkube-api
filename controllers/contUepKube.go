@@ -274,12 +274,12 @@ func GetChartDasboard(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, ChartDashBoard)
 }
 
-
 // @Summary GeAllMemberPelatihan
 // @Tags Lookup-Controller
 // @Accept  json
 // @Produce  json
 // @Param id_pendamping query int true "int"
+// @Param peruntukan query string false "(string) -> uep | kube "
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
 // @Failure 401 {object} models.HTTPError
@@ -288,6 +288,8 @@ func GetChartDasboard(c echo.Context) (err error) {
 // @Router /lookup/member_pelatihan [get]
 func GeAllMemberPelatihan(c echo.Context) (err error) {
 	id_pendamping 	:= c.QueryParam("id_pendamping")
+	For				:= c.QueryParam("peruntukan")
+
 	MemberUep 			:= []models.MemberPelatihan{}
 	MemberKube 			:= []models.MemberPelatihan{}
 	var Result []interface{}
@@ -296,35 +298,51 @@ func GeAllMemberPelatihan(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	// get uep base on id_pendamping
-	if err := con.Table("tbl_uep t1").Select("t2.id_user, t2.nama, 'UEP' as flag ").Joins("join tbl_user t2 on t2.id_user = t1.id_uep").Where("id_pendamping = ?", id_pendamping).Scan(&MemberUep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if For == "UEP" || For == "uep" {
+		// get uep base on id_pendamping
+		if err := con.Table("tbl_uep t1").Select("t1.nama_usaha, t2.id_user, t2.nama, t3.region, 'UEP' as flag ").Joins("join tbl_user t2 on t2.id_user = t1.id_uep").Joins("join view_address t3 on t3.id_kelurahan = t2.id_kelurahan").Where("id_pendamping = ?", id_pendamping).Scan(&MemberUep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
 
-	if len(MemberUep) != 0 {
-		for i,_ := range MemberUep {
-			Result = append(Result, MemberUep[i])
-		}
-	}
-
-	// get kube base on id_pendamping
-	// if err := con.Table("tbl_kube t1").Select("t1.id_kube as id, t1.nama_kube as nama, 'kube' as flag ").Where("id_pendamping = ?", id_pendamping).Scan(&MemberKube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-
-	// if len(MemberKube) != 0 {
-	// 	for i,_ := range MemberKube {
-	// 		Result = append(Result, MemberKube[i])
-	// 	}
-	// }	
-
-	// get member pendamping from uep
-	var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}
-
-	for i,_ := range KubesMember {
-		if err := con.Table("tbl_kube t1").Select("t2.id_user, t2.nama, 'KUBE' as flag ").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[i]).Where("id_pendamping = ?", id_pendamping).Scan(&MemberKube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
-
-		if len(MemberKube) != 0 {
-			for i,_ := range MemberKube {
-				Result = append(Result, MemberKube[i])
+		if len(MemberUep) != 0 {
+			for i,_ := range MemberUep {
+				Result = append(Result, MemberUep[i])
 			}
 		}
+
+	} else if For == "KUBE" || For == "kube" {
+		// get member pendamping from uep
+		var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}
+
+		for i,_ := range KubesMember {
+			if err := con.Table("tbl_kube t1").Select("t1.nama_usaha, t3.region, t2.id_user, t2.nama, t1.nama_kube as flag ").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[i]).Where("id_pendamping = ?", id_pendamping).Joins("join view_address t3 on t3.id_kelurahan = t2.id_kelurahan").Scan(&MemberKube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+			if len(MemberKube) != 0 {
+				for i,_ := range MemberKube {
+					Result = append(Result, MemberKube[i])
+				}
+			}
+		}		
+	} else if For == "" {
+		// get uep base on id_pendamping
+		if err := con.Table("tbl_uep t1").Select("t1.nama_usaha, t2.id_user, t2.nama, t3.region, 'UEP' as flag ").Joins("join tbl_user t2 on t2.id_user = t1.id_uep").Joins("join view_address t3 on t3.id_kelurahan = t2.id_kelurahan").Where("id_pendamping = ?", id_pendamping).Scan(&MemberUep).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+		if len(MemberUep) != 0 {
+			for i,_ := range MemberUep {
+				Result = append(Result, MemberUep[i])
+			}
+		}
+
+		// get member pendamping from uep
+		var KubesMember = []string{"ketua", "sekertaris", "bendahara", "anggota1", "anggota2", "anggota3", "anggota4", "anggota5", "anggota6", "anggota7"}
+
+		for i,_ := range KubesMember {
+			if err := con.Table("tbl_kube t1").Select("t1.nama_usaha, t3.region, t2.id_user, t2.nama, t1.nama_kube as flag ").Joins("join tbl_user t2 on t2.id_user = t1." + KubesMember[i]).Where("id_pendamping = ?", id_pendamping).Joins("join view_address t3 on t3.id_kelurahan = t2.id_kelurahan").Scan(&MemberKube).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+			if len(MemberKube) != 0 {
+				for i,_ := range MemberKube {
+					Result = append(Result, MemberKube[i])
+				}
+			}
+		}		
 	}
 
 	r := &models.Jn{Msg: Result}

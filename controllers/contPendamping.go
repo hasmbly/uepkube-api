@@ -203,6 +203,50 @@ func GetPaginatePendamping(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, r)
 }
 
+func DeletePendamping(c echo.Context) (err error) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	var total_uep 	int64
+	var total_kube 	int64	
+
+	if id == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "please, fill id_pendamping")
+	}
+
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)	
+
+	// count total_uep
+	qcu := con
+	qcu = qcu.Table("tbl_uep")
+	qcu = qcu.Where("id_pendamping = ?", id)
+	qcu = qcu.Count(&total_uep)
+
+	// count total_kube
+	qck := con
+	qck = qck.Table("tbl_kube")
+	qck = qck.Where("id_pendamping = ?", id)
+	qck = qck.Count(&total_kube)
+
+	if total_uep != 0 || total_kube != 0 {
+		log.Println("total_uep : ", total_uep)
+		log.Println("total_kube : ", total_kube)
+		return echo.NewHTTPError(http.StatusBadRequest, "Maaf terdapat anggota UEP atau KUBE yang masih terkait")
+	}
+
+	pendamping := &models.Tbl_pendamping{}
+	pendamping.Id_pendamping = id
+
+	if err := con.Delete(&pendamping).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+
+	defer con.Close()
+
+	r := &models.Jn{Msg: "Success Delete Data"	}
+	return c.JSON(http.StatusOK, r)	
+}
+
+
 func UploadPendampingFiles(c echo.Context) (err error) {
 	// query
 	id, _ 			:= strconv.Atoi(c.QueryParam("id"))

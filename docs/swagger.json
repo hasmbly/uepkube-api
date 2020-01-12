@@ -519,6 +519,12 @@
                         "name": "id_pendamping",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "(string) -\u003e uep | kube ",
+                        "name": "peruntukan",
+                        "in": "query"
                     }
                 ],
                 "responses": {

@@ -573,6 +573,8 @@ MemberPelatihan struct{
 	Id_user int    `json:"id_user"`
 	Nama 	string `json:"nama"`
 	Flag 	string `json:"flag"`
+	Region 	string `json:"region"`
+	Nama_usaha 	string `json:"nama_usaha"`
 }
 
 PelatihanKehadiran struct{

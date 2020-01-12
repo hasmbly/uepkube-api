@@ -221,13 +221,25 @@ func AddMonev(c echo.Context) (err error) {
 		// FieldId = "id_uep"
 		// ValueId = monev.Id_uep 
 		TblType = "_uep"
-		MonevFinal.Id_uep = monev.Id_uep	
+		MonevFinal.Id_uep = monev.Id_uep
+		// get id_monev_final
+		var id []int
+		if err := con.Table("tbl_monev_final").Where("id_uep = ?", monev.Id_uep).Pluck("id", &id).Error; err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		MonevFinal.Id = id[0]
 		MonevFinal.Flag = "UEP"
 	}
 	if monev.Id_uep == 0 { 
 		// FieldId = "id_kube"
 		// ValueId = monev.Id_kube 
 		MonevFinal.Id_kube = monev.Id_kube	
+		// get id_monev_final
+		var id []int
+		if err := con.Table("tbl_monev_final").Where("id_kube = ?", monev.Id_kube).Pluck("id", &id).Error; err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		MonevFinal.Id = id[0]		
 		MonevFinal.Flag = "KUBE"
 		TblType = "_kube"
 	}
@@ -332,7 +344,11 @@ func AddMonev(c echo.Context) (err error) {
 	log.Println("monevFInal : ", MonevFinal)
 
 	// store final monev
-	if err := con.Create(&MonevFinal).Error; err != nil {return echo.ErrInternalServerError}
+	// if err := con.Create(&MonevFinal).Error; err != nil {return echo.ErrInternalServerError}
+	// if err := con.Save(&MonevFinal).Error; err != nil {return echo.ErrInternalServerError}
+	if err := con.Model(&MonevFinal).UpdateColumns(&MonevFinal).Error; err != nil {
+		return echo.ErrInternalServerError
+	}
 
 	defer con.Close()
 

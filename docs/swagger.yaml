@@ -1541,6 +1541,10 @@ paths:
         name: id_pendamping
         required: true
         type: integer
+      - description: '(string) -> uep | kube '
+        in: query
+        name: peruntukan
+        type: string
       produces:
       - application/json
       responses:

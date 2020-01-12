@@ -248,8 +248,8 @@ func DeleteItems(c echo.Context) (err error) {
 		return DeleteUep(c)
 	case "kube":
 		return DeleteKube(c)
-	// case "pendamping":
-	// 	return DeletePendamping(c)
+	case "pendamping":
+		return DeletePendamping(c)
 	// case "verifikator":
 	// 	return DeleteVerifikator(c)	
 	case "produk":
