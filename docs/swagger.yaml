@@ -413,6 +413,10 @@ definitions:
         type: number
       lng:
         type: number
+      log_aktivitas:
+        items:
+          $ref: '#/definitions/models.Tbl_activity'
+        type: array
       nama:
         type: string
       nik:
@@ -485,6 +489,31 @@ definitions:
         items:
           $ref: '#/definitions/models.Tbl_produk_files'
         type: array
+    type: object
+  models.Tbl_activity:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: string
+      id:
+        type: integer
+      id_pendamping:
+        type: integer
+      nama_kegiatan:
+        type: string
+      photo:
+        items:
+          $ref: '#/definitions/models.Tbl_activity_files'
+        type: array
+      rincian:
+        type: string
+      tanggal:
+        type: string
+      updated_at:
+        type: string
+      updated_by:
+        type: string
     type: object
   models.Tbl_activity_files:
     properties:

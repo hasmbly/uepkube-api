@@ -32,14 +32,30 @@ func GetPendamping(c echo.Context) error {
 	q := con
 	q = q.Table("tbl_pendamping t1")
 	q = q.Joins("join tbl_user t2 on t2.id_user = t1.id_pendamping")
-	q = q.Joins("join tbl_account t3 on t3.id_user = t1.id_pendamping")
-	q = q.Joins("join tbl_roles t4 on t4.id = t3.id_roles")
-	q = q.Select("t2.*, t1.jenis_pendamping, t1.periode, t3.id_roles, t3.username, t3.password, t4.roles_name")
+	// q = q.Joins("join tbl_account t3 on t3.id_user = t1.id_pendamping")
+	// q = q.Joins("join tbl_roles t4 on t4.id = t3.id_roles")
+	// q = q.Joins("join tbl_activity t5 on t5.id_pendamping = t1.id_pendamping")
+	q = q.Select("t2.*, t1.jenis_pendamping, t1.periode")
 	q = q.Where("t1.id_pendamping = ?", qk)
 	if ErrNo := q.Scan(&Pendamping); ErrNo.Error != nil { 
-		log.Println("Erro : ", ErrNo.Error)
+		log.Println("Error : ", ErrNo.Error)
 		return echo.ErrNotFound
 	}
+
+	// get account and roles
+	q2 := con
+	q2 = q2.Table("tbl_account t1")
+	q2 = q2.Joins("join tbl_roles t2 on t2.id = t1.id_roles")
+	q2 = q2.Select("t1.id_roles, t1.username,t1.password,t2.roles_name")
+	q2 = q2.Where("t1.id_user = ?", qk)
+	q2.Scan(&Pendamping)
+
+	// get log_aktivitas
+	log_aktivitas  := []models.Tbl_activity{}
+	if err := con.Where("id_pendamping = ?", qk).Find(&log_aktivitas).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	Pendamping.Log_aktivitas = log_aktivitas
 
     // get photo user
     var photo []models.Tbl_user_files
@@ -63,7 +79,7 @@ func GetPendamping(c echo.Context) error {
 	Pendamping.Photo = photo
 
 	// Pendamping.Password = s.Repeat("*", len(Pendamping.Password))
-	Pendamping.Password = "******"
+	if Pendamping.Password != "" { Pendamping.Password = "******" }
 
 	r := &models.Jn{Msg: Pendamping}
 	defer con.Close()

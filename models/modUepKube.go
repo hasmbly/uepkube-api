@@ -610,7 +610,8 @@ Pendamping struct{
 	Password			string 		`json:"password"`
 	Jenis_pendamping	string 		`json:"jenis_pendamping"`
 	Periode 			string 		`json:"periode"`
-	Photo 		 		[]Tbl_user_files 	`json:"photo"`
+	Photo 		 		[]Tbl_user_files `json:"photo"`
+	Log_aktivitas 		[]Tbl_activity `json:"log_aktivitas"`
 }
 
 Verifikator struct{

@@ -1917,6 +1917,12 @@
                 "lng": {
                     "type": "number"
                 },
+                "log_aktivitas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_activity"
+                    }
+                },
                 "nama": {
                     "type": "string"
                 },
@@ -2022,6 +2028,44 @@
                     "items": {
                         "$ref": "#/definitions/models.Tbl_produk_files"
                     }
+                }
+            }
+        },
+        "models.Tbl_activity": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_pendamping": {
+                    "type": "integer"
+                },
+                "nama_kegiatan": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tbl_activity_files"
+                    }
+                },
+                "rincian": {
+                    "type": "string"
+                },
+                "tanggal": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
                 }
             }
         },

@@ -92,7 +92,9 @@ func AddAktivitas(c echo.Context) (err error) {
 	if err != nil { return echo.ErrInternalServerError }
 	con.SingularTable(true)
 
-	if err := con.Create(&Activity).Error; gorm.IsRecordNotFoundError(err) {return echo.ErrNotFound}
+	if err := con.Create(&Activity).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
 
 	defer con.Close()
 
