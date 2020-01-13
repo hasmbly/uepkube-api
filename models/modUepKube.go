@@ -569,12 +569,22 @@ Data_monev struct{
 	Skor_total 		int 	`json:"skor_total"`
 }
 
-MemberPelatihan struct{
-	Id_user int    `json:"id_user"`
-	Nama 	string `json:"nama"`
-	Flag 	string `json:"flag"`
-	Region 	string `json:"region"`
+MemberPelatihanUep struct{
+	Id_user 	int    `json:"id_user"`
+	Nama 		string `json:"nama"`
+	Flag 		string `json:"flag"`
+	Region 		string `json:"region"`
 	Nama_usaha 	string `json:"nama_usaha"`
+	Invited 	bool `json:"invited"`
+}
+
+MemberPelatihanKube struct{
+	Id_user 	int    `json:"id_user"`
+	Nama 		string `json:"nama"`
+	Flag 		string `json:"flag"`
+	Region 		string `json:"region"`
+	Nama_usaha 	string `json:"nama_usaha"`
+	Invited 	bool `json:"invited"`
 }
 
 PelatihanKehadiran struct{

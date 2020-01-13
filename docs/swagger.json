@@ -13,7 +13,7 @@
         },
         "version": "1.0"
     },
-    "host": "157.245.55.185:9093",
+    "host": "localhost:9093",
     "basePath": "/api/v1",
     "paths": {
         "/add/{key}": {
@@ -517,6 +517,13 @@
                         "type": "integer",
                         "description": "int",
                         "name": "id_pendamping",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "int",
+                        "name": "id_pelatihan",
                         "in": "query",
                         "required": true
                     },

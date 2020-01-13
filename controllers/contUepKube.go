@@ -279,7 +279,6 @@ func GetChartDasboard(c echo.Context) (err error) {
 			Labels.Data 	= dataM
 
 			ResultM = append(ResultM, Labels)
-
 		}
 
 		if For[f] == "UEP" { 
@@ -287,7 +286,7 @@ func GetChartDasboard(c echo.Context) (err error) {
 		}
 		if For[f] == "KUBE" { 
 			HasilMonev.Kube = ResultM 
-		}		
+		}
 
 		// PERSEBEARAN_MONEV UEP
 		for x, _ := range yearsP_UEP {
@@ -387,6 +386,7 @@ func GetChartDasboard(c echo.Context) (err error) {
 // @Accept  json
 // @Produce  json
 // @Param id_pendamping query int true "int"
+// @Param id_pelatihan query int true "int"
 // @Param peruntukan query string false "(string) -> uep | kube "
 // @Success 200 {object} models.Jn
 // @Failure 400 {object} models.HTTPError
@@ -396,10 +396,11 @@ func GetChartDasboard(c echo.Context) (err error) {
 // @Router /lookup/member_pelatihan [get]
 func GeAllMemberPelatihan(c echo.Context) (err error) {
 	id_pendamping 	:= c.QueryParam("id_pendamping")
+	id_pelatihan 	:= c.QueryParam("id_pelatihan")
 	For				:= c.QueryParam("peruntukan")
 
-	MemberUep 			:= []models.MemberPelatihan{}
-	MemberKube 			:= []models.MemberPelatihan{}
+	MemberUep 			:= []models.MemberPelatihanUep{}
+	MemberKube 			:= []models.MemberPelatihanKube{}
 	var Result []interface{}
 
 	con, err := db.CreateCon()
@@ -412,6 +413,14 @@ func GeAllMemberPelatihan(c echo.Context) (err error) {
 
 		if len(MemberUep) != 0 {
 			for i,_ := range MemberUep {
+				// check if anggota UEP already in tbl_kehadiran or Invited
+				var count int
+				if err := con.Table("tbl_kehadiran").Where("id_pendamping = ?", id_pendamping).Where("id_pelatihan = ?", id_pelatihan).Where("id_user = ?", MemberUep[i].Id_user).Count(&count).Error; err != nil {
+					return echo.NewHTTPError(http.StatusInternalServerError, err)
+				}
+				log.Println("count : ", count)
+				if count != 0 { MemberUep[i].Invited = true }
+
 				Result = append(Result, MemberUep[i])
 			}
 		}
@@ -425,6 +434,13 @@ func GeAllMemberPelatihan(c echo.Context) (err error) {
 
 			if len(MemberKube) != 0 {
 				for i,_ := range MemberKube {
+					// check if anggota UEP already in tbl_kehadiran or Invited
+					var count int
+					if err := con.Table("tbl_kehadiran").Where("id_pendamping = ?", id_pendamping).Where("id_pelatihan = ?", id_pelatihan).Where("id_user = ?", MemberKube[i].Id_user).Count(&count).Error; err != nil {
+						return echo.NewHTTPError(http.StatusInternalServerError, err)
+					}
+					if count != 0 { MemberKube[i].Invited = true }
+
 					Result = append(Result, MemberKube[i])
 				}
 			}
@@ -435,6 +451,13 @@ func GeAllMemberPelatihan(c echo.Context) (err error) {
 
 		if len(MemberUep) != 0 {
 			for i,_ := range MemberUep {
+				// check if anggota UEP already in tbl_kehadiran or Invited
+				var count int
+				if err := con.Table("tbl_kehadiran").Where("id_pendamping = ?", id_pendamping).Where("id_pelatihan = ?", id_pelatihan).Where("id_user = ?", MemberUep[i].Id_user).Count(&count).Error; err != nil {
+					return echo.NewHTTPError(http.StatusInternalServerError, err)
+				}
+				if count != 0 { MemberUep[i].Invited = true }
+
 				Result = append(Result, MemberUep[i])
 			}
 		}
@@ -447,6 +470,13 @@ func GeAllMemberPelatihan(c echo.Context) (err error) {
 
 			if len(MemberKube) != 0 {
 				for i,_ := range MemberKube {
+					// check if anggota UEP already in tbl_kehadiran or Invited
+					var count int
+					if err := con.Table("tbl_kehadiran").Where("id_pendamping = ?", id_pendamping).Where("id_pelatihan = ?", id_pelatihan).Where("id_user = ?", MemberKube[i].Id_user).Count(&count).Error; err != nil {
+						return echo.NewHTTPError(http.StatusInternalServerError, err)
+					}
+					if count != 0 { MemberKube[i].Invited = true }
+					
 					Result = append(Result, MemberKube[i])
 				}
 			}
