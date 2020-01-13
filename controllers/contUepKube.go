@@ -196,7 +196,6 @@ func GetChartDasboard(c echo.Context) (err error) {
 
 	var (
 		yearsM []string
-		yearsP []string
 	)
 
 	con, err := db.CreateCon()
@@ -211,7 +210,8 @@ func GetChartDasboard(c echo.Context) (err error) {
 
 	// PERSEBARAN
 	LabelsP := []string{"Jakarta Pusat", "Jakarta Utara", "Jakarta Barat", "Jakarta Selatan", "Jakarta Timur", "Kep. Seribu"}
-	// LabelPId := []
+	LabelP_Id := []string{"3171", "3172", "3173", "3174", "3175", "3101"}
+	
 	for i, _ := range LabelsP {
 		Persebaran.Labels = append(Persebaran.Labels, LabelsP[i])
 	}
@@ -222,16 +222,22 @@ func GetChartDasboard(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	// get all years for PERSEBARAN
-	// PersebaranYears := make(map[string]interface{})	
-	if err := con.Model(&models.Tbl_uep{}).Pluck("distinct YEAR(created_at) as created_at", &yearsP).Group("created_at").Error; err != nil {
+	// get all years for PERSEBARAN UEP
+	var yearsP_UEP []string 
+	if err := con.Model(&models.Tbl_uep{}).Pluck("distinct YEAR(created_at) as created_at", &yearsP_UEP).Group("created_at").Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
+	// get all years for PERSEBARAN KUBE
+	var yearsP_KUBE []string 
+	if err := con.Model(&models.Tbl_kube{}).Pluck("distinct YEAR(created_at) as created_at", &yearsP_KUBE).Group("created_at").Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
+	}
+	log.Println("yearsP_KUBE : ", yearsP_KUBE)
 
 	for f, _ := range For {
 		var ResultM []interface{}
 
-		// HASIL_MONEV
+		// HASIL_MONEV per Tahun
 		for x, _ := range yearsM {
 			Labels 		:= Labels{}
 			var dataM []int
@@ -253,33 +259,62 @@ func GetChartDasboard(c echo.Context) (err error) {
 
 		}
 
-		log.Println("ResultM : ", ResultM)
+		if For[f] == "UEP" { 
+			HasilMonev.Uep = ResultM 
+		}
+		if For[f] == "KUBE" { 
+			HasilMonev.Kube = ResultM 
+		}		
 
-		if For[f] == "UEP" { HasilMonev.Uep = ResultM }
-		if For[f] == "KUBE" { HasilMonev.Kube = ResultM }
+		// PERSEBEARAN_MONEV UEP
+		for x, _ := range yearsP_UEP {
+			var ResultP []interface{}
+			Labels 		:= Labels{}
+			var dataP []int
 
-		// PERSEBEARAN_MONEV
-		// for x, _ := range yearsP {
-		// 	var dataP []int
-		// 	// log.Println("years : ", yearsP[x])
-		// 	// for i,_ := range Kabupaten {
-		// 	// 	var id_kabupaten []int
-		// 	// 	if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsP[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
-		// 	// 		return echo.NewHTTPError(http.StatusBadRequest, err)
-		// 	// 	}
-		// 	// 	dataP = append(dataP, len(id_category))
-		// 	// }
-		// 	PersebaranYears[yearsP[x]] = dataP
-		// }
-		// if For[f] == "UEP" { Persebaran.Uep = PersebaranYears }
-		// if For[f] == "KUBE" { Persebaran.Kube = PersebaranYears }		
+			for i,_ := range LabelP_Id {
+				var count int
+				if err := con.Table("tbl_user").Where("id_kabupaten = ?", LabelP_Id[i]).Count(&count).Error; err != nil {
+					return echo.NewHTTPError(http.StatusBadRequest, err)
+				}
+				dataP = append(dataP, count)
+			}
+
+			Labels.Labels 	= yearsP_UEP[x]
+			Labels.Data 	= dataP
+
+			ResultP = append(ResultP, Labels)
+			Persebaran.Uep = ResultP
+		}
+
+		// PERSEBEARAN_MONEV KUBE
+		for x, _ := range yearsP_KUBE {
+			var ResultP []interface{}
+			Labels 		:= Labels{}
+			var dataP []int
+
+			for i,_ := range LabelP_Id {
+				var count int
+				// var id_ketua []int
+				if err := con.Table("tbl_kube t1").Select("t1.id_ketua,t2.id_kabupaten").Joins("join tbl_user t2 on t2.id_user = t1.ketua").Where("id_kabupaten = ?", LabelP_Id[i]).Count(&count).Error; err != nil {
+					return echo.NewHTTPError(http.StatusBadRequest, err)
+				}
+				dataP = append(dataP, count)
+			}
+
+			Labels.Labels 	= yearsP_KUBE[x]
+			Labels.Data 	= dataP
+
+			ResultP = append(ResultP, Labels)
+			Persebaran.Kube = ResultP
+		}
 
 	}
 
 	ChartDashBoard.HasilMonev = HasilMonev
 	ChartDashBoard.Persebaran = Persebaran
 
-	log.Println("PersebaranYears : ", yearsP)
+	// log.Println("PersebaranYears : ", yearsP)
 
 	// for i, _ := range LabelsP {
 	// 	Persebaran.Uep = append(Persebaran.Uep, i)
