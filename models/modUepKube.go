@@ -861,6 +861,7 @@ PaginatePendamping struct{
 	Periode 			string 		`json:"periode"`
 	Total_uep 	     	int64 		`json:"total_uep"`
 	Total_kube      	int64 		`json:"total_kube"`
+	Jumlah_activity     int64 		`json:"jumlah_activity"`
 }
 
 PaginateVerifikator struct{
