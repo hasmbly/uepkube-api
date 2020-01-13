@@ -198,7 +198,7 @@ func GetChartDasboard(c echo.Context) (err error) {
 	con.SingularTable(true)
 
 	// HASIL_MONEV
-	LabelsM := []string{"Sangat Baik", "Cukup Baik", "Kurang Baik"}
+	LabelsM := []string{"Sangat Berhasil", "Cukup Berhasil", "Kurang Berhasil"}
 	for i, _ := range LabelsM {
 		HasilMonev.Labels = append(HasilMonev.Labels, LabelsM[i])
 	}
@@ -222,13 +222,13 @@ func GetChartDasboard(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	var ResultM []map[string]interface{}
+	var ResultM []interface{}
 	for f, _ := range For {
 
 		// HASIL_MONEV
 		for x, _ := range yearsM {
 			var dataM []int
-			// log.Println("years : ", yearsM[x])
+			log.Println("years : ", yearsM[x])
 			for i := 1; i <= len(LabelsM); i++ {
 				var id_category []int
 				if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsM[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
@@ -240,8 +240,13 @@ func GetChartDasboard(c echo.Context) (err error) {
 			MonevYears["labels"] = yearsM[x]
 			MonevYears["data"] = dataM
 
+			log.Println("MonevYears : ", MonevYears)
 			ResultM = append(ResultM, MonevYears)
+			log.Println("ResultM : ", ResultM)
+
 		}
+
+		log.Println("ResultM : ", ResultM)
 
 		if For[f] == "UEP" { HasilMonev.Uep = ResultM }
 		if For[f] == "KUBE" { HasilMonev.Kube = ResultM }
