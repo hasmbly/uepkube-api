@@ -156,6 +156,12 @@ func GeAllBantuanPeriods(c echo.Context) (err error) {
 type ChartDashBoard struct {
 	HasilMonev *HasilMonev `json:"hasil_monev"`
 	Persebaran *Persebaran `json:"persebaran"`
+	JenisUsaha *JenisUsaha `json:"jenis_usaha"`
+}
+
+type Labels struct {
+	Labels 	string 	`json:"labels"`
+	Data 	[]int 	`json:"data"`
 }
 
 type HasilMonev struct {
@@ -170,9 +176,10 @@ type Persebaran struct {
 	Kube 	interface{}		`json:"kube"`
 }
 
-type Labels struct {
-	Labels 	string 	`json:"labels"`
-	Data 	[]int 	`json:"data"`
+type JenisUsaha struct {
+	Labels 	[]string 		`json:"labels"`
+	Uep 	interface{}		`json:"uep"`
+	Kube 	interface{}		`json:"kube"`
 }
 
 // @Summary GetChartDasboard
@@ -191,6 +198,7 @@ func GetChartDasboard(c echo.Context) (err error) {
 
 	HasilMonev 	:= &HasilMonev{}
 	Persebaran 	:= &Persebaran{}
+	JenisUsaha 	:= &JenisUsaha{}
 
 	For 		:= []string{"UEP", "KUBE"}		
 
@@ -211,9 +219,24 @@ func GetChartDasboard(c echo.Context) (err error) {
 	// PERSEBARAN
 	LabelsP := []string{"Jakarta Pusat", "Jakarta Utara", "Jakarta Barat", "Jakarta Selatan", "Jakarta Timur", "Kep. Seribu"}
 	LabelP_Id := []string{"3171", "3172", "3173", "3174", "3175", "3101"}
-	
 	for i, _ := range LabelsP {
 		Persebaran.Labels = append(Persebaran.Labels, LabelsP[i])
+	}
+
+	// JENIS_USAHA
+	var LabelsJ []string
+	var LabelsJ_Id []string
+	// get jenis_usaha
+	jUsaha := models.Tbl_jenis_usaha{}
+	if err := con.Find(&jUsaha).Pluck("jenis_usaha", &LabelsJ).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	// get id_jenis_usaha
+	if err := con.Find(&jUsaha).Pluck("id_usaha", &LabelsJ_Id).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	for i, _ := range LabelsJ {
+		JenisUsaha.Labels = append(JenisUsaha.Labels, LabelsJ[i])
 	}
 
 	// get all years for HASIL_MONEV
@@ -269,9 +292,14 @@ func GetChartDasboard(c echo.Context) (err error) {
 		// PERSEBEARAN_MONEV UEP
 		for x, _ := range yearsP_UEP {
 			var ResultP []interface{}
-			Labels 		:= Labels{}
 			var dataP []int
+			
+			var ResultJ []interface{}
+			var dataJ []int
+			
+			Labels 		:= Labels{}
 
+			// count persebaran UEP by id_kabupaten
 			for i,_ := range LabelP_Id {
 				var count int
 				if err := con.Table("tbl_user").Where("id_kabupaten = ?", LabelP_Id[i]).Count(&count).Error; err != nil {
@@ -285,14 +313,34 @@ func GetChartDasboard(c echo.Context) (err error) {
 
 			ResultP = append(ResultP, Labels)
 			Persebaran.Uep = ResultP
+
+			// count jenis_usaha UEP by id_jenis_usaha
+			for i,_ := range LabelsJ_Id {
+				var count int
+				if err := con.Table("tbl_uep").Where("id_jenis_usaha = ?", LabelsJ_Id[i]).Count(&count).Error; err != nil {
+					return echo.NewHTTPError(http.StatusBadRequest, err)
+				}
+				dataJ = append(dataJ, count)
+			}		
+
+			Labels.Labels 	= yearsP_UEP[x]
+			Labels.Data 	= dataJ
+
+			ResultJ = append(ResultJ, Labels)
+			JenisUsaha.Uep = ResultJ
 		}
 
 		// PERSEBEARAN_MONEV KUBE
 		for x, _ := range yearsP_KUBE {
 			var ResultP []interface{}
-			Labels 		:= Labels{}
 			var dataP []int
+			
+			var ResultJ []interface{}
+			var dataJ []int			
 
+			Labels 		:= Labels{}
+
+			// count persebaran KUBE by id_kabupaten
 			for i,_ := range LabelP_Id {
 				var count int
 				// var id_ketua []int
@@ -307,21 +355,28 @@ func GetChartDasboard(c echo.Context) (err error) {
 
 			ResultP = append(ResultP, Labels)
 			Persebaran.Kube = ResultP
+
+			// count jenis_usaha KUBE by id_jenis_usaha
+			for i,_ := range LabelsJ_Id {
+				var count int
+				if err := con.Table("tbl_kube").Where("id_jenis_usaha = ?", LabelsJ_Id[i]).Count(&count).Error; err != nil {
+					return echo.NewHTTPError(http.StatusBadRequest, err)
+				}
+				dataJ = append(dataJ, count)
+			}		
+
+			Labels.Labels 	= yearsP_UEP[x]
+			Labels.Data 	= dataJ
+
+			ResultJ = append(ResultJ, Labels)
+			JenisUsaha.Kube = ResultJ
 		}
 
 	}
 
 	ChartDashBoard.HasilMonev = HasilMonev
 	ChartDashBoard.Persebaran = Persebaran
-
-	// log.Println("PersebaranYears : ", yearsP)
-
-	// for i, _ := range LabelsP {
-	// 	Persebaran.Uep = append(Persebaran.Uep, i)
-	// 	Persebaran.Kube = append(Persebaran.Kube, i)
-	// }
-
-	// r := &models.Jn{Msg: ChartDashBoard}
+	ChartDashBoard.JenisUsaha = JenisUsaha
 
 	defer con.Close()
 	return c.JSON(http.StatusOK, ChartDashBoard)

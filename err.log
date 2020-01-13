@@ -15748,3 +15748,35 @@ ____________________________________O/_______
                                     O\
 ⇨ http server started on [::]:9093
 {"time":"2020-01-13T19:19:08.786587538+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/chart_dashboard","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":12483261,"latency_human":"12.483261ms","bytes_in":0,"bytes_out":460}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2020-01-13T19:44:25.578959699+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/chart_dashboard","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":19897267,"latency_human":"19.897267ms","bytes_in":0,"bytes_out":833}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
+{"time":"2020-01-13T19:49:11.969405796+07:00","id":"","remote_ip":"::1","host":"localhost:9093","method":"GET","uri":"/api/v1/lookup/chart_dashboard","user_agent":"Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/75.0.3770.90 Chrome/75.0.3770.90 Safari/537.36","status":200,"error":"","latency":51783009,"latency_human":"51.783009ms","bytes_in":0,"bytes_out":894}
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.1.11
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9093
