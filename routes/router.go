@@ -142,7 +142,9 @@ func Init() *echo.Echo {
 	// users
 	o.GET("/lookup/users", controllers.GeAllUser)
 	// chart_dashboard
-	o.GET("/lookup/chart_dashboard", controllers.GetChartDasboard)	
+	o.GET("/lookup/chart_dashboard", controllers.GetChartDasboard)
+	// pkt
+	o.POST("/pkt", controllers.GetPaginatePkt)
 
 	// Routes::All Roles
 	a := e.Group("/api/v1")
