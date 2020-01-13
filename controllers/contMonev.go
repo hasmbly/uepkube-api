@@ -8,10 +8,10 @@ import (
 	"uepkube-api/db"
 	"uepkube-api/models"
 	"uepkube-api/helpers"
-	// "strconv"
+	"strconv"
 	"fmt"
 	"log"
-	// "time"
+	"time"
 )
 
 func GetMonev(c echo.Context) error {
@@ -187,218 +187,217 @@ func GetPaginatePkt(c echo.Context) (err error) {
 }
 
 func AddMonev(c echo.Context) (err error) {
-	// monev := &models.Monev{}
-	// MonevFinal := &models.Tbl_monev_final{}	
+	monev := &models.Monev{}
+	MonevFinal := &models.Tbl_monev_final{}	
 
-	// if err := c.Bind(monev); err != nil {
-	// 	return err
-	// }
+	if err := c.Bind(monev); err != nil {
+		return err
+	}
 
-	// // get log post
-	// helpers.FetchPost(monev)	
+	// get log post
+	helpers.FetchPost(monev)	
 
-	// // validation
-	// if monev.Id_uep == 0 && monev.Id_kube == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_uep or id_kube")
-	// }	
+	// validation
+	if monev.Id_uep == 0 && monev.Id_kube == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_uep or id_kube")
+	}	
 
-	// if monev.Id_pendamping == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_pendamping")
-	// }
+	if monev.Id_pendamping == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_pendamping")
+	}
 
-	// if len(monev.Id_indikator) == 0 {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_indikator")
-	// }	
+	if len(monev.Id_indikator) == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "Please, fill id_indikator")
+	}	
 
-	// con, err := db.CreateCon()
-	// if err != nil { return echo.ErrInternalServerError }
-	// con.SingularTable(true)
+	con, err := db.CreateCon()
+	if err != nil { return echo.ErrInternalServerError }
+	con.SingularTable(true)
 
-	// var TblType string
-	// // var FieldId string
-	// // var ValueId int
+	var TblType string
+	// var FieldId string
+	// var ValueId int
 
-	// if monev.Id_kube == 0 { 
-	// 	// FieldId = "id_uep"
-	// 	// ValueId = monev.Id_uep 
-	// 	TblType = "_uep"
-	// 	MonevFinal.Id_uep = monev.Id_uep
-	// 	// get id_monev_final
-	// 	var id []int
-	// 	if err := con.Table("tbl_monev_final").Where("id_uep = ?", monev.Id_uep).Pluck("id", &id).Error; err != nil {
-	// 		return echo.NewHTTPError(http.StatusInternalServerError, err)
-	// 	}
-	// 	MonevFinal.Id = id[0]
-	// 	MonevFinal.Flag = "UEP"
-	// }
-	// if monev.Id_uep == 0 { 
-	// 	// FieldId = "id_kube"
-	// 	// ValueId = monev.Id_kube 
-	// 	MonevFinal.Id_kube = monev.Id_kube	
-	// 	// get id_monev_final
-	// 	var id []int
-	// 	if err := con.Table("tbl_monev_final").Where("id_kube = ?", monev.Id_kube).Pluck("id", &id).Error; err != nil {
-	// 		return echo.NewHTTPError(http.StatusInternalServerError, err)
-	// 	}
-	// 	MonevFinal.Id = id[0]		
-	// 	MonevFinal.Flag = "KUBE"
-	// 	TblType = "_kube"
-	// }
+	if monev.Id_kube == 0 { 
+		// FieldId = "id_uep"
+		// ValueId = monev.Id_uep 
+		TblType = "_uep"
+		MonevFinal.Id_uep = monev.Id_uep
+		// get id_monev_final
+		var id []int
+		if err := con.Table("tbl_monev_final").Where("id_uep = ?", monev.Id_uep).Pluck("id", &id).Error; err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		MonevFinal.Id = id[0]
+		MonevFinal.Flag = "UEP"
+	}
+	if monev.Id_uep == 0 { 
+		// FieldId = "id_kube"
+		// ValueId = monev.Id_kube 
+		MonevFinal.Id_kube = monev.Id_kube	
+		// get id_monev_final
+		var id []int
+		if err := con.Table("tbl_monev_final").Where("id_kube = ?", monev.Id_kube).Pluck("id", &id).Error; err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		MonevFinal.Id = id[0]		
+		MonevFinal.Flag = "KUBE"
+		TblType = "_kube"
+	}
 
-	// var IdKriteria []int
+	var IdKriteria []int
 	
-	// var bobot []int
-	// var skor []int
+	var bobot []int
+	var skor []int
 
-	// var TotalSkor []int
-	// var SumTotal int
+	var TotalSkor []int
+	var SumTotal int
 
-	// // get skor & bobot from indikator
-	// for i, _ := range monev.Id_indikator {
+	// get skor & bobot from indikator
+	for i, _ := range monev.Id_indikator {
 
-	// 	var bobotKriteria []int
-	// 	var skorIndikator []int
+		var bobotKriteria []int
+		var skorIndikator []int
 
-	// 	con.Table("tbl_indikator" + TblType).Where("id_indikator = ?", monev.Id_indikator[i]).Pluck("skor_indikator", &skorIndikator)
+		con.Table("tbl_indikator" + TblType).Where("id_indikator = ?", monev.Id_indikator[i]).Pluck("skor_indikator", &skorIndikator)
 
-	// 	if len(skorIndikator) != 0 {
-	// 		skor = append(skor, skorIndikator[0])
-	// 	} else {
-	// 		return echo.NewHTTPError(http.StatusBadRequest, "Maaf Indikator tidak ditemukan")
-	// 	}
+		if len(skorIndikator) != 0 {
+			skor = append(skor, skorIndikator[0])
+		} else {
+			return echo.NewHTTPError(http.StatusBadRequest, "Maaf Indikator tidak ditemukan")
+		}
 
-	// 	con.Table("tbl_indikator" + TblType).Where("id_indikator = ?", monev.Id_indikator[i]).Pluck("id_kriteria", &IdKriteria)
+		con.Table("tbl_indikator" + TblType).Where("id_indikator = ?", monev.Id_indikator[i]).Pluck("id_kriteria", &IdKriteria)
 
-	// 	if len(IdKriteria) != 0 {
-	// 		con.Table("tbl_kriteria" + TblType).Where("id_kriteria = ?", IdKriteria[0]).Pluck("bobot", &bobotKriteria)
+		if len(IdKriteria) != 0 {
+			con.Table("tbl_kriteria" + TblType).Where("id_kriteria = ?", IdKriteria[0]).Pluck("bobot", &bobotKriteria)
 
-	// 		if len(bobotKriteria) != 0 {
-	// 			bobot = append(bobot, bobotKriteria[0])
-	// 		}
+			if len(bobotKriteria) != 0 {
+				bobot = append(bobot, bobotKriteria[0])
+			}
 			
-	// 	} else {
-	// 		return echo.NewHTTPError(http.StatusBadRequest, "Maaf Kriteria tidak ditemukan")	
-	// 	}
+		} else {
+			return echo.NewHTTPError(http.StatusBadRequest, "Maaf Kriteria tidak ditemukan")	
+		}
 
 
 
-	// }
+	}
 
-	// log.Println("skor : ", skor)
-	// log.Println("bobot : ", bobot)
+	log.Println("skor : ", skor)
+	log.Println("bobot : ", bobot)
 
-	// // calculate total_skor
-	// for i, _ := range skor {
-	// 	total := skor[i] * bobot[i]
-	// 	TotalSkor = append(TotalSkor, total)
-	// }
-
-	// for x, _ := range TotalSkor {
-		
-	// 	Monev := &models.Tbl_monev_calculate{}	
-	// 	if monev.Id_kube == 0 { Monev.Id_uep = monev.Id_uep }
-	// 	if monev.Id_uep == 0 { Monev.Id_kube = monev.Id_kube }
-	// 	Monev.Id_indikator = monev.Id_indikator[x]
-	// 	Monev.Skor_total = TotalSkor[x]
-
-	// 	log.Println("MonevResult : ", Monev)
-	// 	// store total_skor to Tbl_monev_result_uepkube
-	// 	if err := con.Create(&Monev).Error; err != nil {
-	// 		return echo.ErrInternalServerError
-	// 	}
-	// }
-
-	// // calculate sum_total
-	// for i, _ := range TotalSkor {
-	// 	SumTotal = TotalSkor[i] + SumTotal
-	// }
-
-	// // store final monev
-	// log.Println("SumTotal : ", SumTotal)
-	// MonevFinal.Sum_total = SumTotal
-	// var id_category int
-	// var desc_category string
-	
-	// if SumTotal >= 301 && SumTotal <= 400 {
-	// 	id_category = 1
-	// 	desc_category = "Sangat Berhasil"
-	// } else if SumTotal >= 201 && SumTotal <= 300 {
-	// 	id_category = 2
-	// 	desc_category = "Berhasil"
-	// } else if SumTotal >= 100 && SumTotal <= 200 {
-	// 	id_category = 3
-	// 	desc_category = "Kurang Berhasil"
-	// } else {
-	// 	return echo.NewHTTPError(http.StatusBadRequest, "Maaf Hasil Monev anda Belum berhasil, Total Monev : " + strconv.Itoa(SumTotal))
-	// }
-	
-	// MonevFinal.Id_category = id_category
-	// MonevFinal.Id_pendamping = monev.Id_pendamping
-	// MonevFinal.Is_monev = "SUDAH"
-	
-	// // MonevFinal.Id_periods = id_periods[0]
-
-	// log.Println("monevFInal : ", MonevFinal)
-
-	// // in the utils function create thread when app start to check current for adding monev queue
-
-	// // check if already do monev in the past
+	// check if already do monev in the past
 	// var created_at []string
-	// var CurrYear string
-	// year, _ , _ := time.Now().Date()
-	// CurrYear = strconv.Itoa(year)
+	var CurrYear string
+	year, _ , _ := time.Now().Date()
+	CurrYear = strconv.Itoa(year)
 
-	// if MonevFinal.Id_uep != 0 {
-	// 	var flag []string
-	// 	if err := con.Table("tbl_monev_final").Where("created_at like ?". "%"+CurrYear+"%").Where("id_uep = ?", MonevFinal.Id_uep).Pluck("flag", &flag).Error; err != nil {
-	// 		return echo.NewHTTPError(http.StatusInternalServerError, err)
-	// 	}
-	// 	if flag[0] == "SUDAH" {
-	// 		// check if already do monev this year
+	if MonevFinal.Id_uep != 0 {
+		
+		var is_monev []string
+		
+		if err := con.Table("tbl_monev_final").Where("created_at like ?", "%"+CurrYear+"%").Where("id_uep = ?", MonevFinal.Id_uep).Pluck("is_monev", &is_monev).Error; err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
 
+		log.Println("is_monev uep : ", is_monev[0])
 
-	// 		if err := con.Table("tbl_monev_final").Where("created_at like ?", "%"+CurrYear+"%").Pluck("created_at", &created_at).Error; err != nil {
-	// 			return echo.NewHTTPError(http.StatusInternalServerError, err)
-	// 		}
+		if is_monev[0] == "SUDAH" {
+			return echo.NewHTTPError(http.StatusBadRequest, "Maaf sudah pernah dilakukan Monev tahun ini")
+		}
 
-	// 		if len(created_at) != 0 {
-	// 			return echo.NewHTTPError(http.StatusBadRequest, "Maaf sudah pernah dilakukan Monev tahun ini")
-	// 		} else if len(created_at) == 0 {
+	} else if MonevFinal.Id_kube != 0 {
+		
+		var is_monev []string
 
-	// 			// if err := con.Create(&MonevFinal).Error; err != nil {
-	// 			// 	return echo.NewHTTPError(http.StatusInternalServerError, err)
-	// 			// }
-	// 		}
+		if err := con.Table("tbl_monev_final").Where("created_at like ?", "%"+CurrYear+"%").Where("id_kube = ?", MonevFinal.Id_kube).Pluck("is_monev", &is_monev).Error; err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
 
-	// 	} else if flag[0] == "BELUM" {
-	// 		log.Println("Monev : ", MonevFinal)
-	// 		log.Println("Monev : ", flag[0])
+		log.Println("is_monev kube : ", is_monev[0])
 
-	// 	}
+		if is_monev[0] == "SUDAH" {
+			return echo.NewHTTPError(http.StatusBadRequest, "Maaf sudah pernah dilakukan Monev tahun ini")
+		}
+	}
+
+	// calculate total_skor
+	for i, _ := range skor {
+		total := skor[i] * bobot[i]
+		TotalSkor = append(TotalSkor, total)
+	}
+
+	for x, _ := range TotalSkor {
+		
+		Monev := &models.Tbl_monev_calculate{}	
+		if monev.Id_kube == 0 { Monev.Id_uep = monev.Id_uep }
+		if monev.Id_uep == 0 { Monev.Id_kube = monev.Id_kube }
+		Monev.Id_indikator = monev.Id_indikator[x]
+		Monev.Skor_total = TotalSkor[x]
+
+		log.Println("MonevResult : ", Monev)
+		// store total_skor to Tbl_monev_result_uepkube
+		if err := con.Create(&Monev).Error; err != nil {
+			return echo.ErrInternalServerError
+		}
+	}
+
+	// calculate sum_total
+	for i, _ := range TotalSkor {
+		SumTotal = TotalSkor[i] + SumTotal
+	}
+
+	// store final monev
+	log.Println("SumTotal : ", SumTotal)
+	MonevFinal.Sum_total = SumTotal
+	var id_category int
+	var desc_category string
+	
+	if SumTotal >= 301 && SumTotal <= 400 {
+		id_category = 1
+		desc_category = "Sangat Berhasil"
+	} else if SumTotal >= 201 && SumTotal <= 300 {
+		id_category = 2
+		desc_category = "Berhasil"
+	} else if SumTotal >= 100 && SumTotal <= 200 {
+		id_category = 3
+		desc_category = "Kurang Berhasil"
+	} else {
+		return echo.NewHTTPError(http.StatusBadRequest, "Maaf Hasil Monev anda Belum berhasil, Total Monev : " + strconv.Itoa(SumTotal))
+	}
+	
+	MonevFinal.Id_category = id_category
+	MonevFinal.Id_pendamping = monev.Id_pendamping
+	MonevFinal.Is_monev = "SUDAH"
+	
+	// MonevFinal.Id_periods = id_periods[0]
+
+	log.Println("monevFInal : ", MonevFinal)
+
+	// in the utils function create thread when app start to check current for adding monev queue
+
+		if err := con.Model(&MonevFinal).UpdateColumns(&MonevFinal).Error; err != nil {
+			return echo.ErrInternalServerError
+		}	
+
+		// store new
+		// if err := con.Create(&MonevFinal).Error; err != nil {
+		// 	return echo.NewHTTPError(http.StatusInternalServerError, err)
+		// }				
+
+	// store final monev
+	// if err := con.Create(&MonevFinal).Error; err != nil {return echo.ErrInternalServerError}
+	// if err := con.Save(&MonevFinal).Error; err != nil {return echo.ErrInternalServerError}
+	// if err := con.Model(&MonevFinal).UpdateColumns(&MonevFinal).Error; err != nil {
+	// 	return echo.ErrInternalServerError
 	// }
 
-	// 	// update if exist : BELUM
-	// 	if err := con.Model(&MonevFinal).UpdateColumns(&MonevFinal).Error; err != nil {
-	// 		return echo.ErrInternalServerError
-	// 	}
+	defer con.Close()
 
-	// 	// store new
-	// 	// if err := con.Create(&MonevFinal).Error; err != nil {
-	// 	// 	return echo.NewHTTPError(http.StatusInternalServerError, err)
-	// 	// }				
-
-	// // store final monev
-	// // if err := con.Create(&MonevFinal).Error; err != nil {return echo.ErrInternalServerError}
-	// // if err := con.Save(&MonevFinal).Error; err != nil {return echo.ErrInternalServerError}
-	// // if err := con.Model(&MonevFinal).UpdateColumns(&MonevFinal).Error; err != nil {
-	// // 	return echo.ErrInternalServerError
-	// // }
-
-	// defer con.Close()
-
-	// r := &models.Jn{Msg: "Success Store Data, Total Skor Monev : " + strconv.Itoa(SumTotal) + ", Kategori : " + desc_category}
-	// return c.JSON(http.StatusOK, r)
-	return nil
+	r := &models.Jn{Msg: "Success Store Data, Total Skor Monev : " + strconv.Itoa(SumTotal) + ", Kategori : " + desc_category}
+	return c.JSON(http.StatusOK, r)
+	// return nil
 }
 
 func UpdateMonev(c echo.Context) (err error) {

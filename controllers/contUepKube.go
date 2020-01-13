@@ -235,7 +235,8 @@ func GetChartDasboard(c echo.Context) (err error) {
 				}
 				dataM = append(dataM, len(id_category))
 			}
-			MonevYears[yearsM[x]] = dataM
+			MonevYears["labels"] = yearsM[x]
+			MonevYears["data"] 	= dataM
 		}
 		if For[f] == "UEP" { HasilMonev.Uep = MonevYears }
 		if For[f] == "KUBE" { HasilMonev.Kube = MonevYears }
