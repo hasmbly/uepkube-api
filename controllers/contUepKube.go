@@ -222,6 +222,7 @@ func GetChartDasboard(c echo.Context) (err error) {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
+	var ResultM []map[string]interface{}
 	for f, _ := range For {
 
 		// HASIL_MONEV
@@ -235,11 +236,15 @@ func GetChartDasboard(c echo.Context) (err error) {
 				}
 				dataM = append(dataM, len(id_category))
 			}
+			// MonevYears[yearsM[x]] = dataM
 			MonevYears["labels"] = yearsM[x]
-			MonevYears["data"] 	= dataM
+			MonevYears["data"] = dataM
+
+			ResultM = append(ResultM, MonevYears)
 		}
-		if For[f] == "UEP" { HasilMonev.Uep = MonevYears }
-		if For[f] == "KUBE" { HasilMonev.Kube = MonevYears }
+
+		if For[f] == "UEP" { HasilMonev.Uep = ResultM }
+		if For[f] == "KUBE" { HasilMonev.Kube = ResultM }
 
 		// PERSEBEARAN_MONEV
 		for x, _ := range yearsP {
