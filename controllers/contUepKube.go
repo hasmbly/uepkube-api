@@ -170,6 +170,11 @@ type Persebaran struct {
 	Kube 	interface{}		`json:"kube"`
 }
 
+type Labels struct {
+	Labels 	string 	`json:"labels"`
+	Data 	[]int 	`json:"data"`
+}
+
 // @Summary GetChartDasboard
 // @Tags Lookup-Controller
 // @Accept  json
@@ -186,6 +191,7 @@ func GetChartDasboard(c echo.Context) (err error) {
 
 	HasilMonev 	:= &HasilMonev{}
 	Persebaran 	:= &Persebaran{}
+
 	For 		:= []string{"UEP", "KUBE"}		
 
 	var (
@@ -211,38 +217,39 @@ func GetChartDasboard(c echo.Context) (err error) {
 	}
 
 	// get all years for HASIL_MONEV
-	MonevYears := make(map[string]interface{})
+	// MonevYears := make(map[string]interface{})
 	if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", "UEP").Pluck("distinct YEAR(created_at) as created_at", &yearsM).Group("created_at").Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
 	// get all years for PERSEBARAN
-	PersebaranYears := make(map[string]interface{})	
+	// PersebaranYears := make(map[string]interface{})	
 	if err := con.Model(&models.Tbl_uep{}).Pluck("distinct YEAR(created_at) as created_at", &yearsP).Group("created_at").Error; err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	var ResultM []interface{}
 	for f, _ := range For {
+		var ResultM []interface{}
 
 		// HASIL_MONEV
 		for x, _ := range yearsM {
+			Labels 		:= Labels{}
 			var dataM []int
+
 			log.Println("years : ", yearsM[x])
 			for i := 1; i <= len(LabelsM); i++ {
+
 				var id_category []int
 				if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsM[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
 					return echo.NewHTTPError(http.StatusBadRequest, err)
 				}
 				dataM = append(dataM, len(id_category))
 			}
-			// MonevYears[yearsM[x]] = dataM
-			MonevYears["labels"] = yearsM[x]
-			MonevYears["data"] = dataM
 
-			log.Println("MonevYears : ", MonevYears)
-			ResultM = append(ResultM, MonevYears)
-			log.Println("ResultM : ", ResultM)
+			Labels.Labels 	= yearsM[x]
+			Labels.Data 	= dataM
+
+			ResultM = append(ResultM, Labels)
 
 		}
 
@@ -252,20 +259,20 @@ func GetChartDasboard(c echo.Context) (err error) {
 		if For[f] == "KUBE" { HasilMonev.Kube = ResultM }
 
 		// PERSEBEARAN_MONEV
-		for x, _ := range yearsP {
-			var dataP []int
-			// log.Println("years : ", yearsP[x])
-			// for i,_ := range Kabupaten {
-			// 	var id_kabupaten []int
-			// 	if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsP[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
-			// 		return echo.NewHTTPError(http.StatusBadRequest, err)
-			// 	}
-			// 	dataP = append(dataP, len(id_category))
-			// }
-			PersebaranYears[yearsP[x]] = dataP
-		}
-		if For[f] == "UEP" { Persebaran.Uep = PersebaranYears }
-		if For[f] == "KUBE" { Persebaran.Kube = PersebaranYears }		
+		// for x, _ := range yearsP {
+		// 	var dataP []int
+		// 	// log.Println("years : ", yearsP[x])
+		// 	// for i,_ := range Kabupaten {
+		// 	// 	var id_kabupaten []int
+		// 	// 	if err := con.Model(&models.Tbl_monev_final{}).Where("flag = ?", For[f]).Where("created_at like ?", "%"+ yearsP[x] +"%").Where("id_category = ?", i).Pluck("id_category", &id_category).Error; err != nil {
+		// 	// 		return echo.NewHTTPError(http.StatusBadRequest, err)
+		// 	// 	}
+		// 	// 	dataP = append(dataP, len(id_category))
+		// 	// }
+		// 	PersebaranYears[yearsP[x]] = dataP
+		// }
+		// if For[f] == "UEP" { Persebaran.Uep = PersebaranYears }
+		// if For[f] == "KUBE" { Persebaran.Kube = PersebaranYears }		
 
 	}
 
